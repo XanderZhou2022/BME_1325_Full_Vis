@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Hospital View</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <canvas id="hospitalCanvas" width="1280" height="720" aria-label="full hospital multi-floor visualization"></canvas>
+
+    <section class="hud hud--left" aria-label="Hospital status">
+      <div class="hud__eyebrow">Sim Hospital</div>
+      <h1 id="floorTitle" class="hud__title">1F Emergency</h1>
+      <p id="floorSubtitle" class="hud__subtitle">Emergency intake, rescue bay, emergency consultation, and elevator core.</p>
+      <div class="hud__hint">Move: WASD / Arrows · Drag map · Click mini map</div>
+      <div id="roomReadout" class="hud__readout">Current area: Entrance</div>
+    </section>
+
+    <nav class="floor-panel" aria-label="Floor switcher">
+      <button class="floor-panel__btn is-active" type="button" data-floor="1">
+        <span>1F</span><strong>Emergency</strong>
+      </button>
+      <button class="floor-panel__btn" type="button" data-floor="2">
+        <span>2F</span><strong>Outpatient</strong>
+      </button>
+      <button class="floor-panel__btn" type="button" data-floor="3">
+        <span>3F</span><strong>ICU</strong>
+      </button>
+      <button class="floor-panel__btn" type="button" data-floor="4">
+        <span>4F</span><strong>MDT</strong>
+      </button>
+      <button class="floor-panel__btn" type="button" data-floor="5">
+        <span>5F</span><strong>Ward</strong>
+      </button>
+    </nav>
+
+    <section class="zoom-panel" aria-label="Map zoom controls">
+      <button id="zoomIn" class="zoom-panel__btn" type="button" aria-label="Zoom in">+</button>
+      <div id="zoomLabel" class="zoom-panel__label">100%</div>
+      <button id="zoomOut" class="zoom-panel__btn" type="button" aria-label="Zoom out">-</button>
+      <button id="zoomFit" class="zoom-panel__fit" type="button">Fit</button>
+    </section>
+
+    <section class="status-panel" aria-label="Department preview">
+      <div class="status-panel__title">Department Snapshot</div>
+      <div id="departmentSnapshot" class="status-panel__list"></div>
+    </section>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
