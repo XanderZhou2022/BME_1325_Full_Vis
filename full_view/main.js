@@ -1,8 +1,8 @@
-import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610t";
-import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610t";
-import { createRoomPath } from "./pathfinding.js?v=fit-minimap-player-20260610t";
-import { PATIENTS } from "./patients.js?v=fit-minimap-player-20260610t";
-import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610t";
+import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610v";
+import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610v";
+import { createRoomPath } from "./pathfinding.js?v=fit-minimap-player-20260610v";
+import { PATIENTS } from "./patients.js?v=fit-minimap-player-20260610v";
+import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610v";
 import {
   beginFloorTransition,
   buildGeometry,
@@ -12,7 +12,7 @@ import {
   roomAtPoint,
   updateFloorTransition,
   updatePlayer,
-} from "./runtime.js?v=fit-minimap-player-20260610t";
+} from "./runtime.js?v=fit-minimap-player-20260610v";
 import {
   clearCanvas,
   departmentLabels,
@@ -21,7 +21,7 @@ import {
   drawTransitionWash,
   minimapPointToWorld,
   renderStatusRows,
-} from "./render.js?v=fit-minimap-player-20260610t";
+} from "./render.js?v=fit-minimap-player-20260610v";
 
 const canvas = document.getElementById("hospitalCanvas");
 const ctx = canvas.getContext("2d");
@@ -39,8 +39,8 @@ const zoomOutButton = document.getElementById("zoomOut");
 const zoomFitButton = document.getElementById("zoomFit");
 const zoomLabel = document.getElementById("zoomLabel");
 const labels = departmentLabels();
-const PERSON_SPACING = 44;
-const SLOT_CLEARANCE = 15;
+const PERSON_SPACING = 72;
+const SLOT_CLEARANCE = 34;
 
 const geometry = buildGeometry();
 const propColliders = buildPropColliders(PROPS);
@@ -498,7 +498,8 @@ function startSelectedPatientMove() {
     return;
   }
 
-  patient.form = "walking";
+  patient.transportMode = isEmergencyToIcuTransfer(patient, targetRoom) ? "stretcher" : null;
+  patient.form = patient.transportMode === "stretcher" ? "stretcher" : "walking";
   patient.movePhase = 0;
   state.patientMoves.set(patient.id, route);
   state.selectedEntityId = patient.id;
@@ -612,6 +613,8 @@ function movePatientAlongSegment(patient, move, segment, delta) {
   const step = Math.min(distanceToTarget, move.speed * delta);
   patient.x += (dx / distanceToTarget) * step;
   patient.y += (dy / distanceToTarget) * step;
+  if (Math.abs(dx) > Math.abs(dy)) patient.facing = dx < 0 ? "left" : "right";
+  else patient.facing = dy < 0 ? "up" : "down";
   patient.movePhase = (patient.movePhase || 0) + delta * 8;
 }
 
@@ -622,10 +625,21 @@ function finishPatientMove(patient, move) {
     patient.floor = targetRoom.floor;
     patient.x = move.destination.x;
     patient.y = move.destination.y;
-    patient.form = targetRoom.kind === "waiting" ? "waiting" : "walking";
+    if (patient.transportMode === "stretcher" && targetRoom.kind === "icu") {
+      patient.form = "bed";
+      patient.blanket = patient.blanket || "#d46d8e";
+      patient.skin = patient.skin || "#f2c799";
+    } else {
+      patient.form = targetRoom.kind === "waiting" ? "waiting" : "walking";
+    }
   }
+  patient.transportMode = null;
   patient.movePhase = 0;
   if (state.selectedEntityId === patient.id && targetRoom) renderRoomInfo(targetRoom);
+}
+
+function isEmergencyToIcuTransfer(patient, targetRoom) {
+  return patient.floor === 1 && targetRoom.floor === 3 && targetRoom.kind === "icu";
 }
 
 function findPatient(patientId) {
@@ -647,13 +661,13 @@ function findAvailableRoomSpot(room, movingPatientId, collisions) {
   const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
   const center = roomCenter(room);
   const candidates = [];
-  const minX = (room.x + 1.25) * TILE;
-  const maxX = (room.x + room.w - 1.25) * TILE;
-  const minY = (room.y + 1.8) * TILE;
-  const maxY = (room.y + room.h - 1.25) * TILE;
+  const minX = (room.x + 1.6) * TILE;
+  const maxX = (room.x + room.w - 1.6) * TILE;
+  const minY = (room.y + Math.max(3.1, room.h * 0.46)) * TILE;
+  const maxY = (room.y + room.h - 1.6) * TILE;
 
-  for (let y = minY; y <= maxY; y += TILE) {
-    for (let x = minX; x <= maxX; x += TILE) {
+  for (let y = maxY; y >= minY; y -= TILE * 0.75) {
+    for (let x = minX; x <= maxX; x += TILE * 0.75) {
       const point = { x, y };
       if (!pointInsideRoom(point, room)) continue;
       if (!spotClearOfObstacles(point, room.floor, collisions)) continue;
@@ -661,7 +675,38 @@ function findAvailableRoomSpot(room, movingPatientId, collisions) {
       if (nearestPerson < PERSON_SPACING) continue;
       candidates.push({
         point,
-        score: Math.hypot(point.x - center.x, point.y - center.y) - Math.min(nearestPerson, PERSON_SPACING * 3) * 0.18,
+        score: Math.abs(point.x - center.x) * 0.35 -
+          (point.y - center.y) * 0.5 -
+          Math.min(nearestPerson, PERSON_SPACING * 3) * 0.35,
+      });
+    }
+  }
+
+  if (!candidates.length && SLOT_CLEARANCE > 22) return findFallbackRoomSpot(room, movingPatientId, collisions);
+  if (!candidates.length) return null;
+  candidates.sort((a, b) => a.score - b.score);
+  return candidates[0].point;
+}
+
+function findFallbackRoomSpot(room, movingPatientId, collisions) {
+  const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
+  const center = roomCenter(room);
+  const candidates = [];
+  const minX = (room.x + 1.3) * TILE;
+  const maxX = (room.x + room.w - 1.3) * TILE;
+  const minY = (room.y + 2.4) * TILE;
+  const maxY = (room.y + room.h - 1.3) * TILE;
+
+  for (let y = maxY; y >= minY; y -= TILE * 0.75) {
+    for (let x = minX; x <= maxX; x += TILE * 0.75) {
+      const point = { x, y };
+      if (!pointInsideRoom(point, room)) continue;
+      if (!spotClearOfObstacles(point, room.floor, collisions, 22)) continue;
+      const nearestPerson = nearestPersonDistance(point, occupied);
+      if (nearestPerson < 56) continue;
+      candidates.push({
+        point,
+        score: Math.abs(point.x - center.x) * 0.35 - (point.y - center.y) * 0.45,
       });
     }
   }
@@ -698,13 +743,13 @@ function nearestPersonDistance(point, occupied) {
   return Math.min(...occupied.map((person) => Math.hypot(point.x - person.x, point.y - person.y)));
 }
 
-function spotClearOfObstacles(point, floorId, collisions) {
+function spotClearOfObstacles(point, floorId, collisions, clearance = SLOT_CLEARANCE) {
   return !collisions.some((rect) => {
     if (rect.floor !== floorId) return false;
-    return point.x >= rect.x - SLOT_CLEARANCE &&
-      point.x <= rect.x + rect.w + SLOT_CLEARANCE &&
-      point.y >= rect.y - SLOT_CLEARANCE &&
-      point.y <= rect.y + rect.h + SLOT_CLEARANCE;
+    return point.x >= rect.x - clearance &&
+      point.x <= rect.x + rect.w + clearance &&
+      point.y >= rect.y - clearance &&
+      point.y <= rect.y + rect.h + clearance;
   });
 }
 

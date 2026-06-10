@@ -1,5 +1,5 @@
-import { DEPARTMENT_STATUS, FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610t";
-import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610t";
+import { DEPARTMENT_STATUS, FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610v";
+import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610v";
 
 const MINIMAP = {
   x: 18,
@@ -309,6 +309,7 @@ function drawPatient(ctx, camera, patient, now, selectedEntityId) {
     drawEntitySelection(ctx, camera, patient.x, patient.y, now, patient.form === "bed" ? 34 : 22, patient.form === "bed" ? 16 : 24);
   }
   if (patient.form === "bed") drawBedPatient(ctx, camera, patient, now);
+  else if (patient.form === "stretcher") drawStretcherTransferPatient(ctx, camera, patient, now);
   else if (patient.form === "consultation") drawConsultationPatient(ctx, camera, patient, now);
   else if (patient.form === "waiting") drawWaitingPatient(ctx, camera, patient, now);
   else drawWalkingPatient(ctx, camera, patient, now);
@@ -407,6 +408,70 @@ function drawWalkingPatient(ctx, camera, patient, now) {
   ctx.fillRect(-8, 14, 5, 9 + step * 2);
   ctx.fillRect(3, 14, 5, 9 - step * 2);
   ctx.restore();
+}
+
+function drawStretcherTransferPatient(ctx, camera, patient, now) {
+  const p = project(camera, patient.x, patient.y);
+  const s = patientScale(camera);
+  const bob = Math.sin((patient.movePhase || now / 120) * 2) * 0.8;
+  const facing = patient.facing || "right";
+  const porter = porterOffset(facing);
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y + bob));
+  ctx.scale(s, s);
+
+  ctx.fillStyle = "rgba(33, 22, 14, 0.2)";
+  ctx.beginPath();
+  ctx.ellipse(2, 17, 31, 6, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#dfe8ee";
+  ctx.fillRect(-24, -7, 48, 16);
+  ctx.strokeStyle = "#6f8795";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(-24, -7, 48, 16);
+  ctx.fillStyle = "#b7c9d5";
+  ctx.fillRect(-27, 8, 54, 4);
+  ctx.fillStyle = "#46545d";
+  ctx.fillRect(-19, 13, 5, 5);
+  ctx.fillRect(14, 13, 5, 5);
+
+  ctx.fillStyle = patient.blanket || "#d46d8e";
+  ctx.fillRect(-5, -5, 24, 12);
+  ctx.fillStyle = patient.skin || "#f2c799";
+  ctx.fillRect(-20, -4, 10, 10);
+  ctx.fillStyle = "#3c3340";
+  ctx.fillRect(-21, -6, 11, 3);
+
+  drawPorter(ctx, porter.x, porter.y, facing);
+  ctx.restore();
+}
+
+function drawPorter(ctx, x, y, facing) {
+  ctx.fillStyle = "#80b78a";
+  ctx.fillRect(x - 7, y - 1, 14, 18);
+  ctx.fillStyle = "#f2c799";
+  ctx.fillRect(x - 6, y - 14, 12, 12);
+  ctx.fillStyle = "#2f3440";
+  ctx.fillRect(x - 7, y - 16, 14, 4);
+  ctx.fillStyle = "#4e6a52";
+  ctx.fillRect(x - 9, y + 15, 5, 8);
+  ctx.fillRect(x + 4, y + 15, 5, 8);
+  ctx.fillStyle = "#5f8a68";
+  if (facing === "left") ctx.fillRect(x - 14, y + 2, 7, 5);
+  else if (facing === "right") ctx.fillRect(x + 7, y + 2, 7, 5);
+  else {
+    ctx.fillRect(x - 13, y + 2, 6, 5);
+    ctx.fillRect(x + 7, y + 2, 6, 5);
+  }
+}
+
+function porterOffset(facing) {
+  if (facing === "left") return { x: 33, y: 0 };
+  if (facing === "right") return { x: -33, y: 0 };
+  if (facing === "up") return { x: 0, y: 28 };
+  return { x: 0, y: -26 };
 }
 
 function drawStaff(ctx, camera, member, now, selected = false) {
