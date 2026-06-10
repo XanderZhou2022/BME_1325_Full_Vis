@@ -1,5 +1,5 @@
-import { FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610v";
-import { PLAYER_RADIUS } from "./runtime.js?v=fit-minimap-player-20260610v";
+import { FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610w";
+import { PLAYER_RADIUS } from "./runtime.js?v=fit-minimap-player-20260610w";
 
 const GRID_W = WORLD.width / TILE;
 const GRID_H = WORLD.height / TILE;

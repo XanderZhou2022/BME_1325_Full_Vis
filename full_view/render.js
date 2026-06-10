@@ -1,5 +1,5 @@
-import { DEPARTMENT_STATUS, FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610v";
-import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610v";
+import { DEPARTMENT_STATUS, FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610w";
+import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610w";
 
 const MINIMAP = {
   x: 18,

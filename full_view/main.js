@@ -1,8 +1,8 @@
-import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610v";
-import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610v";
-import { createRoomPath } from "./pathfinding.js?v=fit-minimap-player-20260610v";
-import { PATIENTS } from "./patients.js?v=fit-minimap-player-20260610v";
-import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610v";
+import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610w";
+import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610w";
+import { createRoomPath } from "./pathfinding.js?v=fit-minimap-player-20260610w";
+import { PATIENTS } from "./patients.js?v=fit-minimap-player-20260610w";
+import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610w";
 import {
   beginFloorTransition,
   buildGeometry,
@@ -12,7 +12,7 @@ import {
   roomAtPoint,
   updateFloorTransition,
   updatePlayer,
-} from "./runtime.js?v=fit-minimap-player-20260610v";
+} from "./runtime.js?v=fit-minimap-player-20260610w";
 import {
   clearCanvas,
   departmentLabels,
@@ -21,7 +21,7 @@ import {
   drawTransitionWash,
   minimapPointToWorld,
   renderStatusRows,
-} from "./render.js?v=fit-minimap-player-20260610v";
+} from "./render.js?v=fit-minimap-player-20260610w";
 
 const canvas = document.getElementById("hospitalCanvas");
 const ctx = canvas.getContext("2d");
@@ -625,9 +625,9 @@ function finishPatientMove(patient, move) {
     patient.floor = targetRoom.floor;
     patient.x = move.destination.x;
     patient.y = move.destination.y;
-    if (patient.transportMode === "stretcher" && targetRoom.kind === "icu") {
+    if (isBedCareRoom(targetRoom)) {
       patient.form = "bed";
-      patient.blanket = patient.blanket || "#d46d8e";
+      patient.blanket = careRoomBlanket(targetRoom);
       patient.skin = patient.skin || "#f2c799";
     } else {
       patient.form = targetRoom.kind === "waiting" ? "waiting" : "walking";
@@ -658,6 +658,8 @@ function roomCenter(room) {
 }
 
 function findAvailableRoomSpot(room, movingPatientId, collisions) {
+  if (isBedCareRoom(room)) return findAvailableBedSpot(room, movingPatientId);
+
   const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
   const center = roomCenter(room);
   const candidates = [];
@@ -686,6 +688,22 @@ function findAvailableRoomSpot(room, movingPatientId, collisions) {
   if (!candidates.length) return null;
   candidates.sort((a, b) => a.score - b.score);
   return candidates[0].point;
+}
+
+function findAvailableBedSpot(room, movingPatientId) {
+  const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
+  const beds = PROPS
+    .filter((item) => item.floor === room.floor && item.type === "bed" && propInsideRoom(item, room))
+    .map((item) => ({
+      point: bedPatientPoint(item),
+      score: item.y * 10 + item.x,
+    }))
+    .filter(({ point }) => pointInsideRoom(point, room))
+    .filter(({ point }) => nearestPersonDistance(point, occupied) >= 54);
+
+  if (!beds.length) return null;
+  beds.sort((a, b) => a.score - b.score);
+  return beds[0].point;
 }
 
 function findFallbackRoomSpot(room, movingPatientId, collisions) {
@@ -751,6 +769,28 @@ function spotClearOfObstacles(point, floorId, collisions, clearance = SLOT_CLEAR
       point.y >= rect.y - clearance &&
       point.y <= rect.y + rect.h + clearance;
   });
+}
+
+function isBedCareRoom(room) {
+  return room.kind === "icu" || room.kind === "ward";
+}
+
+function careRoomBlanket(room) {
+  return room.kind === "icu" ? "#d46d8e" : "#76c59d";
+}
+
+function propInsideRoom(item, room) {
+  return item.x >= room.x &&
+    item.x + item.w <= room.x + room.w &&
+    item.y >= room.y &&
+    item.y + item.h <= room.y + room.h;
+}
+
+function bedPatientPoint(item) {
+  return {
+    x: item.x * TILE,
+    y: (item.y + 0.2) * TILE,
+  };
 }
 
 function worldPointFromCanvas(point) {
