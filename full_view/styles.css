@@ -9,7 +9,7 @@ body {
   height: 100%;
   overflow: hidden;
   background:
-    radial-gradient(circle at 30% 10%, rgba(255, 237, 191, 0.28), transparent 34%),
+    radial-gradient(circle at 24% 8%, rgba(255, 237, 191, 0.26), transparent 32%),
     linear-gradient(180deg, #6e9d6a 0%, #477757 100%);
   color: #fff7e7;
   font-family: "Trebuchet MS", "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -20,94 +20,138 @@ button {
 }
 
 .app-shell {
-  position: relative;
   width: 100vw;
   height: 100vh;
+  padding: 14px;
   display: grid;
-  place-items: center;
-}
-
-#hospitalCanvas {
-  width: min(100vw, 1500px);
-  height: min(100vh, 900px);
-  border: 2px solid rgba(105, 72, 42, 0.44);
-  border-radius: 16px;
-  background: #7fb85a;
-  box-shadow: 0 28px 80px rgba(44, 32, 18, 0.34);
-  cursor: grab;
-  image-rendering: pixelated;
-  touch-action: none;
-  user-select: none;
-}
-
-#hospitalCanvas.is-dragging {
-  cursor: grabbing;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
 }
 
 .hud,
 .floor-panel,
 .zoom-panel,
+.mini-panel,
+.person-panel,
 .status-panel {
-  position: fixed;
-  z-index: 3;
   border: 1px solid rgba(255, 228, 183, 0.34);
   border-radius: 10px;
-  background: rgba(65, 43, 28, 0.82);
-  box-shadow: 0 16px 48px rgba(34, 24, 16, 0.28);
-  backdrop-filter: blur(8px);
+  background: rgba(65, 43, 28, 0.84);
+  box-shadow: 0 14px 34px rgba(34, 24, 16, 0.22);
 }
 
-.hud--left {
-  top: 18px;
-  left: 18px;
-  width: min(380px, calc(100vw - 36px));
-  padding: 14px 16px;
+.top-panel {
+  min-height: 92px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 180px minmax(280px, 1fr) minmax(300px, 520px);
+  gap: 16px;
+  align-items: center;
 }
 
 .hud__eyebrow {
-  margin-bottom: 4px;
+  grid-column: 1;
   color: #f5d59e;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
+.hud__main {
+  grid-column: 2;
+  min-width: 0;
+}
+
 .hud__title {
-  margin: 0;
-  font-size: 24px;
-  line-height: 1.15;
+  margin: 4px 0 0;
+  font-size: 25px;
+  line-height: 1.12;
 }
 
 .hud__subtitle {
   margin: 8px 0 0;
+  max-width: 760px;
   color: #f4e5c5;
   font-size: 13px;
-  line-height: 1.45;
+  line-height: 1.42;
+}
+
+.hud__tools {
+  grid-column: 3;
+  display: grid;
+  gap: 8px;
 }
 
 .hud__hint,
 .hud__readout {
-  margin-top: 10px;
+  min-height: 34px;
   padding: 8px 10px;
   border-radius: 8px;
   background: rgba(255, 248, 234, 0.08);
   color: #fff0ca;
   font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.workspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 268px;
+  gap: 12px;
+}
+
+.map-stage {
+  min-width: 0;
+  min-height: 0;
+  padding: 10px;
+  border: 1px solid rgba(255, 228, 183, 0.28);
+  border-radius: 12px;
+  background: rgba(52, 78, 49, 0.34);
+  display: grid;
+}
+
+#hospitalCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 2px solid rgba(105, 72, 42, 0.44);
+  border-radius: 10px;
+  background: #7fb85a;
+  box-shadow: 0 22px 54px rgba(44, 32, 18, 0.28);
+  cursor: default;
+  image-rendering: pixelated;
+  touch-action: none;
+  user-select: none;
+}
+
+.side-panel {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.side-panel__title {
+  margin-bottom: 8px;
+  color: #ffe7b4;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .floor-panel {
-  top: 50%;
-  right: 18px;
-  width: 172px;
   padding: 10px;
-  transform: translateY(-50%);
   display: grid;
   gap: 8px;
 }
 
 .floor-panel__btn {
-  min-height: 58px;
+  min-height: 48px;
   border: 1px solid rgba(255, 228, 183, 0.24);
   border-radius: 8px;
   background: rgba(255, 248, 234, 0.07);
@@ -127,7 +171,7 @@ button {
   background: rgba(255, 213, 122, 0.16);
   color: #ffe7b4;
   text-align: center;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .floor-panel__btn strong {
@@ -142,15 +186,11 @@ button {
 }
 
 .zoom-panel {
-  top: 50%;
-  right: 206px;
-  width: 76px;
   padding: 10px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 44px 1fr 44px;
   gap: 8px;
   align-items: center;
-  transform: translateY(-50%);
 }
 
 .zoom-panel__btn,
@@ -164,12 +204,18 @@ button {
   font-weight: 900;
 }
 
+.zoom-panel__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 .zoom-panel__btn {
   font-size: 22px;
   line-height: 1;
 }
 
 .zoom-panel__fit {
+  grid-column: 1 / -1;
   font-size: 12px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -189,25 +235,61 @@ button {
   text-align: center;
 }
 
+.mini-panel,
+.person-panel,
 .status-panel {
-  right: 18px;
-  bottom: 18px;
-  width: 300px;
-  padding: 12px;
+  padding: 10px;
 }
 
-.status-panel__title {
-  margin-bottom: 8px;
-  color: #ffe7b4;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+#miniMapCanvas {
+  width: 100%;
+  height: 146px;
+  display: block;
+  border-radius: 8px;
+  background: rgba(46, 35, 25, 0.42);
+  image-rendering: pixelated;
+  cursor: pointer;
 }
 
 .status-panel__list {
   display: grid;
   gap: 7px;
+}
+
+.person-info {
+  display: grid;
+  gap: 7px;
+}
+
+.person-info--empty {
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4e5c5;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.person-info__row {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+}
+
+.person-info__label {
+  color: #f5d59e;
+  font-weight: 900;
+}
+
+.person-info__value {
+  min-width: 0;
+  color: #fff7e5;
+  overflow-wrap: anywhere;
 }
 
 .status-row {
@@ -232,14 +314,39 @@ button {
   white-space: nowrap;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 980px) {
+  body {
+    overflow: auto;
+  }
+
+  .app-shell {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .top-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .hud__eyebrow,
+  .hud__main,
+  .hud__tools {
+    grid-column: auto;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .map-stage {
+    min-height: 520px;
+  }
+
+  .side-panel {
+    grid-template-columns: 1fr;
+  }
+
   .floor-panel {
-    top: auto;
-    right: 10px;
-    left: 10px;
-    bottom: 10px;
-    width: auto;
-    transform: none;
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
@@ -248,22 +355,5 @@ button {
     grid-template-columns: 1fr;
     gap: 2px;
     text-align: center;
-  }
-
-  .status-panel {
-    display: none;
-  }
-
-  .zoom-panel {
-    right: 10px;
-    bottom: 82px;
-    top: auto;
-    width: 172px;
-    grid-template-columns: 44px 1fr 44px;
-    transform: none;
-  }
-
-  .zoom-panel__fit {
-    grid-column: 1 / -1;
   }
 }

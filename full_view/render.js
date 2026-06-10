@@ -1,5 +1,5 @@
-import { DEPARTMENT_STATUS, FLOOR_PLATE, ROOM_KIND_LABELS, TILE, WORLD } from "./map.js";
-import { WALL_THICKNESS } from "./runtime.js";
+import { DEPARTMENT_STATUS, FLOOR_PLATE, ROOM_KIND_LABELS, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610n";
+import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610n";
 
 const MINIMAP = {
   x: 18,
@@ -38,7 +38,7 @@ export function clearCanvas(ctx, canvas, floorId) {
 }
 
 export function drawFloorScene(ctx, canvas, scene) {
-  const { floorId, rooms, props, walls, doors, player, camera, alpha = 1, drawPlayer = true } = scene;
+  const { floorId, rooms, props, walls, doors, patients = [], staff = [], selectedEntityId, player, camera, now = 0, alpha = 1, drawPlayer = true } = scene;
   const palette = FLOOR_COLORS[floorId] || FLOOR_COLORS[1];
 
   ctx.save();
@@ -50,6 +50,8 @@ export function drawFloorScene(ctx, canvas, scene) {
   rooms.forEach((room) => drawRoom(ctx, camera, room));
   doors.filter((door) => door.floor === floorId).forEach((door) => drawDoor(ctx, camera, door));
   props.filter((prop) => prop.floor === floorId).forEach((prop) => drawProp(ctx, camera, prop));
+  patients.forEach((patient) => drawPatient(ctx, camera, patient, now, selectedEntityId));
+  staff.forEach((member) => drawStaff(ctx, camera, member, now, member.id === selectedEntityId));
   walls.filter((wall) => wall.floor === floorId).forEach((wall) => drawWall(ctx, camera, wall));
   rooms.forEach((room) => drawRoomLabel(ctx, camera, room));
   if (drawPlayer && player.floor === floorId) drawPlayerSprite(ctx, camera, player);
@@ -299,25 +301,278 @@ function drawProp(ctx, camera, prop) {
   }
 }
 
+function drawPatient(ctx, camera, patient, now, selectedEntityId) {
+  if (patient.form === "consultation") {
+    if (selectedEntityId === patient.id) drawEntitySelection(ctx, camera, patient.x - 24, patient.y + 8, now, 18, 24);
+    if (selectedEntityId === patient.doctorProfileId) drawEntitySelection(ctx, camera, patient.x + 26, patient.y + 8, now, 18, 24);
+  } else if (selectedEntityId === patient.id) {
+    drawEntitySelection(ctx, camera, patient.x, patient.y, now, patient.form === "bed" ? 34 : 22, patient.form === "bed" ? 16 : 24);
+  }
+  if (patient.form === "bed") drawBedPatient(ctx, camera, patient, now);
+  else if (patient.form === "consultation") drawConsultationPatient(ctx, camera, patient, now);
+  else if (patient.form === "waiting") drawWaitingPatient(ctx, camera, patient, now);
+  else drawWalkingPatient(ctx, camera, patient, now);
+}
+
+function drawBedPatient(ctx, camera, patient, now) {
+  const p = project(camera, patient.x, patient.y);
+  const s = patientScale(camera);
+  const breathing = Math.sin(now / 520 + patient.id.length) * 0.8;
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y));
+  ctx.scale(s, s);
+  ctx.fillStyle = "rgba(33, 22, 14, 0.18)";
+  ctx.fillRect(-19, 13, 44, 6);
+  ctx.fillStyle = "#fff7e1";
+  ctx.fillRect(-20, -7, 45, 18);
+  ctx.strokeStyle = "#8f6d55";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(-20, -7, 45, 18);
+  ctx.fillStyle = patient.blanket || "#7fbfa2";
+  ctx.fillRect(-4, -5 + breathing, 26, 14);
+  ctx.fillStyle = patient.skin || "#f0c49a";
+  ctx.fillRect(-17, -4, 10, 10);
+  ctx.fillStyle = "#3c3340";
+  ctx.fillRect(-18, -6, 11, 3);
+  ctx.fillStyle = "#335a78";
+  ctx.fillRect(29, -8, 7, 13);
+  ctx.fillStyle = "#8ef0c5";
+  ctx.fillRect(31, -5, 3, 5);
+  ctx.restore();
+}
+
+function drawConsultationPatient(ctx, camera, patient, now) {
+  const p = project(camera, patient.x, patient.y);
+  const s = patientScale(camera);
+  const talk = Math.sin(now / 360 + patient.id.length) > 0 ? 1 : 0;
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y));
+  ctx.scale(s, s);
+  drawSeatedPerson(ctx, -16, 5, patient.color || "#5f8ec9", "#f2c799");
+  drawSeatedStaff(ctx, 18, 5, "doctor", patient.doctorGender || "female");
+  ctx.fillStyle = "#b98154";
+  ctx.fillRect(-4, 0, 10, 18);
+  ctx.fillStyle = talk ? "#fff5d0" : "#e7f3ff";
+  roundedRect(ctx, -16, -28, 34, 14, 5);
+  ctx.fill();
+  ctx.fillStyle = "#6a5039";
+  ctx.fillRect(-9, -22, 5, 3);
+  ctx.fillRect(0, -22, 5, 3);
+  ctx.restore();
+}
+
+function drawWaitingPatient(ctx, camera, patient, now) {
+  const p = project(camera, patient.x, patient.y);
+  const s = patientScale(camera);
+  const idle = Math.sin(now / 700 + patient.id.length) * 0.7;
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y + idle));
+  ctx.scale(s, s);
+  ctx.fillStyle = "#5f7897";
+  ctx.fillRect(-15, 1, 30, 7);
+  ctx.fillStyle = "#6f86a5";
+  ctx.fillRect(-16, 10, 32, 7);
+  ctx.fillStyle = "rgba(33, 22, 14, 0.2)";
+  ctx.fillRect(-11, 17, 24, 4);
+  drawSeatedPerson(ctx, 0, 2, patient.color || "#7899c6", "#f2c799");
+  ctx.fillStyle = "#334b62";
+  ctx.fillRect(-10, 15, 5, 7);
+  ctx.fillRect(5, 15, 5, 7);
+  ctx.restore();
+}
+
+function drawWalkingPatient(ctx, camera, patient, now) {
+  const phase = now / 180 + (patient.phase || 0);
+  const step = Math.sin(phase);
+  const p = project(camera, patient.x + step * 8, patient.y);
+  const s = patientScale(camera);
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y + Math.abs(step) * -1.5));
+  ctx.scale(s, s);
+  ctx.fillStyle = "rgba(33, 22, 14, 0.2)";
+  ctx.beginPath();
+  ctx.ellipse(1, 15, 12, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = patient.color || "#5f8ec9";
+  ctx.fillRect(-7, -1, 14, 17);
+  ctx.fillStyle = "#f2c799";
+  ctx.fillRect(-6, -14, 12, 12);
+  ctx.fillStyle = "#3c3340";
+  ctx.fillRect(-7, -16, 14, 4);
+  ctx.fillStyle = "#244259";
+  ctx.fillRect(-8, 14, 5, 9 + step * 2);
+  ctx.fillRect(3, 14, 5, 9 - step * 2);
+  ctx.restore();
+}
+
+function drawStaff(ctx, camera, member, now, selected = false) {
+  if (selected) drawEntitySelection(ctx, camera, member.x, member.y, now, 22, 26);
+  if (member.pose === "seated") {
+    drawSeatedStaffAt(ctx, camera, member, now);
+    return;
+  }
+  drawStandingStaff(ctx, camera, member, now);
+}
+
+function drawStandingStaff(ctx, camera, member, now) {
+  const phase = now / 220 + (member.phase || 0);
+  const walk = member.pose === "walking" ? Math.sin(phase) : 0;
+  const monitorLean = member.pose === "monitoring" ? Math.sin(now / 640 + member.id.length) * 0.8 : 0;
+  const p = project(camera, member.x + walk * 7, member.y + monitorLean);
+  const s = patientScale(camera);
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y + Math.abs(walk) * -1.2));
+  ctx.scale(s, s);
+  drawStaffShadow(ctx);
+  drawStandingStaffShape(ctx, member.role, member.gender, walk);
+  ctx.restore();
+}
+
+function drawSeatedStaffAt(ctx, camera, member, now) {
+  const p = project(camera, member.x, member.y);
+  const s = patientScale(camera);
+  const idle = Math.sin(now / 690 + member.id.length) * 0.5;
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y + idle));
+  ctx.scale(s, s);
+  drawSeatedStaff(ctx, 0, 2, member.role, member.gender);
+  ctx.restore();
+}
+
+function drawStandingStaffShape(ctx, role, gender, walk = 0) {
+  const uniform = role === "nurse" ? "#f0a1c1" : "#fff9ef";
+  const trim = role === "nurse" ? "#c95d8e" : "#8eb7cc";
+  const pants = role === "nurse" ? "#8d5f82" : "#5f7893";
+
+  ctx.fillStyle = uniform;
+  ctx.fillRect(-8, -1, 16, 20);
+  ctx.fillStyle = trim;
+  ctx.fillRect(-8, 5, 16, 3);
+  if (role === "doctor") {
+    ctx.strokeStyle = "#6d8fa2";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-3, 1);
+    ctx.lineTo(1, 8);
+    ctx.lineTo(5, 1);
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = "#fff6fb";
+    ctx.fillRect(-6, -18, 12, 4);
+    ctx.fillStyle = trim;
+    ctx.fillRect(-2, -18, 4, 4);
+  }
+
+  ctx.fillStyle = "#f2c799";
+  ctx.fillRect(-6, -15, 12, 12);
+  drawHair(ctx, gender);
+
+  ctx.fillStyle = trim;
+  ctx.fillRect(-13, 2, 5, 12);
+  ctx.fillRect(8, 2, 5, 12);
+  ctx.fillStyle = pants;
+  ctx.fillRect(-8, 17, 6, 10 + walk * 2);
+  ctx.fillRect(2, 17, 6, 10 - walk * 2);
+}
+
+function drawSeatedStaff(ctx, x, y, role, gender) {
+  const uniform = role === "nurse" ? "#f0a1c1" : "#fff9ef";
+  const trim = role === "nurse" ? "#c95d8e" : "#8eb7cc";
+  const pants = role === "nurse" ? "#8d5f82" : "#5f7893";
+
+  ctx.fillStyle = uniform;
+  ctx.fillRect(x - 7, y - 4, 14, 15);
+  ctx.fillStyle = trim;
+  ctx.fillRect(x - 7, y + 4, 14, 3);
+  ctx.fillStyle = "#f2c799";
+  ctx.fillRect(x - 6, y - 15, 12, 11);
+  drawHair(ctx, gender, x, y);
+  if (role === "nurse") {
+    ctx.fillStyle = "#fff6fb";
+    ctx.fillRect(x - 6, y - 18, 12, 4);
+    ctx.fillStyle = trim;
+    ctx.fillRect(x - 2, y - 18, 4, 4);
+  }
+  ctx.fillStyle = pants;
+  ctx.fillRect(x - 9, y + 9, 6, 6);
+  ctx.fillRect(x + 3, y + 9, 6, 6);
+}
+
+function drawStaffShadow(ctx) {
+  ctx.fillStyle = "rgba(33, 22, 14, 0.2)";
+  ctx.beginPath();
+  ctx.ellipse(1, 16, 12, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawEntitySelection(ctx, camera, x, y, now, rx, ry) {
+  const p = project(camera, x, y);
+  const pulse = 0.85 + Math.sin(now / 180) * 0.12;
+  const z = patientScale(camera);
+
+  ctx.save();
+  ctx.translate(Math.round(p.x), Math.round(p.y));
+  ctx.scale(z, z);
+  ctx.strokeStyle = "#fff0a8";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.ellipse(0, 4, rx * pulse, ry * pulse, 0, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawHair(ctx, gender, x = 0, y = 0) {
+  ctx.fillStyle = "#3a3037";
+  if (gender === "female") {
+    ctx.fillRect(x - 8, y - 17, 16, 5);
+    ctx.fillRect(x - 8, y - 12, 4, 8);
+    ctx.fillRect(x + 4, y - 12, 4, 8);
+    return;
+  }
+  ctx.fillRect(x - 7, y - 17, 14, 4);
+  ctx.fillRect(x - 5, y - 19, 10, 3);
+}
+
+function drawSeatedPerson(ctx, x, y, body, skin) {
+  ctx.fillStyle = body;
+  ctx.fillRect(x - 7, y - 4, 14, 15);
+  ctx.fillStyle = skin;
+  ctx.fillRect(x - 6, y - 15, 12, 11);
+  ctx.fillStyle = "#3c3340";
+  ctx.fillRect(x - 7, y - 17, 14, 4);
+  ctx.fillStyle = "#263d55";
+  ctx.fillRect(x - 9, y + 9, 6, 6);
+  ctx.fillRect(x + 3, y + 9, 6, 6);
+}
+
+function patientScale(camera) {
+  return Math.max(0.72, Math.min(1.1, camera.zoom || 1));
+}
+
 function drawRoomLabel(ctx, camera, room) {
   const label = ROOM_KIND_LABELS[room.kind] || room.label;
   const x = room.x * TILE + room.w * TILE / 2;
   const y = room.y * TILE + 26;
   const p = project(camera, x, y);
-  const z = camera.zoom || 1;
-  const fontSize = Math.max(9, Math.min(14, 13 * z));
+  const fontSize = 12;
 
   ctx.save();
   ctx.font = `800 ${fontSize}px Trebuchet MS, PingFang SC, sans-serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   const metrics = ctx.measureText(label);
-  const width = metrics.width + 20;
-  roundedRect(ctx, p.x - width / 2, p.y - 13, width, 26, 6);
+  const width = Math.ceil(metrics.width) + 18;
+  roundedRect(ctx, Math.round(p.x - width / 2), Math.round(p.y - 12), width, 24, 6);
   ctx.fillStyle = "rgba(49, 34, 24, 0.75)";
   ctx.fill();
   ctx.fillStyle = "#fff3cf";
-  ctx.fillText(label, p.x, p.y + 0.5);
+  ctx.fillText(label, Math.round(p.x), Math.round(p.y));
   ctx.restore();
 }
 

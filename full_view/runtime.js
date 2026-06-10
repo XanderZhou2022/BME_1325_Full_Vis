@@ -1,7 +1,8 @@
-import { DOORS, ROOMS, TILE, WORLD } from "./map.js";
+import { DOORS, FLOOR_PLATE, ROOMS, TILE } from "./map.js?v=fit-minimap-player-20260610n";
 
 export const WALL_THICKNESS = 14;
 export const PLAYER_RADIUS = 7;
+export const PLAYER_FLOOR_MARGIN = 20;
 export const FLOOR_SWITCH_MS = 450;
 
 export function buildGeometry() {
@@ -40,6 +41,7 @@ export function createCamera(spawn) {
 }
 
 export function updatePlayer({ player, keys, delta, collisions, movementLocked }) {
+  clampPlayerToFloor(player);
   if (movementLocked) return;
 
   let moveX = 0;
@@ -101,8 +103,9 @@ export function updateFloorTransition(state, now) {
 }
 
 function canMoveTo(player, nextX, nextY, collisions) {
-  if (nextX - player.radius < 0 || nextY - player.radius < 0) return false;
-  if (nextX + player.radius > WORLD.width || nextY + player.radius > WORLD.height) return false;
+  const bounds = floorBounds();
+  if (nextX - PLAYER_FLOOR_MARGIN < bounds.x || nextY - PLAYER_FLOOR_MARGIN < bounds.y) return false;
+  if (nextX + PLAYER_FLOOR_MARGIN > bounds.x + bounds.w || nextY + PLAYER_FLOOR_MARGIN > bounds.y + bounds.h) return false;
 
   return !collisions.some((rect) => {
     if (rect.floor !== player.floor) return false;
@@ -110,6 +113,21 @@ function canMoveTo(player, nextX, nextY, collisions) {
     const closestY = Math.max(rect.y, Math.min(nextY, rect.y + rect.h));
     return (nextX - closestX) ** 2 + (nextY - closestY) ** 2 < player.radius ** 2;
   });
+}
+
+function clampPlayerToFloor(player) {
+  const bounds = floorBounds();
+  player.x = Math.min(bounds.x + bounds.w - PLAYER_FLOOR_MARGIN, Math.max(bounds.x + PLAYER_FLOOR_MARGIN, player.x));
+  player.y = Math.min(bounds.y + bounds.h - PLAYER_FLOOR_MARGIN, Math.max(bounds.y + PLAYER_FLOOR_MARGIN, player.y));
+}
+
+function floorBounds() {
+  return {
+    x: FLOOR_PLATE.x * TILE,
+    y: FLOOR_PLATE.y * TILE,
+    w: FLOOR_PLATE.w * TILE,
+    h: FLOOR_PLATE.h * TILE,
+  };
 }
 
 function buildDoor(spec, index) {

@@ -1,4 +1,7 @@
-import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js";
+import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610n";
+import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610n";
+import { getPatientsForFloor } from "./patients.js?v=fit-minimap-player-20260610n";
+import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610n";
 import {
   beginFloorTransition,
   buildGeometry,
@@ -6,10 +9,9 @@ import {
   createCamera,
   createPlayer,
   roomAtPoint,
-  updateCamera,
   updateFloorTransition,
   updatePlayer,
-} from "./runtime.js";
+} from "./runtime.js?v=fit-minimap-player-20260610n";
 import {
   clearCanvas,
   departmentLabels,
@@ -18,23 +20,23 @@ import {
   drawTransitionWash,
   minimapPointToWorld,
   renderStatusRows,
-} from "./render.js";
+} from "./render.js?v=fit-minimap-player-20260610n";
 
 const canvas = document.getElementById("hospitalCanvas");
 const ctx = canvas.getContext("2d");
+const miniMapCanvas = document.getElementById("miniMapCanvas");
+const miniMapCtx = miniMapCanvas.getContext("2d");
 const floorTitle = document.getElementById("floorTitle");
 const floorSubtitle = document.getElementById("floorSubtitle");
 const roomReadout = document.getElementById("roomReadout");
 const departmentSnapshot = document.getElementById("departmentSnapshot");
+const personInfo = document.getElementById("personInfo");
 const floorButtons = Array.from(document.querySelectorAll("[data-floor]"));
 const zoomInButton = document.getElementById("zoomIn");
 const zoomOutButton = document.getElementById("zoomOut");
 const zoomFitButton = document.getElementById("zoomFit");
 const zoomLabel = document.getElementById("zoomLabel");
 const labels = departmentLabels();
-
-const MAX_ZOOM = 1.65;
-const ZOOM_STEP = 0.16;
 
 const geometry = buildGeometry();
 const propColliders = buildPropColliders(PROPS);
@@ -44,28 +46,30 @@ const state = {
   activeFloor: initialFloor.id,
   camera: createCamera(initialFloor.spawn),
   cameraControl: {
-    mode: "follow",
-    drag: null,
+    mode: "fit",
     flight: null,
   },
   geometry,
   keys: new Set(),
   player,
+  playerTravel: null,
+  selectedEntityId: null,
   selectedRoomId: null,
   transition: null,
 };
 
 let lastFrame = performance.now();
 let hudFloor = null;
+let profileRequestId = 0;
 
+applyFitView();
 syncHud();
 requestAnimationFrame(loop);
 
 window.addEventListener("keydown", (event) => {
   if (isMovementKey(event.code)) {
     event.preventDefault();
-    state.cameraControl.mode = "follow";
-    state.cameraControl.flight = null;
+    state.playerTravel = null;
     state.selectedRoomId = null;
     state.keys.add(event.code);
   }
@@ -79,20 +83,19 @@ floorButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const targetFloor = Number(button.dataset.floor);
     const floor = getFloor(targetFloor);
-    const preserveFit = state.cameraControl.mode === "fit";
-    resetCameraControl(preserveFit ? "fit" : "follow");
+    resetCameraControl();
     beginFloorTransition(state, targetFloor, floor.spawn);
-    if (preserveFit) applyFitView();
+    applyFitView();
     syncHud(targetFloor);
   });
 });
 
 zoomInButton.addEventListener("click", () => {
-  setZoom(state.camera.zoom + ZOOM_STEP);
+  fitWholeFloor();
 });
 
 zoomOutButton.addEventListener("click", () => {
-  setZoom(state.camera.zoom - ZOOM_STEP);
+  fitWholeFloor();
 });
 
 zoomFitButton.addEventListener("click", () => {
@@ -101,53 +104,17 @@ zoomFitButton.addEventListener("click", () => {
 
 canvas.addEventListener("pointerdown", (event) => {
   if (state.transition) return;
-  const point = canvasPoint(event);
-  const minimapHit = minimapPointToWorld(canvas, point);
-  if (minimapHit?.insidePanel) {
-    state.cameraControl.minimapPress = { point, startedAt: performance.now() };
-    return;
-  }
-
-  state.cameraControl.drag = {
-    pointerId: event.pointerId,
-    lastX: event.clientX,
-    lastY: event.clientY,
-    moved: false,
-  };
-  state.cameraControl.mode = "free";
-  state.cameraControl.flight = null;
-  canvas.classList.add("is-dragging");
-  canvas.setPointerCapture(event.pointerId);
+  event.preventDefault();
 });
 
-canvas.addEventListener("pointermove", (event) => {
-  const drag = state.cameraControl.drag;
-  if (!drag || drag.pointerId !== event.pointerId) return;
-  const rect = canvas.getBoundingClientRect();
-  const dx = (((event.clientX - drag.lastX) / rect.width) * canvas.width) / state.camera.zoom;
-  const dy = (((event.clientY - drag.lastY) / rect.height) * canvas.height) / state.camera.zoom;
-  state.camera.x -= dx;
-  state.camera.y -= dy;
-  clampCamera(state.camera);
-  drag.lastX = event.clientX;
-  drag.lastY = event.clientY;
-  drag.moved = true;
+canvas.addEventListener("click", (event) => {
+  if (state.transition) return;
+  handleCanvasClick(canvasPoint(event));
 });
 
-canvas.addEventListener("pointerup", (event) => {
-  const press = state.cameraControl.minimapPress;
-  if (press) {
-    const point = canvasPoint(event);
-    state.cameraControl.minimapPress = null;
-    if (distance(point, press.point) < 8) handleMinimapClick(point);
-    return;
-  }
-  finishDrag(event.pointerId);
-});
-
-canvas.addEventListener("pointercancel", (event) => {
-  state.cameraControl.minimapPress = null;
-  finishDrag(event.pointerId);
+miniMapCanvas.addEventListener("click", (event) => {
+  if (state.transition) return;
+  handleMinimapClick(canvasPoint(event, miniMapCanvas), miniMapCanvas);
 });
 
 function loop(now) {
@@ -163,11 +130,12 @@ function loop(now) {
     keys: state.keys,
     delta,
     collisions,
-    movementLocked: Boolean(state.transition),
+    movementLocked: Boolean(state.transition) || Boolean(state.playerTravel),
   });
+  updatePlayerTravel(delta);
   updateCameraControl(now);
 
-  render(transition, transitionProgress);
+  render(transition, transitionProgress, now);
   const previousFloor = state.activeFloor;
   updateFloorTransition(state, now);
   if (previousFloor !== state.activeFloor || !state.transition) syncHud(state.activeFloor);
@@ -175,54 +143,49 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
-function render(transition, progress) {
+function render(transition, progress, now) {
   const visibleFloor = transition ? transition.toFloor : state.activeFloor;
   clearCanvas(ctx, canvas, visibleFloor);
 
   if (transition) {
-    drawFloorScene(ctx, canvas, sceneForFloor(transition.fromFloor, 1 - progress, false));
-    drawFloorScene(ctx, canvas, sceneForFloor(transition.toFloor, progress, true));
+    drawFloorScene(ctx, canvas, sceneForFloor(transition.fromFloor, 1 - progress, false, now));
+    drawFloorScene(ctx, canvas, sceneForFloor(transition.toFloor, progress, true, now));
     drawTransitionWash(ctx, canvas, progress);
-    drawMinimap(ctx, canvas, {
-      floorId: transition.toFloor,
-      rooms: getRoomsForFloor(transition.toFloor),
-      player: state.player,
-      selectedRoomId: state.selectedRoomId,
-    });
+    renderMiniMap(transition.toFloor);
     return;
   }
 
-  drawFloorScene(ctx, canvas, sceneForFloor(state.activeFloor, 1, true));
-  drawMinimap(ctx, canvas, {
-    floorId: state.activeFloor,
-    rooms: getRoomsForFloor(state.activeFloor),
-    player: state.player,
-    selectedRoomId: state.selectedRoomId,
-  });
+  drawFloorScene(ctx, canvas, sceneForFloor(state.activeFloor, 1, true, now));
+  renderMiniMap(state.activeFloor);
   updateRoomReadout();
 }
 
-function sceneForFloor(floorId, alpha, drawPlayer) {
+function renderMiniMap(floorId) {
+  miniMapCtx.clearRect(0, 0, miniMapCanvas.width, miniMapCanvas.height);
+  drawMinimap(miniMapCtx, miniMapCanvas, {
+    floorId,
+    rooms: getRoomsForFloor(floorId),
+    player: state.player,
+    selectedRoomId: state.selectedRoomId,
+  });
+}
+
+function sceneForFloor(floorId, alpha, drawPlayer, now) {
   return {
     alpha,
     camera: state.camera,
     doors: state.geometry.doors,
     drawPlayer,
     floorId,
+    now,
+    patients: getPatientsForFloor(floorId),
     player: state.player,
     props: getPropsForFloor(floorId),
     rooms: getRoomsForFloor(floorId),
+    selectedEntityId: state.selectedEntityId,
+    staff: getStaffForFloor(floorId),
     walls: state.geometry.walls,
   };
-}
-
-function setZoom(nextZoom) {
-  const zoom = clamp(nextZoom, minZoom(), MAX_ZOOM);
-  state.camera.zoom = Number(zoom.toFixed(3));
-  state.cameraControl.flight = null;
-  state.cameraControl.mode = state.cameraControl.mode === "follow" ? "follow" : "free";
-  clampCamera(state.camera);
-  updateZoomControls();
 }
 
 function fitWholeFloor() {
@@ -253,14 +216,19 @@ function syncHud(previewFloor = state.activeFloor) {
 }
 
 function updateRoomReadout() {
+  const selectedRoom = ROOMS.find((item) => item.id === state.selectedRoomId);
   if (state.cameraControl.mode === "fit") {
     const transitionSuffix = state.transition ? " · switching floors" : "";
+    if (selectedRoom) {
+      const prefix = state.playerTravel ? "Moving player to" : "Player target";
+      roomReadout.textContent = `${prefix}: ${selectedRoom.label}${transitionSuffix}`;
+      return;
+    }
     roomReadout.textContent = `Current view: Full floor${transitionSuffix}`;
     return;
   }
 
   const room = roomAtPoint(ROOMS, state.player);
-  const selectedRoom = ROOMS.find((item) => item.id === state.selectedRoomId);
   const prefix = selectedRoom ? "Focused area" : "Current area";
   const area = selectedRoom ? selectedRoom.label : room ? room.label : "Hallway";
   const transitionSuffix = state.transition ? " · switching floors" : "";
@@ -271,36 +239,15 @@ function isMovementKey(code) {
   return ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "KeyW", "KeyA", "KeyS", "KeyD"].includes(code);
 }
 
-function updateCameraControl(now) {
-  if (state.transition || state.cameraControl.drag) return;
+function updateCameraControl() {
+  if (state.transition) return;
 
-  if (state.cameraControl.mode === "fit") {
-    applyFitView();
-    return;
-  }
-
-  const flight = state.cameraControl.flight;
-  if (flight) {
-    const progress = Math.min(1, (now - flight.startedAt) / flight.duration);
-    const eased = easeInOutCubic(progress);
-    state.camera.x = lerp(flight.fromX, flight.toX, eased);
-    state.camera.y = lerp(flight.fromY, flight.toY, eased);
-    clampCamera(state.camera);
-    if (progress >= 1) {
-      state.cameraControl.flight = null;
-      state.cameraControl.mode = "free";
-    }
-    return;
-  }
-
-  if (state.cameraControl.mode === "follow") {
-    updateCamera(state.camera, state.player);
-    clampCamera(state.camera);
-  }
+  state.cameraControl.mode = "fit";
+  applyFitView();
 }
 
-function handleMinimapClick(point) {
-  const hit = minimapPointToWorld(canvas, point);
+function handleMinimapClick(point, targetCanvas) {
+  const hit = minimapPointToWorld(targetCanvas, point);
   if (!hit?.world) return;
 
   const targetRoom = roomAtWorldPoint(state.activeFloor, hit.world.x, hit.world.y);
@@ -308,16 +255,161 @@ function handleMinimapClick(point) {
 
   const target = roomCenter(targetRoom);
   state.selectedRoomId = targetRoom.id;
-  state.cameraControl.mode = "flight";
-  state.cameraControl.flight = {
-    fromX: state.camera.x,
-    fromY: state.camera.y,
-    toX: clampCameraValue(target.x, "x"),
-    toY: clampCameraValue(target.y, "y"),
-    startedAt: performance.now(),
-    duration: 720,
+  state.keys.clear();
+  state.playerTravel = {
+    roomId: targetRoom.id,
+    targetX: target.x,
+    targetY: target.y,
+    speed: 260,
   };
+  state.cameraControl.mode = "fit";
+  state.cameraControl.flight = null;
   updateRoomReadout();
+}
+
+function handleCanvasClick(point) {
+  const hitEntity = entityAtCanvasPoint(point);
+  if (!hitEntity) {
+    clearPersonSelection();
+    return;
+  }
+
+  state.selectedEntityId = hitEntity.id;
+  state.selectedRoomId = null;
+  renderPersonLoading(hitEntity);
+  const requestId = ++profileRequestId;
+  fetchPersonProfile(hitEntity.id).then((profile) => {
+    if (requestId !== profileRequestId) return;
+    renderPersonProfile(profile, hitEntity);
+  });
+}
+
+function entityAtCanvasPoint(point) {
+  const world = worldPointFromCanvas(point);
+  const entities = [
+    ...getStaffForFloor(state.activeFloor).map((entity) => ({ ...entity, entityType: entity.role })),
+    ...clickablePatientsForFloor(state.activeFloor),
+  ];
+
+  return entities
+    .map((entity) => ({ entity, score: entityHitScore(entity, world) }))
+    .filter((hit) => hit.score <= 1)
+    .sort((a, b) => a.score - b.score)[0]?.entity || null;
+}
+
+function entityHitScore(entity, world) {
+  const shape = entity.hitShape || (entity.form === "bed"
+    ? { rx: 36, ry: 18 }
+    : entity.form === "waiting"
+      ? { rx: 26, ry: 24 }
+      : { rx: 24, ry: 28 });
+  const dx = world.x - entity.x;
+  const dy = world.y - entity.y;
+  return (dx / shape.rx) ** 2 + (dy / shape.ry) ** 2;
+}
+
+function clickablePatientsForFloor(floorId) {
+  return getPatientsForFloor(floorId).flatMap((patient) => {
+    if (patient.form !== "consultation") return [{ ...patient, entityType: "patient" }];
+    return [
+      {
+        ...patient,
+        entityType: "patient",
+        x: patient.x - 24,
+        y: patient.y + 8,
+        hitShape: { rx: 18, ry: 24 },
+      },
+      {
+        id: patient.doctorProfileId,
+        floor: patient.floor,
+        entityType: "doctor",
+        x: patient.x + 26,
+        y: patient.y + 8,
+        hitShape: { rx: 18, ry: 24 },
+      },
+    ];
+  });
+}
+
+function worldPointFromCanvas(point) {
+  const zoom = state.camera.zoom || 1;
+  return {
+    x: (point.x - canvas.width / 2) / zoom + state.camera.x,
+    y: (point.y - canvas.height / 2) / zoom + state.camera.y,
+  };
+}
+
+function clearPersonSelection() {
+  state.selectedEntityId = null;
+  profileRequestId += 1;
+  personInfo.className = "person-info person-info--empty";
+  personInfo.textContent = "Click a doctor, nurse, or patient.";
+}
+
+function renderPersonLoading(entity) {
+  personInfo.className = "person-info person-info--empty";
+  personInfo.textContent = `Loading ${roleLabel(entity.entityType)} info...`;
+}
+
+function renderPersonProfile(profile, entity) {
+  if (!profile) {
+    personInfo.className = "person-info person-info--empty";
+    personInfo.textContent = "No mock profile found.";
+    return;
+  }
+
+  personInfo.className = "person-info";
+  const rows = [
+    infoRow("Role", roleLabel(profile.type)),
+    infoRow("Department", profile.department),
+    infoRow("Name", profile.name),
+  ];
+  if (profile.type === "patient") {
+    rows.splice(1, 0, infoRow("Patient ID", profile.patientId));
+    rows.push(infoRow("Symptoms", profile.symptoms));
+  } else {
+    rows.splice(1, 0, infoRow("Employee ID", profile.employeeId));
+  }
+  personInfo.innerHTML = rows.join("");
+}
+
+function infoRow(label, value) {
+  return `
+    <div class="person-info__row">
+      <span class="person-info__label">${label}</span>
+      <span class="person-info__value">${value}</span>
+    </div>
+  `;
+}
+
+function roleLabel(type) {
+  return {
+    doctor: "Doctor",
+    nurse: "Nurse",
+    patient: "Patient",
+  }[type] || "Person";
+}
+
+function updatePlayerTravel(delta) {
+  const travel = state.playerTravel;
+  if (!travel) return;
+
+  const dx = travel.targetX - state.player.x;
+  const dy = travel.targetY - state.player.y;
+  const distanceToTarget = Math.hypot(dx, dy);
+  if (distanceToTarget < 4) {
+    state.player.x = travel.targetX;
+    state.player.y = travel.targetY;
+    state.playerTravel = null;
+    updateRoomReadout();
+    return;
+  }
+
+  const step = Math.min(distanceToTarget, travel.speed * delta);
+  state.player.x += (dx / distanceToTarget) * step;
+  state.player.y += (dy / distanceToTarget) * step;
+  if (Math.abs(dx) > Math.abs(dy)) state.player.facing = dx < 0 ? "left" : "right";
+  else state.player.facing = dy < 0 ? "up" : "down";
 }
 
 function roomAtWorldPoint(floorId, x, y) {
@@ -337,29 +429,21 @@ function roomCenter(room) {
   };
 }
 
-function canvasPoint(event) {
-  const rect = canvas.getBoundingClientRect();
+function canvasPoint(event, targetCanvas = canvas) {
+  const rect = targetCanvas.getBoundingClientRect();
   return {
-    x: ((event.clientX - rect.left) / rect.width) * canvas.width,
-    y: ((event.clientY - rect.top) / rect.height) * canvas.height,
+    x: ((event.clientX - rect.left) / rect.width) * targetCanvas.width,
+    y: ((event.clientY - rect.top) / rect.height) * targetCanvas.height,
   };
 }
 
-function finishDrag(pointerId) {
-  const drag = state.cameraControl.drag;
-  if (!drag || drag.pointerId !== pointerId) return;
-  state.cameraControl.drag = null;
-  canvas.classList.remove("is-dragging");
-  if (canvas.hasPointerCapture(pointerId)) canvas.releasePointerCapture(pointerId);
-}
-
-function resetCameraControl(mode = "follow") {
+function resetCameraControl() {
   state.selectedRoomId = null;
-  state.cameraControl.mode = mode;
+  state.selectedEntityId = null;
+  state.cameraControl.mode = "fit";
   state.cameraControl.flight = null;
-  state.cameraControl.drag = null;
-  state.cameraControl.minimapPress = null;
-  canvas.classList.remove("is-dragging");
+  state.playerTravel = null;
+  clearPersonSelection();
 }
 
 function applyFitView() {
@@ -399,21 +483,9 @@ function floorPlateCenter() {
 function updateZoomControls() {
   const zoom = state.camera.zoom || 1;
   zoomLabel.textContent = `${Math.round(zoom * 100)}%`;
-  zoomOutButton.disabled = zoom <= minZoom() + 0.001;
-  zoomInButton.disabled = zoom >= MAX_ZOOM - 0.001;
-  zoomFitButton.classList.toggle("is-active", state.cameraControl.mode === "fit");
-}
-
-function distance(a, b) {
-  return Math.hypot(a.x - b.x, a.y - b.y);
-}
-
-function easeInOutCubic(t) {
-  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
-}
-
-function lerp(a, b, t) {
-  return a + (b - a) * t;
+  zoomOutButton.disabled = true;
+  zoomInButton.disabled = true;
+  zoomFitButton.classList.add("is-active");
 }
 
 function clamp(value, min, max) {
