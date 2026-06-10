@@ -1,5 +1,5 @@
-import { DEPARTMENT_STATUS, FLOOR_PLATE, ROOM_KIND_LABELS, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610n";
-import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610n";
+import { DEPARTMENT_STATUS, FLOOR_PLATE, TILE, WORLD } from "./map.js?v=fit-minimap-player-20260610t";
+import { WALL_THICKNESS } from "./runtime.js?v=fit-minimap-player-20260610t";
 
 const MINIMAP = {
   x: 18,
@@ -556,7 +556,7 @@ function patientScale(camera) {
 }
 
 function drawRoomLabel(ctx, camera, room) {
-  const label = ROOM_KIND_LABELS[room.kind] || room.label;
+  const label = room.label;
   const x = room.x * TILE + room.w * TILE / 2;
   const y = room.y * TILE + 26;
   const p = project(camera, x, y);

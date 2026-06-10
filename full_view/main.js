@@ -1,7 +1,8 @@
-import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610n";
-import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610n";
-import { getPatientsForFloor } from "./patients.js?v=fit-minimap-player-20260610n";
-import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610n";
+import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610t";
+import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610t";
+import { createRoomPath } from "./pathfinding.js?v=fit-minimap-player-20260610t";
+import { PATIENTS } from "./patients.js?v=fit-minimap-player-20260610t";
+import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610t";
 import {
   beginFloorTransition,
   buildGeometry,
@@ -11,7 +12,7 @@ import {
   roomAtPoint,
   updateFloorTransition,
   updatePlayer,
-} from "./runtime.js?v=fit-minimap-player-20260610n";
+} from "./runtime.js?v=fit-minimap-player-20260610t";
 import {
   clearCanvas,
   departmentLabels,
@@ -20,7 +21,7 @@ import {
   drawTransitionWash,
   minimapPointToWorld,
   renderStatusRows,
-} from "./render.js?v=fit-minimap-player-20260610n";
+} from "./render.js?v=fit-minimap-player-20260610t";
 
 const canvas = document.getElementById("hospitalCanvas");
 const ctx = canvas.getContext("2d");
@@ -31,12 +32,15 @@ const floorSubtitle = document.getElementById("floorSubtitle");
 const roomReadout = document.getElementById("roomReadout");
 const departmentSnapshot = document.getElementById("departmentSnapshot");
 const personInfo = document.getElementById("personInfo");
+const roomInfo = document.getElementById("roomInfo");
 const floorButtons = Array.from(document.querySelectorAll("[data-floor]"));
 const zoomInButton = document.getElementById("zoomIn");
 const zoomOutButton = document.getElementById("zoomOut");
 const zoomFitButton = document.getElementById("zoomFit");
 const zoomLabel = document.getElementById("zoomLabel");
 const labels = departmentLabels();
+const PERSON_SPACING = 44;
+const SLOT_CLEARANCE = 15;
 
 const geometry = buildGeometry();
 const propColliders = buildPropColliders(PROPS);
@@ -51,9 +55,13 @@ const state = {
   },
   geometry,
   keys: new Set(),
+  patients: PATIENTS.map((patient) => ({ ...patient, baseForm: patient.form })),
+  patientMoves: new Map(),
   player,
   playerTravel: null,
   selectedEntityId: null,
+  selectedInfoRoomId: null,
+  moveDraft: null,
   selectedRoomId: null,
   transition: null,
 };
@@ -117,6 +125,14 @@ miniMapCanvas.addEventListener("click", (event) => {
   handleMinimapClick(canvasPoint(event, miniMapCanvas), miniMapCanvas);
 });
 
+personInfo.addEventListener("click", (event) => {
+  const action = event.target?.dataset?.action;
+  if (action === "show-move") showMoveControls(event.target.dataset.patientId);
+  if (action === "move-floor") selectMoveFloor(Number(event.target.dataset.floor));
+  if (action === "move-room") selectMoveRoom(Number(event.target.dataset.roomIndex));
+  if (action === "start-move") startSelectedPatientMove();
+});
+
 function loop(now) {
   const delta = Math.min(0.033, (now - lastFrame) / 1000);
   lastFrame = now;
@@ -133,6 +149,7 @@ function loop(now) {
     movementLocked: Boolean(state.transition) || Boolean(state.playerTravel),
   });
   updatePlayerTravel(delta);
+  updatePatientMoves(delta);
   updateCameraControl(now);
 
   render(transition, transitionProgress, now);
@@ -178,7 +195,7 @@ function sceneForFloor(floorId, alpha, drawPlayer, now) {
     drawPlayer,
     floorId,
     now,
-    patients: getPatientsForFloor(floorId),
+    patients: patientsForFloor(floorId),
     player: state.player,
     props: getPropsForFloor(floorId),
     rooms: getRoomsForFloor(floorId),
@@ -220,7 +237,8 @@ function updateRoomReadout() {
   if (state.cameraControl.mode === "fit") {
     const transitionSuffix = state.transition ? " · switching floors" : "";
     if (selectedRoom) {
-      const prefix = state.playerTravel ? "Moving player to" : "Player target";
+      const hasPatientMove = Array.from(state.patientMoves.values()).some((move) => move.targetRoomId === selectedRoom.id);
+      const prefix = state.playerTravel ? "Moving player to" : hasPatientMove ? "Moving patient to" : "Target room";
       roomReadout.textContent = `${prefix}: ${selectedRoom.label}${transitionSuffix}`;
       return;
     }
@@ -253,13 +271,23 @@ function handleMinimapClick(point, targetCanvas) {
   const targetRoom = roomAtWorldPoint(state.activeFloor, hit.world.x, hit.world.y);
   if (!targetRoom) return;
 
-  const target = roomCenter(targetRoom);
+  const path = createRoomPath({
+    floorId: state.activeFloor,
+    start: { x: state.player.x, y: state.player.y },
+    targetRoom,
+    collisions: [...state.geometry.walls, ...propColliders],
+  });
+  if (!path) {
+    roomReadout.textContent = `No route to: ${targetRoom.label}`;
+    return;
+  }
+
   state.selectedRoomId = targetRoom.id;
   state.keys.clear();
   state.playerTravel = {
     roomId: targetRoom.id,
-    targetX: target.x,
-    targetY: target.y,
+    waypointIndex: 0,
+    waypoints: path,
     speed: 260,
   };
   state.cameraControl.mode = "fit";
@@ -269,19 +297,74 @@ function handleMinimapClick(point, targetCanvas) {
 
 function handleCanvasClick(point) {
   const hitEntity = entityAtCanvasPoint(point);
-  if (!hitEntity) {
-    clearPersonSelection();
+  if (hitEntity) {
+    clearRoomSelection();
+    state.selectedEntityId = hitEntity.id;
+    state.selectedRoomId = null;
+    renderPersonLoading(hitEntity);
+    const requestId = ++profileRequestId;
+    fetchPersonProfile(hitEntity.id).then((profile) => {
+      if (requestId !== profileRequestId) return;
+      renderPersonProfile(profile, hitEntity);
+    });
     return;
   }
 
-  state.selectedEntityId = hitEntity.id;
+  const world = worldPointFromCanvas(point);
+  const hitRoom = roomAtWorldPoint(state.activeFloor, world.x, world.y);
+  if (hitRoom) {
+    clearPersonSelection();
+    state.selectedInfoRoomId = hitRoom.id;
+    renderRoomInfo(hitRoom);
+    return;
+  }
+
+  clearPersonSelection();
+  clearRoomSelection();
+}
+
+function renderRoomInfo(room) {
   state.selectedRoomId = null;
-  renderPersonLoading(hitEntity);
-  const requestId = ++profileRequestId;
-  fetchPersonProfile(hitEntity.id).then((profile) => {
-    if (requestId !== profileRequestId) return;
-    renderPersonProfile(profile, hitEntity);
-  });
+  roomInfo.className = "room-info";
+  roomInfo.innerHTML = [
+    roomInfoRow("Room", room.label),
+    roomInfoRow("Room ID", room.roomCode),
+    roomInfoRow("Patients", String(patientCountInRoom(room))),
+  ].join("");
+}
+
+function clearRoomSelection() {
+  state.selectedInfoRoomId = null;
+  roomInfo.className = "room-info room-info--empty";
+  roomInfo.textContent = "Click a room.";
+}
+
+function roomInfoRow(label, value) {
+  return `
+    <div class="room-info__row">
+      <span class="room-info__label">${label}</span>
+      <span class="room-info__value">${value}</span>
+    </div>
+  `;
+}
+
+function patientCountInRoom(room) {
+  return clickablePatientsForFloor(room.floor).filter((patient) => {
+    if (patient.entityType !== "patient") return false;
+    return pointInsideRoom(patient, room);
+  }).length;
+}
+
+function patientsForFloor(floorId) {
+  return state.patients.filter((patient) => patient.floor === floorId);
+}
+
+function pointInsideRoom(point, room) {
+  const rx = room.x * TILE;
+  const ry = room.y * TILE;
+  const rw = room.w * TILE;
+  const rh = room.h * TILE;
+  return point.x >= rx && point.x <= rx + rw && point.y >= ry && point.y <= ry + rh;
 }
 
 function entityAtCanvasPoint(point) {
@@ -309,7 +392,7 @@ function entityHitScore(entity, world) {
 }
 
 function clickablePatientsForFloor(floorId) {
-  return getPatientsForFloor(floorId).flatMap((patient) => {
+  return patientsForFloor(floorId).flatMap((patient) => {
     if (patient.form !== "consultation") return [{ ...patient, entityType: "patient" }];
     return [
       {
@@ -328,6 +411,300 @@ function clickablePatientsForFloor(floorId) {
         hitShape: { rx: 18, ry: 24 },
       },
     ];
+  });
+}
+
+function showMoveControls(patientId) {
+  const patient = findPatient(patientId);
+  const controls = document.getElementById("moveControls");
+  if (!patient || !controls) return;
+
+  state.moveDraft = {
+    patientId,
+    floor: patient.floor,
+    roomIndex: 0,
+  };
+  controls.hidden = false;
+  renderMoveControls();
+}
+
+function renderMoveControls() {
+  const controls = document.getElementById("moveControls");
+  if (!controls || !state.moveDraft) return;
+
+  const rooms = getRoomsForFloor(state.moveDraft.floor);
+  state.moveDraft.roomIndex = clamp(Math.round(state.moveDraft.roomIndex), 0, Math.max(0, rooms.length - 1));
+  const selectedRoom = rooms[state.moveDraft.roomIndex];
+
+  controls.innerHTML = `
+    <div class="move-controls__group">
+      <div class="move-controls__label">Floor <strong>${state.moveDraft.floor}F</strong></div>
+      <div class="move-tabs move-tabs--floor">
+        ${[1, 2, 3, 4, 5].map((floor) => moveTab({
+          action: "move-floor",
+          active: floor === state.moveDraft.floor,
+          attrs: `data-floor="${floor}"`,
+          label: `${floor}F`,
+        })).join("")}
+      </div>
+    </div>
+    <div class="move-controls__group">
+      <div class="move-controls__label">Room <strong>${selectedRoom?.label || "None"}</strong></div>
+      <div class="move-tabs move-tabs--rooms">
+        ${rooms.map((room, index) => moveTab({
+          action: "move-room",
+          active: index === state.moveDraft.roomIndex,
+          attrs: `data-room-index="${index}"`,
+          label: `${room.roomCode} ${room.label}`,
+        })).join("")}
+      </div>
+    </div>
+    <button class="move-controls__start" type="button" data-action="start-move">Start move</button>
+  `;
+}
+
+function moveTab({ action, active, attrs, label }) {
+  return `
+    <button class="move-tabs__btn${active ? " is-active" : ""}" type="button" data-action="${action}" ${attrs}>
+      ${label}
+    </button>
+  `;
+}
+
+function selectMoveFloor(floor) {
+  if (!state.moveDraft || !Number.isFinite(floor)) return;
+  state.moveDraft.floor = floor;
+  state.moveDraft.roomIndex = 0;
+  renderMoveControls();
+}
+
+function selectMoveRoom(roomIndex) {
+  if (!state.moveDraft) return;
+  state.moveDraft.roomIndex = roomIndex;
+  renderMoveControls();
+}
+
+function startSelectedPatientMove() {
+  if (!state.moveDraft) return;
+  const patient = findPatient(state.moveDraft.patientId);
+  const rooms = getRoomsForFloor(state.moveDraft.floor);
+  const targetRoom = rooms[state.moveDraft.roomIndex];
+  if (!patient || !targetRoom) return;
+
+  const route = createPatientRoute(patient, targetRoom);
+  if (!route) {
+    const controls = document.getElementById("moveControls");
+    if (controls) controls.insertAdjacentHTML("beforeend", `<div class="move-controls__error">No route found.</div>`);
+    return;
+  }
+
+  patient.form = "walking";
+  patient.movePhase = 0;
+  state.patientMoves.set(patient.id, route);
+  state.selectedEntityId = patient.id;
+  state.selectedRoomId = targetRoom.id;
+  updateRoomReadout();
+}
+
+function createPatientRoute(patient, targetRoom) {
+  const collisions = [...state.geometry.walls, ...propColliders];
+  const destination = findAvailableRoomSpot(targetRoom, patient.id, collisions);
+  if (!destination) return null;
+
+  if (patient.floor === targetRoom.floor) {
+    const path = createRoomPath({
+      floorId: patient.floor,
+      start: { x: patient.x, y: patient.y },
+      targetRoom,
+      targetPoint: destination,
+      collisions,
+    });
+    if (!path) return null;
+    return {
+      destination,
+      targetRoomId: targetRoom.id,
+      speed: 170,
+      segmentIndex: 0,
+      waypointIndex: 0,
+      segments: [{ type: "path", floor: patient.floor, waypoints: path }],
+    };
+  }
+
+  const currentElevator = roomById(`elevator_${patient.floor}`);
+  const targetElevator = roomById(`elevator_${targetRoom.floor}`);
+  if (!currentElevator || !targetElevator) return null;
+
+  const pathToElevator = createRoomPath({
+    floorId: patient.floor,
+    start: { x: patient.x, y: patient.y },
+    targetRoom: currentElevator,
+    collisions,
+  });
+  const pathFromElevator = createRoomPath({
+    floorId: targetRoom.floor,
+    start: roomCenter(targetElevator),
+    targetRoom,
+    targetPoint: destination,
+    collisions,
+  });
+  if (!pathToElevator || !pathFromElevator) return null;
+
+  return {
+    destination,
+    targetRoomId: targetRoom.id,
+    speed: 170,
+    segmentIndex: 0,
+    waypointIndex: 0,
+    segments: [
+      { type: "path", floor: patient.floor, waypoints: pathToElevator },
+      { type: "floor-switch", floor: targetRoom.floor, position: roomCenter(targetElevator) },
+      { type: "path", floor: targetRoom.floor, waypoints: pathFromElevator },
+    ],
+  };
+}
+
+function updatePatientMoves(delta) {
+  state.patientMoves.forEach((move, patientId) => {
+    const patient = findPatient(patientId);
+    if (!patient) {
+      state.patientMoves.delete(patientId);
+      return;
+    }
+
+    const segment = move.segments[move.segmentIndex];
+    if (!segment) {
+      finishPatientMove(patient, move);
+      return;
+    }
+
+    if (segment.type === "floor-switch") {
+      patient.floor = segment.floor;
+      patient.x = segment.position.x;
+      patient.y = segment.position.y;
+      move.segmentIndex += 1;
+      move.waypointIndex = 0;
+      return;
+    }
+
+    movePatientAlongSegment(patient, move, segment, delta);
+  });
+}
+
+function movePatientAlongSegment(patient, move, segment, delta) {
+  const target = segment.waypoints[move.waypointIndex];
+  if (!target) {
+    move.segmentIndex += 1;
+    move.waypointIndex = 0;
+    return;
+  }
+
+  patient.floor = segment.floor;
+  const dx = target.x - patient.x;
+  const dy = target.y - patient.y;
+  const distanceToTarget = Math.hypot(dx, dy);
+  if (distanceToTarget < 4) {
+    patient.x = target.x;
+    patient.y = target.y;
+    move.waypointIndex += 1;
+    return;
+  }
+
+  const step = Math.min(distanceToTarget, move.speed * delta);
+  patient.x += (dx / distanceToTarget) * step;
+  patient.y += (dy / distanceToTarget) * step;
+  patient.movePhase = (patient.movePhase || 0) + delta * 8;
+}
+
+function finishPatientMove(patient, move) {
+  state.patientMoves.delete(patient.id);
+  const targetRoom = roomById(move.targetRoomId);
+  if (targetRoom) {
+    patient.floor = targetRoom.floor;
+    patient.x = move.destination.x;
+    patient.y = move.destination.y;
+    patient.form = targetRoom.kind === "waiting" ? "waiting" : "walking";
+  }
+  patient.movePhase = 0;
+  if (state.selectedEntityId === patient.id && targetRoom) renderRoomInfo(targetRoom);
+}
+
+function findPatient(patientId) {
+  return state.patients.find((patient) => patient.id === patientId) || null;
+}
+
+function roomById(roomId) {
+  return ROOMS.find((room) => room.id === roomId) || null;
+}
+
+function roomCenter(room) {
+  return {
+    x: (room.x + room.w / 2) * TILE,
+    y: (room.y + room.h / 2) * TILE,
+  };
+}
+
+function findAvailableRoomSpot(room, movingPatientId, collisions) {
+  const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
+  const center = roomCenter(room);
+  const candidates = [];
+  const minX = (room.x + 1.25) * TILE;
+  const maxX = (room.x + room.w - 1.25) * TILE;
+  const minY = (room.y + 1.8) * TILE;
+  const maxY = (room.y + room.h - 1.25) * TILE;
+
+  for (let y = minY; y <= maxY; y += TILE) {
+    for (let x = minX; x <= maxX; x += TILE) {
+      const point = { x, y };
+      if (!pointInsideRoom(point, room)) continue;
+      if (!spotClearOfObstacles(point, room.floor, collisions)) continue;
+      const nearestPerson = nearestPersonDistance(point, occupied);
+      if (nearestPerson < PERSON_SPACING) continue;
+      candidates.push({
+        point,
+        score: Math.hypot(point.x - center.x, point.y - center.y) - Math.min(nearestPerson, PERSON_SPACING * 3) * 0.18,
+      });
+    }
+  }
+
+  if (!candidates.length) return null;
+  candidates.sort((a, b) => a.score - b.score);
+  return candidates[0].point;
+}
+
+function occupiedPeopleForFloor(floorId, movingPatientId) {
+  const patients = state.patients
+    .filter((patient) => patient.floor === floorId && patient.id !== movingPatientId)
+    .flatMap((patient) => patientOccupancyPoints(patient));
+  const staff = getStaffForFloor(floorId).map((member) => ({ x: member.x, y: member.y }));
+  const reserved = Array.from(state.patientMoves.entries())
+    .filter(([patientId, move]) => patientId !== movingPatientId && roomById(move.targetRoomId)?.floor === floorId)
+    .map(([, move]) => move.destination)
+    .filter(Boolean);
+  return [...patients, ...staff, ...reserved];
+}
+
+function patientOccupancyPoints(patient) {
+  if (patient.form === "consultation") {
+    return [
+      { x: patient.x - 24, y: patient.y + 8 },
+      { x: patient.x + 26, y: patient.y + 8 },
+    ];
+  }
+  return [{ x: patient.x, y: patient.y }];
+}
+
+function nearestPersonDistance(point, occupied) {
+  if (!occupied.length) return Infinity;
+  return Math.min(...occupied.map((person) => Math.hypot(point.x - person.x, point.y - person.y)));
+}
+
+function spotClearOfObstacles(point, floorId, collisions) {
+  return !collisions.some((rect) => {
+    if (rect.floor !== floorId) return false;
+    return point.x >= rect.x - SLOT_CLEARANCE &&
+      point.x <= rect.x + rect.w + SLOT_CLEARANCE &&
+      point.y >= rect.y - SLOT_CLEARANCE &&
+      point.y <= rect.y + rect.h + SLOT_CLEARANCE;
   });
 }
 
@@ -367,6 +744,7 @@ function renderPersonProfile(profile, entity) {
   if (profile.type === "patient") {
     rows.splice(1, 0, infoRow("Patient ID", profile.patientId));
     rows.push(infoRow("Symptoms", profile.symptoms));
+    rows.push(moveActionRow(entity.id));
   } else {
     rows.splice(1, 0, infoRow("Employee ID", profile.employeeId));
   }
@@ -382,6 +760,15 @@ function infoRow(label, value) {
   `;
 }
 
+function moveActionRow(patientId) {
+  return `
+    <button class="person-info__move" type="button" data-action="show-move" data-patient-id="${patientId}">
+      Move
+    </button>
+    <div id="moveControls" class="move-controls" hidden></div>
+  `;
+}
+
 function roleLabel(type) {
   return {
     doctor: "Doctor",
@@ -394,14 +781,24 @@ function updatePlayerTravel(delta) {
   const travel = state.playerTravel;
   if (!travel) return;
 
-  const dx = travel.targetX - state.player.x;
-  const dy = travel.targetY - state.player.y;
-  const distanceToTarget = Math.hypot(dx, dy);
-  if (distanceToTarget < 4) {
-    state.player.x = travel.targetX;
-    state.player.y = travel.targetY;
+  const target = travel.waypoints[travel.waypointIndex];
+  if (!target) {
     state.playerTravel = null;
     updateRoomReadout();
+    return;
+  }
+
+  const dx = target.x - state.player.x;
+  const dy = target.y - state.player.y;
+  const distanceToTarget = Math.hypot(dx, dy);
+  if (distanceToTarget < 4) {
+    state.player.x = target.x;
+    state.player.y = target.y;
+    travel.waypointIndex += 1;
+    if (travel.waypointIndex >= travel.waypoints.length) {
+      state.playerTravel = null;
+      updateRoomReadout();
+    }
     return;
   }
 
@@ -422,13 +819,6 @@ function roomAtWorldPoint(floorId, x, y) {
   }) || null;
 }
 
-function roomCenter(room) {
-  return {
-    x: (room.x + room.w / 2) * TILE,
-    y: (room.y + room.h / 2) * TILE,
-  };
-}
-
 function canvasPoint(event, targetCanvas = canvas) {
   const rect = targetCanvas.getBoundingClientRect();
   return {
@@ -440,10 +830,12 @@ function canvasPoint(event, targetCanvas = canvas) {
 function resetCameraControl() {
   state.selectedRoomId = null;
   state.selectedEntityId = null;
+  state.selectedInfoRoomId = null;
   state.cameraControl.mode = "fit";
   state.cameraControl.flight = null;
   state.playerTravel = null;
   clearPersonSelection();
+  clearRoomSelection();
 }
 
 function applyFitView() {

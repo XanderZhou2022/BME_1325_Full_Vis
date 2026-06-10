@@ -12,7 +12,7 @@ const departmentMaps = [emergency, outpatient, icu, mdt, ward];
 
 export { DEPARTMENT_STATUS, FLOOR_PLATE, FLOORS, ROOM_KIND_LABELS, TILE, WORLD };
 
-export const ROOMS = departmentMaps.flatMap((department) => department.rooms);
+export const ROOMS = assignRoomCodes(departmentMaps.flatMap((department) => department.rooms));
 export const DOORS = departmentMaps.flatMap((department) => department.doors);
 export const PROPS = departmentMaps.flatMap((department) => department.props);
 
@@ -26,4 +26,16 @@ export function getRoomsForFloor(floorId) {
 
 export function getPropsForFloor(floorId) {
   return PROPS.filter((item) => item.floor === floorId);
+}
+
+function assignRoomCodes(rooms) {
+  const floorCounts = new Map();
+  return rooms.map((room) => {
+    const next = (floorCounts.get(room.floor) || 0) + 1;
+    floorCounts.set(room.floor, next);
+    return {
+      ...room,
+      roomCode: `${room.floor}F-Room${next}`,
+    };
+  });
 }

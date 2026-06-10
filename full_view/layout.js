@@ -29,7 +29,7 @@ export function room(floor, id, kind, label, x, y, w, h, accent) {
 }
 
 export function elevatorRoom(floor) {
-  return room(floor, `elevator_${floor}`, "elevator", "Elevator", ELEVATOR.x, ELEVATOR.y, ELEVATOR.w, ELEVATOR.h, "#d7b07b");
+  return room(floor, `elevator_${floor}`, "elevator", `${floor}F Elevator`, ELEVATOR.x, ELEVATOR.y, ELEVATOR.w, ELEVATOR.h, "#d7b07b");
 }
 
 export function door(roomId, side, offset, length) {

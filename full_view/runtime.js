@@ -1,4 +1,4 @@
-import { DOORS, FLOOR_PLATE, ROOMS, TILE } from "./map.js?v=fit-minimap-player-20260610n";
+import { DOORS, FLOOR_PLATE, ROOMS, TILE } from "./map.js?v=fit-minimap-player-20260610t";
 
 export const WALL_THICKNESS = 14;
 export const PLAYER_RADIUS = 7;

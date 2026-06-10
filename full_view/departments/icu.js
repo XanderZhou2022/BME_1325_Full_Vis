@@ -2,11 +2,11 @@ import { door, elevatorProp, elevatorRoom, prop, room } from "../layout.js";
 
 export const rooms = [
   room(3, "icu_station", "icu_station", "ICU Nurse Station", 6, 6, 18, 11, "#d46d8e"),
-  room(3, "icu_beds_a", "icu", "ICU Beds A", 27, 6, 18, 11, "#db7895"),
-  room(3, "icu_beds_b", "icu", "ICU Beds B", 48, 6, 18, 11, "#db7895"),
+  room(3, "icu_beds_a", "icu", "ICU Beds1", 27, 6, 18, 11, "#db7895"),
+  room(3, "icu_beds_b", "icu", "ICU Beds2", 48, 6, 18, 11, "#db7895"),
   room(3, "monitor_center", "monitor", "Monitoring Center", 6, 21, 18, 11, "#79bcc8"),
   room(3, "icu_support", "waiting", "Family Support", 27, 21, 18, 11, "#e7d1a1"),
-  room(3, "icu_isolation", "icu", "Isolation Beds", 48, 21, 18, 11, "#cf6f8c"),
+  room(3, "icu_isolation", "icu", "ICU Isolation Beds", 48, 21, 18, 11, "#cf6f8c"),
   elevatorRoom(3),
 ];
 
