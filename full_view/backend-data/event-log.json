@@ -1,5 +1,5 @@
 {
-  "lastSeq": 4,
+  "lastSeq": 6,
   "events": [
     {
       "eventSeq": 1,
@@ -101,6 +101,68 @@
           "elevator_1",
           "elevator_5"
         ],
+        "finalForm": "bed",
+        "patientFormDuringMove": "wheelchair"
+      }
+    },
+    {
+      "eventSeq": 5,
+      "accepted": true,
+      "eventId": "WARD_TO_DIAGNOSTIC_MOVE",
+      "patientId": "P-WD-002",
+      "request": {
+        "requestId": "console-1781179558842",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "WARD_TO_DIAGNOSTIC_MOVE",
+        "patientId": "P-WD-002",
+        "fromRoomId": "resp_ward",
+        "toRoomId": "diagnostic_center",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "wheelchair",
+        "escortRoles": [
+          "porter"
+        ],
+        "equipment": [],
+        "fromRoomId": "resp_ward",
+        "toRoomId": "diagnostic_center",
+        "viaRoomIds": [],
+        "finalForm": "wheelchair",
+        "patientFormDuringMove": "wheelchair"
+      }
+    },
+    {
+      "eventSeq": 6,
+      "accepted": true,
+      "eventId": "WARD_DIAGNOSTIC_RETURN",
+      "patientId": "P-WD-002",
+      "request": {
+        "requestId": "console-1781179597075",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "WARD_DIAGNOSTIC_RETURN",
+        "patientId": "P-WD-002",
+        "fromRoomId": "diagnostic_center",
+        "toRoomId": "resp_ward",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "wheelchair",
+        "escortRoles": [
+          "porter"
+        ],
+        "equipment": [],
+        "fromRoomId": "diagnostic_center",
+        "toRoomId": "resp_ward",
+        "viaRoomIds": [],
         "finalForm": "bed",
         "patientFormDuringMove": "wheelchair"
       }

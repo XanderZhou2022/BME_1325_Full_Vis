@@ -47,6 +47,8 @@ Returns the full hospital state:
 
 Returns all rooms with people and resource state.
 
+Care-room bed occupancy is tracked by `room.bedAssignments`, not only by the patient's current visible room. A ward/ICU patient can temporarily leave for an exam while their assigned bed remains unavailable to other patients.
+
 `GET /api/hospital/people`
 
 Returns all patients, doctors, and nurses.
@@ -87,7 +89,9 @@ Accepted response:
   "statusUpdates": {
     "patientStatus": "TRANSFERRING",
     "fromRoomReleased": true,
-    "targetReserved": true
+    "sourceBedRetained": false,
+    "targetReserved": true,
+    "bedRoomId": "icu_beds_a"
   },
   "animationPlan": {
     "kind": "patient-move",
@@ -130,6 +134,8 @@ Every reusable movement rule should include:
 - `movement.finalForm`: `walking`, `waiting`, `consultation`, `stretcher`, `bed`, or `hidden`.
 - `movement.escortRequired`, `movement.escortRoles`, and `movement.equipment`.
 - `movement.pathPolicy`, `movement.resourcePolicy`, and `movement.failurePolicy`.
+- For ward/ICU exam moves, set `resourcePolicy.retainSourceBed: true` and use `stretcher` transport when the patient should keep their original bed while away.
+- For discharge or transfer to another care area, set `resourcePolicy.releaseSourceBed: true` so the old bed becomes available.
 
 The backend checks the event rule first, then updates state and event log. The frontend should not decide whether a move is legal.
 

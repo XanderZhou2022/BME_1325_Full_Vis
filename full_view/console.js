@@ -365,6 +365,9 @@ function symbolicDestinationRoom(targetId) {
 }
 
 function selectedPatientRoomOfKind(kind) {
+  const patient = selectedPatient();
+  const assignedRoom = patient?.bedRoomId ? roomById(patient.bedRoomId) : null;
+  if (assignedRoom?.kind === kind) return assignedRoom;
   const room = selectedPatientRoom();
   if (room?.kind === kind) return room;
   return firstAvailableRoomByKind(kind);
@@ -440,7 +443,7 @@ function renderEvents() {
     <article class="console-event ${event.accepted ? "is-accepted" : "is-rejected"}">
       <strong>#${event.eventSeq} ${escapeHtml(event.eventId || "EVENT")}</strong>
       <span>${escapeHtml(event.patientId || "")}</span>
-      <p>${event.accepted ? formatAnimation(event.animationPlan) : `${event.reasonCode}: ${event.message}`}</p>
+      <p class="console-event-route">${event.accepted ? formatAnimation(event.animationPlan) : `${escapeHtml(event.reasonCode)}: ${escapeHtml(event.message)}`}</p>
     </article>
   `).join("") : `<div class="console-detail-empty">No events yet.</div>`;
 }
@@ -497,7 +500,7 @@ function peopleList(people, type) {
 function formatAnimation(plan) {
   if (!plan) return "No animation plan";
   const via = plan.viaRoomIds?.length ? ` via ${plan.viaRoomIds.join(" -> ")}` : "";
-  return `${plan.transport} ${plan.fromRoomId} -> ${plan.toRoomId}${via}`;
+  return escapeHtml(`${plan.transport} ${plan.fromRoomId} -> ${plan.toRoomId}${via}`);
 }
 
 function escapeHtml(value) {

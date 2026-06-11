@@ -1059,6 +1059,17 @@ button {
   padding-right: 2px;
 }
 
+.console-event-list {
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 2px;
+}
+
+.console-event-list > * {
+  min-width: 0;
+}
+
 .console-floor,
 .console-floor-tab {
   display: grid;
@@ -1270,6 +1281,9 @@ button {
   border: 1px solid rgba(255, 228, 183, 0.16);
   display: grid;
   gap: 4px;
+  align-content: start;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .console-event.is-accepted {
@@ -1282,7 +1296,21 @@ button {
 
 .console-event p {
   margin: 0;
+  line-height: 1.35;
   overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.console-event strong,
+.console-event span {
+  min-width: 0;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.console-event-route {
+  max-width: 100%;
 }
 
 .console-detail-empty {

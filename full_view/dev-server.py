@@ -13,6 +13,7 @@ PATIENTS_FILE = BACKEND_DATA / "patients.json"
 STAFF_FILE = BACKEND_DATA / "staff.json"
 ROOM_STATE_FILE = BACKEND_DATA / "room-state.json"
 EVENT_LOG_FILE = BACKEND_DATA / "event-log.json"
+CARE_ROOM_KINDS = {"icu", "ward"}
 
 
 class HospitalViewHandler(SimpleHTTPRequestHandler):
@@ -156,6 +157,7 @@ def handle_move_request(request):
     _, rooms = normalize_map(map_config)
     rooms_by_id = {room["id"]: room for room in rooms}
     patients = patients_data.get("patients", [])
+    recompute_room_state(room_state, patients, rooms_by_id)
     patient = find_patient(patients, request.get("patientId"))
     rule = find_rule(request.get("eventId"))
     from_room_id = request.get("fromRoomId")
@@ -180,7 +182,14 @@ def handle_move_request(request):
     movement = rule.get("movement", {})
     target_room = rooms_by_id[to_room_id]
     previous_room = rooms_by_id.get(patient.get("roomId"))
+    previous_bed_room_id = patient.get("bedRoomId")
     final_form = movement.get("finalForm", "walking")
+    release_source_bed = should_release_source_bed(movement, final_form, previous_bed_room_id, target_room)
+
+    if release_source_bed:
+        release_patient_bed(room_state, patient)
+    if final_form == "bed" and is_care_room(target_room):
+        assign_patient_bed(room_state, patient, target_room["id"])
 
     patient["roomId"] = to_room_id
     patient["status"] = final_status_for(final_form, target_room)
@@ -202,8 +211,10 @@ def handle_move_request(request):
         "patientId": patient.get("patientId"),
         "statusUpdates": {
             "patientStatus": "TRANSFERRING",
-            "fromRoomReleased": previous_room is not None,
-            "targetReserved": True,
+            "fromRoomReleased": previous_room is not None and not patient.get("bedRoomId") == previous_bed_room_id,
+            "sourceBedRetained": bool(previous_bed_room_id and patient.get("bedRoomId") == previous_bed_room_id),
+            "targetReserved": bool(patient.get("bedRoomId") == to_room_id),
+            "bedRoomId": patient.get("bedRoomId"),
         },
         "animationPlan": {
             "kind": "patient-move",
@@ -235,13 +246,20 @@ def validate_move_request(request, patient, rule, rooms_by_id, room_state):
         return error("TARGET_ROOM_NOT_FOUND", f"Unknown target room: {request.get('toRoomId')}.")
     if not target_allowed(rule.get("movement", {}), request.get("toRoomId")):
         return error("TARGET_NOT_ALLOWED", "Target room is not allowed by the selected movement rule.")
+    symbolic_error = validate_symbolic_target(rule.get("movement", {}), request.get("toRoomId"), patient, rooms_by_id)
+    if symbolic_error:
+        return symbolic_error
     if not source_allowed(rule.get("movement", {}), request.get("fromRoomId")):
         return error("SOURCE_NOT_ALLOWED", "Source room is not allowed by the selected movement rule.")
+    symbolic_source_error = validate_symbolic_source(rule.get("movement", {}), request.get("fromRoomId"), patient, rooms_by_id)
+    if symbolic_source_error:
+        return symbolic_source_error
 
     target_room = rooms_by_id[request.get("toRoomId")]
-    if target_room.get("kind") in ["icu", "ward"]:
+    if is_care_room(target_room):
         state = room_state.get("rooms", {}).get(target_room["id"], {})
-        if state.get("capacityBeds", 0) <= state.get("occupiedBeds", 0):
+        assignments = state.get("bedAssignments", [])
+        if patient_identifier(patient) not in assignments and state.get("capacityBeds", 0) <= len(assignments):
             return error("NO_BED_AVAILABLE", "Target care room has no available bed.")
 
     movement = rule.get("movement", {})
@@ -253,6 +271,47 @@ def validate_move_request(request, patient, rule, rooms_by_id, room_state):
         if missing:
             return error("ESCORT_UNAVAILABLE", f"Missing escort resource: {', '.join(missing)}.")
 
+    return None
+
+
+def validate_symbolic_target(movement, to_room_id, patient, rooms_by_id):
+    target = movement.get("to")
+    targets = target if isinstance(target, list) else [target]
+    target_room = rooms_by_id.get(to_room_id)
+    if not target_room:
+        return None
+
+    if "source_ward_room" in targets or "source_icu_bed_room" in targets:
+        if patient.get("bedRoomId") != to_room_id:
+            return error("TARGET_NOT_ASSIGNED_BED", "Return target must be the patient's assigned bed room.")
+    if "target_ward_room" in targets and target_room.get("kind") != "ward":
+        return error("TARGET_NOT_WARD_ROOM", "Target must be an inpatient ward room.")
+    return None
+
+
+def validate_symbolic_source(movement, from_room_id, patient, rooms_by_id):
+    source = movement.get("from")
+    sources = source if isinstance(source, list) else [source]
+    room = rooms_by_id.get(from_room_id)
+    if not room:
+        return None
+
+    checks = {
+        "current_ward_room": lambda: room.get("kind") == "ward",
+        "source_ward_room": lambda: patient.get("bedRoomId") == from_room_id,
+        "current_icu_bed_room": lambda: from_room_id in {"icu_beds_a", "icu_beds_b", "icu_isolation"},
+        "source_icu_bed_room": lambda: patient.get("bedRoomId") == from_room_id,
+        "current_icu_exam_room": lambda: from_room_id in {"intervention_bay", "icu_equipment"},
+        "current_ed_room": lambda: room.get("floor") == 1,
+        "current_ed_bed_room": lambda: room.get("floor") == 1 and room.get("capacityBeds", 0) > 0,
+        "current_op_room": lambda: room.get("floor") == 2,
+        "current_consult_room": lambda: room.get("kind") in {"consultation", "internal_medicine", "surgery", "pediatrics", "fever", "obgyn"},
+        "current_room": lambda: True,
+    }
+    for source_id in sources:
+        check = checks.get(source_id)
+        if check and not check():
+            return error("SOURCE_SYMBOLIC_MISMATCH", f"Patient is not in a valid source room for {source_id}.")
     return None
 
 
@@ -363,6 +422,7 @@ def decorate_room(room, patients, staff, room_state):
         "staffCount": len(room_staff),
         "occupiedBeds": state.get("occupiedBeds", 0),
         "availableBeds": max(0, state.get("capacityBeds", room.get("capacityBeds", 0)) - state.get("occupiedBeds", 0)),
+        "bedAssignments": state.get("bedAssignments", []),
         "reservedBy": state.get("reservedBy"),
         "queue": state.get("queue", []),
     }
@@ -370,14 +430,99 @@ def decorate_room(room, patients, staff, room_state):
 
 def recompute_room_state(room_state, patients, rooms_by_id):
     room_state.setdefault("rooms", {})
+    patients_by_id = {patient_identifier(patient): patient for patient in patients if patient_identifier(patient)}
     for room in rooms_by_id.values():
         state = room_state["rooms"].setdefault(room["id"], {"roomId": room["id"], "reservedBy": None, "queue": []})
         state["capacityBeds"] = state.get("capacityBeds", room.get("capacityBeds", 0))
-        state["occupiedBeds"] = 0
+        assignments = []
+        for patient_id in state.get("bedAssignments", []):
+            patient = patients_by_id.get(patient_id)
+            if not patient or patient.get("form") == "hidden" or patient.get("status") == "DISCHARGED":
+                continue
+            if patient.get("bedRoomId") and patient.get("bedRoomId") != room["id"]:
+                continue
+            patient["bedRoomId"] = room["id"]
+            assignments.append(patient_id)
+        state["bedAssignments"] = unique_list(assignments)
     for patient in patients:
+        patient_id = patient_identifier(patient)
+        if not patient_id:
+            continue
+        if patient.get("form") == "hidden" or patient.get("status") == "DISCHARGED":
+            release_patient_bed(room_state, patient)
+            continue
+        bed_room_id = patient.get("bedRoomId")
+        if bed_room_id and is_care_room(rooms_by_id.get(bed_room_id)):
+            assign_patient_bed(room_state, patient, bed_room_id)
+            continue
         room = rooms_by_id.get(patient.get("roomId"))
-        if room and patient.get("form") == "bed":
-            room_state["rooms"][room["id"]]["occupiedBeds"] += 1
+        if room and is_care_room(room) and patient.get("form") == "bed":
+            assign_patient_bed(room_state, patient, room["id"])
+    for room in rooms_by_id.values():
+        state = room_state["rooms"].setdefault(room["id"], {"roomId": room["id"], "reservedBy": None, "queue": []})
+        state["bedAssignments"] = unique_list(state.get("bedAssignments", []))
+        state["occupiedBeds"] = len(state["bedAssignments"])
+
+
+def patient_identifier(patient):
+    if not patient:
+        return None
+    return patient.get("patientId") or patient.get("id")
+
+
+def unique_list(values):
+    result = []
+    for value in values:
+        if value not in result:
+            result.append(value)
+    return result
+
+
+def is_care_room(room):
+    return bool(room and room.get("kind") in CARE_ROOM_KINDS)
+
+
+def assign_patient_bed(room_state, patient, room_id):
+    patient_id = patient_identifier(patient)
+    if not patient_id:
+        return
+    release_patient_bed(room_state, patient, except_room_id=room_id)
+    state = room_state.setdefault("rooms", {}).setdefault(room_id, {"roomId": room_id, "reservedBy": None, "queue": []})
+    assignments = state.setdefault("bedAssignments", [])
+    if patient_id not in assignments:
+        assignments.append(patient_id)
+    patient["bedRoomId"] = room_id
+    state["occupiedBeds"] = len(assignments)
+
+
+def release_patient_bed(room_state, patient, except_room_id=None):
+    patient_id = patient_identifier(patient)
+    if not patient_id:
+        return
+    for room_id, state in room_state.setdefault("rooms", {}).items():
+        if room_id == except_room_id:
+            continue
+        assignments = state.get("bedAssignments", [])
+        if patient_id in assignments:
+            state["bedAssignments"] = [value for value in assignments if value != patient_id]
+            state["occupiedBeds"] = len(state["bedAssignments"])
+    if patient.get("bedRoomId") != except_room_id:
+        patient.pop("bedRoomId", None)
+
+
+def should_release_source_bed(movement, final_form, previous_bed_room_id, target_room):
+    if not previous_bed_room_id:
+        return False
+    policy = movement.get("resourcePolicy", {})
+    if policy.get("retainSourceBed") is True:
+        return False
+    if policy.get("releaseSourceBed") is True:
+        return True
+    if final_form == "hidden":
+        return True
+    if is_care_room(target_room) and target_room.get("id") != previous_bed_room_id:
+        return True
+    return False
 
 
 def build_department_status(floors, rooms, patients):

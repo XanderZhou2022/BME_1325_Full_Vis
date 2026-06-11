@@ -84,24 +84,27 @@
       "roomsText": "resp_ward、card_ward、gastro_ward、neuro_ward、endo_ward、gensurg_ward、ortho_ward、obgyn_ward、peds_ward、diagnostic_center",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
       "prechecks": "检查医嘱有效；diagnostic_center 可服务或可排队；患者可转运。",
-      "actions": "患者从当前病房移动到 diagnostic_center。",
+      "actions": "患者从当前病房由推车转运到 diagnostic_center，原床位继续绑定该患者。",
       "successState": "患者状态短暂变为 IN_EXAM。",
       "blocking": "检查中心忙或患者不稳定时留原病房。",
-      "visualization": "患者从病房移动到检查中心。",
+      "visualization": "患者由护工/护士用推车从病房送到检查中心，原床位保留。",
       "movement": {
         "schema": "patient-move",
         "from": "current_ward_room",
         "to": "diagnostic_center",
         "via": [],
-        "transport": "wheelchair",
+        "transport": "stretcher",
         "acuity": "routine",
-        "patientFormDuringMove": "wheelchair",
-        "finalForm": "wheelchair",
+        "patientFormDuringMove": "stretcher",
+        "finalForm": "stretcher",
         "escortRequired": true,
         "escortRoles": [
-          "porter"
+          "porter",
+          "ward_nurse"
         ],
-        "equipment": [],
+        "equipment": [
+          "transport_bag"
+        ],
         "pathPolicy": {
           "requiresPath": true,
           "useElevator": false,
@@ -113,7 +116,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": false
+          "keepSourceReservedUntilArrival": true,
+          "retainSourceBed": true,
+          "releaseSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -144,24 +149,27 @@
       "roomsText": "diagnostic_center、resp_ward、card_ward、gastro_ward、neuro_ward、endo_ward、gensurg_ward、ortho_ward、obgyn_ward、peds_ward",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
       "prechecks": "原床位仍由该患者占用。",
-      "actions": "患者从 diagnostic_center 返回原病房床位。",
+      "actions": "患者从 diagnostic_center 返回 bedRoomId 对应的原病房床位。",
       "successState": "患者状态回到 ADMITTED 或 IN_TREATMENT。",
       "blocking": "床位状态不一致时阻塞返回。",
-      "visualization": "患者回到原病房床位。",
+      "visualization": "患者由护工/护士用推车送回原病房床位。",
       "movement": {
         "schema": "patient-move",
         "from": "diagnostic_center",
         "to": "source_ward_room",
         "via": [],
-        "transport": "wheelchair",
+        "transport": "stretcher",
         "acuity": "routine",
-        "patientFormDuringMove": "wheelchair",
+        "patientFormDuringMove": "stretcher",
         "finalForm": "bed",
         "escortRequired": true,
         "escortRoles": [
-          "porter"
+          "porter",
+          "ward_nurse"
         ],
-        "equipment": [],
+        "equipment": [
+          "transport_bag"
+        ],
         "pathPolicy": {
           "requiresPath": true,
           "useElevator": false,
@@ -173,7 +181,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": false
+          "keepSourceReservedUntilArrival": true,
+          "retainSourceBed": true,
+          "releaseSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -233,7 +243,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": false
+          "keepSourceReservedUntilArrival": false,
+          "releaseSourceBed": true,
+          "retainSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -297,7 +309,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": false
+          "keepSourceReservedUntilArrival": false,
+          "releaseSourceBed": true,
+          "retainSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -360,7 +374,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": false,
-          "keepSourceReservedUntilArrival": false
+          "keepSourceReservedUntilArrival": false,
+          "releaseSourceBed": true,
+          "retainSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",

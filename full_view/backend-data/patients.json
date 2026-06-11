@@ -250,7 +250,8 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "bedRoomId": "icu_beds_a"
     },
     {
       "id": "icu-bed-b",
@@ -271,7 +272,8 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "bedRoomId": "icu_beds_b"
     },
     {
       "id": "icu-isolation",
@@ -292,7 +294,8 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "bedRoomId": "icu_isolation"
     },
     {
       "id": "ward-bed-a",
@@ -313,7 +316,8 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "bedRoomId": "resp_ward"
     },
     {
       "id": "ward-bed-b",
@@ -334,7 +338,8 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "bedRoomId": "card_ward"
     },
     {
       "id": "ward-bed-c",
@@ -355,7 +360,8 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "bedRoomId": "peds_ward"
     }
   ]
 }

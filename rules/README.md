@@ -106,7 +106,9 @@
     "lockBeforeMove": true,
     "releaseSourceOnArrival": true,
     "occupyTargetOnArrival": true,
-    "keepSourceReservedUntilArrival": true
+    "keepSourceReservedUntilArrival": true,
+    "retainSourceBed": true,
+    "releaseSourceBed": false
   },
   "failurePolicy": {
     "onNoPath": "stay_source",
@@ -115,6 +117,10 @@
   }
 }
 ```
+
+住院部/ICU 床位是长期资源绑定：患者分配床位后，`room-state.json` 使用 `bedAssignments` 按 `patientId` 保留该床位。患者临时去检查或处置时应设置 `retainSourceBed: true`，不能释放原床；患者出院、转 ICU、转住院或转到其他长期床位时才设置 `releaseSourceBed: true`。
+
+住院部和 ICU 患者前往检查/处置默认使用 `stretcher`，并配置 `porter` 以及相应科室护士作为 escort，避免把卧床患者表现成自行步行。
 
 后端处理原则：
 

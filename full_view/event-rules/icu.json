@@ -123,7 +123,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": true
+          "keepSourceReservedUntilArrival": true,
+          "retainSourceBed": true,
+          "releaseSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -183,7 +185,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": true
+          "keepSourceReservedUntilArrival": true,
+          "retainSourceBed": true,
+          "releaseSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -255,7 +259,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": false
+          "keepSourceReservedUntilArrival": false,
+          "releaseSourceBed": true,
+          "retainSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -324,7 +330,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": true,
-          "keepSourceReservedUntilArrival": true
+          "keepSourceReservedUntilArrival": true,
+          "releaseSourceBed": true,
+          "retainSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",
@@ -385,7 +393,9 @@
           "lockBeforeMove": true,
           "releaseSourceOnArrival": true,
           "occupyTargetOnArrival": false,
-          "keepSourceReservedUntilArrival": true
+          "keepSourceReservedUntilArrival": true,
+          "releaseSourceBed": true,
+          "retainSourceBed": false
         },
         "failurePolicy": {
           "onNoPath": "stay_source",

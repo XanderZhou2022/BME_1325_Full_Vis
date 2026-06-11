@@ -62,6 +62,8 @@ const zoomLabel = document.getElementById("zoomLabel");
 const labels = departmentLabels();
 const PERSON_SPACING = 72;
 const SLOT_CLEARANCE = 34;
+const STAFF_BED_MARGIN = 8;
+const STAFF_BED_SCAN_STEP = TILE * 0.5;
 
 const geometry = buildGeometry();
 let propColliders = buildPropColliders(PROPS);
@@ -764,6 +766,7 @@ function reflowPatients() {
 }
 
 function reflowStaff() {
+  const placedStaff = [];
   state.staff.forEach((member) => {
     if (!member.roomId) {
       member.floor = -1;
@@ -775,8 +778,14 @@ function reflowStaff() {
       return;
     }
     member.floor = room.floor;
-    member.x = (room.x + room.w * clamp(member.relX ?? 0.5, 0.06, 0.94)) * TILE;
-    member.y = (room.y + room.h * clamp(member.relY ?? 0.5, 0.06, 0.94)) * TILE;
+    const basePoint = {
+      x: (room.x + room.w * clamp(member.relX ?? 0.5, 0.06, 0.94)) * TILE,
+      y: (room.y + room.h * clamp(member.relY ?? 0.5, 0.06, 0.94)) * TILE,
+    };
+    const point = staffPointAvoidingBeds(member, room, basePoint, placedStaff);
+    member.x = point.x;
+    member.y = point.y;
+    placedStaff.push({ x: member.x, y: member.y });
   });
 }
 
@@ -1037,6 +1046,100 @@ function findAvailableBedSpot(room, movingPatientId) {
   if (!beds.length) return null;
   beds.sort((a, b) => a.score - b.score);
   return beds[0].point;
+}
+
+function staffPointAvoidingBeds(member, room, basePoint, placedStaff = []) {
+  const bedRects = bedRectsForRoom(room);
+  if (!bedRects.length) return basePoint;
+
+  const occupied = [
+    ...placedStaff,
+    ...state.patients
+      .filter((patient) => patient.floor === room.floor && patient.roomId === room.id && patient.form !== "bed")
+      .flatMap((patient) => patientOccupancyPoints(patient)),
+  ];
+
+  if (staffPointClear(basePoint, room, bedRects, occupied)) return basePoint;
+
+  const candidates = [];
+  const center = roomCenter(room);
+  const minX = (room.x + 1.2) * TILE;
+  const maxX = (room.x + room.w - 1.2) * TILE;
+  const minY = (room.y + 2.2) * TILE;
+  const maxY = (room.y + room.h - 1.2) * TILE;
+
+  for (let y = minY; y <= maxY; y += STAFF_BED_SCAN_STEP) {
+    for (let x = minX; x <= maxX; x += STAFF_BED_SCAN_STEP) {
+      const point = { x, y };
+      if (!staffPointClear(point, room, bedRects, occupied)) continue;
+      candidates.push({
+        point,
+        score: Math.hypot(point.x - basePoint.x, point.y - basePoint.y) +
+          Math.abs(point.x - center.x) * 0.12 +
+          Math.max(0, center.y - point.y) * 0.08 +
+          roleSideBias(member, point, center),
+      });
+    }
+  }
+
+  if (!candidates.length) return basePoint;
+  candidates.sort((a, b) => a.score - b.score);
+  return candidates[0].point;
+}
+
+function roleSideBias(member, point, center) {
+  if (member.role === "nurse") return Math.abs(point.x - center.x) * 0.05;
+  if (member.role === "doctor") return point.x < center.x ? 10 : 0;
+  return 0;
+}
+
+function staffPointClear(point, room, bedRects, occupied) {
+  if (!staffBBoxInsideRoom(point, room)) return false;
+  const box = staffBBox(point);
+  if (bedRects.some((rect) => rectsOverlap(box, rect))) return false;
+  if (occupied.some((person) => Math.hypot(point.x - person.x, point.y - person.y) < 38)) return false;
+  return true;
+}
+
+function bedRectsForRoom(room) {
+  return PROPS
+    .filter((item) => item.floor === room.floor && item.type === "bed" && propInsideRoom(item, room))
+    .map((item) => ({
+      x: item.x * TILE - STAFF_BED_MARGIN,
+      y: item.y * TILE - STAFF_BED_MARGIN,
+      w: item.w * TILE + STAFF_BED_MARGIN * 2,
+      h: item.h * TILE + STAFF_BED_MARGIN * 2,
+    }));
+}
+
+function staffBBox(point) {
+  return {
+    x: point.x - 16,
+    y: point.y - 22,
+    w: 32,
+    h: 52,
+  };
+}
+
+function staffBBoxInsideRoom(point, room) {
+  const box = staffBBox(point);
+  const roomBox = {
+    x: (room.x + 0.35) * TILE,
+    y: (room.y + 0.75) * TILE,
+    w: (room.w - 0.7) * TILE,
+    h: (room.h - 1.1) * TILE,
+  };
+  return box.x >= roomBox.x &&
+    box.y >= roomBox.y &&
+    box.x + box.w <= roomBox.x + roomBox.w &&
+    box.y + box.h <= roomBox.y + roomBox.h;
+}
+
+function rectsOverlap(a, b) {
+  return a.x < b.x + b.w &&
+    a.x + a.w > b.x &&
+    a.y < b.y + b.h &&
+    a.y + a.h > b.y;
 }
 
 function findFallbackRoomSpot(room, movingPatientId, collisions) {
