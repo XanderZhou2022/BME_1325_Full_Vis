@@ -1,0 +1,2104 @@
+{
+  "version": 1,
+  "description": "Full hospital floor map. Room x/y/w/h and item x/y/w/h use tile units. Room items are relative to each room top-left corner.",
+  "floors": [
+    {
+      "id": 1,
+      "label": "1F Emergency",
+      "shortLabel": "1F",
+      "subtitle": "Aligned emergency floor with intake, rescue, consult rooms, entrance, and bottom-right elevator.",
+      "departmentKinds": [
+        "emergency"
+      ],
+      "rooms": [
+        {
+          "id": "ed_entrance",
+          "kind": "entrance",
+          "label": "Main Entrance",
+          "x": 6,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#b99163",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_registration",
+          "kind": "registration",
+          "label": "ED Registration",
+          "x": 19,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#d85e5e",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "reception",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_triage",
+          "kind": "triage",
+          "label": "ED Triage",
+          "x": 32,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#e05f5f",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_red_resus",
+          "kind": "rescue",
+          "label": "Red Resus",
+          "x": 45,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#d84b4b",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "ed_trauma",
+          "kind": "emergency",
+          "label": "Trauma Room",
+          "x": 58,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#c96b58",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "ed_major",
+          "kind": "emergency",
+          "label": "Major Injuries",
+          "x": 6,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#d9736d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "ed_minor",
+          "kind": "emergency",
+          "label": "Minor Injuries",
+          "x": 19,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#df8a72",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_diagnostic",
+          "kind": "lab",
+          "label": "Diagnostic Room",
+          "x": 32,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#67b7cf",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_doctor_room",
+          "kind": "doctor_office",
+          "label": "ED Doctor Room",
+          "x": 45,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#dca768",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_bedside_nurse",
+          "kind": "nurse_station",
+          "label": "Bedside Nurse",
+          "x": 58,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#e08aac",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "reception",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_observation",
+          "kind": "emergency",
+          "label": "Observation",
+          "x": 6,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#d9736d",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "ed_waiting",
+          "kind": "waiting",
+          "label": "ED Waiting",
+          "x": 19,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#e7d1a1",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "sofa",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_handoff",
+          "kind": "emergency_consult",
+          "label": "Handoff Desk",
+          "x": 32,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#c79b69",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ed_pager",
+          "kind": "emergency",
+          "label": "Pager Queue",
+          "x": 45,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#cf6f8c",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "elevator_1",
+          "kind": "elevator",
+          "label": "1F Elevator",
+          "x": 62,
+          "y": 32,
+          "w": 10,
+          "h": 10,
+          "accent": "#d7b07b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 3.5,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "elevator",
+              "x": 3.2,
+              "y": 3.7,
+              "w": 3.6,
+              "h": 1.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "label": "2F Outpatient",
+      "shortLabel": "2F",
+      "subtitle": "Outpatient office grid aligned with registration, triage, consultation, lab, and pharmacy nodes.",
+      "departmentKinds": [
+        "outpatient",
+        "pharmacy",
+        "lab"
+      ],
+      "rooms": [
+        {
+          "id": "registration_2",
+          "kind": "registration",
+          "label": "Registration",
+          "x": 6,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#6d8fe8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "reception",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "payment_2",
+          "kind": "registration",
+          "label": "Payment",
+          "x": 19,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#b99163",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "triage_2",
+          "kind": "triage",
+          "label": "Triage",
+          "x": 32,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#74a7e8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "consultation_a_2",
+          "kind": "consultation",
+          "label": "Consultation A",
+          "x": 45,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#6d8fe8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "consultation_b_2",
+          "kind": "consultation",
+          "label": "Consultation B",
+          "x": 58,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#6d8fe8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "internal_2",
+          "kind": "internal_medicine",
+          "label": "Internal Med",
+          "x": 6,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#7f9ee8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.2,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "surgery_2",
+          "kind": "surgery",
+          "label": "Surgery",
+          "x": 19,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#7f9ee8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.2,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "pediatrics_2",
+          "kind": "pediatrics",
+          "label": "Pediatrics",
+          "x": 32,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#7f9ee8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.2,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "fever_2",
+          "kind": "fever",
+          "label": "Fever Clinic",
+          "x": 45,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#d9736d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.2,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "obgyn_2",
+          "kind": "obgyn",
+          "label": "OB-GYN",
+          "x": 58,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#d68db4",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.2,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "lab_2",
+          "kind": "lab",
+          "label": "Laboratory",
+          "x": 6,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#55b8c8",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "pharmacy_2",
+          "kind": "pharmacy_pickup",
+          "label": "Pharmacy",
+          "x": 19,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#87b96b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "cabinet",
+              "x": 3,
+              "y": 3,
+              "w": 4.2,
+              "h": 1.4
+            }
+          ]
+        },
+        {
+          "id": "doctor_entry_2",
+          "kind": "doctor_entry",
+          "label": "Doctor Entry",
+          "x": 32,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#6f8fd7",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "outpatient_waiting",
+          "kind": "waiting",
+          "label": "OP Waiting",
+          "x": 45,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#e7d1a1",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "sofa",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "elevator_2",
+          "kind": "elevator",
+          "label": "2F Elevator",
+          "x": 62,
+          "y": 32,
+          "w": 10,
+          "h": 10,
+          "accent": "#d7b07b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 3.5,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "elevator",
+              "x": 3.2,
+              "y": 3.7,
+              "w": 3.6,
+              "h": 1.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "label": "3F ICU",
+      "shortLabel": "3F",
+      "subtitle": "Aligned ICU floor with station, monitored beds, support, and bottom-right elevator.",
+      "departmentKinds": [
+        "icu"
+      ],
+      "rooms": [
+        {
+          "id": "icu_admission",
+          "kind": "icu_station",
+          "label": "ICU Admission",
+          "x": 6,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#d46d8e",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "reception",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "icu_station",
+          "kind": "icu_station",
+          "label": "ICU Nurse",
+          "x": 19,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#d46d8e",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "reception",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "icu_beds_a",
+          "kind": "icu",
+          "label": "ICU Beds1",
+          "x": 32,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#db7895",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "icu_beds_b",
+          "kind": "icu",
+          "label": "ICU Beds2",
+          "x": 45,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#db7895",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "icu_isolation",
+          "kind": "icu",
+          "label": "Isolation Beds",
+          "x": 58,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#cf6f8c",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "monitor_center",
+          "kind": "monitor",
+          "label": "Monitor Center",
+          "x": 6,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#79bcc8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "intervention_bay",
+          "kind": "icu",
+          "label": "Intervention Bay",
+          "x": 19,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#d9736d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "risk_sentinel",
+          "kind": "monitor",
+          "label": "Risk Alerts",
+          "x": 32,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#dca768",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "clinical_summary",
+          "kind": "doctor_office",
+          "label": "Clinical Summary",
+          "x": 45,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#c79b69",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "ward_coordinator",
+          "kind": "doctor_office",
+          "label": "Coordinator",
+          "x": 58,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#a992f7",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "icu_support",
+          "kind": "waiting",
+          "label": "Family Support",
+          "x": 6,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#e7d1a1",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "sofa",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "icu_medication",
+          "kind": "pharmacy",
+          "label": "ICU Medication",
+          "x": 19,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#87b96b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "cabinet",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "icu_equipment",
+          "kind": "monitor",
+          "label": "Equipment",
+          "x": 32,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#67b7cf",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "icu_transfer",
+          "kind": "icu_station",
+          "label": "Transfer Desk",
+          "x": 45,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#b99163",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "elevator_3",
+          "kind": "elevator",
+          "label": "3F Elevator",
+          "x": 62,
+          "y": 32,
+          "w": 10,
+          "h": 10,
+          "accent": "#d7b07b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 3.5,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "elevator",
+              "x": 3.2,
+              "y": 3.7,
+              "w": 3.6,
+              "h": 1.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "label": "4F MDT",
+      "shortLabel": "4F",
+      "subtitle": "Aligned MDT floor with meeting, imaging review, specialist planning, and elevator.",
+      "departmentKinds": [
+        "mdt"
+      ],
+      "rooms": [
+        {
+          "id": "mdt_call",
+          "kind": "mdt",
+          "label": "MDT Call",
+          "x": 6,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#9b87f5",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "head_doctor",
+          "kind": "doctor_office",
+          "label": "Head Doctor",
+          "x": 19,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#c79b69",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "mdt_meeting",
+          "kind": "mdt_meeting",
+          "label": "Conference",
+          "x": 32,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#a992f7",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "table",
+              "x": 2,
+              "y": 3,
+              "w": 5,
+              "h": 1.8
+            }
+          ]
+        },
+        {
+          "id": "imaging_review",
+          "kind": "imaging_review",
+          "label": "Imaging Review",
+          "x": 45,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#67b7cf",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "final_plan",
+          "kind": "doctor_office",
+          "label": "Final Plan",
+          "x": 58,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#dca768",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "anesthesia_room",
+          "kind": "specialist",
+          "label": "Anesthesia",
+          "x": 6,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#8fb7e8",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "cardiology_room",
+          "kind": "specialist",
+          "label": "Cardiology",
+          "x": 19,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#d46d8e",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "hbp_room",
+          "kind": "specialist",
+          "label": "HBP Surgery",
+          "x": 32,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#dca768",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "neurosurgery_room",
+          "kind": "specialist",
+          "label": "Neurosurgery",
+          "x": 45,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#7b82ad",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "orthopaedics_room",
+          "kind": "specialist",
+          "label": "Orthopaedics",
+          "x": 58,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "mdt_records",
+          "kind": "doctor_office",
+          "label": "Records",
+          "x": 6,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#c79b69",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "cabinet",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "mdt_lounge",
+          "kind": "waiting",
+          "label": "Consult Waiting",
+          "x": 19,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#e7d1a1",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "sofa",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "mdt_memory",
+          "kind": "mdt",
+          "label": "Plan Memory",
+          "x": 32,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#b184d0",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "mdt_kb",
+          "kind": "doctor_office",
+          "label": "Knowledge Base",
+          "x": 45,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#b7c58b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "cabinet",
+              "x": 3,
+              "y": 3,
+              "w": 3.5,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "elevator_4",
+          "kind": "elevator",
+          "label": "4F Elevator",
+          "x": 62,
+          "y": 32,
+          "w": 10,
+          "h": 10,
+          "accent": "#d7b07b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 3.5,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "elevator",
+              "x": 3.2,
+              "y": 3.7,
+              "w": 3.6,
+              "h": 1.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "label": "5F Ward",
+      "shortLabel": "5F",
+      "subtitle": "Aligned inpatient floor with nurse station, wards, doctor office, and elevator.",
+      "departmentKinds": [
+        "ward"
+      ],
+      "rooms": [
+        {
+          "id": "ward_admission",
+          "kind": "registration",
+          "label": "Ward Admission",
+          "x": 6,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#b99163",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "nurse_station",
+          "kind": "nurse_station",
+          "label": "Nurse Station",
+          "x": 19,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#66bfa2",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "reception",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "resp_ward",
+          "kind": "ward",
+          "label": "Resp Ward",
+          "x": 32,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "card_ward",
+          "kind": "ward",
+          "label": "Cardio Ward",
+          "x": 45,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "gastro_ward",
+          "kind": "ward",
+          "label": "Gastro Ward",
+          "x": 58,
+          "y": 6,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "neuro_ward",
+          "kind": "ward",
+          "label": "Neuro Ward",
+          "x": 6,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "endo_ward",
+          "kind": "ward",
+          "label": "Endo Ward",
+          "x": 19,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "gensurg_ward",
+          "kind": "ward",
+          "label": "Gen Surg Ward",
+          "x": 32,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "ortho_ward",
+          "kind": "ward",
+          "label": "Ortho Ward",
+          "x": 45,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "obgyn_ward",
+          "kind": "ward",
+          "label": "OB-GYN Ward",
+          "x": 58,
+          "y": 17,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "bottom",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "peds_ward",
+          "kind": "ward",
+          "label": "Peds Ward",
+          "x": 6,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#76c59d",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "bed",
+              "x": 2,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            },
+            {
+              "type": "bed",
+              "x": 7,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.3
+            }
+          ]
+        },
+        {
+          "id": "doctor_office",
+          "kind": "doctor_office",
+          "label": "Doctor Office",
+          "x": 19,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#dca768",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "diagnostic_center",
+          "kind": "lab",
+          "label": "Diagnostic Center",
+          "x": 32,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#55b8c8",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "screen",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "discharge_desk",
+          "kind": "registration",
+          "label": "Discharge Desk",
+          "x": 45,
+          "y": 28,
+          "w": 11,
+          "h": 8,
+          "accent": "#c79b69",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 4,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "desk",
+              "x": 3,
+              "y": 3,
+              "w": 3.4,
+              "h": 1.2
+            }
+          ]
+        },
+        {
+          "id": "elevator_5",
+          "kind": "elevator",
+          "label": "5F Elevator",
+          "x": 62,
+          "y": 32,
+          "w": 10,
+          "h": 10,
+          "accent": "#d7b07b",
+          "doors": [
+            {
+              "side": "top",
+              "offset": 3.5,
+              "length": 3
+            }
+          ],
+          "items": [
+            {
+              "type": "elevator",
+              "x": 3.2,
+              "y": 3.7,
+              "w": 3.6,
+              "h": 1.6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

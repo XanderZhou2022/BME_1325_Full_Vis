@@ -9,6 +9,7 @@ export const ROOM_KIND_LABELS = {
   triage: "Triage",
   consultation: "Consultation",
   doctor_entry: "Doctor Entry",
+  fever: "Fever Clinic",
   internal_medicine: "Internal Med",
   surgery: "Surgery",
   pediatrics: "Pediatrics",

@@ -1,0 +1,109 @@
+{
+  "lastSeq": 4,
+  "events": [
+    {
+      "eventSeq": 1,
+      "accepted": false,
+      "eventId": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+      "patientId": "P-ER-001",
+      "request": {
+        "requestId": "console-1781177357815",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+        "patientId": "P-ER-001",
+        "fromRoomId": "ed_pager",
+        "toRoomId": "ed_entrance",
+        "context": {
+          "reason": ""
+        }
+      },
+      "reasonCode": "TARGET_NOT_ALLOWED",
+      "message": "Target room is not allowed by the selected movement rule."
+    },
+    {
+      "eventSeq": 2,
+      "accepted": false,
+      "eventId": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+      "patientId": "P-ER-001",
+      "request": {
+        "requestId": "console-1781177374079",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+        "patientId": "P-ER-001",
+        "fromRoomId": "ed_pager",
+        "toRoomId": "ed_minor",
+        "context": {
+          "reason": ""
+        }
+      },
+      "reasonCode": "TARGET_NOT_ALLOWED",
+      "message": "Target room is not allowed by the selected movement rule."
+    },
+    {
+      "eventSeq": 3,
+      "accepted": true,
+      "eventId": "ED_WAITING_TO_CONSULT_ROOM",
+      "patientId": "P-ER-002",
+      "request": {
+        "requestId": "console-1781179039827",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "ED_WAITING_TO_CONSULT_ROOM",
+        "patientId": "P-ER-002",
+        "fromRoomId": "ed_waiting",
+        "toRoomId": "ed_minor",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escortRoles": [],
+        "equipment": [],
+        "fromRoomId": "ed_waiting",
+        "toRoomId": "ed_minor",
+        "viaRoomIds": [],
+        "finalForm": "consultation",
+        "patientFormDuringMove": "walking"
+      }
+    },
+    {
+      "eventSeq": 4,
+      "accepted": true,
+      "eventId": "ED_TO_WARD_MOVE",
+      "patientId": "P-ER-001",
+      "request": {
+        "requestId": "console-1781179077008",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "ED_TO_WARD_MOVE",
+        "patientId": "P-ER-001",
+        "fromRoomId": "ed_pager",
+        "toRoomId": "ward_admission",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "wheelchair",
+        "escortRoles": [
+          "porter"
+        ],
+        "equipment": [],
+        "fromRoomId": "ed_pager",
+        "toRoomId": "ward_admission",
+        "viaRoomIds": [
+          "ed_handoff",
+          "elevator_1",
+          "elevator_5"
+        ],
+        "finalForm": "bed",
+        "patientFormDuringMove": "wheelchair"
+      }
+    }
+  ]
+}

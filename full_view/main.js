@@ -1,8 +1,10 @@
-import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor } from "./map.js?v=fit-minimap-player-20260610w";
-import { fetchPersonProfile } from "./mock-backend.js?v=fit-minimap-player-20260610w";
-import { createRoomPath } from "./pathfinding.js?v=fit-minimap-player-20260610w";
-import { PATIENTS } from "./patients.js?v=fit-minimap-player-20260610w";
-import { getStaffForFloor } from "./staff.js?v=fit-minimap-player-20260610w";
+import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor, loadMapConfig } from "./map.js";
+import { createMapAdmin } from "./map-admin.js";
+import { createRulesAdmin } from "./rules-admin.js";
+import { fetchHospitalEvents, fetchHospitalSnapshot, fetchPersonProfile, requestPatientMove } from "./hospital-api.js";
+import { createRoomPath } from "./pathfinding.js";
+import { PATIENTS } from "./patients.js";
+import { STAFF } from "./staff.js";
 import {
   beginFloorTransition,
   buildGeometry,
@@ -12,7 +14,7 @@ import {
   roomAtPoint,
   updateFloorTransition,
   updatePlayer,
-} from "./runtime.js?v=fit-minimap-player-20260610w";
+} from "./runtime.js";
 import {
   clearCanvas,
   departmentLabels,
@@ -21,7 +23,7 @@ import {
   drawTransitionWash,
   minimapPointToWorld,
   renderStatusRows,
-} from "./render.js?v=fit-minimap-player-20260610w";
+} from "./render.js";
 
 const canvas = document.getElementById("hospitalCanvas");
 const ctx = canvas.getContext("2d");
@@ -37,13 +39,32 @@ const floorButtons = Array.from(document.querySelectorAll("[data-floor]"));
 const zoomInButton = document.getElementById("zoomIn");
 const zoomOutButton = document.getElementById("zoomOut");
 const zoomFitButton = document.getElementById("zoomFit");
+const mapRefreshButton = document.getElementById("mapRefresh");
+const mapAdminOpenButton = document.getElementById("mapAdminOpen");
+const rulesAdminOpenButton = document.getElementById("rulesAdminOpen");
+const mapAdminPanel = document.getElementById("mapAdmin");
+const mapAdminCancelButton = document.getElementById("mapAdminCancel");
+const mapAdminSaveButton = document.getElementById("mapAdminSave");
+const mapAdminFloors = document.getElementById("mapAdminFloors");
+const mapAdminFloorTitle = document.getElementById("mapAdminFloorTitle");
+const mapAdminStatus = document.getElementById("mapAdminStatus");
+const mapAdminRoomList = document.getElementById("mapAdminRoomList");
+const mapAdminAddForm = document.getElementById("mapAdminAddForm");
+const mapAdminRoomName = document.getElementById("mapAdminRoomName");
+const rulesAdminPanel = document.getElementById("rulesAdmin");
+const rulesAdminBackButton = document.getElementById("rulesAdminBack");
+const rulesAdminSaveButton = document.getElementById("rulesAdminSave");
+const rulesAdminCategories = document.getElementById("rulesAdminCategories");
+const rulesAdminList = document.getElementById("rulesAdminList");
+const rulesAdminEditor = document.getElementById("rulesAdminEditor");
+const rulesAdminStatus = document.getElementById("rulesAdminStatus");
 const zoomLabel = document.getElementById("zoomLabel");
 const labels = departmentLabels();
 const PERSON_SPACING = 72;
 const SLOT_CLEARANCE = 34;
 
 const geometry = buildGeometry();
-const propColliders = buildPropColliders(PROPS);
+let propColliders = buildPropColliders(PROPS);
 const initialFloor = getFloor(1);
 const player = createPlayer(initialFloor.spawn, initialFloor.id);
 const state = {
@@ -56,6 +77,7 @@ const state = {
   geometry,
   keys: new Set(),
   patients: PATIENTS.map((patient) => ({ ...patient, baseForm: patient.form })),
+  staff: STAFF.map((member) => ({ ...member })),
   patientMoves: new Map(),
   player,
   playerTravel: null,
@@ -63,6 +85,8 @@ const state = {
   selectedInfoRoomId: null,
   moveDraft: null,
   selectedRoomId: null,
+  lastEventSeq: 0,
+  pollingEvents: false,
   transition: null,
 };
 
@@ -72,6 +96,34 @@ let profileRequestId = 0;
 
 applyFitView();
 syncHud();
+initializeHospitalState();
+const mapAdmin = createMapAdmin({
+  panel: mapAdminPanel,
+  openButton: mapAdminOpenButton,
+  cancelButton: mapAdminCancelButton,
+  saveButton: mapAdminSaveButton,
+  floorTabs: mapAdminFloors,
+  floorTitle: mapAdminFloorTitle,
+  status: mapAdminStatus,
+  roomList: mapAdminRoomList,
+  addForm: mapAdminAddForm,
+  roomNameInput: mapAdminRoomName,
+  onSaved: async (result) => {
+    rebuildMapAfterConfigChange(result.mode === "file" ? "Map saved to map-config.json" : "Map saved in browser storage");
+  },
+});
+const rulesAdmin = createRulesAdmin({
+  panel: rulesAdminPanel,
+  openButton: rulesAdminOpenButton,
+  backButton: rulesAdminBackButton,
+  saveButton: rulesAdminSaveButton,
+  categoryList: rulesAdminCategories,
+  ruleList: rulesAdminList,
+  editor: rulesAdminEditor,
+  status: rulesAdminStatus,
+});
+if (window.location.hash === "#admin") mapAdmin.open();
+if (window.location.hash === "#rules") rulesAdmin.open();
 requestAnimationFrame(loop);
 
 window.addEventListener("keydown", (event) => {
@@ -108,6 +160,10 @@ zoomOutButton.addEventListener("click", () => {
 
 zoomFitButton.addEventListener("click", () => {
   fitWholeFloor();
+});
+
+mapRefreshButton.addEventListener("click", () => {
+  refreshMapConfig();
 });
 
 canvas.addEventListener("pointerdown", (event) => {
@@ -160,6 +216,82 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
+async function initializeHospitalState() {
+  await refreshHospitalSnapshot({ preserveMoves: false });
+  window.setInterval(pollHospitalEvents, 900);
+}
+
+async function refreshHospitalSnapshot({ preserveMoves = true } = {}) {
+  try {
+    const snapshot = await fetchHospitalSnapshot();
+    applyHospitalSnapshot(snapshot, { preserveMoves });
+    state.lastEventSeq = Math.max(state.lastEventSeq, snapshot.eventSeq || 0);
+  } catch (error) {
+    console.warn("Hospital snapshot unavailable; using local seed data.", error);
+  }
+}
+
+function applyHospitalSnapshot(snapshot, { preserveMoves = true } = {}) {
+  const movingIds = preserveMoves ? new Set(state.patientMoves.keys()) : new Set();
+  const currentById = new Map(state.patients.map((patient) => [patient.id, patient]));
+  state.patients = (snapshot.patients || []).map((patient) => {
+    const current = currentById.get(patient.id);
+    if (movingIds.has(patient.id) && current) return current;
+    return {
+      ...patient,
+      baseForm: patient.baseForm || patient.form,
+      phase: patient.phase || current?.phase || 0,
+    };
+  });
+  state.staff = (snapshot.staff || []).map((member) => ({
+    ...member,
+    role: member.role || member.type,
+    phase: member.phase || 0,
+  }));
+  reflowPatients();
+  reflowStaff();
+  if (state.selectedInfoRoomId) {
+    const room = roomById(state.selectedInfoRoomId);
+    if (room) renderRoomInfo(room);
+  }
+}
+
+async function pollHospitalEvents() {
+  if (state.pollingEvents) return;
+  state.pollingEvents = true;
+  try {
+    const result = await fetchHospitalEvents(state.lastEventSeq);
+    for (const event of result.events || []) {
+      state.lastEventSeq = Math.max(state.lastEventSeq, event.eventSeq || 0);
+      if (event.accepted && event.animationPlan) startBackendPatientMove(event);
+    }
+  } catch (error) {
+    console.warn("Hospital event polling unavailable.", error);
+  } finally {
+    state.pollingEvents = false;
+  }
+}
+
+function startBackendPatientMove(event) {
+  const patient = findPatient(event.patientId);
+  const plan = event.animationPlan;
+  if (!patient || state.patientMoves.has(patient.id)) return;
+  const route = createPatientRouteFromPlan(patient, plan);
+  if (!route) {
+    roomReadout.textContent = `No route found for ${event.eventId}`;
+    refreshHospitalSnapshot({ preserveMoves: false });
+    return;
+  }
+
+  patient.form = transferForm(plan);
+  patient.transportMode = plan.transport || null;
+  patient.movePhase = 0;
+  state.patientMoves.set(patient.id, route);
+  state.selectedEntityId = patient.id;
+  state.selectedRoomId = plan.toRoomId;
+  updateRoomReadout();
+}
+
 function render(transition, progress, now) {
   const visibleFloor = transition ? transition.toFloor : state.activeFloor;
   clearCanvas(ctx, canvas, visibleFloor);
@@ -200,7 +332,7 @@ function sceneForFloor(floorId, alpha, drawPlayer, now) {
     props: getPropsForFloor(floorId),
     rooms: getRoomsForFloor(floorId),
     selectedEntityId: state.selectedEntityId,
-    staff: getStaffForFloor(floorId),
+    staff: staffForFloor(floorId),
     walls: state.geometry.walls,
   };
 }
@@ -303,10 +435,15 @@ function handleCanvasClick(point) {
     state.selectedRoomId = null;
     renderPersonLoading(hitEntity);
     const requestId = ++profileRequestId;
-    fetchPersonProfile(hitEntity.id).then((profile) => {
-      if (requestId !== profileRequestId) return;
-      renderPersonProfile(profile, hitEntity);
-    });
+    fetchPersonProfile(hitEntity.id)
+      .then((profile) => {
+        if (requestId !== profileRequestId) return;
+        renderPersonProfile(profile, hitEntity);
+      })
+      .catch((error) => {
+        if (requestId !== profileRequestId) return;
+        renderPersonError(error.message);
+      });
     return;
   }
 
@@ -330,6 +467,8 @@ function renderRoomInfo(room) {
     roomInfoRow("Room", room.label),
     roomInfoRow("Room ID", room.roomCode),
     roomInfoRow("Patients", String(patientCountInRoom(room))),
+    roomInfoRow("Beds", String(room.features?.bed || 0)),
+    roomInfoRow("Workstations", formatRoomFeatures(room)),
   ].join("");
 }
 
@@ -346,6 +485,21 @@ function roomInfoRow(label, value) {
       <span class="room-info__value">${value}</span>
     </div>
   `;
+}
+
+function formatRoomFeatures(room) {
+  const features = room.features || {};
+  const parts = [
+    ["desk", "desk"],
+    ["reception", "reception"],
+    ["screen", "screen"],
+    ["sofa", "sofa"],
+    ["cabinet", "cabinet"],
+    ["table", "table"],
+  ]
+    .filter(([key]) => features[key])
+    .map(([key, label]) => `${features[key]} ${label}`);
+  return parts.length ? parts.join(" · ") : "None";
 }
 
 function patientCountInRoom(room) {
@@ -370,7 +524,7 @@ function pointInsideRoom(point, room) {
 function entityAtCanvasPoint(point) {
   const world = worldPointFromCanvas(point);
   const entities = [
-    ...getStaffForFloor(state.activeFloor).map((entity) => ({ ...entity, entityType: entity.role })),
+    ...staffForFloor(state.activeFloor).map((entity) => ({ ...entity, entityType: entity.role || entity.type })),
     ...clickablePatientsForFloor(state.activeFloor),
   ];
 
@@ -484,27 +638,150 @@ function selectMoveRoom(roomIndex) {
   renderMoveControls();
 }
 
-function startSelectedPatientMove() {
+async function startSelectedPatientMove() {
   if (!state.moveDraft) return;
   const patient = findPatient(state.moveDraft.patientId);
   const rooms = getRoomsForFloor(state.moveDraft.floor);
   const targetRoom = rooms[state.moveDraft.roomIndex];
   if (!patient || !targetRoom) return;
 
-  const route = createPatientRoute(patient, targetRoom);
-  if (!route) {
-    const controls = document.getElementById("moveControls");
-    if (controls) controls.insertAdjacentHTML("beforeend", `<div class="move-controls__error">No route found.</div>`);
+  const eventId = inferMoveEventId(patient, targetRoom);
+  if (!eventId) {
+    renderMoveError("No movement event matches this target.");
     return;
   }
 
-  patient.transportMode = isEmergencyToIcuTransfer(patient, targetRoom) ? "stretcher" : null;
-  patient.form = patient.transportMode === "stretcher" ? "stretcher" : "walking";
-  patient.movePhase = 0;
-  state.patientMoves.set(patient.id, route);
-  state.selectedEntityId = patient.id;
-  state.selectedRoomId = targetRoom.id;
-  updateRoomReadout();
+  try {
+    const response = await requestPatientMove({
+      requestId: `map-${Date.now()}`,
+      source: "map-person-panel",
+      operatorId: "visual-user",
+      eventId,
+      patientId: patient.patientId || patient.id,
+      fromRoomId: patient.roomId,
+      toRoomId: targetRoom.id,
+      context: { reason: "manual visual move" },
+    });
+    state.lastEventSeq = Math.max(state.lastEventSeq, response.eventSeq || 0);
+    if (!response.accepted) {
+      renderMoveError(`${response.reasonCode}: ${response.message}`);
+      return;
+    }
+    startBackendPatientMove(response);
+  } catch (error) {
+    renderMoveError(error.message);
+  }
+}
+
+function inferMoveEventId(patient, targetRoom) {
+  const sourceRoom = roomById(patient.roomId);
+  if (!sourceRoom || !targetRoom) return null;
+  if (sourceRoom.floor === 1 && targetRoom.floor === 3) return "TRANSFER_ED_TO_ICU";
+  if (sourceRoom.floor === 1 && targetRoom.floor === 5) return "TRANSFER_ED_TO_WARD";
+  if (sourceRoom.floor === 2 && targetRoom.floor === 1) return "TRANSFER_OP_TO_ED";
+  if (sourceRoom.floor === 2 && targetRoom.floor === 3) return "OP_TO_ICU_MOVE";
+  if (sourceRoom.floor === 2 && targetRoom.floor === 5) return "TRANSFER_OP_TO_WARD";
+  if (sourceRoom.floor === 3 && targetRoom.floor === 5) return "TRANSFER_ICU_TO_WARD";
+  if (sourceRoom.floor === 5 && targetRoom.floor === 3) return "TRANSFER_WARD_TO_ICU";
+  if (sourceRoom.floor === 5 && targetRoom.floor === 5) return "WARD_BED_TO_BED_MOVE";
+  if (sourceRoom.floor === 2 && targetRoom.kind === "lab") return "OP_PAYMENT_TO_LAB";
+  if (sourceRoom.floor === 2 && targetRoom.kind === "pharmacy") return "OP_CONSULT_TO_PHARMACY";
+  if (sourceRoom.floor === 2 && targetRoom.kind !== "elevator") return "OP_TRIAGE_TO_CONSULT_ROOM";
+  if (sourceRoom.floor === 1 && targetRoom.kind === "lab") return "ED_TO_DIAGNOSTIC_MOVE";
+  if (sourceRoom.floor === 1 && targetRoom.kind !== "elevator") return "ED_WAITING_TO_CONSULT_ROOM";
+  return null;
+}
+
+function renderMoveError(message) {
+  const controls = document.getElementById("moveControls");
+  if (!controls) return;
+  const previous = controls.querySelector(".move-controls__error");
+  if (previous) previous.remove();
+  controls.insertAdjacentHTML("beforeend", `<div class="move-controls__error">${escapeHtml(message)}</div>`);
+}
+
+function transferForm(plan) {
+  if (plan.patientFormDuringMove === "stretcher" || plan.transport === "stretcher") return "stretcher";
+  if (plan.patientFormDuringMove === "waiting") return "waiting";
+  return "walking";
+}
+
+async function refreshMapConfig() {
+  if (state.transition) return;
+  mapRefreshButton.disabled = true;
+  const previousLabel = roomReadout.textContent;
+  roomReadout.textContent = "Refreshing map-config.json...";
+
+  try {
+    await loadMapConfig({ bustCache: true });
+    rebuildMapAfterConfigChange("Map refreshed from map-config.json");
+  } catch (error) {
+    console.error(error);
+    roomReadout.textContent = `Map refresh failed: ${error.message}`;
+  } finally {
+    window.setTimeout(() => {
+      mapRefreshButton.disabled = false;
+      if (roomReadout.textContent === "Map refreshed from map-config.json") updateRoomReadout();
+      if (roomReadout.textContent.startsWith("Map refresh failed")) return;
+      if (previousLabel && roomReadout.textContent === "Refreshing map-config.json...") roomReadout.textContent = previousLabel;
+    }, 450);
+  }
+}
+
+function rebuildMapAfterConfigChange(message) {
+  state.geometry = buildGeometry();
+  propColliders = buildPropColliders(PROPS);
+  state.patientMoves.clear();
+  state.keys.clear();
+  state.playerTravel = null;
+  state.transition = null;
+
+  const floor = getFloor(state.activeFloor) || getFloor(1);
+  state.activeFloor = floor.id;
+  state.player.floor = floor.id;
+  state.player.x = floor.spawn.x;
+  state.player.y = floor.spawn.y;
+  reflowPatients();
+  reflowStaff();
+  resetCameraControl();
+  applyFitView();
+  syncHud(floor.id);
+  roomReadout.textContent = message;
+}
+
+function reflowPatients() {
+  state.patients.forEach((patient) => {
+    if (!patient.roomId || state.patientMoves.has(patient.id)) return;
+    const room = roomById(patient.roomId);
+    if (!room) {
+      patient.floor = -1;
+      return;
+    }
+    patient.floor = room.floor;
+    patient.x = (room.x + room.w * clamp(patient.relX ?? 0.5, 0.06, 0.94)) * TILE;
+    patient.y = (room.y + room.h * clamp(patient.relY ?? 0.5, 0.06, 0.94)) * TILE;
+  });
+}
+
+function reflowStaff() {
+  state.staff.forEach((member) => {
+    if (!member.roomId) {
+      member.floor = -1;
+      return;
+    }
+    const room = roomById(member.roomId);
+    if (!room) {
+      member.floor = -1;
+      return;
+    }
+    member.floor = room.floor;
+    member.x = (room.x + room.w * clamp(member.relX ?? 0.5, 0.06, 0.94)) * TILE;
+    member.y = (room.y + room.h * clamp(member.relY ?? 0.5, 0.06, 0.94)) * TILE;
+  });
+}
+
+function staffForFloor(floorId) {
+  return state.staff.filter((member) => member.floor === floorId);
 }
 
 function createPatientRoute(patient, targetRoom) {
@@ -562,6 +839,52 @@ function createPatientRoute(patient, targetRoom) {
       { type: "path", floor: targetRoom.floor, waypoints: pathFromElevator },
     ],
   };
+}
+
+function createPatientRouteFromPlan(patient, plan) {
+  const targetRoom = roomById(plan.toRoomId);
+  if (!targetRoom) return null;
+  const collisions = [...state.geometry.walls, ...propColliders];
+  const destination = findAvailableRoomSpot(targetRoom, patient.id, collisions) || roomCenter(targetRoom);
+  const roomIds = [...(plan.viaRoomIds || []), plan.toRoomId].filter(Boolean);
+  const route = {
+    destination,
+    finalForm: plan.finalForm,
+    targetRoomId: targetRoom.id,
+    speed: plan.transport === "stretcher" ? 150 : 170,
+    segmentIndex: 0,
+    waypointIndex: 0,
+    segments: [],
+  };
+
+  let start = { x: patient.x, y: patient.y };
+  let currentFloor = patient.floor;
+  for (const roomId of roomIds) {
+    const room = roomById(roomId);
+    if (!room) continue;
+
+    if (room.floor !== currentFloor) {
+      const position = roomCenter(room);
+      route.segments.push({ type: "floor-switch", floor: room.floor, position });
+      start = position;
+      currentFloor = room.floor;
+      continue;
+    }
+
+    const isFinal = room.id === targetRoom.id;
+    const path = createRoomPath({
+      floorId: currentFloor,
+      start,
+      targetRoom: room,
+      targetPoint: isFinal ? destination : roomCenter(room),
+      collisions,
+    });
+    if (!path) return null;
+    route.segments.push({ type: "path", floor: currentFloor, waypoints: path });
+    start = isFinal ? destination : roomCenter(room);
+  }
+
+  return route.segments.length ? route : null;
 }
 
 function updatePatientMoves(delta) {
@@ -623,9 +946,22 @@ function finishPatientMove(patient, move) {
   const targetRoom = roomById(move.targetRoomId);
   if (targetRoom) {
     patient.floor = targetRoom.floor;
+    patient.roomId = targetRoom.id;
+    const rel = relativePointInRoom(move.destination, targetRoom);
+    patient.relX = rel.relX;
+    patient.relY = rel.relY;
     patient.x = move.destination.x;
     patient.y = move.destination.y;
-    if (isBedCareRoom(targetRoom)) {
+    if (move.finalForm === "hidden") {
+      patient.floor = -1;
+      patient.form = "hidden";
+    } else if (move.finalForm === "stretcher") {
+      patient.form = "stretcher";
+    } else if (move.finalForm === "consultation") {
+      patient.form = "consultation";
+    } else if (move.finalForm === "waiting") {
+      patient.form = "waiting";
+    } else if (move.finalForm === "bed" || isBedCareRoom(targetRoom)) {
       patient.form = "bed";
       patient.blanket = careRoomBlanket(targetRoom);
       patient.skin = patient.skin || "#f2c799";
@@ -636,14 +972,11 @@ function finishPatientMove(patient, move) {
   patient.transportMode = null;
   patient.movePhase = 0;
   if (state.selectedEntityId === patient.id && targetRoom) renderRoomInfo(targetRoom);
-}
-
-function isEmergencyToIcuTransfer(patient, targetRoom) {
-  return patient.floor === 1 && targetRoom.floor === 3 && targetRoom.kind === "icu";
+  refreshHospitalSnapshot({ preserveMoves: true });
 }
 
 function findPatient(patientId) {
-  return state.patients.find((patient) => patient.id === patientId) || null;
+  return state.patients.find((patient) => patient.id === patientId || patient.patientId === patientId) || null;
 }
 
 function roomById(roomId) {
@@ -738,7 +1071,7 @@ function occupiedPeopleForFloor(floorId, movingPatientId) {
   const patients = state.patients
     .filter((patient) => patient.floor === floorId && patient.id !== movingPatientId)
     .flatMap((patient) => patientOccupancyPoints(patient));
-  const staff = getStaffForFloor(floorId).map((member) => ({ x: member.x, y: member.y }));
+  const staff = staffForFloor(floorId).map((member) => ({ x: member.x, y: member.y }));
   const reserved = Array.from(state.patientMoves.entries())
     .filter(([patientId, move]) => patientId !== movingPatientId && roomById(move.targetRoomId)?.floor === floorId)
     .map(([, move]) => move.destination)
@@ -793,6 +1126,13 @@ function bedPatientPoint(item) {
   };
 }
 
+function relativePointInRoom(point, room) {
+  return {
+    relX: clamp((point.x / TILE - room.x) / room.w, 0.06, 0.94),
+    relY: clamp((point.y / TILE - room.y) / room.h, 0.06, 0.94),
+  };
+}
+
 function worldPointFromCanvas(point) {
   const zoom = state.camera.zoom || 1;
   return {
@@ -811,6 +1151,11 @@ function clearPersonSelection() {
 function renderPersonLoading(entity) {
   personInfo.className = "person-info person-info--empty";
   personInfo.textContent = `Loading ${roleLabel(entity.entityType)} info...`;
+}
+
+function renderPersonError(message) {
+  personInfo.className = "person-info person-info--empty";
+  personInfo.textContent = `Unable to load person info: ${message}`;
 }
 
 function renderPersonProfile(profile, entity) {
@@ -968,4 +1313,13 @@ function updateZoomControls() {
 function clamp(value, min, max) {
   if (max < min) return (min + max) / 2;
   return Math.min(max, Math.max(min, value));
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("'", "&#039;");
 }

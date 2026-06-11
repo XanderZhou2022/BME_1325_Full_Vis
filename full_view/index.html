@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-store" />
   <title>Full Hospital View</title>
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="./styles.css?v=fit-minimap-player-20260610w" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <main class="app-shell">
@@ -51,6 +51,12 @@
           <div id="zoomLabel" class="zoom-panel__label">100%</div>
           <button id="zoomOut" class="zoom-panel__btn" type="button" aria-label="Zoom out">-</button>
           <button id="zoomFit" class="zoom-panel__fit" type="button">Fit</button>
+          <div class="map-actions">
+            <button id="mapRefresh" class="map-actions__btn" type="button">Refresh</button>
+            <button id="mapAdminOpen" class="map-actions__btn map-actions__btn--primary" type="button">Edit Map</button>
+            <button id="rulesAdminOpen" class="map-actions__btn" type="button">Rules</button>
+            <a class="map-actions__btn" href="./console.html" target="_blank" rel="noreferrer">Console</a>
+          </div>
         </section>
 
         <section class="person-panel" aria-label="Person information">
@@ -74,8 +80,68 @@
         </section>
       </aside>
     </div>
+
+    <section id="mapAdmin" class="map-admin" hidden aria-label="Map editor">
+      <div class="map-admin__topbar">
+        <div>
+          <div class="map-admin__eyebrow">Map Admin</div>
+          <h2 class="map-admin__title">Floor Room Editor</h2>
+        </div>
+        <div class="map-admin__actions">
+          <button id="mapAdminCancel" class="map-admin__btn" type="button">Back</button>
+          <button id="mapAdminSave" class="map-admin__btn map-admin__btn--primary" type="button">Save</button>
+        </div>
+      </div>
+
+      <div class="map-admin__body">
+        <aside class="map-admin__floors" id="mapAdminFloors" aria-label="Admin floor tabs"></aside>
+        <section class="map-admin__rooms">
+          <div class="map-admin__rooms-head">
+            <div>
+              <h3 id="mapAdminFloorTitle" class="map-admin__section-title">1F Rooms</h3>
+              <div id="mapAdminStatus" class="map-admin__status">Ready</div>
+            </div>
+          </div>
+          <div id="mapAdminRoomList" class="map-admin__room-list"></div>
+          <form id="mapAdminAddForm" class="map-admin__add">
+            <input id="mapAdminRoomName" class="map-admin__input" type="text" autocomplete="off" placeholder="Room name" />
+            <button class="map-admin__btn map-admin__btn--primary" type="submit">Add Room</button>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <section id="rulesAdmin" class="rules-admin" hidden aria-label="Event rules editor">
+      <div class="rules-admin__topbar">
+        <div>
+          <div class="rules-admin__eyebrow">Rules Admin</div>
+          <h2 class="rules-admin__title">Event Rule Library</h2>
+        </div>
+        <div class="rules-admin__actions">
+          <button id="rulesAdminBack" class="rules-admin__btn" type="button">Back</button>
+          <button id="rulesAdminSave" class="rules-admin__btn rules-admin__btn--primary" type="button">Save</button>
+        </div>
+      </div>
+
+      <div class="rules-admin__body">
+        <aside id="rulesAdminCategories" class="rules-admin__categories" aria-label="Rule categories"></aside>
+        <section class="rules-admin__list-panel">
+          <div class="rules-admin__panel-head">
+            <h3 class="rules-admin__section-title">Rules</h3>
+            <div id="rulesAdminStatus" class="rules-admin__status">Ready</div>
+          </div>
+          <div id="rulesAdminList" class="rules-admin__list"></div>
+        </section>
+        <section class="rules-admin__editor-panel">
+          <div class="rules-admin__panel-head">
+            <h3 class="rules-admin__section-title">Rule Details</h3>
+          </div>
+          <div id="rulesAdminEditor" class="rules-admin__editor"></div>
+        </section>
+      </div>
+    </section>
   </main>
 
-  <script type="module" src="./main.js?v=fit-minimap-player-20260610w"></script>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>
