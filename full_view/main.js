@@ -517,7 +517,16 @@ function patientCountInRoom(room) {
 }
 
 function patientsForFloor(floorId) {
-  return state.patients.filter((patient) => patient.floor === floorId);
+  return state.patients
+    .filter((patient) => patient.floor === floorId)
+    .map((patient) => {
+      if (patient.form !== "consultation") return patient;
+      const doctorId = patient.doctorProfileId || patient.doctor_profile_id;
+      return {
+        ...patient,
+        showConsultationDoctor: !(doctorId && hasStaffProfile(doctorId)),
+      };
+    });
 }
 
 function pointInsideRoom(point, room) {
@@ -555,6 +564,8 @@ function entityHitScore(entity, world) {
 function clickablePatientsForFloor(floorId) {
   return patientsForFloor(floorId).flatMap((patient) => {
     if (patient.form !== "consultation") return [{ ...patient, entityType: "patient" }];
+    const doctorId = patient.doctorProfileId || patient.doctor_profile_id;
+    const showConsultationDoctor = patient.showConsultationDoctor !== false;
     const entities = [
       {
         ...patient,
@@ -564,8 +575,7 @@ function clickablePatientsForFloor(floorId) {
         hitShape: { rx: 18, ry: 24 },
       },
     ];
-    const doctorId = patient.doctorProfileId || patient.doctor_profile_id;
-    if (doctorId && hasStaffProfile(doctorId)) {
+    if (doctorId && showConsultationDoctor) {
       entities.push({
         id: consultationDoctorEntityId(patient),
         profileId: doctorId,
@@ -815,7 +825,7 @@ function reflowPatients() {
 }
 
 function shouldAutoSpreadPatient(patient) {
-  return ["waiting", "walking"].includes(patient.form);
+  return ["waiting", "walking", "sitting"].includes(patient.form);
 }
 
 function spreadPatientsInsideRoom(room, patients) {
@@ -837,22 +847,24 @@ function spreadPatientsInsideRoom(room, patients) {
 
 function patientCrowdPointsForRoom(room, count) {
   const candidates = [];
-  const minX = (room.x + 1.25) * TILE;
-  const maxX = (room.x + room.w - 1.25) * TILE;
-  const minY = (room.y + Math.max(3.0, room.h * 0.42)) * TILE;
-  const maxY = (room.y + room.h - 1.05) * TILE;
   const center = roomCenter(room);
+  const relSlots = relativeSlotsForRoom(room, count, {
+    minRelX: 0.16,
+    maxRelX: 0.84,
+    minRelY: Math.max(0.42, 2.8 / room.h),
+    maxRelY: 0.86,
+    stepRelX: 0.82 / Math.max(6, room.w),
+    stepRelY: 0.78 / Math.max(5, room.h),
+  });
 
-  for (let y = minY; y <= maxY; y += TILE * 0.78) {
-    for (let x = minX; x <= maxX; x += TILE * 0.82) {
-      const point = { x, y };
-      if (!pointInsideRoom(point, room)) continue;
-      if (!spotClearOfObstacles(point, room.floor, propColliders, 14)) continue;
-      candidates.push({
-        point,
-        score: Math.abs(point.x - center.x) * 0.2 + Math.abs(point.y - center.y) * 0.08,
-      });
-    }
+  for (const slot of relSlots) {
+    const point = pointFromRoomRel(room, slot.relX, slot.relY);
+    if (!pointInsideRoom(point, room)) continue;
+    if (!spotClearOfObstacles(point, room.floor, propColliders, 14)) continue;
+    candidates.push({
+      point,
+      score: Math.abs(point.x - center.x) * 0.2 + Math.abs(point.y - center.y) * 0.08,
+    });
   }
 
   candidates.sort((a, b) => a.score - b.score);
@@ -888,6 +900,47 @@ function roomCrowdFallbackPoint(room, index, total) {
   };
 }
 
+function relativeSlotsForRoom(room, count, options = {}) {
+  const minRelX = clamp(options.minRelX ?? 0.16, 0.06, 0.94);
+  const maxRelX = clamp(options.maxRelX ?? 0.84, minRelX, 0.94);
+  const minRelY = clamp(options.minRelY ?? 0.42, 0.06, 0.94);
+  const maxRelY = clamp(options.maxRelY ?? 0.86, minRelY, 0.94);
+  const stepRelX = Math.max(0.05, options.stepRelX ?? 0.09);
+  const stepRelY = Math.max(0.05, options.stepRelY ?? 0.09);
+  const slots = [];
+
+  for (let relY = minRelY; relY <= maxRelY + 0.0001; relY += stepRelY) {
+    for (let relX = minRelX; relX <= maxRelX + 0.0001; relX += stepRelX) {
+      slots.push({
+        relX: clamp(relX, minRelX, maxRelX),
+        relY: clamp(relY, minRelY, maxRelY),
+      });
+    }
+  }
+
+  const centerX = 0.5;
+  const centerY = room.kind === "waiting" ? 0.66 : 0.58;
+  slots.sort((a, b) => {
+    const aScore = Math.abs(a.relX - centerX) * 0.8 + Math.abs(a.relY - centerY) * 0.45;
+    const bScore = Math.abs(b.relX - centerX) * 0.8 + Math.abs(b.relY - centerY) * 0.45;
+    return aScore - bScore;
+  });
+
+  if (slots.length >= count) return slots;
+  while (slots.length < count) {
+    const point = roomCrowdFallbackPoint(room, slots.length, count);
+    slots.push(relativePointInRoom(point, room));
+  }
+  return slots;
+}
+
+function pointFromRoomRel(room, relX, relY) {
+  return {
+    x: (room.x + room.w * clamp(relX, 0.06, 0.94)) * TILE,
+    y: (room.y + room.h * clamp(relY, 0.06, 0.94)) * TILE,
+  };
+}
+
 function reflowStaff() {
   const placedStaff = [];
   state.staff.forEach((member) => {
@@ -898,7 +951,7 @@ function reflowStaff() {
       member.floor = floor;
       member.x = x;
       member.y = y;
-      placedStaff.push({ x: member.x, y: member.y });
+      placedStaff.push({ floor: member.floor, x: member.x, y: member.y });
       return;
     }
     if (!member.roomId) {
@@ -915,10 +968,10 @@ function reflowStaff() {
       x: (room.x + room.w * clamp(member.relX ?? 0.5, 0.06, 0.94)) * TILE,
       y: (room.y + room.h * clamp(member.relY ?? 0.5, 0.06, 0.94)) * TILE,
     };
-    const point = staffPointAvoidingBeds(member, room, basePoint, placedStaff);
+    const point = staffPointAvoidingPeopleAndProps(member, room, basePoint, placedStaff);
     member.x = point.x;
     member.y = point.y;
-    placedStaff.push({ x: member.x, y: member.y });
+    placedStaff.push({ floor: member.floor, x: member.x, y: member.y });
   });
 }
 
@@ -1232,38 +1285,38 @@ function findAvailableBedSpot(room, movingPatientId, assignedBedId = null) {
   return beds[0].point;
 }
 
-function staffPointAvoidingBeds(member, room, basePoint, placedStaff = []) {
-  const bedRects = bedRectsForRoom(room);
-  if (!bedRects.length) return basePoint;
-
+function staffPointAvoidingPeopleAndProps(member, room, basePoint, placedStaff = []) {
+  const obstacleRects = propRectsForRoom(room, STAFF_BED_MARGIN);
   const occupied = [
-    ...placedStaff,
+    ...placedStaff.filter((point) => point.floor === room.floor),
     ...state.patients
       .filter((patient) => patient.floor === room.floor && patient.roomId === room.id && patient.form !== "bed")
       .flatMap((patient) => patientOccupancyPoints(patient)),
   ];
 
-  if (staffPointClear(basePoint, room, bedRects, occupied)) return basePoint;
+  if (staffPointClear(basePoint, room, obstacleRects, occupied)) return basePoint;
 
   const candidates = [];
   const center = roomCenter(room);
-  const minX = (room.x + 1.2) * TILE;
-  const maxX = (room.x + room.w - 1.2) * TILE;
-  const minY = (room.y + 2.2) * TILE;
-  const maxY = (room.y + room.h - 1.2) * TILE;
+  const relSlots = relativeSlotsForRoom(room, 28, {
+    minRelX: 0.14,
+    maxRelX: 0.86,
+    minRelY: Math.max(0.30, 2.1 / room.h),
+    maxRelY: 0.84,
+    stepRelX: STAFF_BED_SCAN_STEP / (room.w * TILE),
+    stepRelY: STAFF_BED_SCAN_STEP / (room.h * TILE),
+  });
 
-  for (let y = minY; y <= maxY; y += STAFF_BED_SCAN_STEP) {
-    for (let x = minX; x <= maxX; x += STAFF_BED_SCAN_STEP) {
-      const point = { x, y };
-      if (!staffPointClear(point, room, bedRects, occupied)) continue;
-      candidates.push({
-        point,
-        score: Math.hypot(point.x - basePoint.x, point.y - basePoint.y) +
-          Math.abs(point.x - center.x) * 0.12 +
-          Math.max(0, center.y - point.y) * 0.08 +
-          roleSideBias(member, point, center),
-      });
-    }
+  for (const slot of relSlots) {
+    const point = pointFromRoomRel(room, slot.relX, slot.relY);
+    if (!staffPointClear(point, room, obstacleRects, occupied)) continue;
+    candidates.push({
+      point,
+      score: Math.hypot(point.x - basePoint.x, point.y - basePoint.y) +
+        Math.abs(point.x - center.x) * 0.12 +
+        Math.max(0, center.y - point.y) * 0.08 +
+        roleSideBias(member, point, center),
+    });
   }
 
   if (!candidates.length) return basePoint;
@@ -1286,13 +1339,17 @@ function staffPointClear(point, room, bedRects, occupied) {
 }
 
 function bedRectsForRoom(room) {
+  return propRectsForRoom(room, STAFF_BED_MARGIN, (item) => item.type === "bed");
+}
+
+function propRectsForRoom(room, margin = 0, filter = () => true) {
   return PROPS
-    .filter((item) => item.floor === room.floor && item.type === "bed" && propInsideRoom(item, room))
+    .filter((item) => item.floor === room.floor && filter(item) && propInsideRoom(item, room))
     .map((item) => ({
-      x: item.x * TILE - STAFF_BED_MARGIN,
-      y: item.y * TILE - STAFF_BED_MARGIN,
-      w: item.w * TILE + STAFF_BED_MARGIN * 2,
-      h: item.h * TILE + STAFF_BED_MARGIN * 2,
+      x: item.x * TILE - margin,
+      y: item.y * TILE - margin,
+      w: item.w * TILE + margin * 2,
+      h: item.h * TILE + margin * 2,
     }));
 }
 
@@ -1368,10 +1425,10 @@ function occupiedPeopleForFloor(floorId, movingPatientId) {
 
 function patientOccupancyPoints(patient) {
   if (patient.form === "consultation") {
-    return [
-      { x: patient.x - 24, y: patient.y + 8 },
-      { x: patient.x + 26, y: patient.y + 8 },
-    ];
+    const points = [{ x: patient.x - 24, y: patient.y + 8 }];
+    const doctorId = patient.doctorProfileId || patient.doctor_profile_id;
+    if (!(doctorId && hasStaffProfile(doctorId))) points.push({ x: patient.x + 26, y: patient.y + 8 });
+    return points;
   }
   return [{ x: patient.x, y: patient.y }];
 }

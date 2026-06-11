@@ -304,7 +304,9 @@ function drawProp(ctx, camera, prop) {
 function drawPatient(ctx, camera, patient, now, selectedEntityId) {
   if (patient.form === "consultation") {
     if (selectedEntityId === patient.id) drawEntitySelection(ctx, camera, patient.x - 24, patient.y + 8, now, 18, 24);
-    if (selectedEntityId === consultationDoctorEntityId(patient)) drawEntitySelection(ctx, camera, patient.x + 26, patient.y + 8, now, 18, 24);
+    if (patient.showConsultationDoctor !== false && selectedEntityId === consultationDoctorEntityId(patient)) {
+      drawEntitySelection(ctx, camera, patient.x + 26, patient.y + 8, now, 18, 24);
+    }
   } else if (selectedEntityId === patient.id) {
     drawEntitySelection(ctx, camera, patient.x, patient.y, now, patient.form === "bed" ? 34 : 22, patient.form === "bed" ? 16 : 24);
   }
@@ -351,12 +353,13 @@ function drawConsultationPatient(ctx, camera, patient, now) {
   const p = project(camera, patient.x, patient.y);
   const s = patientScale(camera);
   const talk = Math.sin(now / 360 + patient.id.length) > 0 ? 1 : 0;
+  const showDoctor = patient.showConsultationDoctor !== false;
 
   ctx.save();
   ctx.translate(Math.round(p.x), Math.round(p.y));
   ctx.scale(s, s);
   drawSeatedPerson(ctx, -16, 5, patient.color || "#5f8ec9", "#f2c799");
-  drawSeatedStaff(ctx, 18, 5, "doctor", patient.doctorGender || "female");
+  if (showDoctor) drawSeatedStaff(ctx, 18, 5, "doctor", patient.doctorGender || "female");
   ctx.fillStyle = "#b98154";
   ctx.fillRect(-4, 0, 10, 18);
   ctx.fillStyle = talk ? "#fff5d0" : "#e7f3ff";

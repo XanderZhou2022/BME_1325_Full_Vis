@@ -1,5 +1,5 @@
 {
-  "lastSeq": 83,
+  "lastSeq": 88,
   "events": [
     {
       "eventSeq": 1,
@@ -3110,6 +3110,154 @@
       "request": {
         "source": "console",
         "patientId": "P-OP-019"
+      }
+    },
+    {
+      "eventSeq": 84,
+      "event_seq": 84,
+      "accepted": true,
+      "eventId": "RELATIVE_POSITION_REFLOW",
+      "event_id": "RELATIVE_POSITION_REFLOW",
+      "patientId": null,
+      "patient_id": null,
+      "snapshotRefresh": true,
+      "message": "Reflowed room occupants using room-relative slots to reduce overlap.",
+      "request": {
+        "source": "maintenance",
+        "operatorId": "codex",
+        "timestamp": 1781197053
+      }
+    },
+    {
+      "event_seq": 85,
+      "eventSeq": 85,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-013",
+      "patientId": "P-OP-013",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-013"
+      }
+    },
+    {
+      "event_seq": 86,
+      "eventSeq": 86,
+      "accepted": false,
+      "event_id": "OP_TRIAGE_TO_CONSULT_ROOM",
+      "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+      "patient_id": "P-OP-020",
+      "patientId": "P-OP-020",
+      "request": {
+        "requestId": "console-1781197546991",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+        "patientId": "P-OP-020",
+        "fromRoomId": "outpatient_waiting",
+        "toRoomId": "consultation_a_2",
+        "context": {
+          "reason": ""
+        }
+      },
+      "reasonCode": "CONSULT_ROOM_BUSY_QUEUED",
+      "message": "Target consultation room is occupied; patient has been added to this room queue."
+    },
+    {
+      "event_seq": 87,
+      "eventSeq": 87,
+      "accepted": true,
+      "event_id": "OP_CONSULT_TO_PAYMENT",
+      "eventId": "OP_CONSULT_TO_PAYMENT",
+      "patient_id": "P-OP-008",
+      "patientId": "P-OP-008",
+      "request": {
+        "requestId": "console-1781197560206",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "OP_CONSULT_TO_PAYMENT",
+        "patientId": "P-OP-008",
+        "fromRoomId": "consultation_a_2",
+        "toRoomId": "payment_2",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escort_roles": [],
+        "equipment": [],
+        "from_room_id": "consultation_a_2",
+        "to_room_id": "payment_2",
+        "requested_to_room_id": "payment_2",
+        "via_room_ids": [],
+        "final_form": "walking",
+        "patient_form_during_move": "walking",
+        "porter_id": null,
+        "porter_staff_id": null,
+        "porter_name": null,
+        "porter_start": null,
+        "porter_return": null
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escortRoles": [],
+        "equipment": [],
+        "fromRoomId": "consultation_a_2",
+        "toRoomId": "payment_2",
+        "requestedToRoomId": "payment_2",
+        "viaRoomIds": [],
+        "finalForm": "walking",
+        "patientFormDuringMove": "walking",
+        "porterId": null,
+        "porterStaffId": null,
+        "porterName": null,
+        "porterStart": null,
+        "porterReturn": null
+      }
+    },
+    {
+      "event_seq": 88,
+      "eventSeq": 88,
+      "accepted": true,
+      "event_id": "CONSULT_QUEUE_ADVANCE",
+      "eventId": "CONSULT_QUEUE_ADVANCE",
+      "patient_id": "P-OP-020",
+      "patientId": "P-OP-020",
+      "request": {
+        "source": "consult-queue",
+        "operatorId": "hospital-backend",
+        "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+        "patientId": "P-OP-020",
+        "fromRoomId": "outpatient_waiting",
+        "toRoomId": "consultation_a_2"
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escort_roles": [],
+        "equipment": [],
+        "from_room_id": "outpatient_waiting",
+        "to_room_id": "consultation_a_2",
+        "requested_to_room_id": "consultation_a_2",
+        "via_room_ids": [],
+        "final_form": "consultation",
+        "patient_form_during_move": "walking"
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escortRoles": [],
+        "equipment": [],
+        "fromRoomId": "outpatient_waiting",
+        "toRoomId": "consultation_a_2",
+        "requestedToRoomId": "consultation_a_2",
+        "viaRoomIds": [],
+        "finalForm": "consultation",
+        "patientFormDuringMove": "walking"
       }
     }
   ],
