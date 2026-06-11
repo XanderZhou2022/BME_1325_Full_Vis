@@ -81,6 +81,7 @@ const state = {
   patients: PATIENTS.map((patient) => ({ ...patient, baseForm: patient.form })),
   staff: STAFF.map((member) => ({ ...member })),
   patientMoves: new Map(),
+  porterMoves: new Map(),
   player,
   playerTravel: null,
   selectedEntityId: null,
@@ -208,6 +209,7 @@ function loop(now) {
   });
   updatePlayerTravel(delta);
   updatePatientMoves(delta);
+  updatePorterMoves(delta);
   updateCameraControl(now);
 
   render(transition, transitionProgress, now);
@@ -245,17 +247,30 @@ function applyHospitalSnapshot(snapshot, { preserveMoves = true } = {}) {
       phase: patient.phase || current?.phase || 0,
     };
   });
-  state.staff = (snapshot.staff || []).map((member) => ({
-    ...member,
-    role: member.role || member.type,
-    phase: member.phase || 0,
-  }));
+  state.staff = (snapshot.staff || []).map((member) => {
+    const returning = returningPorterForSnapshotMember(member);
+    if (returning) return returning;
+    return {
+      ...member,
+      role: member.role || member.type,
+      phase: member.phase || 0,
+    };
+  });
   reflowPatients();
   reflowStaff();
   if (state.selectedInfoRoomId) {
     const room = roomById(state.selectedInfoRoomId);
     if (room) renderRoomInfo(room);
   }
+}
+
+function returningPorterForSnapshotMember(member) {
+  const ids = [member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean);
+  for (const id of ids) {
+    const move = state.porterMoves.get(id);
+    if (move?.porter) return move.porter;
+  }
+  return null;
 }
 
 async function pollHospitalEvents() {
@@ -976,12 +991,17 @@ function reflowStaff() {
 }
 
 function staffForFloor(floorId) {
-  return state.staff.filter((member) => member.floor === floorId && !staffBusyWithTransport(member));
+  return state.staff.filter((member) => member.floor === floorId && (!staffBusyWithTransport(member) || staffReturningFromTransport(member)));
 }
 
 function staffBusyWithTransport(member) {
   const memberIds = new Set([member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean));
   return Array.from(state.patientMoves.values()).some((move) => move.porterId && memberIds.has(move.porterId));
+}
+
+function staffReturningFromTransport(member) {
+  const memberIds = [member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean);
+  return memberIds.some((id) => state.porterMoves.has(id));
 }
 
 function createPatientRoute(patient, targetRoom) {
@@ -1147,7 +1167,6 @@ function movePatientAlongSegment(patient, move, segment, delta) {
 
 function finishPatientMove(patient, move) {
   state.patientMoves.delete(patient.id);
-  placePorterAfterMove(move);
   const targetRoom = roomById(move.targetRoomId);
   if (targetRoom) {
     patient.floor = targetRoom.floor;
@@ -1183,10 +1202,143 @@ function finishPatientMove(patient, move) {
       patient.form = targetRoom.kind === "waiting" ? "waiting" : "walking";
     }
   }
+  startPorterReturnMove(move, targetRoom || null, patient);
   patient.transportMode = null;
   patient.movePhase = 0;
   if (state.selectedEntityId === patient.id && targetRoom) renderRoomInfo(targetRoom);
   refreshHospitalSnapshot({ preserveMoves: true });
+}
+
+function startPorterReturnMove(move, targetRoom, patient) {
+  if (!move.porterId || !move.porterReturn) return;
+  const porter = state.staff.find((member) => {
+    const ids = [member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean);
+    return ids.includes(move.porterId);
+  });
+  if (!porter) return;
+  const returnFloor = Number(move.porterReturn.floor ?? move.porterReturn.floorId ?? porter.floor);
+  const returnPoint = {
+    x: Number(move.porterReturn.x ?? porter.x),
+    y: Number(move.porterReturn.y ?? porter.y),
+  };
+  const startFloor = targetRoom?.floor ?? patient.floor ?? returnFloor;
+  const startPoint = { x: patient.x, y: patient.y };
+  porter.floor = startFloor;
+  porter.floor_id = startFloor;
+  porter.x = startPoint.x;
+  porter.y = startPoint.y;
+  porter.locationType = "transport-return";
+  porter.location_type = "transport-return";
+
+  const route = createPorterReturnRoute(startFloor, startPoint, returnFloor, returnPoint, targetRoom);
+  if (!route) {
+    placePorterAfterMove(move);
+    return;
+  }
+  state.porterMoves.set(porter.id, {
+    porter,
+    porterReturn: move.porterReturn,
+    speed: 165,
+    movePhase: 0,
+    segmentIndex: 0,
+    waypointIndex: 0,
+    segments: route.segments,
+  });
+}
+
+function createPorterReturnRoute(startFloor, startPoint, returnFloor, returnPoint, sourceRoom) {
+  const collisions = [...state.geometry.walls, ...propColliders];
+  if (startFloor === returnFloor) {
+    const floorRooms = getRoomsForFloor(returnFloor);
+    const targetRoom = sourceRoom && sourceRoom.floor === returnFloor ? sourceRoom : nearestRoomToPoint(floorRooms, returnPoint);
+    const waypoints = createRoomPath({
+      floorId: returnFloor,
+      start: startPoint,
+      targetRoom,
+      targetPoint: returnPoint,
+      collisions,
+    }) || [returnPoint];
+    return { segments: [{ type: "path", floor: returnFloor, waypoints }] };
+  }
+
+  const startElevator = roomById(`elevator_${startFloor}`);
+  const returnElevator = roomById(`elevator_${returnFloor}`);
+  if (!startElevator || !returnElevator) return null;
+  const pathToElevator = createRoomPath({
+    floorId: startFloor,
+    start: startPoint,
+    targetRoom: startElevator,
+    targetPoint: roomCenter(startElevator),
+    collisions,
+  });
+  const pathFromElevator = createRoomPath({
+    floorId: returnFloor,
+    start: roomCenter(returnElevator),
+    targetRoom: returnElevator,
+    targetPoint: returnPoint,
+    collisions,
+  }) || [returnPoint];
+  if (!pathToElevator) return null;
+  return {
+    segments: [
+      { type: "path", floor: startFloor, waypoints: pathToElevator },
+      { type: "floor-switch", floor: returnFloor, position: roomCenter(returnElevator) },
+      { type: "path", floor: returnFloor, waypoints: pathFromElevator },
+    ],
+  };
+}
+
+function updatePorterMoves(delta) {
+  state.porterMoves.forEach((move, porterId) => {
+    const segment = move.segments[move.segmentIndex];
+    if (!segment) {
+      finishPorterReturnMove(porterId, move);
+      return;
+    }
+    if (segment.type === "floor-switch") {
+      move.porter.floor = segment.floor;
+      move.porter.floor_id = segment.floor;
+      move.porter.x = segment.position.x;
+      move.porter.y = segment.position.y;
+      move.segmentIndex += 1;
+      move.waypointIndex = 0;
+      return;
+    }
+    movePorterAlongSegment(move, segment, delta);
+  });
+}
+
+function movePorterAlongSegment(move, segment, delta) {
+  const porter = move.porter;
+  const target = segment.waypoints[move.waypointIndex];
+  if (!target) {
+    move.segmentIndex += 1;
+    move.waypointIndex = 0;
+    return;
+  }
+  porter.floor = segment.floor;
+  porter.floor_id = segment.floor;
+  const dx = target.x - porter.x;
+  const dy = target.y - porter.y;
+  const distanceToTarget = Math.hypot(dx, dy);
+  if (distanceToTarget < 4) {
+    porter.x = target.x;
+    porter.y = target.y;
+    move.waypointIndex += 1;
+    return;
+  }
+  const step = Math.min(distanceToTarget, move.speed * delta);
+  porter.x += (dx / distanceToTarget) * step;
+  porter.y += (dy / distanceToTarget) * step;
+  porter.movePhase = (porter.movePhase || 0) + delta * 8;
+}
+
+function finishPorterReturnMove(porterId, move) {
+  state.porterMoves.delete(porterId);
+  placePorterAfterMove({
+    porterId,
+    porterReturn: move.porterReturn,
+  });
 }
 
 function placePorterAfterMove(move) {
@@ -1215,6 +1367,17 @@ function placePorterAfterMove(move) {
     x: porter.x,
     y: porter.y,
   };
+}
+
+function nearestRoomToPoint(rooms, point) {
+  if (!rooms.length) return null;
+  return rooms
+    .slice()
+    .sort((a, b) => {
+      const ac = roomCenter(a);
+      const bc = roomCenter(b);
+      return Math.hypot(ac.x - point.x, ac.y - point.y) - Math.hypot(bc.x - point.x, bc.y - point.y);
+    })[0];
 }
 
 function findPatient(patientId) {

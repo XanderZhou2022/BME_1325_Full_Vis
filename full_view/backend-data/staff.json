@@ -1185,9 +1185,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-001"
+      "hallway_seed": "POT-1F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-02",
@@ -1218,9 +1226,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-002"
+      "hallway_seed": "POT-1F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-03",
@@ -1251,9 +1267,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-003"
+      "hallway_seed": "POT-1F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-04",
@@ -1284,9 +1308,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-004"
+      "hallway_seed": "POT-1F-004",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-05",
@@ -1317,9 +1349,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-005"
+      "hallway_seed": "POT-1F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-06",
@@ -1350,9 +1390,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-006"
+      "hallway_seed": "POT-1F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-07",
@@ -1369,12 +1417,13 @@
       "department_id": "emergency",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 1,
-      "floor_id": 1,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 1
+        "floor_id": 5,
+        "anchor_room_id": "gastro_ward"
       },
       "pose": "walking",
       "phase": 2.59,
@@ -1383,9 +1432,18 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-007"
+      "hallway_seed": "POT-1F-007:gastro_ward",
+      "roomId": null,
+      "room_id": null,
+      "hallway_anchor_room_id": "gastro_ward",
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-08",
@@ -1416,9 +1474,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-008"
+      "hallway_seed": "POT-1F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-09",
@@ -1449,9 +1515,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-009"
+      "hallway_seed": "POT-1F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-1f-10",
@@ -1482,9 +1556,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-010"
+      "hallway_seed": "POT-1F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-01",
@@ -1515,9 +1597,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-001"
+      "hallway_seed": "POT-2F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-02",
@@ -1548,9 +1638,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-002"
+      "hallway_seed": "POT-2F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-03",
@@ -1581,9 +1679,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-003"
+      "hallway_seed": "POT-2F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-04",
@@ -1614,9 +1720,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-004"
+      "hallway_seed": "POT-2F-004",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-05",
@@ -1647,9 +1761,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-005"
+      "hallway_seed": "POT-2F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-06",
@@ -1680,9 +1802,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-006"
+      "hallway_seed": "POT-2F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-07",
@@ -1713,9 +1843,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-007"
+      "hallway_seed": "POT-2F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-08",
@@ -1746,9 +1884,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-008"
+      "hallway_seed": "POT-2F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-09",
@@ -1779,9 +1925,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-009"
+      "hallway_seed": "POT-2F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-2f-10",
@@ -1812,9 +1966,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-010"
+      "hallway_seed": "POT-2F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-01",
@@ -1845,9 +2007,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-001"
+      "hallway_seed": "POT-3F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-02",
@@ -1878,9 +2048,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-002"
+      "hallway_seed": "POT-3F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-03",
@@ -1911,9 +2089,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-003"
+      "hallway_seed": "POT-3F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-04",
@@ -1945,12 +2131,18 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
       "hallway_seed": "POT-3F-004:icu_beds_a",
       "roomId": null,
       "room_id": null,
-      "hallway_anchor_room_id": "icu_beds_a"
+      "hallway_anchor_room_id": "icu_beds_a",
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-05",
@@ -1981,9 +2173,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-005"
+      "hallway_seed": "POT-3F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-06",
@@ -2014,9 +2214,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-006"
+      "hallway_seed": "POT-3F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-07",
@@ -2047,9 +2255,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-007"
+      "hallway_seed": "POT-3F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-08",
@@ -2080,9 +2296,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-008"
+      "hallway_seed": "POT-3F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-09",
@@ -2113,9 +2337,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-009"
+      "hallway_seed": "POT-3F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-3f-10",
@@ -2146,9 +2378,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-010"
+      "hallway_seed": "POT-3F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-01",
@@ -2179,9 +2419,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-001"
+      "hallway_seed": "POT-4F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-02",
@@ -2212,9 +2460,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-002"
+      "hallway_seed": "POT-4F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-03",
@@ -2245,9 +2501,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-003"
+      "hallway_seed": "POT-4F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-04",
@@ -2278,9 +2542,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-004"
+      "hallway_seed": "POT-4F-004",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-05",
@@ -2311,9 +2583,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-005"
+      "hallway_seed": "POT-4F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-06",
@@ -2344,9 +2624,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-006"
+      "hallway_seed": "POT-4F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-07",
@@ -2377,9 +2665,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-007"
+      "hallway_seed": "POT-4F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-08",
@@ -2410,9 +2706,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-008"
+      "hallway_seed": "POT-4F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-09",
@@ -2443,9 +2747,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-009"
+      "hallway_seed": "POT-4F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-4f-10",
@@ -2476,9 +2788,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-4F-010"
+      "hallway_seed": "POT-4F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-01",
@@ -2509,9 +2829,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-001"
+      "hallway_seed": "POT-5F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-02",
@@ -2542,9 +2870,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-002"
+      "hallway_seed": "POT-5F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-03",
@@ -2575,9 +2911,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-003"
+      "hallway_seed": "POT-5F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-04",
@@ -2608,9 +2952,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-004"
+      "hallway_seed": "POT-5F-004",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-05",
@@ -2641,9 +2993,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-005"
+      "hallway_seed": "POT-5F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-06",
@@ -2674,9 +3034,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-006"
+      "hallway_seed": "POT-5F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-07",
@@ -2707,9 +3075,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-007"
+      "hallway_seed": "POT-5F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-08",
@@ -2740,9 +3116,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-008"
+      "hallway_seed": "POT-5F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-09",
@@ -2773,9 +3157,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-009"
+      "hallway_seed": "POT-5F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "porter-5f-10",
@@ -2806,9 +3198,17 @@
         "available": true
       },
       "visual": {
-        "pose": "walking"
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
       },
-      "hallway_seed": "POT-5F-010"
+      "hallway_seed": "POT-5F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
     }
   ]
 }

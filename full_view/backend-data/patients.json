@@ -159,26 +159,29 @@
       "name": "Riley Patel",
       "department": "Emergency",
       "symptoms": "Minor trauma, awaiting triage",
-      "status": "WAITING",
-      "roomId": "ed_waiting",
-      "relX": 0.5327272727272727,
-      "relY": 0.615,
-      "form": "waiting",
+      "status": "ADMITTED",
+      "roomId": "gastro_ward",
+      "relX": 0.2,
+      "relY": 0.4,
+      "form": "bed",
       "baseForm": "waiting",
       "color": "#c69072",
-      "skin": null,
-      "blanket": null,
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
       "gender": null,
       "phase": 0,
       "local_person_id": "wait-er-2",
       "patient_id": "P-ER-003",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "gastro_ward"
       },
-      "home_bed": {},
+      "home_bed": {
+        "room_id": "gastro_ward",
+        "bed_id": "gastro_ward-bed-01"
+      },
       "clinical": {
-        "status": "WAITING",
+        "status": "ADMITTED",
         "symptoms": "Minor trauma, awaiting triage",
         "care_phase": null,
         "ctas_level": null,
@@ -187,18 +190,22 @@
         "latest_interventions": []
       },
       "visual": {
-        "form": "waiting",
+        "form": "bed",
         "base_form": "waiting",
-        "rel_x": 0.5327272727272727,
-        "rel_y": 0.615,
+        "rel_x": 0.2,
+        "rel_y": 0.4,
         "color": "#c69072",
         "skin": null,
         "blanket": null
       },
-      "room_id": "ed_waiting",
+      "room_id": "gastro_ward",
       "base_form": "waiting",
-      "rel_x": 0.5327272727272727,
-      "rel_y": 0.615
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "bedRoomId": "gastro_ward",
+      "bedId": "gastro_ward-bed-01",
+      "bed_room_id": "gastro_ward",
+      "bed_id": "gastro_ward-bed-01"
     },
     {
       "id": "wait-op-1",
@@ -1644,7 +1651,11 @@
         "color": "#7899c6",
         "skin": null,
         "blanket": null
-      }
+      },
+      "doctorProfileId": "doctor-op-a",
+      "doctor_profile_id": "doctor-op-a",
+      "doctorGender": "female",
+      "doctor_gender": "female"
     },
     {
       "id": "intake-emergency-006",
@@ -1989,6 +2000,58 @@
         "skin": null,
         "blanket": null
       }
+    },
+    {
+      "id": "intake-outpatient-021",
+      "local_person_id": "intake-outpatient-021",
+      "patientId": "P-OP-021",
+      "patient_id": "P-OP-021",
+      "type": "patient",
+      "name": "王若溪",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "symptoms": "慢性咳嗽复诊",
+      "status": "ARRIVED",
+      "roomId": "pharmacy_2",
+      "room_id": "pharmacy_2",
+      "current_location": {
+        "room_id": "pharmacy_2"
+      },
+      "home_bed": {},
+      "form": "walking",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "color": "#8f7ed0",
+      "skin": null,
+      "blanket": null,
+      "phase": 0,
+      "clinical": {
+        "status": "ARRIVED",
+        "symptoms": "慢性咳嗽复诊",
+        "care_phase": "entry_triage",
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "walking",
+        "base_form": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58,
+        "color": "#8f7ed0",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "stress-doctor-op-fever",
+      "doctor_profile_id": "stress-doctor-op-fever",
+      "doctorGender": "female",
+      "doctor_gender": "female"
     }
   ]
 }

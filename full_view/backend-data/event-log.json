@@ -1,5 +1,5 @@
 {
-  "lastSeq": 88,
+  "lastSeq": 94,
   "events": [
     {
       "eventSeq": 1,
@@ -3258,6 +3258,461 @@
         "viaRoomIds": [],
         "finalForm": "consultation",
         "patientFormDuringMove": "walking"
+      }
+    },
+    {
+      "event_seq": 89,
+      "eventSeq": 89,
+      "accepted": true,
+      "event_id": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+      "eventId": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+      "patient_id": "P-OP-021",
+      "patientId": "P-OP-021",
+      "request": {
+        "requestId": "console-intake-outpatient-1781197652957",
+        "source": "console-intake",
+        "operatorId": "manual-admin",
+        "eventId": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING",
+        "patientId": "P-OP-021",
+        "fromRoomId": "registration_2",
+        "toRoomId": "outpatient_waiting",
+        "context": {
+          "reason": "outpatient patient intake",
+          "entryDepartment": "outpatient"
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escort_roles": [],
+        "equipment": [],
+        "from_room_id": "registration_2",
+        "to_room_id": "outpatient_waiting",
+        "requested_to_room_id": "outpatient_waiting",
+        "via_room_ids": [],
+        "final_form": "waiting",
+        "patient_form_during_move": "walking",
+        "porter_id": null,
+        "porter_staff_id": null,
+        "porter_name": null,
+        "porter_start": null,
+        "porter_return": null
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escortRoles": [],
+        "equipment": [],
+        "fromRoomId": "registration_2",
+        "toRoomId": "outpatient_waiting",
+        "requestedToRoomId": "outpatient_waiting",
+        "viaRoomIds": [],
+        "finalForm": "waiting",
+        "patientFormDuringMove": "walking",
+        "porterId": null,
+        "porterStaffId": null,
+        "porterName": null,
+        "porterStart": null,
+        "porterReturn": null
+      }
+    },
+    {
+      "event_seq": 90,
+      "eventSeq": 90,
+      "accepted": true,
+      "event_id": "OP_TRIAGE_TO_CONSULT_ROOM",
+      "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+      "patient_id": "P-OP-021",
+      "patientId": "P-OP-021",
+      "request": {
+        "requestId": "console-1781197671140",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+        "patientId": "P-OP-021",
+        "fromRoomId": "outpatient_waiting",
+        "toRoomId": "fever_2",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escort_roles": [],
+        "equipment": [],
+        "from_room_id": "outpatient_waiting",
+        "to_room_id": "fever_2",
+        "requested_to_room_id": "fever_2",
+        "via_room_ids": [],
+        "final_form": "consultation",
+        "patient_form_during_move": "walking",
+        "porter_id": null,
+        "porter_staff_id": null,
+        "porter_name": null,
+        "porter_start": null,
+        "porter_return": null
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escortRoles": [],
+        "equipment": [],
+        "fromRoomId": "outpatient_waiting",
+        "toRoomId": "fever_2",
+        "requestedToRoomId": "fever_2",
+        "viaRoomIds": [],
+        "finalForm": "consultation",
+        "patientFormDuringMove": "walking",
+        "porterId": null,
+        "porterStaffId": null,
+        "porterName": null,
+        "porterStart": null,
+        "porterReturn": null
+      }
+    },
+    {
+      "event_seq": 91,
+      "eventSeq": 91,
+      "accepted": true,
+      "event_id": "OP_CONSULT_TO_PHARMACY",
+      "eventId": "OP_CONSULT_TO_PHARMACY",
+      "patient_id": "P-OP-021",
+      "patientId": "P-OP-021",
+      "request": {
+        "requestId": "console-1781197704990",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "OP_CONSULT_TO_PHARMACY",
+        "patientId": "P-OP-021",
+        "fromRoomId": "fever_2",
+        "toRoomId": "pharmacy_2",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escort_roles": [],
+        "equipment": [],
+        "from_room_id": "fever_2",
+        "to_room_id": "pharmacy_2",
+        "requested_to_room_id": "pharmacy_2",
+        "via_room_ids": [],
+        "final_form": "walking",
+        "patient_form_during_move": "walking",
+        "porter_id": null,
+        "porter_staff_id": null,
+        "porter_name": null,
+        "porter_start": null,
+        "porter_return": null
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "walking",
+        "escortRoles": [],
+        "equipment": [],
+        "fromRoomId": "fever_2",
+        "toRoomId": "pharmacy_2",
+        "requestedToRoomId": "pharmacy_2",
+        "viaRoomIds": [],
+        "finalForm": "walking",
+        "patientFormDuringMove": "walking",
+        "porterId": null,
+        "porterStaffId": null,
+        "porterName": null,
+        "porterStart": null,
+        "porterReturn": null
+      }
+    },
+    {
+      "event_seq": 92,
+      "eventSeq": 92,
+      "accepted": true,
+      "event_id": "ED_TO_WARD_MOVE",
+      "eventId": "ED_TO_WARD_MOVE",
+      "patient_id": "P-ER-003",
+      "patientId": "P-ER-003",
+      "request": {
+        "requestId": "console-1781197751740",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "ED_TO_WARD_MOVE",
+        "patientId": "P-ER-003",
+        "fromRoomId": "ed_waiting",
+        "toRoomId": "ward_admission",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "stretcher",
+        "escort_roles": [
+          "porter",
+          "ed_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
+        "from_room_id": "ed_waiting",
+        "to_room_id": "gastro_ward",
+        "requested_to_room_id": "ward_admission",
+        "via_room_ids": [
+          "ed_handoff",
+          "elevator_1",
+          "elevator_5",
+          "ward_admission"
+        ],
+        "final_form": "bed",
+        "patient_form_during_move": "stretcher",
+        "porter_id": "porter-1f-07",
+        "porter_staff_id": "POT-1F-007",
+        "porter_name": "Porter Kai Song",
+        "porter_start": {
+          "floor": 1,
+          "floorId": 1,
+          "tileX": 23.0,
+          "tileY": 26.4,
+          "x": 736.0,
+          "y": 844.8
+        },
+        "porter_return": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 63.5,
+          "tileY": 15.4,
+          "x": 2032.0,
+          "y": 492.8
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "stretcher",
+        "escortRoles": [
+          "porter",
+          "ed_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
+        "fromRoomId": "ed_waiting",
+        "toRoomId": "gastro_ward",
+        "requestedToRoomId": "ward_admission",
+        "viaRoomIds": [
+          "ed_handoff",
+          "elevator_1",
+          "elevator_5",
+          "ward_admission"
+        ],
+        "finalForm": "bed",
+        "patientFormDuringMove": "stretcher",
+        "porterId": "porter-1f-07",
+        "porterStaffId": "POT-1F-007",
+        "porterName": "Porter Kai Song",
+        "porterStart": {
+          "floor": 1,
+          "floorId": 1,
+          "tileX": 23.0,
+          "tileY": 26.4,
+          "x": 736.0,
+          "y": 844.8
+        },
+        "porterReturn": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 63.5,
+          "tileY": 15.4,
+          "x": 2032.0,
+          "y": 492.8
+        }
+      }
+    },
+    {
+      "event_seq": 93,
+      "eventSeq": 93,
+      "accepted": true,
+      "event_id": "WARD_TO_DIAGNOSTIC_MOVE",
+      "eventId": "WARD_TO_DIAGNOSTIC_MOVE",
+      "patient_id": "P-ER-003",
+      "patientId": "P-ER-003",
+      "request": {
+        "requestId": "console-1781198089142",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "WARD_TO_DIAGNOSTIC_MOVE",
+        "patientId": "P-ER-003",
+        "fromRoomId": "gastro_ward",
+        "toRoomId": "diagnostic_center",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "stretcher",
+        "escort_roles": [
+          "porter",
+          "ward_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
+        "from_room_id": "gastro_ward",
+        "to_room_id": "diagnostic_center",
+        "requested_to_room_id": "diagnostic_center",
+        "via_room_ids": [],
+        "final_form": "stretcher",
+        "patient_form_during_move": "stretcher",
+        "porter_id": "porter-1f-07",
+        "porter_staff_id": "POT-1F-007",
+        "porter_name": "Porter Kai Song",
+        "porter_start": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 64.6,
+          "tileY": 15.4,
+          "x": 2067.2,
+          "y": 492.8
+        },
+        "porter_return": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 37.5,
+          "tileY": 26.6,
+          "x": 1200.0,
+          "y": 851.2
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "stretcher",
+        "escortRoles": [
+          "porter",
+          "ward_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
+        "fromRoomId": "gastro_ward",
+        "toRoomId": "diagnostic_center",
+        "requestedToRoomId": "diagnostic_center",
+        "viaRoomIds": [],
+        "finalForm": "stretcher",
+        "patientFormDuringMove": "stretcher",
+        "porterId": "porter-1f-07",
+        "porterStaffId": "POT-1F-007",
+        "porterName": "Porter Kai Song",
+        "porterStart": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 64.6,
+          "tileY": 15.4,
+          "x": 2067.2,
+          "y": 492.8
+        },
+        "porterReturn": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 37.5,
+          "tileY": 26.6,
+          "x": 1200.0,
+          "y": 851.2
+        }
+      }
+    },
+    {
+      "event_seq": 94,
+      "eventSeq": 94,
+      "accepted": true,
+      "event_id": "WARD_DIAGNOSTIC_RETURN",
+      "eventId": "WARD_DIAGNOSTIC_RETURN",
+      "patient_id": "P-ER-003",
+      "patientId": "P-ER-003",
+      "request": {
+        "requestId": "console-1781198119324",
+        "source": "console",
+        "operatorId": "manual-admin",
+        "eventId": "WARD_DIAGNOSTIC_RETURN",
+        "patientId": "P-ER-003",
+        "fromRoomId": "diagnostic_center",
+        "toRoomId": "gastro_ward",
+        "context": {
+          "reason": ""
+        }
+      },
+      "animation_plan": {
+        "kind": "patient-move",
+        "transport": "stretcher",
+        "escort_roles": [
+          "porter",
+          "ward_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
+        "from_room_id": "diagnostic_center",
+        "to_room_id": "gastro_ward",
+        "requested_to_room_id": "gastro_ward",
+        "via_room_ids": [],
+        "final_form": "bed",
+        "patient_form_during_move": "stretcher",
+        "porter_id": "porter-1f-07",
+        "porter_staff_id": "POT-1F-007",
+        "porter_name": "Porter Kai Song",
+        "porter_start": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 36.0,
+          "tileY": 26.6,
+          "x": 1152.0,
+          "y": 851.2
+        },
+        "porter_return": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 63.5,
+          "tileY": 15.4,
+          "x": 2032.0,
+          "y": 492.8
+        }
+      },
+      "animationPlan": {
+        "kind": "patient-move",
+        "transport": "stretcher",
+        "escortRoles": [
+          "porter",
+          "ward_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
+        "fromRoomId": "diagnostic_center",
+        "toRoomId": "gastro_ward",
+        "requestedToRoomId": "gastro_ward",
+        "viaRoomIds": [],
+        "finalForm": "bed",
+        "patientFormDuringMove": "stretcher",
+        "porterId": "porter-1f-07",
+        "porterStaffId": "POT-1F-007",
+        "porterName": "Porter Kai Song",
+        "porterStart": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 36.0,
+          "tileY": 26.6,
+          "x": 1152.0,
+          "y": 851.2
+        },
+        "porterReturn": {
+          "floor": 5,
+          "floorId": 5,
+          "tileX": 63.5,
+          "tileY": 15.4,
+          "x": 2032.0,
+          "y": 492.8
+        }
       }
     }
   ],

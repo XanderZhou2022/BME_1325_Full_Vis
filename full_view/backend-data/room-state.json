@@ -1193,10 +1193,17 @@
     "gastro_ward": {
       "roomId": "gastro_ward",
       "reservedBy": null,
-      "occupiedBeds": 0,
+      "occupiedBeds": 1,
       "capacityBeds": 4,
       "queue": [],
-      "bedAssignments": [],
+      "bedAssignments": [
+        {
+          "bedId": "gastro_ward-bed-01",
+          "patientId": "P-ER-003",
+          "bed_id": "gastro_ward-bed-01",
+          "patient_id": "P-ER-003"
+        }
+      ],
       "bedIds": [
         "gastro_ward-bed-01",
         "gastro_ward-bed-02",
@@ -1206,14 +1213,21 @@
       "room_id": "gastro_ward",
       "reserved_by": null,
       "capacity_beds": 4,
-      "occupied_beds": 0,
+      "occupied_beds": 1,
       "bed_ids": [
         "gastro_ward-bed-01",
         "gastro_ward-bed-02",
         "gastro_ward-bed-03",
         "gastro_ward-bed-04"
       ],
-      "bed_assignments": []
+      "bed_assignments": [
+        {
+          "bedId": "gastro_ward-bed-01",
+          "patientId": "P-ER-003",
+          "bed_id": "gastro_ward-bed-01",
+          "patient_id": "P-ER-003"
+        }
+      ]
     },
     "neuro_ward": {
       "roomId": "neuro_ward",
