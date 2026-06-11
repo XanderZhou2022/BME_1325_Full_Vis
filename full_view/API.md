@@ -72,6 +72,48 @@ Returns all patients, doctors, and nurses.
 
 Returns event-log entries with `eventSeq > after`. The map page polls this endpoint and only animates accepted events with an `animationPlan`.
 
+## Patient Intake API
+
+`POST /api/hospital/patients/admit`
+
+Creates a new entry patient. Current entry patients must enter through emergency or outpatient, then the backend immediately routes them through the corresponding triage movement rule:
+
+- `department: "emergency"` creates the patient at `ed_registration`, then sends `ED_REGISTRATION_TO_TRIAGE_OR_WAITING`.
+- `department: "outpatient"` creates the patient at `registration_2`, then sends `OP_REGISTRATION_TO_TRIAGE_OR_WAITING`.
+
+Request:
+
+```json
+{
+  "requestId": "console-intake-emergency-001",
+  "source": "console-intake",
+  "operatorId": "manual-admin",
+  "department": "emergency",
+  "context": {
+    "reason": "walk-in chest tightness"
+  }
+}
+```
+
+Response:
+
+```json
+{
+  "accepted": true,
+  "patient": {
+    "patientId": "P-ER-006",
+    "name": "陈安然",
+    "roomId": "ed_triage",
+    "status": "WAITING"
+  },
+  "move": {
+    "accepted": true,
+    "eventSeq": 27,
+    "eventId": "ED_REGISTRATION_TO_TRIAGE_OR_WAITING"
+  }
+}
+```
+
 ## Move Event API
 
 `POST /api/hospital/events/move`

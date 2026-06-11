@@ -542,15 +542,18 @@
           "elevator_1",
           "elevator_5"
         ],
-        "transport": "wheelchair",
+        "transport": "stretcher",
         "acuity": "routine",
-        "patientFormDuringMove": "wheelchair",
+        "patientFormDuringMove": "stretcher",
         "finalForm": "bed",
         "escortRequired": true,
         "escortRoles": [
-          "porter"
+          "porter",
+          "ed_nurse"
         ],
-        "equipment": [],
+        "equipment": [
+          "transport_bag"
+        ],
         "pathPolicy": {
           "requiresPath": true,
           "useElevator": true,
@@ -569,11 +572,12 @@
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
         },
-        "patient_form_during_move": "wheelchair",
+        "patient_form_during_move": "stretcher",
         "final_form": "bed",
         "escort_required": true,
         "escort_roles": [
-          "porter"
+          "porter",
+          "ed_nurse"
         ]
       },
       "sourceFile": "patient-movement-curated",

@@ -1006,7 +1006,7 @@ button {
 }
 
 .console-panel--events {
-  grid-template-rows: auto auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
 }
 
 .console-panel__head {
@@ -1237,6 +1237,29 @@ button {
   font: inherit;
 }
 
+.console-person-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.console-patient-delete {
+  min-width: 70px;
+  border: 1px solid rgba(231, 128, 99, 0.55);
+  border-radius: 8px;
+  background: rgba(231, 128, 99, 0.12);
+  color: #ffd9cf;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.console-patient-delete:hover {
+  border-color: rgba(255, 169, 144, 0.9);
+  background: rgba(231, 128, 99, 0.22);
+}
+
 .console-person-row:hover,
 .console-person-row.is-active {
   border-color: rgba(255, 213, 122, 0.86);
@@ -1246,6 +1269,48 @@ button {
 .console-form {
   display: grid;
   gap: 9px;
+}
+
+.console-intake-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.console-intake-button {
+  min-height: 58px;
+  border: 1px solid rgba(255, 213, 122, 0.42);
+  border-radius: 8px;
+  background: rgba(255, 213, 122, 0.14);
+  color: #fff7e5;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  align-content: center;
+  text-align: left;
+  padding: 9px 10px;
+  font: inherit;
+}
+
+.console-intake-button:hover {
+  border-color: rgba(255, 213, 122, 0.86);
+  background: rgba(255, 213, 122, 0.22);
+}
+
+.console-intake-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.console-intake-button strong {
+  font-size: 13px;
+}
+
+.console-intake-button span {
+  color: #f4e5c5;
+  font-size: 10px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .console-selected-person {

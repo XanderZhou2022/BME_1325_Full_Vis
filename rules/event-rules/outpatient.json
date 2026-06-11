@@ -514,13 +514,18 @@
           "elevator_2",
           "elevator_5"
         ],
-        "transport": "walking",
+        "transport": "stretcher",
         "acuity": "routine",
-        "patientFormDuringMove": "walking",
+        "patientFormDuringMove": "stretcher",
         "finalForm": "bed",
-        "escortRequired": false,
-        "escortRoles": [],
-        "equipment": [],
+        "escortRequired": true,
+        "escortRoles": [
+          "porter",
+          "outpatient_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
         "pathPolicy": {
           "requiresPath": true,
           "useElevator": true,
@@ -539,10 +544,13 @@
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
         },
-        "patient_form_during_move": "walking",
+        "patient_form_during_move": "stretcher",
         "final_form": "bed",
-        "escort_required": false,
-        "escort_roles": []
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "outpatient_nurse"
+        ]
       },
       "sourceFile": "patient-movement-curated",
       "event_id": "OP_TO_WARD_MOVE"

@@ -1,10 +1,12 @@
 import {
+  deletePatient,
   fetchEventRuleCategory,
   fetchEventRuleIndex,
   fetchHospitalEvents,
   fetchHospitalSnapshot,
+  requestPatientAdmission,
   requestPatientMove,
-} from "./hospital-api.js";
+} from "./hospital-api.js?v=queue-delete-20260612";
 
 const summary = document.getElementById("consoleSummary");
 const roomCount = document.getElementById("roomCount");
@@ -21,6 +23,9 @@ const moveTarget = document.getElementById("moveTarget");
 const moveReason = document.getElementById("moveReason");
 const moveSubmit = moveForm.querySelector("[type='submit']");
 const selectedPersonSummary = document.getElementById("selectedPersonSummary");
+const intakeStatus = document.getElementById("intakeStatus");
+const admitEmergencyButton = document.getElementById("admitEmergencyPatient");
+const admitOutpatientButton = document.getElementById("admitOutpatientPatient");
 const eventStatus = document.getElementById("eventStatus");
 const eventCount = document.getElementById("eventCount");
 const eventsContainer = document.getElementById("consoleEvents");
@@ -61,6 +66,12 @@ roomsContainer.addEventListener("click", (event) => {
   renderRoomDetail();
 });
 roomDetail.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest("[data-delete-patient-id]");
+  if (deleteButton) {
+    event.stopPropagation();
+    deletePatientFromConsole(deleteButton.dataset.deletePatientId);
+    return;
+  }
   const button = event.target.closest("[data-person-id]");
   if (!button) return;
   selectPersonForOperation(button.dataset.personType, button.dataset.personId);
@@ -76,6 +87,8 @@ movePatient.addEventListener("change", () => {
 moveEvent.addEventListener("change", () => applySelectedRuleDestination({ syncRoomDetail: true }));
 moveFloor.addEventListener("change", () => renderTargetOptions());
 moveForm.addEventListener("submit", submitMoveEvent);
+admitEmergencyButton.addEventListener("click", () => admitEntryPatient("emergency"));
+admitOutpatientButton.addEventListener("click", () => admitEntryPatient("outpatient"));
 
 await loadConsole();
 window.setInterval(refreshEvents, 1200);
@@ -175,7 +188,7 @@ function renderRoomDetail() {
     ${bedList(room)}
     <h3>Patients</h3>
     ${peopleList(room.patients, "patient")}
-    <h3>Doctors & Nurses</h3>
+    <h3>Staff</h3>
     ${peopleList(room.staff, "staff")}
   `;
 }
@@ -428,6 +441,77 @@ async function submitMoveEvent(event) {
   }
 }
 
+async function deletePatientFromConsole(patientId) {
+  const patient = state.snapshot?.patients?.find((item) => item.patientId === patientId);
+  if (!patient) return;
+  if (!window.confirm(`Delete patient ${patient.name} (${patientId})?`)) return;
+
+  eventStatus.textContent = "Deleting...";
+  try {
+    const response = await deletePatient(patientId);
+    if (response.accepted) {
+      if (state.selectedPersonId === patientId) {
+        state.selectedPersonId = null;
+        state.selectedPersonType = null;
+      }
+      eventStatus.textContent = "Deleted";
+    } else {
+      eventStatus.textContent = response.reasonCode || "Rejected";
+      window.alert(response.message || "Delete rejected by backend.");
+    }
+    await loadConsole();
+    await refreshEvents();
+  } catch (error) {
+    eventStatus.textContent = "Delete failed";
+    window.alert(error.message);
+  }
+}
+
+async function admitEntryPatient(department) {
+  intakeStatus.textContent = "Creating...";
+  setIntakeButtonsDisabled(true);
+  try {
+    const response = await requestPatientAdmission({
+      requestId: `console-intake-${department}-${Date.now()}`,
+      source: "console-intake",
+      operatorId: "manual-admin",
+      department,
+      context: { reason: `${department} patient intake` },
+    });
+    const patient = response.patient;
+    intakeStatus.textContent = response.accepted
+      ? `${patient?.patientId || "Patient"} triaged`
+      : response.reasonCode || "Rejected";
+    await loadConsole();
+    if (patient?.patientId) {
+      focusPatient(patient.patientId);
+    }
+    await refreshEvents();
+  } catch (error) {
+    intakeStatus.textContent = error.message;
+  } finally {
+    setIntakeButtonsDisabled(false);
+  }
+}
+
+function setIntakeButtonsDisabled(disabled) {
+  admitEmergencyButton.disabled = disabled;
+  admitOutpatientButton.disabled = disabled;
+}
+
+function focusPatient(patientId) {
+  const patient = state.snapshot.patients.find((item) => item.patientId === patientId);
+  const room = patient ? roomById(patient.roomId) : null;
+  state.selectedPersonId = patientId;
+  state.selectedPersonType = "patient";
+  if (room) {
+    state.selectedFloorId = room.floor;
+    state.selectedRoomId = room.id;
+  }
+  if (patient) movePatient.value = patient.patientId;
+  renderAll();
+}
+
 async function refreshEvents() {
   try {
     const result = await fetchHospitalEvents(0);
@@ -488,12 +572,19 @@ function peopleList(people, type) {
       ${people.map((person) => {
         const personId = person.patientId || person.employeeId;
         const selected = state.selectedPersonType === type && state.selectedPersonId === personId;
+        const row = `
+          <button class="console-person-row${selected ? " is-active" : ""}" type="button" data-person-type="${escapeAttr(type)}" data-person-id="${escapeAttr(personId)}">
+            <strong>${escapeHtml(person.name)}</strong>
+            <span>${escapeHtml(person.patientId || person.employeeId)} · ${escapeHtml(person.status || person.role || person.type)}</span>
+          </button>
+        `;
+        if (type !== "patient") return row;
         return `
-        <button class="console-person-row${selected ? " is-active" : ""}" type="button" data-person-type="${escapeAttr(type)}" data-person-id="${escapeAttr(personId)}">
-          <strong>${escapeHtml(person.name)}</strong>
-          <span>${escapeHtml(person.patientId || person.employeeId)} · ${escapeHtml(person.status || person.role || person.type)}</span>
-        </button>
-      `;
+          <div class="console-person-entry">
+            ${row}
+            <button class="console-patient-delete" type="button" data-delete-patient-id="${escapeAttr(personId)}" aria-label="Delete ${escapeAttr(person.name)}">Delete</button>
+          </div>
+        `;
       }).join("")}
     </div>
   `;

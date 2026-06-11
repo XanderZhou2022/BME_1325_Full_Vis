@@ -60,6 +60,7 @@ http://localhost:8000/console.html
 - `GET /api/hospital/rooms`
 - `GET /api/hospital/people`
 - `GET /api/hospital/events?after=<seq>`
+- `POST /api/hospital/patients/admit`
 - `POST /api/hospital/events/move`
 - `GET /api/event-rules`
 - `PUT /api/event-rules/*.json`

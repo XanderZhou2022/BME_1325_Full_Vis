@@ -35,13 +35,18 @@
         "from": "ward_admission",
         "to": "target_ward_room",
         "via": [],
-        "transport": "walking",
+        "transport": "stretcher",
         "acuity": "routine",
-        "patientFormDuringMove": "walking",
+        "patientFormDuringMove": "stretcher",
         "finalForm": "bed",
-        "escortRequired": false,
-        "escortRoles": [],
-        "equipment": [],
+        "escortRequired": true,
+        "escortRoles": [
+          "porter",
+          "ward_nurse"
+        ],
+        "equipment": [
+          "transport_bag"
+        ],
         "pathPolicy": {
           "requiresPath": true,
           "useElevator": false,
@@ -60,10 +65,13 @@
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
         },
-        "patient_form_during_move": "walking",
+        "patient_form_during_move": "stretcher",
         "final_form": "bed",
-        "escort_required": false,
-        "escort_roles": []
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "ward_nurse"
+        ]
       },
       "sourceFile": "patient-movement-curated",
       "event_id": "WARD_ADMISSION_TO_BED"
@@ -243,16 +251,18 @@
         "from": "source_ward_room",
         "to": "target_ward_room",
         "via": [],
-        "transport": "wheelchair",
+        "transport": "stretcher",
         "acuity": "routine",
-        "patientFormDuringMove": "wheelchair",
+        "patientFormDuringMove": "stretcher",
         "finalForm": "bed",
         "escortRequired": true,
         "escortRoles": [
           "porter",
           "ward_nurse"
         ],
-        "equipment": [],
+        "equipment": [
+          "transport_bag"
+        ],
         "pathPolicy": {
           "requiresPath": true,
           "useElevator": false,
@@ -273,7 +283,7 @@
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
         },
-        "patient_form_during_move": "wheelchair",
+        "patient_form_during_move": "stretcher",
         "final_form": "bed",
         "escort_required": true,
         "escort_roles": [

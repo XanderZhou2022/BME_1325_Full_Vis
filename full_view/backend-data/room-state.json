@@ -291,7 +291,64 @@
       "reservedBy": null,
       "occupiedBeds": 0,
       "capacityBeds": 0,
-      "queue": [],
+      "queue": [
+        {
+          "patientId": "P-OP-009",
+          "patient_id": "P-OP-009",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        },
+        {
+          "patientId": "P-OP-011",
+          "patient_id": "P-OP-011",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        },
+        {
+          "patientId": "P-OP-012",
+          "patient_id": "P-OP-012",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        },
+        {
+          "patientId": "P-OP-014",
+          "patient_id": "P-OP-014",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        },
+        {
+          "patientId": "P-OP-016",
+          "patient_id": "P-OP-016",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        },
+        {
+          "patientId": "P-OP-018",
+          "patient_id": "P-OP-018",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        },
+        {
+          "patientId": "P-OP-019",
+          "patient_id": "P-OP-019",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        }
+      ],
       "bedAssignments": [],
       "bedIds": [],
       "room_id": "consultation_a_2",
@@ -306,7 +363,16 @@
       "reservedBy": null,
       "occupiedBeds": 0,
       "capacityBeds": 0,
-      "queue": [],
+      "queue": [
+        {
+          "patientId": "P-ST-OP-005",
+          "patient_id": "P-ST-OP-005",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        }
+      ],
       "bedAssignments": [],
       "bedIds": [],
       "room_id": "consultation_b_2",
@@ -321,7 +387,16 @@
       "reservedBy": null,
       "occupiedBeds": 0,
       "capacityBeds": 0,
-      "queue": [],
+      "queue": [
+        {
+          "patientId": "P-ST-OP-004",
+          "patient_id": "P-ST-OP-004",
+          "fromRoomId": "outpatient_waiting",
+          "from_room_id": "outpatient_waiting",
+          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
+          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
+        }
+      ],
       "bedAssignments": [],
       "bedIds": [],
       "room_id": "internal_2",
@@ -499,8 +574,8 @@
     "icu_beds_a": {
       "roomId": "icu_beds_a",
       "reservedBy": null,
-      "occupiedBeds": 1,
-      "capacityBeds": 2,
+      "occupiedBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [
         {
@@ -508,19 +583,29 @@
           "patientId": "P-ICU-001",
           "bed_id": "icu_beds_a-bed-01",
           "patient_id": "P-ICU-001"
+        },
+        {
+          "bedId": "icu_beds_a-bed-02",
+          "patientId": "P-ST-ICU-001",
+          "bed_id": "icu_beds_a-bed-02",
+          "patient_id": "P-ST-ICU-001"
         }
       ],
       "bedIds": [
         "icu_beds_a-bed-01",
-        "icu_beds_a-bed-02"
+        "icu_beds_a-bed-02",
+        "icu_beds_a-bed-03",
+        "icu_beds_a-bed-04"
       ],
       "room_id": "icu_beds_a",
       "reserved_by": null,
-      "capacity_beds": 2,
-      "occupied_beds": 1,
+      "capacity_beds": 4,
+      "occupied_beds": 2,
       "bed_ids": [
         "icu_beds_a-bed-01",
-        "icu_beds_a-bed-02"
+        "icu_beds_a-bed-02",
+        "icu_beds_a-bed-03",
+        "icu_beds_a-bed-04"
       ],
       "bed_assignments": [
         {
@@ -528,6 +613,12 @@
           "patientId": "P-ICU-001",
           "bed_id": "icu_beds_a-bed-01",
           "patient_id": "P-ICU-001"
+        },
+        {
+          "bedId": "icu_beds_a-bed-02",
+          "patientId": "P-ST-ICU-001",
+          "bed_id": "icu_beds_a-bed-02",
+          "patient_id": "P-ST-ICU-001"
         }
       ]
     },
@@ -535,7 +626,7 @@
       "roomId": "icu_beds_b",
       "reservedBy": null,
       "occupiedBeds": 1,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [
         {
@@ -547,15 +638,19 @@
       ],
       "bedIds": [
         "icu_beds_b-bed-01",
-        "icu_beds_b-bed-02"
+        "icu_beds_b-bed-02",
+        "icu_beds_b-bed-03",
+        "icu_beds_b-bed-04"
       ],
       "room_id": "icu_beds_b",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 1,
       "bed_ids": [
         "icu_beds_b-bed-01",
-        "icu_beds_b-bed-02"
+        "icu_beds_b-bed-02",
+        "icu_beds_b-bed-03",
+        "icu_beds_b-bed-04"
       ],
       "bed_assignments": [
         {
@@ -570,7 +665,7 @@
       "roomId": "icu_isolation",
       "reservedBy": null,
       "occupiedBeds": 1,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [
         {
@@ -582,15 +677,19 @@
       ],
       "bedIds": [
         "icu_isolation-bed-01",
-        "icu_isolation-bed-02"
+        "icu_isolation-bed-02",
+        "icu_isolation-bed-03",
+        "icu_isolation-bed-04"
       ],
       "room_id": "icu_isolation",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 1,
       "bed_ids": [
         "icu_isolation-bed-01",
-        "icu_isolation-bed-02"
+        "icu_isolation-bed-02",
+        "icu_isolation-bed-03",
+        "icu_isolation-bed-04"
       ],
       "bed_assignments": [
         {
@@ -620,20 +719,24 @@
       "roomId": "intervention_bay",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
         "intervention_bay-bed-01",
-        "intervention_bay-bed-02"
+        "intervention_bay-bed-02",
+        "intervention_bay-bed-03",
+        "intervention_bay-bed-04"
       ],
       "room_id": "intervention_bay",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "intervention_bay-bed-01",
-        "intervention_bay-bed-02"
+        "intervention_bay-bed-02",
+        "intervention_bay-bed-03",
+        "intervention_bay-bed-04"
       ],
       "bed_assignments": []
     },
@@ -1015,8 +1118,8 @@
     "resp_ward": {
       "roomId": "resp_ward",
       "reservedBy": null,
-      "occupiedBeds": 1,
-      "capacityBeds": 2,
+      "occupiedBeds": 4,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [
         {
@@ -1024,6 +1127,24 @@
           "patientId": "P-WD-002",
           "bed_id": "resp_ward-bed-01",
           "patient_id": "P-WD-002"
+        },
+        {
+          "bedId": "resp_ward-bed-02",
+          "patientId": "P-ST-WD-002",
+          "bed_id": "resp_ward-bed-02",
+          "patient_id": "P-ST-WD-002"
+        },
+        {
+          "bedId": "resp_ward-bed-03",
+          "patientId": "P-ER-001",
+          "bed_id": "resp_ward-bed-03",
+          "patient_id": "P-ER-001"
+        },
+        {
+          "bedId": "resp_ward-bed-04",
+          "patientId": "P-WD-001",
+          "bed_id": "resp_ward-bed-04",
+          "patient_id": "P-WD-001"
         }
       ],
       "bedIds": [
@@ -1034,8 +1155,8 @@
       ],
       "room_id": "resp_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
-      "occupied_beds": 1,
+      "capacity_beds": 4,
+      "occupied_beds": 4,
       "bed_ids": [
         "resp_ward-bed-01",
         "resp_ward-bed-02",
@@ -1048,14 +1169,32 @@
           "patientId": "P-WD-002",
           "bed_id": "resp_ward-bed-01",
           "patient_id": "P-WD-002"
+        },
+        {
+          "bedId": "resp_ward-bed-02",
+          "patientId": "P-ST-WD-002",
+          "bed_id": "resp_ward-bed-02",
+          "patient_id": "P-ST-WD-002"
+        },
+        {
+          "bedId": "resp_ward-bed-03",
+          "patientId": "P-ER-001",
+          "bed_id": "resp_ward-bed-03",
+          "patient_id": "P-ER-001"
+        },
+        {
+          "bedId": "resp_ward-bed-04",
+          "patientId": "P-WD-001",
+          "bed_id": "resp_ward-bed-04",
+          "patient_id": "P-WD-001"
         }
       ]
     },
     "card_ward": {
       "roomId": "card_ward",
       "reservedBy": null,
-      "occupiedBeds": 1,
-      "capacityBeds": 2,
+      "occupiedBeds": 4,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [
         {
@@ -1063,6 +1202,24 @@
           "patientId": "P-WD-003",
           "bed_id": "card_ward-bed-01",
           "patient_id": "P-WD-003"
+        },
+        {
+          "bedId": "card_ward-bed-02",
+          "patientId": "P-ST-WD-001",
+          "bed_id": "card_ward-bed-02",
+          "patient_id": "P-ST-WD-001"
+        },
+        {
+          "bedId": "card_ward-bed-03",
+          "patientId": "P-ER-006",
+          "bed_id": "card_ward-bed-03",
+          "patient_id": "P-ER-006"
+        },
+        {
+          "bedId": "card_ward-bed-04",
+          "patientId": "P-OP-004",
+          "bed_id": "card_ward-bed-04",
+          "patient_id": "P-OP-004"
         }
       ],
       "bedIds": [
@@ -1073,8 +1230,8 @@
       ],
       "room_id": "card_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
-      "occupied_beds": 1,
+      "capacity_beds": 4,
+      "occupied_beds": 4,
       "bed_ids": [
         "card_ward-bed-01",
         "card_ward-bed-02",
@@ -1087,6 +1244,24 @@
           "patientId": "P-WD-003",
           "bed_id": "card_ward-bed-01",
           "patient_id": "P-WD-003"
+        },
+        {
+          "bedId": "card_ward-bed-02",
+          "patientId": "P-ST-WD-001",
+          "bed_id": "card_ward-bed-02",
+          "patient_id": "P-ST-WD-001"
+        },
+        {
+          "bedId": "card_ward-bed-03",
+          "patientId": "P-ER-006",
+          "bed_id": "card_ward-bed-03",
+          "patient_id": "P-ER-006"
+        },
+        {
+          "bedId": "card_ward-bed-04",
+          "patientId": "P-OP-004",
+          "bed_id": "card_ward-bed-04",
+          "patient_id": "P-OP-004"
         }
       ]
     },
@@ -1094,7 +1269,7 @@
       "roomId": "gastro_ward",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
@@ -1105,7 +1280,7 @@
       ],
       "room_id": "gastro_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "gastro_ward-bed-01",
@@ -1119,7 +1294,7 @@
       "roomId": "neuro_ward",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
@@ -1130,7 +1305,7 @@
       ],
       "room_id": "neuro_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "neuro_ward-bed-01",
@@ -1144,7 +1319,7 @@
       "roomId": "endo_ward",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
@@ -1155,7 +1330,7 @@
       ],
       "room_id": "endo_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "endo_ward-bed-01",
@@ -1169,7 +1344,7 @@
       "roomId": "gensurg_ward",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
@@ -1180,7 +1355,7 @@
       ],
       "room_id": "gensurg_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "gensurg_ward-bed-01",
@@ -1194,7 +1369,7 @@
       "roomId": "ortho_ward",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
@@ -1205,7 +1380,7 @@
       ],
       "room_id": "ortho_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "ortho_ward-bed-01",
@@ -1219,7 +1394,7 @@
       "roomId": "obgyn_ward",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
@@ -1230,7 +1405,7 @@
       ],
       "room_id": "obgyn_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 0,
       "bed_ids": [
         "obgyn_ward-bed-01",
@@ -1244,7 +1419,7 @@
       "roomId": "peds_ward",
       "reservedBy": null,
       "occupiedBeds": 1,
-      "capacityBeds": 2,
+      "capacityBeds": 4,
       "queue": [],
       "bedAssignments": [
         {
@@ -1262,7 +1437,7 @@
       ],
       "room_id": "peds_ward",
       "reserved_by": null,
-      "capacity_beds": 2,
+      "capacity_beds": 4,
       "occupied_beds": 1,
       "bed_ids": [
         "peds_ward-bed-01",
@@ -1342,8 +1517,8 @@
   },
   "escortResources": {
     "porter": {
-      "available": 4,
-      "total": 4
+      "available": 50,
+      "total": 50
     },
     "ed_nurse": {
       "available": 3,
@@ -1360,6 +1535,10 @@
     "ward_nurse": {
       "available": 3,
       "total": 3
+    },
+    "transport_stretcher": {
+      "available": 50,
+      "total": 50
     }
   }
 }

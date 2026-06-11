@@ -1,9 +1,9 @@
 import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor, loadMapConfig } from "./map.js";
 import { createMapAdmin } from "./map-admin.js";
 import { createRulesAdmin } from "./rules-admin.js";
-import { fetchHospitalEvents, fetchHospitalSnapshot, fetchPersonProfile, requestPatientMove } from "./hospital-api.js";
+import { fetchHospitalEvents, fetchHospitalSnapshot, fetchPersonProfile, requestPatientMove } from "./hospital-api.js?v=queue-delete-20260612";
 import { createRoomPath } from "./pathfinding.js";
-import { PATIENTS } from "./patients.js";
+import { PATIENTS } from "./patients.js?v=profile-guard-20260612";
 import { STAFF } from "./staff.js";
 import {
   beginFloorTransition,
@@ -23,7 +23,7 @@ import {
   drawTransitionWash,
   minimapPointToWorld,
   renderStatusRows,
-} from "./render.js";
+} from "./render.js?v=stretcher-static-20260612";
 
 const canvas = document.getElementById("hospitalCanvas");
 const ctx = canvas.getContext("2d");
@@ -266,6 +266,9 @@ async function pollHospitalEvents() {
     for (const event of result.events || []) {
       state.lastEventSeq = Math.max(state.lastEventSeq, event.eventSeq || 0);
       if (event.accepted && event.animationPlan) startBackendPatientMove(event);
+      if (event.accepted && !event.animationPlan && (event.eventId === "PATIENT_DELETE" || event.snapshotRefresh)) {
+        refreshHospitalSnapshot({ preserveMoves: false });
+      }
     }
   } catch (error) {
     console.warn("Hospital event polling unavailable.", error);
@@ -278,7 +281,7 @@ function startBackendPatientMove(event) {
   const patient = findPatient(event.patientId);
   const plan = event.animationPlan;
   if (!patient || state.patientMoves.has(patient.id)) return;
-  const route = createPatientRouteFromPlan(patient, plan);
+  const route = createPatientRouteFromPlan(patient, plan, event);
   if (!route) {
     roomReadout.textContent = `No route found for ${event.eventId}`;
     refreshHospitalSnapshot({ preserveMoves: false });
@@ -288,6 +291,8 @@ function startBackendPatientMove(event) {
   patient.form = transferForm(plan);
   patient.transportMode = plan.transport || null;
   patient.movePhase = 0;
+  route.porterId = plan.porterId || null;
+  route.porterReturn = plan.porterReturn || null;
   state.patientMoves.set(patient.id, route);
   state.selectedEntityId = patient.id;
   state.selectedRoomId = plan.toRoomId;
@@ -437,7 +442,7 @@ function handleCanvasClick(point) {
     state.selectedRoomId = null;
     renderPersonLoading(hitEntity);
     const requestId = ++profileRequestId;
-    fetchPersonProfile(hitEntity.id)
+    fetchPersonProfile(hitEntity.profileId || hitEntity.id)
       .then((profile) => {
         if (requestId !== profileRequestId) return;
         renderPersonProfile(profile, hitEntity);
@@ -550,7 +555,7 @@ function entityHitScore(entity, world) {
 function clickablePatientsForFloor(floorId) {
   return patientsForFloor(floorId).flatMap((patient) => {
     if (patient.form !== "consultation") return [{ ...patient, entityType: "patient" }];
-    return [
+    const entities = [
       {
         ...patient,
         entityType: "patient",
@@ -558,15 +563,34 @@ function clickablePatientsForFloor(floorId) {
         y: patient.y + 8,
         hitShape: { rx: 18, ry: 24 },
       },
-      {
-        id: patient.doctorProfileId,
+    ];
+    const doctorId = patient.doctorProfileId || patient.doctor_profile_id;
+    if (doctorId && hasStaffProfile(doctorId)) {
+      entities.push({
+        id: consultationDoctorEntityId(patient),
+        profileId: doctorId,
         floor: patient.floor,
         entityType: "doctor",
         x: patient.x + 26,
         y: patient.y + 8,
         hitShape: { rx: 18, ry: 24 },
-      },
-    ];
+      });
+    }
+    return entities;
+  });
+}
+
+function consultationDoctorEntityId(patient) {
+  return `${patient.id}::doctor`;
+}
+
+function hasStaffProfile(id) {
+  return state.staff.some((member) => {
+    return member.id === id ||
+      member.staffId === id ||
+      member.staff_id === id ||
+      member.employeeId === id ||
+      member.employee_id === id;
   });
 }
 
@@ -752,6 +776,7 @@ function rebuildMapAfterConfigChange(message) {
 }
 
 function reflowPatients() {
+  const patientsByRoom = new Map();
   state.patients.forEach((patient) => {
     if (!patient.roomId || state.patientMoves.has(patient.id)) return;
     const room = roomById(patient.roomId);
@@ -760,14 +785,122 @@ function reflowPatients() {
       return;
     }
     patient.floor = room.floor;
+    if (patient.form === "bed" && isBedCareRoom(room)) {
+      const bedPoint = bedPatientPointForPatient(room, patient);
+      if (bedPoint) {
+        patient.x = bedPoint.x;
+        patient.y = bedPoint.y;
+        const rel = relativePointInRoom(bedPoint, room);
+        patient.relX = rel.relX;
+        patient.relY = rel.relY;
+        patient.rel_x = rel.relX;
+        patient.rel_y = rel.relY;
+        return;
+      }
+    }
     patient.x = (room.x + room.w * clamp(patient.relX ?? 0.5, 0.06, 0.94)) * TILE;
     patient.y = (room.y + room.h * clamp(patient.relY ?? 0.5, 0.06, 0.94)) * TILE;
+    if (shouldAutoSpreadPatient(patient)) {
+      if (!patientsByRoom.has(room.id)) patientsByRoom.set(room.id, []);
+      patientsByRoom.get(room.id).push(patient);
+    }
   });
+
+  patientsByRoom.forEach((patients, roomId) => {
+    if (patients.length < 2) return;
+    const room = roomById(roomId);
+    if (!room) return;
+    spreadPatientsInsideRoom(room, patients);
+  });
+}
+
+function shouldAutoSpreadPatient(patient) {
+  return ["waiting", "walking"].includes(patient.form);
+}
+
+function spreadPatientsInsideRoom(room, patients) {
+  const points = patientCrowdPointsForRoom(room, patients.length);
+  patients
+    .slice()
+    .sort((a, b) => String(a.patientId || a.id).localeCompare(String(b.patientId || b.id)))
+    .forEach((patient, index) => {
+      const point = points[index] || roomCrowdFallbackPoint(room, index, patients.length);
+      patient.x = point.x;
+      patient.y = point.y;
+      const rel = relativePointInRoom(point, room);
+      patient.relX = rel.relX;
+      patient.relY = rel.relY;
+      patient.rel_x = rel.relX;
+      patient.rel_y = rel.relY;
+    });
+}
+
+function patientCrowdPointsForRoom(room, count) {
+  const candidates = [];
+  const minX = (room.x + 1.25) * TILE;
+  const maxX = (room.x + room.w - 1.25) * TILE;
+  const minY = (room.y + Math.max(3.0, room.h * 0.42)) * TILE;
+  const maxY = (room.y + room.h - 1.05) * TILE;
+  const center = roomCenter(room);
+
+  for (let y = minY; y <= maxY; y += TILE * 0.78) {
+    for (let x = minX; x <= maxX; x += TILE * 0.82) {
+      const point = { x, y };
+      if (!pointInsideRoom(point, room)) continue;
+      if (!spotClearOfObstacles(point, room.floor, propColliders, 14)) continue;
+      candidates.push({
+        point,
+        score: Math.abs(point.x - center.x) * 0.2 + Math.abs(point.y - center.y) * 0.08,
+      });
+    }
+  }
+
+  candidates.sort((a, b) => a.score - b.score);
+  const selected = [];
+  const minDistance = count > 8 ? 30 : 38;
+  for (const candidate of candidates) {
+    if (selected.every((point) => Math.hypot(point.x - candidate.point.x, point.y - candidate.point.y) >= minDistance)) {
+      selected.push(candidate.point);
+      if (selected.length >= count) break;
+    }
+  }
+
+  while (selected.length < count) {
+    selected.push(roomCrowdFallbackPoint(room, selected.length, count));
+  }
+  return selected;
+}
+
+function roomCrowdFallbackPoint(room, index, total) {
+  const columns = Math.max(2, Math.ceil(Math.sqrt(total)));
+  const rows = Math.ceil(total / columns);
+  const col = index % columns;
+  const row = Math.floor(index / columns);
+  const minRelX = 0.18;
+  const maxRelX = 0.82;
+  const minRelY = 0.50;
+  const maxRelY = 0.86;
+  const relX = columns === 1 ? 0.5 : minRelX + (maxRelX - minRelX) * (col / (columns - 1));
+  const relY = rows === 1 ? 0.64 : minRelY + (maxRelY - minRelY) * (row / (rows - 1));
+  return {
+    x: (room.x + room.w * relX) * TILE,
+    y: (room.y + room.h * relY) * TILE,
+  };
 }
 
 function reflowStaff() {
   const placedStaff = [];
   state.staff.forEach((member) => {
+    if (member.locationType === "hallway" || member.location_type === "hallway") {
+      const floor = Number(member.floor ?? member.floor_id ?? member.current_location?.floor_id ?? 0);
+      const x = Number(member.x ?? member.current_location?.x ?? (member.tile_x ?? member.current_location?.tile_x ?? 0) * TILE);
+      const y = Number(member.y ?? member.current_location?.y ?? (member.tile_y ?? member.current_location?.tile_y ?? 0) * TILE);
+      member.floor = floor;
+      member.x = x;
+      member.y = y;
+      placedStaff.push({ x: member.x, y: member.y });
+      return;
+    }
     if (!member.roomId) {
       member.floor = -1;
       return;
@@ -790,7 +923,12 @@ function reflowStaff() {
 }
 
 function staffForFloor(floorId) {
-  return state.staff.filter((member) => member.floor === floorId);
+  return state.staff.filter((member) => member.floor === floorId && !staffBusyWithTransport(member));
+}
+
+function staffBusyWithTransport(member) {
+  const memberIds = new Set([member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean));
+  return Array.from(state.patientMoves.values()).some((move) => move.porterId && memberIds.has(move.porterId));
 }
 
 function createPatientRoute(patient, targetRoom) {
@@ -850,17 +988,21 @@ function createPatientRoute(patient, targetRoom) {
   };
 }
 
-function createPatientRouteFromPlan(patient, plan) {
+function createPatientRouteFromPlan(patient, plan, event = {}) {
   const targetRoom = roomById(plan.toRoomId);
   if (!targetRoom) return null;
   const collisions = [...state.geometry.walls, ...propColliders];
-  const destination = findAvailableRoomSpot(targetRoom, patient.id, collisions) || roomCenter(targetRoom);
+  const assignedBedId = plan.bedId || event.statusUpdates?.bedId || event.status_updates?.bed_id || patient.bedId || patient.bed_id;
+  const destination = findAvailableRoomSpot(targetRoom, patient.id, collisions, assignedBedId) || roomCenter(targetRoom);
   const roomIds = [...(plan.viaRoomIds || []), plan.toRoomId].filter(Boolean);
   const route = {
     destination,
     finalForm: plan.finalForm,
+    assignedBedId,
     targetRoomId: targetRoom.id,
     speed: plan.transport === "stretcher" ? 150 : 170,
+    porterId: plan.porterId || null,
+    porterReturn: plan.porterReturn || null,
     segmentIndex: 0,
     waypointIndex: 0,
     segments: [],
@@ -952,10 +1094,20 @@ function movePatientAlongSegment(patient, move, segment, delta) {
 
 function finishPatientMove(patient, move) {
   state.patientMoves.delete(patient.id);
+  placePorterAfterMove(move);
   const targetRoom = roomById(move.targetRoomId);
   if (targetRoom) {
     patient.floor = targetRoom.floor;
     patient.roomId = targetRoom.id;
+    if (move.assignedBedId) {
+      patient.bedId = move.assignedBedId;
+      patient.bed_id = move.assignedBedId;
+      patient.home_bed = {
+        ...(patient.home_bed || {}),
+        room_id: targetRoom.id,
+        bed_id: move.assignedBedId,
+      };
+    }
     const rel = relativePointInRoom(move.destination, targetRoom);
     patient.relX = rel.relX;
     patient.relY = rel.relY;
@@ -984,6 +1136,34 @@ function finishPatientMove(patient, move) {
   refreshHospitalSnapshot({ preserveMoves: true });
 }
 
+function placePorterAfterMove(move) {
+  if (!move.porterId || !move.porterReturn) return;
+  const porter = state.staff.find((member) => {
+    const ids = [member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean);
+    return ids.includes(move.porterId);
+  });
+  if (!porter) return;
+  porter.locationType = "hallway";
+  porter.location_type = "hallway";
+  porter.roomId = null;
+  porter.room_id = null;
+  porter.floor = Number(move.porterReturn.floor ?? move.porterReturn.floorId ?? porter.floor);
+  porter.floor_id = porter.floor;
+  porter.x = Number(move.porterReturn.x ?? porter.x);
+  porter.y = Number(move.porterReturn.y ?? porter.y);
+  porter.tile_x = Number(move.porterReturn.tileX ?? porter.x / TILE);
+  porter.tile_y = Number(move.porterReturn.tileY ?? porter.y / TILE);
+  porter.current_location = {
+    kind: "hallway",
+    location_type: "hallway",
+    floor_id: porter.floor,
+    tile_x: porter.tile_x,
+    tile_y: porter.tile_y,
+    x: porter.x,
+    y: porter.y,
+  };
+}
+
 function findPatient(patientId) {
   return state.patients.find((patient) => patient.id === patientId || patient.patientId === patientId) || null;
 }
@@ -999,8 +1179,8 @@ function roomCenter(room) {
   };
 }
 
-function findAvailableRoomSpot(room, movingPatientId, collisions) {
-  if (isBedCareRoom(room)) return findAvailableBedSpot(room, movingPatientId);
+function findAvailableRoomSpot(room, movingPatientId, collisions, assignedBedId = null) {
+  if (isBedCareRoom(room)) return findAvailableBedSpot(room, movingPatientId, assignedBedId);
 
   const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
   const center = roomCenter(room);
@@ -1032,10 +1212,14 @@ function findAvailableRoomSpot(room, movingPatientId, collisions) {
   return candidates[0].point;
 }
 
-function findAvailableBedSpot(room, movingPatientId) {
+function findAvailableBedSpot(room, movingPatientId, assignedBedId = null) {
+  if (assignedBedId) {
+    const assignedPoint = bedPatientPointById(room, assignedBedId);
+    if (assignedPoint) return assignedPoint;
+  }
+
   const occupied = occupiedPeopleForFloor(room.floor, movingPatientId);
-  const beds = PROPS
-    .filter((item) => item.floor === room.floor && item.type === "bed" && propInsideRoom(item, room))
+  const beds = bedPropsForRoom(room)
     .map((item) => ({
       point: bedPatientPoint(item),
       score: item.y * 10 + item.x,
@@ -1222,6 +1406,26 @@ function propInsideRoom(item, room) {
     item.y + item.h <= room.y + room.h;
 }
 
+function bedPatientPointForPatient(room, patient) {
+  const bedId = patient.bedId || patient.bed_id || patient.home_bed?.bed_id;
+  return bedPatientPointById(room, bedId) || null;
+}
+
+function bedPatientPointById(room, bedId) {
+  if (!bedId) return null;
+  const bed = bedPropsForRoom(room).find((item) => item.bedId === bedId);
+  return bed ? bedPatientPoint(bed) : null;
+}
+
+function bedPropsForRoom(room) {
+  return PROPS
+    .filter((item) => item.floor === room.floor && item.type === "bed" && item.roomId === room.id)
+    .map((item, index) => ({
+      ...item,
+      bedId: `${room.id}-bed-${String(index + 1).padStart(2, "0")}`,
+    }));
+}
+
 function bedPatientPoint(item) {
   return {
     x: item.x * TILE,
@@ -1264,7 +1468,7 @@ function renderPersonError(message) {
 function renderPersonProfile(profile, entity) {
   if (!profile) {
     personInfo.className = "person-info person-info--empty";
-    personInfo.textContent = "No mock profile found.";
+    personInfo.textContent = "Invalid person reference. This record is not available in hospital data.";
     return;
   }
 
@@ -1306,6 +1510,7 @@ function roleLabel(type) {
   return {
     doctor: "Doctor",
     nurse: "Nurse",
+    porter: "Porter",
     patient: "Patient",
   }[type] || "Person";
 }

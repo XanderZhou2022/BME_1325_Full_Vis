@@ -24,6 +24,24 @@ export async function requestPatientMove(payload) {
   return response.json();
 }
 
+export async function requestPatientAdmission(payload) {
+  const response = await fetch("./api/hospital/patients/admit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error(`Unable to admit patient: ${response.status}`);
+  return response.json();
+}
+
+export async function deletePatient(patientId) {
+  const response = await fetch(`./api/hospital/patients/${encodeURIComponent(patientId)}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) throw new Error(`Unable to delete patient: ${response.status}`);
+  return response.json();
+}
+
 export async function fetchEventRuleIndex() {
   return fetchJson("./api/event-rules", "event rule index");
 }
@@ -33,8 +51,9 @@ export async function fetchEventRuleCategory(file) {
 }
 
 export async function fetchPersonProfile(id) {
+  if (!id) throw new Error("Invalid empty person id.");
   const people = await fetchHospitalPeople();
-  const patient = people.patients.find((item) => item.id === id || item.patientId === id);
+  const patient = people.patients.find((item) => item.id === id || item.patientId === id || item.patient_id === id);
   if (patient) {
     return {
       type: "patient",
@@ -46,11 +65,17 @@ export async function fetchPersonProfile(id) {
       roomId: patient.roomId,
     };
   }
-  const staff = people.staff.find((item) => item.id === id || item.employeeId === id);
+  const staff = people.staff.find((item) => {
+    return item.id === id ||
+      item.staffId === id ||
+      item.staff_id === id ||
+      item.employeeId === id ||
+      item.employee_id === id;
+  });
   if (staff) {
     return {
       type: staff.role || staff.type,
-      employeeId: staff.employeeId,
+      employeeId: staff.employeeId || staff.employee_id || staff.staffId || staff.staff_id,
       department: staff.department,
       name: staff.name,
       roomId: staff.roomId,

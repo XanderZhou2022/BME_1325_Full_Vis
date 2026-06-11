@@ -304,15 +304,19 @@ function drawProp(ctx, camera, prop) {
 function drawPatient(ctx, camera, patient, now, selectedEntityId) {
   if (patient.form === "consultation") {
     if (selectedEntityId === patient.id) drawEntitySelection(ctx, camera, patient.x - 24, patient.y + 8, now, 18, 24);
-    if (selectedEntityId === patient.doctorProfileId) drawEntitySelection(ctx, camera, patient.x + 26, patient.y + 8, now, 18, 24);
+    if (selectedEntityId === consultationDoctorEntityId(patient)) drawEntitySelection(ctx, camera, patient.x + 26, patient.y + 8, now, 18, 24);
   } else if (selectedEntityId === patient.id) {
     drawEntitySelection(ctx, camera, patient.x, patient.y, now, patient.form === "bed" ? 34 : 22, patient.form === "bed" ? 16 : 24);
   }
   if (patient.form === "bed") drawBedPatient(ctx, camera, patient, now);
-  else if (patient.form === "stretcher") drawStretcherTransferPatient(ctx, camera, patient, now);
+  else if (patient.form === "stretcher") drawStretcherPatient(ctx, camera, patient, now);
   else if (patient.form === "consultation") drawConsultationPatient(ctx, camera, patient, now);
   else if (patient.form === "waiting") drawWaitingPatient(ctx, camera, patient, now);
   else drawWalkingPatient(ctx, camera, patient, now);
+}
+
+function consultationDoctorEntityId(patient) {
+  return `${patient.id}::doctor`;
 }
 
 function drawBedPatient(ctx, camera, patient, now) {
@@ -410,10 +414,11 @@ function drawWalkingPatient(ctx, camera, patient, now) {
   ctx.restore();
 }
 
-function drawStretcherTransferPatient(ctx, camera, patient, now) {
+function drawStretcherPatient(ctx, camera, patient, now) {
   const p = project(camera, patient.x, patient.y);
   const s = patientScale(camera);
-  const bob = Math.sin((patient.movePhase || now / 120) * 2) * 0.8;
+  const isTransporting = patient.transportMode === "stretcher";
+  const bob = isTransporting ? Math.sin((patient.movePhase || now / 120) * 2) * 0.8 : 0;
   const facing = patient.facing || "right";
   const porter = porterOffset(facing);
 
@@ -444,7 +449,7 @@ function drawStretcherTransferPatient(ctx, camera, patient, now) {
   ctx.fillStyle = "#3c3340";
   ctx.fillRect(-21, -6, 11, 3);
 
-  drawPorter(ctx, porter.x, porter.y, facing);
+  if (isTransporting) drawPorter(ctx, porter.x, porter.y, facing);
   ctx.restore();
 }
 
@@ -511,9 +516,9 @@ function drawSeatedStaffAt(ctx, camera, member, now) {
 }
 
 function drawStandingStaffShape(ctx, role, gender, walk = 0) {
-  const uniform = role === "nurse" ? "#f0a1c1" : "#fff9ef";
-  const trim = role === "nurse" ? "#c95d8e" : "#8eb7cc";
-  const pants = role === "nurse" ? "#8d5f82" : "#5f7893";
+  const uniform = role === "porter" ? "#80b78a" : role === "nurse" ? "#f0a1c1" : "#fff9ef";
+  const trim = role === "porter" ? "#4f7f59" : role === "nurse" ? "#c95d8e" : "#8eb7cc";
+  const pants = role === "porter" ? "#4e6a52" : role === "nurse" ? "#8d5f82" : "#5f7893";
 
   ctx.fillStyle = uniform;
   ctx.fillRect(-8, -1, 16, 20);
@@ -527,11 +532,14 @@ function drawStandingStaffShape(ctx, role, gender, walk = 0) {
     ctx.lineTo(1, 8);
     ctx.lineTo(5, 1);
     ctx.stroke();
-  } else {
+  } else if (role === "nurse") {
     ctx.fillStyle = "#fff6fb";
     ctx.fillRect(-6, -18, 12, 4);
     ctx.fillStyle = trim;
     ctx.fillRect(-2, -18, 4, 4);
+  } else if (role === "porter") {
+    ctx.fillStyle = "#eaf5df";
+    ctx.fillRect(-5, 2, 10, 3);
   }
 
   ctx.fillStyle = "#f2c799";
@@ -547,9 +555,9 @@ function drawStandingStaffShape(ctx, role, gender, walk = 0) {
 }
 
 function drawSeatedStaff(ctx, x, y, role, gender) {
-  const uniform = role === "nurse" ? "#f0a1c1" : "#fff9ef";
-  const trim = role === "nurse" ? "#c95d8e" : "#8eb7cc";
-  const pants = role === "nurse" ? "#8d5f82" : "#5f7893";
+  const uniform = role === "porter" ? "#80b78a" : role === "nurse" ? "#f0a1c1" : "#fff9ef";
+  const trim = role === "porter" ? "#4f7f59" : role === "nurse" ? "#c95d8e" : "#8eb7cc";
+  const pants = role === "porter" ? "#4e6a52" : role === "nurse" ? "#8d5f82" : "#5f7893";
 
   ctx.fillStyle = uniform;
   ctx.fillRect(x - 7, y - 4, 14, 15);

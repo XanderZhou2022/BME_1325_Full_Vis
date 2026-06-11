@@ -14,9 +14,9 @@ export const PATIENTS = [
   waitingPatient("wait-ward-1", "ward_admission", 0.72, 0.58, "#7fa98f"),
 
   // Outpatient consultation scenes.
-  consultationPatient("consult-a", "consultation_a_2", 0.72, 0.56, "#5f8ec9", "female", "doctor-consult-a"),
-  consultationPatient("consult-b", "consultation_b_2", 0.72, 0.56, "#8a79c9", "male", "doctor-consult-b"),
-  consultationPatient("consult-int", "internal_2", 0.42, 0.58, "#5f8ec9", "male", "doctor-consult-int"),
+  consultationPatient("consult-a", "consultation_a_2", 0.72, 0.56, "#5f8ec9", "female", "doctor-op-a"),
+  consultationPatient("consult-b", "consultation_b_2", 0.72, 0.56, "#8a79c9", "male", "doctor-op-b"),
+  consultationPatient("consult-int", "internal_2", 0.42, 0.58, "#5f8ec9", "male", "doctor-op-internal"),
 
   // Bed patients in ICU and ward.
   bedPatient("icu-bed-a", "icu_beds_a", 0.20, 0.40, "#f2c799", "#d46d8e"),
