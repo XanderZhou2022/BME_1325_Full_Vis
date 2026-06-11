@@ -1,7 +1,7 @@
 import { FLOOR_PLATE, PROPS, ROOMS, TILE, WORLD, getFloor, getPropsForFloor, getRoomsForFloor, loadMapConfig } from "./map.js";
 import { createMapAdmin } from "./map-admin.js";
 import { createRulesAdmin } from "./rules-admin.js";
-import { fetchHospitalEvents, fetchHospitalSnapshot, fetchPersonProfile, requestPatientMove } from "./hospital-api.js?v=queue-delete-20260612";
+import { fetchHospitalEvents, fetchHospitalSnapshot, fetchPersonProfile } from "./hospital-api.js?v=queue-delete-20260612";
 import { createRoomPath } from "./pathfinding.js";
 import { PATIENTS } from "./patients.js?v=profile-guard-20260612";
 import { STAFF } from "./staff.js";
@@ -86,7 +86,6 @@ const state = {
   playerTravel: null,
   selectedEntityId: null,
   selectedInfoRoomId: null,
-  moveDraft: null,
   selectedRoomId: null,
   lastEventSeq: 0,
   pollingEvents: false,
@@ -182,14 +181,6 @@ canvas.addEventListener("click", (event) => {
 miniMapCanvas.addEventListener("click", (event) => {
   if (state.transition) return;
   handleMinimapClick(canvasPoint(event, miniMapCanvas), miniMapCanvas);
-});
-
-personInfo.addEventListener("click", (event) => {
-  const action = event.target?.dataset?.action;
-  if (action === "show-move") showMoveControls(event.target.dataset.patientId);
-  if (action === "move-floor") selectMoveFloor(Number(event.target.dataset.floor));
-  if (action === "move-room") selectMoveRoom(Number(event.target.dataset.roomIndex));
-  if (action === "start-move") startSelectedPatientMove();
 });
 
 function loop(now) {
@@ -617,138 +608,6 @@ function hasStaffProfile(id) {
       member.employeeId === id ||
       member.employee_id === id;
   });
-}
-
-function showMoveControls(patientId) {
-  const patient = findPatient(patientId);
-  const controls = document.getElementById("moveControls");
-  if (!patient || !controls) return;
-
-  state.moveDraft = {
-    patientId,
-    floor: patient.floor,
-    roomIndex: 0,
-  };
-  controls.hidden = false;
-  renderMoveControls();
-}
-
-function renderMoveControls() {
-  const controls = document.getElementById("moveControls");
-  if (!controls || !state.moveDraft) return;
-
-  const rooms = getRoomsForFloor(state.moveDraft.floor);
-  state.moveDraft.roomIndex = clamp(Math.round(state.moveDraft.roomIndex), 0, Math.max(0, rooms.length - 1));
-  const selectedRoom = rooms[state.moveDraft.roomIndex];
-
-  controls.innerHTML = `
-    <div class="move-controls__group">
-      <div class="move-controls__label">Floor <strong>${state.moveDraft.floor}F</strong></div>
-      <div class="move-tabs move-tabs--floor">
-        ${[1, 2, 3, 4, 5].map((floor) => moveTab({
-          action: "move-floor",
-          active: floor === state.moveDraft.floor,
-          attrs: `data-floor="${floor}"`,
-          label: `${floor}F`,
-        })).join("")}
-      </div>
-    </div>
-    <div class="move-controls__group">
-      <div class="move-controls__label">Room <strong>${selectedRoom?.label || "None"}</strong></div>
-      <div class="move-tabs move-tabs--rooms">
-        ${rooms.map((room, index) => moveTab({
-          action: "move-room",
-          active: index === state.moveDraft.roomIndex,
-          attrs: `data-room-index="${index}"`,
-          label: `${room.roomCode} ${room.label}`,
-        })).join("")}
-      </div>
-    </div>
-    <button class="move-controls__start" type="button" data-action="start-move">Start move</button>
-  `;
-}
-
-function moveTab({ action, active, attrs, label }) {
-  return `
-    <button class="move-tabs__btn${active ? " is-active" : ""}" type="button" data-action="${action}" ${attrs}>
-      ${label}
-    </button>
-  `;
-}
-
-function selectMoveFloor(floor) {
-  if (!state.moveDraft || !Number.isFinite(floor)) return;
-  state.moveDraft.floor = floor;
-  state.moveDraft.roomIndex = 0;
-  renderMoveControls();
-}
-
-function selectMoveRoom(roomIndex) {
-  if (!state.moveDraft) return;
-  state.moveDraft.roomIndex = roomIndex;
-  renderMoveControls();
-}
-
-async function startSelectedPatientMove() {
-  if (!state.moveDraft) return;
-  const patient = findPatient(state.moveDraft.patientId);
-  const rooms = getRoomsForFloor(state.moveDraft.floor);
-  const targetRoom = rooms[state.moveDraft.roomIndex];
-  if (!patient || !targetRoom) return;
-
-  const eventId = inferMoveEventId(patient, targetRoom);
-  if (!eventId) {
-    renderMoveError("No movement event matches this target.");
-    return;
-  }
-
-  try {
-    const response = await requestPatientMove({
-      requestId: `map-${Date.now()}`,
-      source: "map-person-panel",
-      operatorId: "visual-user",
-      eventId,
-      patientId: patient.patientId || patient.id,
-      fromRoomId: patient.roomId,
-      toRoomId: targetRoom.id,
-      context: { reason: "manual visual move" },
-    });
-    state.lastEventSeq = Math.max(state.lastEventSeq, response.eventSeq || 0);
-    if (!response.accepted) {
-      renderMoveError(`${response.reasonCode}: ${response.message}`);
-      return;
-    }
-    startBackendPatientMove(response);
-  } catch (error) {
-    renderMoveError(error.message);
-  }
-}
-
-function inferMoveEventId(patient, targetRoom) {
-  const sourceRoom = roomById(patient.roomId);
-  if (!sourceRoom || !targetRoom) return null;
-  if (sourceRoom.floor === 1 && targetRoom.floor === 3) return "TRANSFER_ED_TO_ICU";
-  if (sourceRoom.floor === 1 && targetRoom.floor === 5) return "TRANSFER_ED_TO_WARD";
-  if (sourceRoom.floor === 2 && targetRoom.floor === 1) return "TRANSFER_OP_TO_ED";
-  if (sourceRoom.floor === 2 && targetRoom.floor === 3) return "OP_TO_ICU_MOVE";
-  if (sourceRoom.floor === 2 && targetRoom.floor === 5) return "TRANSFER_OP_TO_WARD";
-  if (sourceRoom.floor === 3 && targetRoom.floor === 5) return "TRANSFER_ICU_TO_WARD";
-  if (sourceRoom.floor === 5 && targetRoom.floor === 3) return "TRANSFER_WARD_TO_ICU";
-  if (sourceRoom.floor === 5 && targetRoom.floor === 5) return "WARD_BED_TO_BED_MOVE";
-  if (sourceRoom.floor === 2 && targetRoom.kind === "lab") return "OP_PAYMENT_TO_LAB";
-  if (sourceRoom.floor === 2 && targetRoom.kind === "pharmacy") return "OP_CONSULT_TO_PHARMACY";
-  if (sourceRoom.floor === 2 && targetRoom.kind !== "elevator") return "OP_TRIAGE_TO_CONSULT_ROOM";
-  if (sourceRoom.floor === 1 && targetRoom.kind === "lab") return "ED_TO_DIAGNOSTIC_MOVE";
-  if (sourceRoom.floor === 1 && targetRoom.kind !== "elevator") return "ED_WAITING_TO_CONSULT_ROOM";
-  return null;
-}
-
-function renderMoveError(message) {
-  const controls = document.getElementById("moveControls");
-  if (!controls) return;
-  const previous = controls.querySelector(".move-controls__error");
-  if (previous) previous.remove();
-  controls.insertAdjacentHTML("beforeend", `<div class="move-controls__error">${escapeHtml(message)}</div>`);
 }
 
 function transferForm(plan) {
@@ -1701,7 +1560,6 @@ function renderPersonProfile(profile, entity) {
   if (profile.type === "patient") {
     rows.splice(1, 0, infoRow("Patient ID", profile.patientId));
     rows.push(infoRow("Symptoms", profile.symptoms));
-    rows.push(moveActionRow(entity.id));
   } else {
     rows.splice(1, 0, infoRow("Employee ID", profile.employeeId));
   }
@@ -1714,15 +1572,6 @@ function infoRow(label, value) {
       <span class="person-info__label">${label}</span>
       <span class="person-info__value">${value}</span>
     </div>
-  `;
-}
-
-function moveActionRow(patientId) {
-  return `
-    <button class="person-info__move" type="button" data-action="show-move" data-patient-id="${patientId}">
-      Move
-    </button>
-    <div id="moveControls" class="move-controls" hidden></div>
   `;
 }
 
