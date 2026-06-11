@@ -13,7 +13,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 2.9,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-er-a",
+      "staff_id": "N-ER-001",
+      "employee_id": "N-ER-001",
+      "provider_id": "N-ER-001",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ed_registration"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "ed_registration",
+      "rel_x": 0.46,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-er-b",
@@ -28,7 +47,26 @@
       "gender": "male",
       "pose": "walking",
       "phase": 2.9,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-er-b",
+      "staff_id": "N-ER-002",
+      "employee_id": "N-ER-002",
+      "provider_id": "N-ER-002",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ed_bedside_nurse"
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.3,
+        "rel_y": 0.6
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "ed_bedside_nurse",
+      "rel_x": 0.3,
+      "rel_y": 0.6
     },
     {
       "id": "doctor-er-a",
@@ -43,7 +81,26 @@
       "gender": "male",
       "pose": "standing",
       "phase": 3.19,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-er-a",
+      "staff_id": "D-ER-001",
+      "employee_id": "D-ER-001",
+      "provider_id": "D-ER-001",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ed_doctor_room"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.28,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "ed_doctor_room",
+      "rel_x": 0.28,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-er-b",
@@ -58,7 +115,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 3.19,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-er-b",
+      "staff_id": "D-ER-002",
+      "employee_id": "D-ER-002",
+      "provider_id": "D-ER-002",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ed_red_resus"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "ed_red_resus",
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-op-reg",
@@ -73,7 +149,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 3.4799999999999995,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-op-reg",
+      "staff_id": "N-OP-001",
+      "employee_id": "N-OP-001",
+      "provider_id": "N-OP-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "registration_2"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.56,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "registration_2",
+      "rel_x": 0.56,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-op-triage",
@@ -88,7 +183,26 @@
       "gender": "male",
       "pose": "standing",
       "phase": 4.35,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-op-triage",
+      "staff_id": "N-OP-002",
+      "employee_id": "N-OP-002",
+      "provider_id": "N-OP-002",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "triage_2"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.56,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "triage_2",
+      "rel_x": 0.56,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-op-a",
@@ -103,7 +217,26 @@
       "gender": "female",
       "pose": "seated",
       "phase": 3.19,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-op-a",
+      "staff_id": "D-OP-001",
+      "employee_id": "D-OP-001",
+      "provider_id": "D-OP-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "consultation_a_2"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.84,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "consultation_a_2",
+      "rel_x": 0.84,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-op-b",
@@ -118,7 +251,26 @@
       "gender": "male",
       "pose": "seated",
       "phase": 3.19,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-op-b",
+      "staff_id": "D-OP-002",
+      "employee_id": "D-OP-002",
+      "provider_id": "D-OP-002",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "consultation_b_2"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.84,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "consultation_b_2",
+      "rel_x": 0.84,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-op-internal",
@@ -133,7 +285,26 @@
       "gender": "male",
       "pose": "seated",
       "phase": 5.22,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-op-internal",
+      "staff_id": "D-IM-001",
+      "employee_id": "D-IM-001",
+      "provider_id": "D-IM-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "internal_2"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.56,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "internal_2",
+      "rel_x": 0.56,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-op-surgery",
@@ -148,7 +319,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 4.93,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-op-surgery",
+      "staff_id": "D-SG-001",
+      "employee_id": "D-SG-001",
+      "provider_id": "D-SG-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "surgery_2"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.56,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "surgery_2",
+      "rel_x": 0.56,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-op-wait",
@@ -163,7 +353,26 @@
       "gender": "female",
       "pose": "walking",
       "phase": 3.7699999999999996,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-op-wait",
+      "staff_id": "N-OP-003",
+      "employee_id": "N-OP-003",
+      "provider_id": "N-OP-003",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "outpatient_waiting"
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.45,
+        "rel_y": 0.6
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "outpatient_waiting",
+      "rel_x": 0.45,
+      "rel_y": 0.6
     },
     {
       "id": "nurse-icu-station-a",
@@ -178,7 +387,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 5.51,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-icu-station-a",
+      "staff_id": "N-ICU-001",
+      "employee_id": "N-ICU-001",
+      "provider_id": "N-ICU-001",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_station"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.3,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "icu_station",
+      "rel_x": 0.3,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-icu-station-b",
@@ -193,7 +421,26 @@
       "gender": "male",
       "pose": "standing",
       "phase": 5.51,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-icu-station-b",
+      "staff_id": "N-ICU-002",
+      "employee_id": "N-ICU-002",
+      "provider_id": "N-ICU-002",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_station"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.62,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "icu_station",
+      "rel_x": 0.62,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-icu-bed-a",
@@ -208,7 +455,26 @@
       "gender": "female",
       "pose": "monitoring",
       "phase": 4.64,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-icu-bed-a",
+      "staff_id": "D-ICU-001",
+      "employee_id": "D-ICU-001",
+      "provider_id": "D-ICU-001",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_beds_a"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.58,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "icu_beds_a",
+      "rel_x": 0.58,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-icu-bed-b",
@@ -223,7 +489,26 @@
       "gender": "male",
       "pose": "monitoring",
       "phase": 4.64,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-icu-bed-b",
+      "staff_id": "D-ICU-002",
+      "employee_id": "D-ICU-002",
+      "provider_id": "D-ICU-002",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_beds_b"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.58,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "icu_beds_b",
+      "rel_x": 0.58,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-icu-isolation",
@@ -238,7 +523,26 @@
       "gender": "female",
       "pose": "monitoring",
       "phase": 5.51,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-icu-isolation",
+      "staff_id": "N-ICU-003",
+      "employee_id": "N-ICU-003",
+      "provider_id": "N-ICU-003",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_isolation"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.58,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "icu_isolation",
+      "rel_x": 0.58,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-mdt-a",
@@ -253,7 +557,26 @@
       "gender": "female",
       "pose": "seated",
       "phase": 3.4799999999999995,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-mdt-a",
+      "staff_id": "D-MDT-001",
+      "employee_id": "D-MDT-001",
+      "provider_id": "D-MDT-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "head_doctor"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "head_doctor",
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-mdt-b",
@@ -268,7 +591,26 @@
       "gender": "male",
       "pose": "seated",
       "phase": 3.4799999999999995,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-mdt-b",
+      "staff_id": "D-MDT-002",
+      "employee_id": "D-MDT-002",
+      "provider_id": "D-MDT-002",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "mdt_meeting"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "mdt_meeting",
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-mdt-c",
@@ -283,7 +625,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 3.4799999999999995,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-mdt-c",
+      "staff_id": "D-IMG-001",
+      "employee_id": "D-IMG-001",
+      "provider_id": "D-IMG-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "imaging_review"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "imaging_review",
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-mdt-coord",
@@ -298,7 +659,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 4.35,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-mdt-coord",
+      "staff_id": "N-MDT-001",
+      "employee_id": "N-MDT-001",
+      "provider_id": "N-MDT-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "final_plan"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "final_plan",
+      "rel_x": 0.5,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-ward-station-a",
@@ -313,7 +693,26 @@
       "gender": "female",
       "pose": "standing",
       "phase": 5.8,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-ward-station-a",
+      "staff_id": "N-WD-001",
+      "employee_id": "N-WD-001",
+      "provider_id": "N-WD-001",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "nurse_station"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.3,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "nurse_station",
+      "rel_x": 0.3,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-ward-station-b",
@@ -328,7 +727,26 @@
       "gender": "male",
       "pose": "walking",
       "phase": 5.8,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-ward-station-b",
+      "staff_id": "N-WD-002",
+      "employee_id": "N-WD-002",
+      "provider_id": "N-WD-002",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "nurse_station"
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.62,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "nurse_station",
+      "rel_x": 0.62,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-ward-office",
@@ -343,7 +761,26 @@
       "gender": "male",
       "pose": "standing",
       "phase": 5.22,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-ward-office",
+      "staff_id": "D-WD-001",
+      "employee_id": "D-WD-001",
+      "provider_id": "D-WD-001",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "doctor_office"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.28,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "doctor_office",
+      "rel_x": 0.28,
+      "rel_y": 0.58
     },
     {
       "id": "doctor-ward-round",
@@ -358,7 +795,26 @@
       "gender": "female",
       "pose": "monitoring",
       "phase": 4.93,
-      "available": true
+      "available": true,
+      "local_person_id": "doctor-ward-round",
+      "staff_id": "D-WD-002",
+      "employee_id": "D-WD-002",
+      "provider_id": "D-WD-002",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "resp_ward"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.42,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "resp_ward",
+      "rel_x": 0.42,
+      "rel_y": 0.58
     },
     {
       "id": "nurse-ward-room-c",
@@ -373,7 +829,26 @@
       "gender": "female",
       "pose": "monitoring",
       "phase": 4.93,
-      "available": true
+      "available": true,
+      "local_person_id": "nurse-ward-room-c",
+      "staff_id": "N-WD-003",
+      "employee_id": "N-WD-003",
+      "provider_id": "N-WD-003",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "gensurg_ward"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.28,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "gensurg_ward",
+      "rel_x": 0.28,
+      "rel_y": 0.58
     }
   ]
 }

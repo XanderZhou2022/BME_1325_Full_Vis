@@ -171,6 +171,8 @@ function renderRoomDetail() {
       ${detailMetric("Beds", `${room.occupiedBeds}/${room.capacityBeds || 0}`)}
       ${detailMetric("Queue", String(room.queue?.length || 0))}
     </div>
+    <h3>Beds</h3>
+    ${bedList(room)}
     <h3>Patients</h3>
     ${peopleList(room.patients, "patient")}
     <h3>Doctors & Nurses</h3>
@@ -495,6 +497,99 @@ function peopleList(people, type) {
       }).join("")}
     </div>
   `;
+}
+
+function bedList(room) {
+  const beds = normalizedRoomBeds(room);
+  if (!beds?.length) return `<div class="console-detail-empty">No beds in this room.</div>`;
+  return `
+    <div class="console-bed-list">
+      ${beds.map((bed) => `
+        <div class="console-bed-row${bed.occupied ? " is-occupied" : " is-free"}">
+          <strong>${escapeHtml(bed.bedId)}</strong>
+          <span>
+            ${bed.occupied
+              ? `${escapeHtml(bed.patientName || "Assigned patient")} · ${escapeHtml(bed.patientId)}${bed.patientAway ? " · away" : ""}`
+              : "Available"}
+          </span>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function normalizedRoomBeds(room) {
+  const capacity = Math.max(Number(room.capacityBeds || 0), room.beds?.length || 0);
+  if (!capacity) return [];
+
+  const baseBeds = (room.beds?.length
+    ? room.beds
+    : Array.from({ length: capacity }, (_, index) => ({ bedId: `${room.id}-bed-${String(index + 1).padStart(2, "0")}` })))
+    .map((bed, index) => ({ ...bed, bedId: bed.bedId || `${room.id}-bed-${String(index + 1).padStart(2, "0")}` }));
+  const assignments = normalizeBedAssignments(room.bedAssignments || [], room.id, capacity);
+  const patientsById = new Map(state.snapshot.patients.map((patient) => [patient.patientId, patient]));
+  const assignedByBed = new Map();
+
+  baseBeds.forEach((bed) => {
+    if (bed.patientId) assignedByBed.set(bed.bedId, bed.patientId);
+  });
+  assignments.forEach((assignment) => {
+    if (assignment.bedId && assignment.patientId) assignedByBed.set(assignment.bedId, assignment.patientId);
+  });
+  patientsAssignedToRoom(room).forEach((patient) => {
+    const bedId = patient.bedId || firstUnassignedBedId(baseBeds, assignedByBed);
+    if (bedId) assignedByBed.set(bedId, patient.patientId);
+  });
+
+  return baseBeds.map((baseBed, index) => {
+    const bedId = baseBed.bedId || `${room.id}-bed-${String(index + 1).padStart(2, "0")}`;
+    const patientId = assignedByBed.get(bedId) || null;
+    const patient = patientId ? patientsById.get(patientId) : null;
+    return {
+      bedId,
+      occupied: Boolean(patientId),
+      patientId,
+      patientName: patient?.name || baseBed.patientName || null,
+      patientStatus: patient?.status || baseBed.patientStatus || null,
+      patientCurrentRoomId: patient?.roomId || baseBed.patientCurrentRoomId || null,
+      patientAway: Boolean((patient && patient.roomId !== room.id) || baseBed.patientAway),
+    };
+  });
+}
+
+function patientsAssignedToRoom(room) {
+  const roomPatients = room.patients || [];
+  const snapshotPatients = state.snapshot.patients || [];
+  const candidates = [
+    ...roomPatients,
+    ...snapshotPatients.filter((patient) => patient.bedRoomId === room.id),
+    ...roomPatients.filter((patient) => patient.form === "bed"),
+  ];
+  const byId = new Map();
+  candidates.forEach((patient) => {
+    if (patient.patientId) byId.set(patient.patientId, patient);
+  });
+  return Array.from(byId.values());
+}
+
+function firstUnassignedBedId(beds, assignedByBed) {
+  const bed = beds.find((item) => !assignedByBed.has(item.bedId));
+  return bed?.bedId || null;
+}
+
+function normalizeBedAssignments(assignments, roomId, capacity) {
+  return assignments.map((assignment, index) => {
+    if (assignment && typeof assignment === "object") {
+      return {
+        bedId: assignment.bedId || `${roomId}-bed-${String(index + 1).padStart(2, "0")}`,
+        patientId: assignment.patientId,
+      };
+    }
+    return {
+      bedId: `${roomId}-bed-${String(index + 1).padStart(2, "0")}`,
+      patientId: assignment,
+    };
+  }).filter((assignment, index) => assignment.patientId && index < capacity);
 }
 
 function formatAnimation(plan) {

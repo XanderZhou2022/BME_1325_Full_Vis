@@ -1157,6 +1157,7 @@ button {
 }
 
 .console-metric,
+.console-bed-row,
 .console-person-row,
 .console-event,
 .console-detail-empty {
@@ -1172,6 +1173,7 @@ button {
 }
 
 .console-metric span,
+.console-bed-row span,
 .console-person-row span,
 .console-event span,
 .console-event p {
@@ -1180,6 +1182,7 @@ button {
 }
 
 .console-metric strong,
+.console-bed-row strong,
 .console-person-row strong,
 .console-event strong {
   color: #fff7e5;
@@ -1189,6 +1192,37 @@ button {
 .console-people-list {
   display: grid;
   gap: 7px;
+}
+
+.console-bed-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 7px;
+}
+
+.console-bed-row {
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 228, 183, 0.14);
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.console-bed-row.is-occupied {
+  border-color: rgba(255, 213, 122, 0.44);
+  background: rgba(255, 213, 122, 0.12);
+}
+
+.console-bed-row.is-free {
+  border-color: rgba(159, 240, 190, 0.28);
+  background: rgba(159, 240, 190, 0.08);
+}
+
+.console-bed-row strong,
+.console-bed-row span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .console-person-row {

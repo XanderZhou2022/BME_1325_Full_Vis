@@ -55,9 +55,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "waiting",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_REGISTRATION_TO_TRIAGE_OR_WAITING"
     },
     {
       "id": "outpatient-move-2",
@@ -123,9 +128,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "consultation",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
     },
     {
       "id": "outpatient-move-3",
@@ -179,9 +189,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "walking",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_CONSULT_TO_PAYMENT"
     },
     {
       "id": "outpatient-move-4",
@@ -229,9 +244,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "walking",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_PAYMENT_TO_LAB"
     },
     {
       "id": "outpatient-move-5",
@@ -279,9 +299,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "waiting",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_LAB_RETURN_TO_WAITING"
     },
     {
       "id": "outpatient-move-6",
@@ -335,9 +360,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "consultation",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_SECOND_CONSULT_MOVE"
     },
     {
       "id": "outpatient-move-7",
@@ -391,9 +421,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "walking",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_CONSULT_TO_PHARMACY"
     },
     {
       "id": "outpatient-move-8",
@@ -443,9 +478,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "hidden",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_PATIENT_EXIT_HOSPITAL"
     },
     {
       "id": "outpatient-move-9",
@@ -498,9 +538,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "bed",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_TO_WARD_MOVE"
     },
     {
       "id": "outpatient-move-10",
@@ -563,9 +608,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "outpatient_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "OP_TO_ICU_MOVE"
     }
   ]
 }

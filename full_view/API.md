@@ -2,6 +2,8 @@
 
 The full-view frontend treats the backend as the source of truth. The map only renders snapshots, sends event requests, and plays approved animation plans.
 
+Canonical data shapes are defined in `HOSPITAL_CORE_STANDARD.md`. New fullview backend data and department adapters should write the snake_case core fields described there. camelCase fields remain available as compatibility aliases for the current Canvas and console UI.
+
 ## Runtime
 
 Run:
@@ -49,6 +51,19 @@ Returns all rooms with people and resource state.
 
 Care-room bed occupancy is tracked by `room.bedAssignments`, not only by the patient's current visible room. A ward/ICU patient can temporarily leave for an exam while their assigned bed remains unavailable to other patients.
 
+Each room with beds also includes a `beds` list:
+
+```json
+{
+  "bedId": "resp_ward-bed-01",
+  "occupied": true,
+  "patientId": "P-WD-002",
+  "patientName": "Grace Li",
+  "patientCurrentRoomId": "diagnostic_center",
+  "patientAway": true
+}
+```
+
 `GET /api/hospital/people`
 
 Returns all patients, doctors, and nurses.
@@ -91,7 +106,8 @@ Accepted response:
     "fromRoomReleased": true,
     "sourceBedRetained": false,
     "targetReserved": true,
-    "bedRoomId": "icu_beds_a"
+    "bedRoomId": "icu_beds_a",
+    "bedId": "icu_beds_a-bed-01"
   },
   "animationPlan": {
     "kind": "patient-move",

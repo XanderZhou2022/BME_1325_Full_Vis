@@ -6,7 +6,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_entrance",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_registration": {
       "roomId": "ed_registration",
@@ -14,7 +21,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_registration",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_triage": {
       "roomId": "ed_triage",
@@ -22,7 +36,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_triage",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_red_resus": {
       "roomId": "ed_red_resus",
@@ -30,7 +51,18 @@
       "occupiedBeds": 0,
       "capacityBeds": 1,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "ed_red_resus-bed-01"
+      ],
+      "room_id": "ed_red_resus",
+      "reserved_by": null,
+      "capacity_beds": 1,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "ed_red_resus-bed-01"
+      ],
+      "bed_assignments": []
     },
     "ed_trauma": {
       "roomId": "ed_trauma",
@@ -38,7 +70,18 @@
       "occupiedBeds": 0,
       "capacityBeds": 1,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "ed_trauma-bed-01"
+      ],
+      "room_id": "ed_trauma",
+      "reserved_by": null,
+      "capacity_beds": 1,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "ed_trauma-bed-01"
+      ],
+      "bed_assignments": []
     },
     "ed_major": {
       "roomId": "ed_major",
@@ -46,7 +89,18 @@
       "occupiedBeds": 0,
       "capacityBeds": 1,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "ed_major-bed-01"
+      ],
+      "room_id": "ed_major",
+      "reserved_by": null,
+      "capacity_beds": 1,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "ed_major-bed-01"
+      ],
+      "bed_assignments": []
     },
     "ed_minor": {
       "roomId": "ed_minor",
@@ -54,7 +108,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_minor",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_diagnostic": {
       "roomId": "ed_diagnostic",
@@ -62,7 +123,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_diagnostic",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_doctor_room": {
       "roomId": "ed_doctor_room",
@@ -70,7 +138,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_doctor_room",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_bedside_nurse": {
       "roomId": "ed_bedside_nurse",
@@ -78,7 +153,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_bedside_nurse",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_observation": {
       "roomId": "ed_observation",
@@ -86,7 +168,18 @@
       "occupiedBeds": 0,
       "capacityBeds": 1,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "ed_observation-bed-01"
+      ],
+      "room_id": "ed_observation",
+      "reserved_by": null,
+      "capacity_beds": 1,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "ed_observation-bed-01"
+      ],
+      "bed_assignments": []
     },
     "ed_waiting": {
       "roomId": "ed_waiting",
@@ -94,7 +187,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_waiting",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_handoff": {
       "roomId": "ed_handoff",
@@ -102,7 +202,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_handoff",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ed_pager": {
       "roomId": "ed_pager",
@@ -110,7 +217,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ed_pager",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "elevator_1": {
       "roomId": "elevator_1",
@@ -118,7 +232,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "elevator_1",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "registration_2": {
       "roomId": "registration_2",
@@ -126,7 +247,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "registration_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "payment_2": {
       "roomId": "payment_2",
@@ -134,7 +262,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "payment_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "triage_2": {
       "roomId": "triage_2",
@@ -142,7 +277,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "triage_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "consultation_a_2": {
       "roomId": "consultation_a_2",
@@ -150,7 +292,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "consultation_a_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "consultation_b_2": {
       "roomId": "consultation_b_2",
@@ -158,7 +307,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "consultation_b_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "internal_2": {
       "roomId": "internal_2",
@@ -166,7 +322,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "internal_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "surgery_2": {
       "roomId": "surgery_2",
@@ -174,7 +337,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "surgery_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "pediatrics_2": {
       "roomId": "pediatrics_2",
@@ -182,7 +352,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "pediatrics_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "fever_2": {
       "roomId": "fever_2",
@@ -190,7 +367,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "fever_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "obgyn_2": {
       "roomId": "obgyn_2",
@@ -198,7 +382,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "obgyn_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "lab_2": {
       "roomId": "lab_2",
@@ -206,7 +397,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "lab_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "pharmacy_2": {
       "roomId": "pharmacy_2",
@@ -214,7 +412,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "pharmacy_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "doctor_entry_2": {
       "roomId": "doctor_entry_2",
@@ -222,7 +427,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "doctor_entry_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "outpatient_waiting": {
       "roomId": "outpatient_waiting",
@@ -230,7 +442,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "outpatient_waiting",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "elevator_2": {
       "roomId": "elevator_2",
@@ -238,7 +457,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "elevator_2",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_admission": {
       "roomId": "icu_admission",
@@ -246,7 +472,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "icu_admission",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_station": {
       "roomId": "icu_station",
@@ -254,7 +487,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "icu_station",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_beds_a": {
       "roomId": "icu_beds_a",
@@ -263,7 +503,32 @@
       "capacityBeds": 2,
       "queue": [],
       "bedAssignments": [
-        "P-ICU-001"
+        {
+          "bedId": "icu_beds_a-bed-01",
+          "patientId": "P-ICU-001",
+          "bed_id": "icu_beds_a-bed-01",
+          "patient_id": "P-ICU-001"
+        }
+      ],
+      "bedIds": [
+        "icu_beds_a-bed-01",
+        "icu_beds_a-bed-02"
+      ],
+      "room_id": "icu_beds_a",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 1,
+      "bed_ids": [
+        "icu_beds_a-bed-01",
+        "icu_beds_a-bed-02"
+      ],
+      "bed_assignments": [
+        {
+          "bedId": "icu_beds_a-bed-01",
+          "patientId": "P-ICU-001",
+          "bed_id": "icu_beds_a-bed-01",
+          "patient_id": "P-ICU-001"
+        }
       ]
     },
     "icu_beds_b": {
@@ -273,7 +538,32 @@
       "capacityBeds": 2,
       "queue": [],
       "bedAssignments": [
-        "P-ICU-002"
+        {
+          "bedId": "icu_beds_b-bed-01",
+          "patientId": "P-ICU-002",
+          "bed_id": "icu_beds_b-bed-01",
+          "patient_id": "P-ICU-002"
+        }
+      ],
+      "bedIds": [
+        "icu_beds_b-bed-01",
+        "icu_beds_b-bed-02"
+      ],
+      "room_id": "icu_beds_b",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 1,
+      "bed_ids": [
+        "icu_beds_b-bed-01",
+        "icu_beds_b-bed-02"
+      ],
+      "bed_assignments": [
+        {
+          "bedId": "icu_beds_b-bed-01",
+          "patientId": "P-ICU-002",
+          "bed_id": "icu_beds_b-bed-01",
+          "patient_id": "P-ICU-002"
+        }
       ]
     },
     "icu_isolation": {
@@ -283,7 +573,32 @@
       "capacityBeds": 2,
       "queue": [],
       "bedAssignments": [
-        "P-ICU-003"
+        {
+          "bedId": "icu_isolation-bed-01",
+          "patientId": "P-ICU-003",
+          "bed_id": "icu_isolation-bed-01",
+          "patient_id": "P-ICU-003"
+        }
+      ],
+      "bedIds": [
+        "icu_isolation-bed-01",
+        "icu_isolation-bed-02"
+      ],
+      "room_id": "icu_isolation",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 1,
+      "bed_ids": [
+        "icu_isolation-bed-01",
+        "icu_isolation-bed-02"
+      ],
+      "bed_assignments": [
+        {
+          "bedId": "icu_isolation-bed-01",
+          "patientId": "P-ICU-003",
+          "bed_id": "icu_isolation-bed-01",
+          "patient_id": "P-ICU-003"
+        }
       ]
     },
     "monitor_center": {
@@ -292,7 +607,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "monitor_center",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "intervention_bay": {
       "roomId": "intervention_bay",
@@ -300,7 +622,20 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "intervention_bay-bed-01",
+        "intervention_bay-bed-02"
+      ],
+      "room_id": "intervention_bay",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "intervention_bay-bed-01",
+        "intervention_bay-bed-02"
+      ],
+      "bed_assignments": []
     },
     "risk_sentinel": {
       "roomId": "risk_sentinel",
@@ -308,7 +643,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "risk_sentinel",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "clinical_summary": {
       "roomId": "clinical_summary",
@@ -316,7 +658,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "clinical_summary",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ward_coordinator": {
       "roomId": "ward_coordinator",
@@ -324,7 +673,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ward_coordinator",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_support": {
       "roomId": "icu_support",
@@ -332,7 +688,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "icu_support",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_medication": {
       "roomId": "icu_medication",
@@ -340,7 +703,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "icu_medication",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_equipment": {
       "roomId": "icu_equipment",
@@ -348,7 +718,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "icu_equipment",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "icu_transfer": {
       "roomId": "icu_transfer",
@@ -356,7 +733,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "icu_transfer",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "elevator_3": {
       "roomId": "elevator_3",
@@ -364,7 +748,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "elevator_3",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "mdt_call": {
       "roomId": "mdt_call",
@@ -372,7 +763,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "mdt_call",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "head_doctor": {
       "roomId": "head_doctor",
@@ -380,7 +778,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "head_doctor",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "mdt_meeting": {
       "roomId": "mdt_meeting",
@@ -388,7 +793,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "mdt_meeting",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "imaging_review": {
       "roomId": "imaging_review",
@@ -396,7 +808,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "imaging_review",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "final_plan": {
       "roomId": "final_plan",
@@ -404,7 +823,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "final_plan",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "anesthesia_room": {
       "roomId": "anesthesia_room",
@@ -412,7 +838,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "anesthesia_room",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "cardiology_room": {
       "roomId": "cardiology_room",
@@ -420,7 +853,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "cardiology_room",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "hbp_room": {
       "roomId": "hbp_room",
@@ -428,7 +868,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "hbp_room",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "neurosurgery_room": {
       "roomId": "neurosurgery_room",
@@ -436,7 +883,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "neurosurgery_room",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "orthopaedics_room": {
       "roomId": "orthopaedics_room",
@@ -444,7 +898,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "orthopaedics_room",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "mdt_records": {
       "roomId": "mdt_records",
@@ -452,7 +913,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "mdt_records",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "mdt_lounge": {
       "roomId": "mdt_lounge",
@@ -460,7 +928,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "mdt_lounge",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "mdt_memory": {
       "roomId": "mdt_memory",
@@ -468,7 +943,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "mdt_memory",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "mdt_kb": {
       "roomId": "mdt_kb",
@@ -476,7 +958,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "mdt_kb",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "elevator_4": {
       "roomId": "elevator_4",
@@ -484,7 +973,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "elevator_4",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "ward_admission": {
       "roomId": "ward_admission",
@@ -492,7 +988,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "ward_admission",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "nurse_station": {
       "roomId": "nurse_station",
@@ -500,7 +1003,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "nurse_station",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "resp_ward": {
       "roomId": "resp_ward",
@@ -509,7 +1019,36 @@
       "capacityBeds": 2,
       "queue": [],
       "bedAssignments": [
-        "P-WD-002"
+        {
+          "bedId": "resp_ward-bed-01",
+          "patientId": "P-WD-002",
+          "bed_id": "resp_ward-bed-01",
+          "patient_id": "P-WD-002"
+        }
+      ],
+      "bedIds": [
+        "resp_ward-bed-01",
+        "resp_ward-bed-02",
+        "resp_ward-bed-03",
+        "resp_ward-bed-04"
+      ],
+      "room_id": "resp_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 1,
+      "bed_ids": [
+        "resp_ward-bed-01",
+        "resp_ward-bed-02",
+        "resp_ward-bed-03",
+        "resp_ward-bed-04"
+      ],
+      "bed_assignments": [
+        {
+          "bedId": "resp_ward-bed-01",
+          "patientId": "P-WD-002",
+          "bed_id": "resp_ward-bed-01",
+          "patient_id": "P-WD-002"
+        }
       ]
     },
     "card_ward": {
@@ -519,7 +1058,36 @@
       "capacityBeds": 2,
       "queue": [],
       "bedAssignments": [
-        "P-WD-003"
+        {
+          "bedId": "card_ward-bed-01",
+          "patientId": "P-WD-003",
+          "bed_id": "card_ward-bed-01",
+          "patient_id": "P-WD-003"
+        }
+      ],
+      "bedIds": [
+        "card_ward-bed-01",
+        "card_ward-bed-02",
+        "card_ward-bed-03",
+        "card_ward-bed-04"
+      ],
+      "room_id": "card_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 1,
+      "bed_ids": [
+        "card_ward-bed-01",
+        "card_ward-bed-02",
+        "card_ward-bed-03",
+        "card_ward-bed-04"
+      ],
+      "bed_assignments": [
+        {
+          "bedId": "card_ward-bed-01",
+          "patientId": "P-WD-003",
+          "bed_id": "card_ward-bed-01",
+          "patient_id": "P-WD-003"
+        }
       ]
     },
     "gastro_ward": {
@@ -528,7 +1096,24 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "gastro_ward-bed-01",
+        "gastro_ward-bed-02",
+        "gastro_ward-bed-03",
+        "gastro_ward-bed-04"
+      ],
+      "room_id": "gastro_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "gastro_ward-bed-01",
+        "gastro_ward-bed-02",
+        "gastro_ward-bed-03",
+        "gastro_ward-bed-04"
+      ],
+      "bed_assignments": []
     },
     "neuro_ward": {
       "roomId": "neuro_ward",
@@ -536,7 +1121,24 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "neuro_ward-bed-01",
+        "neuro_ward-bed-02",
+        "neuro_ward-bed-03",
+        "neuro_ward-bed-04"
+      ],
+      "room_id": "neuro_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "neuro_ward-bed-01",
+        "neuro_ward-bed-02",
+        "neuro_ward-bed-03",
+        "neuro_ward-bed-04"
+      ],
+      "bed_assignments": []
     },
     "endo_ward": {
       "roomId": "endo_ward",
@@ -544,7 +1146,24 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "endo_ward-bed-01",
+        "endo_ward-bed-02",
+        "endo_ward-bed-03",
+        "endo_ward-bed-04"
+      ],
+      "room_id": "endo_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "endo_ward-bed-01",
+        "endo_ward-bed-02",
+        "endo_ward-bed-03",
+        "endo_ward-bed-04"
+      ],
+      "bed_assignments": []
     },
     "gensurg_ward": {
       "roomId": "gensurg_ward",
@@ -552,7 +1171,24 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "gensurg_ward-bed-01",
+        "gensurg_ward-bed-02",
+        "gensurg_ward-bed-03",
+        "gensurg_ward-bed-04"
+      ],
+      "room_id": "gensurg_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "gensurg_ward-bed-01",
+        "gensurg_ward-bed-02",
+        "gensurg_ward-bed-03",
+        "gensurg_ward-bed-04"
+      ],
+      "bed_assignments": []
     },
     "ortho_ward": {
       "roomId": "ortho_ward",
@@ -560,7 +1196,24 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "ortho_ward-bed-01",
+        "ortho_ward-bed-02",
+        "ortho_ward-bed-03",
+        "ortho_ward-bed-04"
+      ],
+      "room_id": "ortho_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "ortho_ward-bed-01",
+        "ortho_ward-bed-02",
+        "ortho_ward-bed-03",
+        "ortho_ward-bed-04"
+      ],
+      "bed_assignments": []
     },
     "obgyn_ward": {
       "roomId": "obgyn_ward",
@@ -568,7 +1221,24 @@
       "occupiedBeds": 0,
       "capacityBeds": 2,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [
+        "obgyn_ward-bed-01",
+        "obgyn_ward-bed-02",
+        "obgyn_ward-bed-03",
+        "obgyn_ward-bed-04"
+      ],
+      "room_id": "obgyn_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 0,
+      "bed_ids": [
+        "obgyn_ward-bed-01",
+        "obgyn_ward-bed-02",
+        "obgyn_ward-bed-03",
+        "obgyn_ward-bed-04"
+      ],
+      "bed_assignments": []
     },
     "peds_ward": {
       "roomId": "peds_ward",
@@ -577,7 +1247,36 @@
       "capacityBeds": 2,
       "queue": [],
       "bedAssignments": [
-        "P-WD-004"
+        {
+          "bedId": "peds_ward-bed-01",
+          "patientId": "P-WD-004",
+          "bed_id": "peds_ward-bed-01",
+          "patient_id": "P-WD-004"
+        }
+      ],
+      "bedIds": [
+        "peds_ward-bed-01",
+        "peds_ward-bed-02",
+        "peds_ward-bed-03",
+        "peds_ward-bed-04"
+      ],
+      "room_id": "peds_ward",
+      "reserved_by": null,
+      "capacity_beds": 2,
+      "occupied_beds": 1,
+      "bed_ids": [
+        "peds_ward-bed-01",
+        "peds_ward-bed-02",
+        "peds_ward-bed-03",
+        "peds_ward-bed-04"
+      ],
+      "bed_assignments": [
+        {
+          "bedId": "peds_ward-bed-01",
+          "patientId": "P-WD-004",
+          "bed_id": "peds_ward-bed-01",
+          "patient_id": "P-WD-004"
+        }
       ]
     },
     "doctor_office": {
@@ -586,7 +1285,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "doctor_office",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "diagnostic_center": {
       "roomId": "diagnostic_center",
@@ -594,7 +1300,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "diagnostic_center",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "discharge_desk": {
       "roomId": "discharge_desk",
@@ -602,7 +1315,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "discharge_desk",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     },
     "elevator_5": {
       "roomId": "elevator_5",
@@ -610,7 +1330,14 @@
       "occupiedBeds": 0,
       "capacityBeds": 0,
       "queue": [],
-      "bedAssignments": []
+      "bedAssignments": [],
+      "bedIds": [],
+      "room_id": "elevator_5",
+      "reserved_by": null,
+      "capacity_beds": 0,
+      "occupied_beds": 0,
+      "bed_ids": [],
+      "bed_assignments": []
     }
   },
   "escortResources": {

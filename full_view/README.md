@@ -1,60 +1,80 @@
 # Full Hospital View
 
-Static Canvas 2D whole-hospital visualization for the simulated hospital course project.
+`hospital/full_view` 是 SIM Hospital 的全院可视化与轻量后端模块。仓库发布说明请先阅读上一级 [README.md](../README.md)，department 接入步骤请阅读 [Fullview 接入手册](../docs/fullview-integration-manual.md)。
 
-Run from this directory:
+## 运行
 
 ```bash
-python dev-server.py
+python dev-server.py 8000
 ```
 
-Open:
+打开：
 
 ```text
 http://localhost:8000/
 http://localhost:8000/console.html
 ```
 
-`dev-server.py` serves the static pages, enables the map/rule editors to save JSON, and provides the lightweight hospital backend APIs used by the map and console.
+`dev-server.py` 同时负责静态页面、地图/规则保存 API、医院 snapshot API、事件 API 和 JSON 文件写回。页面也可以用 `python -m http.server 8000` 静态打开，但这种模式不能写回本地 JSON。
 
-The page can still run with `python -m http.server 8000`, but the browser cannot write local files in that mode. If the save API is unavailable, the editor stores the updated map in browser storage and applies it immediately for the current browser.
+## 模块职责
 
-## Map Configuration
+| 模块 | 职责 |
+|---|---|
+| `index.html` + `main.js` | 全院 Canvas 地图入口，读取 snapshot，播放后端批准的移动动画 |
+| `console.html` + `console.js` | Operations Console，查看房间/人员/床位，发送全局移动请求 |
+| `dev-server.py` | 轻量 mock 后端，负责状态读取、规则校验、资源更新和事件日志 |
+| `hospital-api.js` | 前端访问医院后端 API 的封装 |
+| `map-config.json` | 楼层、房间、家具、门、床位布局 |
+| `backend-data/*.json` | 患者、医护、房间资源、床位占用、事件历史 |
+| `event-rules/*.json` | 后端读取的患者移动规则 |
+| `map-admin.js` | 地图编辑器，支持新增/删除房间和调整床位 |
+| `rules-admin.js` | 规则编辑器，支持新增/删除/保存移动规则 |
 
-The floor layout is driven by `map-config.json`.
+核心边界：**后端负责状态与规则，前端只负责展示、表单提交和动画播放。**
 
-- `floors[]` defines each hospital floor, title, subtitle, department kinds, and rooms.
-- `rooms[]` defines each room with `id`, `kind`, `label`, `x`, `y`, `w`, `h`, and `accent`.
-- `rooms[].protected` prevents critical rooms from being deleted or edited in the map admin. Elevator rooms are protected automatically.
-- `rooms[].maxBeds` overrides the room's bed limit in the map admin. Ward and ICU rooms default to 4 beds; emergency/rescue rooms default to 2 beds.
-- Room coordinates use tile units, not pixels. One tile is currently 32px.
-- `doors[]` is stored inside each room and uses room-relative offsets.
-- `items[]` is also stored inside each room. Beds, desks, screens, sofas, cabinets, tables, and reception counters use room-relative tile offsets, so they move automatically when the room moves.
+## 数据与规则
 
-After editing `map-config.json`, click `Refresh` in the right panel. The page refetches the JSON, rebuilds rooms, doors, props, walls, collisions, mini map, room info, and relative person placement without editing JS.
+地图由 `map-config.json` 驱动：
 
-Use `Edit Map` to open the room editor. It lists rooms by floor, supports deleting rooms, changing bed counts within each room's max limit, and adding a new room with an automatically generated unique room id.
+- `floors[]` 定义楼层。
+- `rooms[]` 定义房间。
+- `doors[]` 和 `items[]` 使用房间相对坐标，因此房间移动后家具和床位不会跑出房间。
+- `protected` 房间不能在编辑器中删除；电梯自动视为保护房间。
+- `maxBeds` 可覆盖房间床位上限。
 
-## Event Rules
+运行状态由 `backend-data/` 驱动：
 
-Structured patient-movement event rules live in `../rules/event-rules/`.
+- `patients.json`：患者身份、当前位置、状态、视觉形态和床位归属。
+- `staff.json`：医生、护士、护工等人员。
+- `room-state.json`：床位分配、队列、房间资源和转运资源。
+- `event-log.json`：accepted/rejected 事件和动画指令。
 
-- `index.json` lists the rule categories.
-- `emergency.json`, `outpatient.json`, `icu.json`, `ward.json`, `transfer.json`, and `resource-blocking.json` store the editable rule lists.
-- Each rule keeps `eventId`, `classification`, `trigger`, `rooms`, `prechecks`, `actions`, `successState`, `blocking`, and `visualization`.
-- Current rules intentionally focus on patient movement: room-to-room movement, cross-floor transfers, discharge/exit, exam/pharmacy routing, and movement blockers.
+移动规则由 `event-rules/` 驱动。每条规则应有稳定 `eventId`，并定义 `movement.from`、`movement.to`、`movement.via`、`transport`、`escortRoles`、`equipment`、`finalForm` 和资源策略。
 
-Use `Rules` in the right panel to open the event rule editor. It can browse rules by category, edit rule fields, add a new placeholder rule, delete a rule, and save the category JSON through `dev-server.py`.
+## API
 
-## Hospital Backend APIs
+地图页和控制台使用同一套 API：
 
-The current demo backend is intentionally lightweight and file-based. It stores runtime state under `backend-data/`:
+- `GET /api/hospital/snapshot`
+- `GET /api/hospital/rooms`
+- `GET /api/hospital/people`
+- `GET /api/hospital/events?after=<seq>`
+- `POST /api/hospital/events/move`
+- `GET /api/event-rules`
+- `PUT /api/event-rules/*.json`
 
-- `patients.json`: patient identity, status, room, form, and visual placement.
-- `staff.json`: doctor and nurse identity, room, role, gender, and pose.
-- `room-state.json`: bed occupancy, queues, room reservations, and escort resources.
-- `event-log.json`: accepted/rejected events with monotonically increasing `eventSeq`.
+请求/响应格式见 [API.md](API.md)。统一数据标准见 [HOSPITAL_CORE_STANDARD.md](HOSPITAL_CORE_STANDARD.md)。
 
-The map page loads `/api/hospital/snapshot`, polls `/api/hospital/events`, and only plays backend-approved animation plans. The standalone `console.html` reads the same APIs and sends global move requests through `POST /api/hospital/events/move`.
+## 开发检查
 
-See `API.md` for request/response shapes and the reusable movement-rule standard.
+```bash
+python -m py_compile dev-server.py
+node --check console.js hospital-api.js main.js
+python -m json.tool map-config.json >/dev/null
+python -m json.tool backend-data/patients.json >/dev/null
+python -m json.tool backend-data/staff.json >/dev/null
+python -m json.tool backend-data/room-state.json >/dev/null
+```
+
+修改地图、规则或后端接口后，请同时打开地图页和 `console.html` 手动验证一次 accepted 与 rejected 事件。

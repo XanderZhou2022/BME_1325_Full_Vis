@@ -64,9 +64,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "ed_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "TRANSFER_ED_TO_ICU"
     },
     {
       "id": "transfer-move-2",
@@ -122,9 +130,16 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "wheelchair",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "TRANSFER_ED_TO_WARD"
     },
     {
       "id": "transfer-move-3",
@@ -187,9 +202,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "wheelchair",
+        "final_form": "bed_or_waiting",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "outpatient_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "TRANSFER_OP_TO_ED"
     },
     {
       "id": "transfer-move-4",
@@ -243,9 +266,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "bed",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "TRANSFER_OP_TO_WARD"
     },
     {
       "id": "transfer-move-5",
@@ -306,9 +334,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "icu_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "TRANSFER_ICU_TO_WARD"
     },
     {
       "id": "transfer-move-6",
@@ -367,9 +403,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "ward_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "TRANSFER_WARD_TO_ICU"
     }
   ]
 }

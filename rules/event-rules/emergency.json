@@ -50,9 +50,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "walking",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_PATIENT_ARRIVES_ENTRANCE"
     },
     {
       "id": "emergency-move-2",
@@ -100,9 +105,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "walking",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_ENTRANCE_TO_REGISTRATION"
     },
     {
       "id": "emergency-move-3",
@@ -154,9 +164,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "waiting",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_REGISTRATION_TO_TRIAGE_OR_WAITING"
     },
     {
       "id": "emergency-move-4",
@@ -216,9 +231,16 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "wheelchair",
+        "final_form": "bed_or_waiting",
+        "escort_required": true,
+        "escort_roles": [
+          "ed_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_TRIAGE_TO_TREATMENT_AREA"
     },
     {
       "id": "emergency-move-5",
@@ -272,9 +294,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "consultation",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_WAITING_TO_CONSULT_ROOM"
     },
     {
       "id": "emergency-move-6",
@@ -331,9 +358,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "stretcher",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "ed_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_TO_DIAGNOSTIC_MOVE"
     },
     {
       "id": "emergency-move-7",
@@ -390,9 +425,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed_or_waiting",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "ed_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_DIAGNOSTIC_RETURN"
     },
     {
       "id": "emergency-move-8",
@@ -458,9 +501,17 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "ed_nurse"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_TO_ICU_MOVE"
     },
     {
       "id": "emergency-move-9",
@@ -517,9 +568,16 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "stay_source"
-        }
+        },
+        "patient_form_during_move": "wheelchair",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter"
+        ]
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_TO_WARD_MOVE"
     },
     {
       "id": "emergency-move-10",
@@ -570,9 +628,14 @@
           "onNoPath": "stay_source",
           "onResourceBlocked": "stay_source",
           "onEscortUnavailable": "continue_without_escort"
-        }
+        },
+        "patient_form_during_move": "walking",
+        "final_form": "hidden",
+        "escort_required": false,
+        "escort_roles": []
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ED_PATIENT_EXIT_HOSPITAL"
     }
   ]
 }

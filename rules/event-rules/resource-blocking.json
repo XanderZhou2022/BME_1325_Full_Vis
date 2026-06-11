@@ -42,7 +42,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_ICU_FULL"
     },
     {
       "id": "movement-block-2",
@@ -87,7 +88,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_WARD_FULL"
     },
     {
       "id": "movement-block-3",
@@ -124,7 +126,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_CONSULT_ROOM_BUSY"
     },
     {
       "id": "movement-block-4",
@@ -162,7 +165,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_EXAM_BUSY"
     },
     {
       "id": "movement-block-5",
@@ -198,7 +202,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_PHARMACY_UNAVAILABLE"
     },
     {
       "id": "movement-block-6",
@@ -237,7 +242,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_TRANSPORT_STAFF_UNAVAILABLE"
     },
     {
       "id": "movement-block-7",
@@ -271,7 +277,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_UNSTABLE_FOR_ROUTINE_TRANSFER"
     },
     {
       "id": "movement-block-8",
@@ -305,7 +312,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_RECEIVER_REJECTED"
     },
     {
       "id": "movement-block-9",
@@ -345,7 +353,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "BLOCK_MOVE_ELEVATOR_PATH_UNAVAILABLE"
     },
     {
       "id": "movement-block-10",
@@ -379,7 +388,8 @@
         },
         "visualAlert": "warning"
       },
-      "sourceFile": "patient-movement-curated"
+      "sourceFile": "patient-movement-curated",
+      "event_id": "ERROR_MOVE_BED_STATE_INCONSISTENT"
     }
   ]
 }

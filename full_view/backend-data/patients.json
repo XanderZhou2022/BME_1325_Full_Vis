@@ -19,7 +19,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 3.33
+      "phase": 3.33,
+      "local_person_id": "walk-er-1",
+      "patient_id": "P-ER-001",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ward_admission"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Acute abdominal pain, dizziness",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#5f8ec9",
+        "skin": "#f2c799",
+        "blanket": "#76c59d"
+      },
+      "room_id": "ward_admission",
+      "base_form": "walking",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     },
     {
       "id": "walk-op-1",
@@ -40,7 +69,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 3.33
+      "phase": 3.33,
+      "local_person_id": "walk-op-1",
+      "patient_id": "P-OP-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "outpatient_waiting"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "ARRIVED",
+        "symptoms": "Follow-up after medication adjustment",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "walking",
+        "base_form": "walking",
+        "rel_x": 0.78,
+        "rel_y": 0.55,
+        "color": "#5f8ec9",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "outpatient_waiting",
+      "base_form": "walking",
+      "rel_x": 0.78,
+      "rel_y": 0.55
     },
     {
       "id": "walk-mdt-1",
@@ -61,7 +119,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 3.7
+      "phase": 3.7,
+      "local_person_id": "walk-mdt-1",
+      "patient_id": "P-MDT-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "mdt_lounge"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "ARRIVED",
+        "symptoms": "Complex tumor case review",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "walking",
+        "base_form": "walking",
+        "rel_x": 0.62,
+        "rel_y": 0.55,
+        "color": "#8f7ed0",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "mdt_lounge",
+      "base_form": "walking",
+      "rel_x": 0.62,
+      "rel_y": 0.55
     },
     {
       "id": "wait-er-1",
@@ -82,7 +169,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "wait-er-1",
+      "patient_id": "P-ER-002",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ed_minor"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "IN_CONSULTATION",
+        "symptoms": "Fever and sore throat",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "consultation",
+        "base_form": "waiting",
+        "rel_x": 0.72,
+        "rel_y": 0.58,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "ed_minor",
+      "base_form": "waiting",
+      "rel_x": 0.72,
+      "rel_y": 0.58
     },
     {
       "id": "wait-er-2",
@@ -103,7 +219,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "wait-er-2",
+      "patient_id": "P-ER-003",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "ed_waiting"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "WAITING",
+        "symptoms": "Minor trauma, awaiting triage",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "waiting",
+        "base_form": "waiting",
+        "rel_x": 0.64,
+        "rel_y": 0.62,
+        "color": "#c69072",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "ed_waiting",
+      "base_form": "waiting",
+      "rel_x": 0.64,
+      "rel_y": 0.62
     },
     {
       "id": "wait-op-1",
@@ -124,7 +269,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "wait-op-1",
+      "patient_id": "P-OP-002",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "outpatient_waiting"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "WAITING",
+        "symptoms": "Cough, mild fever",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "waiting",
+        "base_form": "waiting",
+        "rel_x": 0.32,
+        "rel_y": 0.62,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "outpatient_waiting",
+      "base_form": "waiting",
+      "rel_x": 0.32,
+      "rel_y": 0.62
     },
     {
       "id": "wait-op-2",
@@ -145,7 +319,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "wait-op-2",
+      "patient_id": "P-OP-003",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "outpatient_waiting"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "WAITING",
+        "symptoms": "Headache and fatigue",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "waiting",
+        "base_form": "waiting",
+        "rel_x": 0.58,
+        "rel_y": 0.62,
+        "color": "#c69072",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "outpatient_waiting",
+      "base_form": "waiting",
+      "rel_x": 0.58,
+      "rel_y": 0.62
     },
     {
       "id": "wait-ward-1",
@@ -166,7 +369,36 @@
       "gender": null,
       "doctorGender": null,
       "doctorProfileId": null,
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "wait-ward-1",
+      "patient_id": "P-WD-001",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "ward_admission"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "WAITING",
+        "symptoms": "Family waiting for ward update",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "waiting",
+        "base_form": "waiting",
+        "rel_x": 0.72,
+        "rel_y": 0.58,
+        "color": "#7fa98f",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "ward_admission",
+      "base_form": "waiting",
+      "rel_x": 0.72,
+      "rel_y": 0.58
     },
     {
       "id": "consult-a",
@@ -187,7 +419,36 @@
       "gender": null,
       "doctorGender": "female",
       "doctorProfileId": "doctor-consult-a",
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "consult-a",
+      "patient_id": "P-OP-004",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "consultation_a_2"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "IN_CONSULTATION",
+        "symptoms": "Chest discomfort consultation",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "consultation",
+        "base_form": "consultation",
+        "rel_x": 0.72,
+        "rel_y": 0.56,
+        "color": "#5f8ec9",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "consultation_a_2",
+      "base_form": "consultation",
+      "rel_x": 0.72,
+      "rel_y": 0.56
     },
     {
       "id": "consult-b",
@@ -208,7 +469,36 @@
       "gender": null,
       "doctorGender": "male",
       "doctorProfileId": "doctor-consult-b",
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "consult-b",
+      "patient_id": "P-OP-005",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "consultation_b_2"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "IN_CONSULTATION",
+        "symptoms": "Skin rash and itching",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "consultation",
+        "base_form": "consultation",
+        "rel_x": 0.72,
+        "rel_y": 0.56,
+        "color": "#8a79c9",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "consultation_b_2",
+      "base_form": "consultation",
+      "rel_x": 0.72,
+      "rel_y": 0.56
     },
     {
       "id": "consult-int",
@@ -229,7 +519,36 @@
       "gender": null,
       "doctorGender": "male",
       "doctorProfileId": "doctor-consult-int",
-      "phase": 0
+      "phase": 0,
+      "local_person_id": "consult-int",
+      "patient_id": "P-IM-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "internal_2"
+      },
+      "home_bed": {},
+      "clinical": {
+        "status": "IN_CONSULTATION",
+        "symptoms": "Diabetes follow-up",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "consultation",
+        "base_form": "consultation",
+        "rel_x": 0.42,
+        "rel_y": 0.58,
+        "color": "#5f8ec9",
+        "skin": null,
+        "blanket": null
+      },
+      "room_id": "internal_2",
+      "base_form": "consultation",
+      "rel_x": 0.42,
+      "rel_y": 0.58
     },
     {
       "id": "icu-bed-a",
@@ -251,7 +570,43 @@
       "doctorGender": null,
       "doctorProfileId": null,
       "phase": 0,
-      "bedRoomId": "icu_beds_a"
+      "bedRoomId": "icu_beds_a",
+      "bedId": "icu_beds_a-bed-01",
+      "local_person_id": "icu-bed-a",
+      "patient_id": "P-ICU-001",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_beds_a"
+      },
+      "home_bed": {
+        "room_id": "icu_beds_a",
+        "bed_id": "icu_beds_a-bed-01",
+        "retained": true
+      },
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Postoperative respiratory monitoring",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "bed",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": null,
+        "skin": "#f2c799",
+        "blanket": "#d46d8e"
+      },
+      "room_id": "icu_beds_a",
+      "bed_room_id": "icu_beds_a",
+      "bed_id": "icu_beds_a-bed-01",
+      "base_form": "bed",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     },
     {
       "id": "icu-bed-b",
@@ -273,7 +628,43 @@
       "doctorGender": null,
       "doctorProfileId": null,
       "phase": 0,
-      "bedRoomId": "icu_beds_b"
+      "bedRoomId": "icu_beds_b",
+      "bedId": "icu_beds_b-bed-01",
+      "local_person_id": "icu-bed-b",
+      "patient_id": "P-ICU-002",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_beds_b"
+      },
+      "home_bed": {
+        "room_id": "icu_beds_b",
+        "bed_id": "icu_beds_b-bed-01",
+        "retained": true
+      },
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Sepsis observation",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "bed",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": null,
+        "skin": "#f2c799",
+        "blanket": "#d46d8e"
+      },
+      "room_id": "icu_beds_b",
+      "bed_room_id": "icu_beds_b",
+      "bed_id": "icu_beds_b-bed-01",
+      "base_form": "bed",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     },
     {
       "id": "icu-isolation",
@@ -295,7 +686,43 @@
       "doctorGender": null,
       "doctorProfileId": null,
       "phase": 0,
-      "bedRoomId": "icu_isolation"
+      "bedRoomId": "icu_isolation",
+      "bedId": "icu_isolation-bed-01",
+      "local_person_id": "icu-isolation",
+      "patient_id": "P-ICU-003",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "icu_isolation"
+      },
+      "home_bed": {
+        "room_id": "icu_isolation",
+        "bed_id": "icu_isolation-bed-01",
+        "retained": true
+      },
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Infectious disease isolation care",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "bed",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": null,
+        "skin": "#f2c799",
+        "blanket": "#cf6f8c"
+      },
+      "room_id": "icu_isolation",
+      "bed_room_id": "icu_isolation",
+      "bed_id": "icu_isolation-bed-01",
+      "base_form": "bed",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     },
     {
       "id": "ward-bed-a",
@@ -317,7 +744,43 @@
       "doctorGender": null,
       "doctorProfileId": null,
       "phase": 0,
-      "bedRoomId": "resp_ward"
+      "bedRoomId": "resp_ward",
+      "bedId": "resp_ward-bed-01",
+      "local_person_id": "ward-bed-a",
+      "patient_id": "P-WD-002",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "resp_ward"
+      },
+      "home_bed": {
+        "room_id": "resp_ward",
+        "bed_id": "resp_ward-bed-01",
+        "retained": true
+      },
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Postoperative recovery",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "bed",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": null,
+        "skin": "#f2c799",
+        "blanket": "#76c59d"
+      },
+      "room_id": "resp_ward",
+      "bed_room_id": "resp_ward",
+      "bed_id": "resp_ward-bed-01",
+      "base_form": "bed",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     },
     {
       "id": "ward-bed-b",
@@ -339,7 +802,43 @@
       "doctorGender": null,
       "doctorProfileId": null,
       "phase": 0,
-      "bedRoomId": "card_ward"
+      "bedRoomId": "card_ward",
+      "bedId": "card_ward-bed-01",
+      "local_person_id": "ward-bed-b",
+      "patient_id": "P-WD-003",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "card_ward"
+      },
+      "home_bed": {
+        "room_id": "card_ward",
+        "bed_id": "card_ward-bed-01",
+        "retained": true
+      },
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Pneumonia recovery",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "bed",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": null,
+        "skin": "#f2c799",
+        "blanket": "#76c59d"
+      },
+      "room_id": "card_ward",
+      "bed_room_id": "card_ward",
+      "bed_id": "card_ward-bed-01",
+      "base_form": "bed",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     },
     {
       "id": "ward-bed-c",
@@ -361,7 +860,43 @@
       "doctorGender": null,
       "doctorProfileId": null,
       "phase": 0,
-      "bedRoomId": "peds_ward"
+      "bedRoomId": "peds_ward",
+      "bedId": "peds_ward-bed-01",
+      "local_person_id": "ward-bed-c",
+      "patient_id": "P-WD-004",
+      "department_id": "ward",
+      "current_location": {
+        "room_id": "peds_ward"
+      },
+      "home_bed": {
+        "room_id": "peds_ward",
+        "bed_id": "peds_ward-bed-01",
+        "retained": true
+      },
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "Fracture rehabilitation",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "bed",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": null,
+        "skin": "#f2c799",
+        "blanket": "#76c59d"
+      },
+      "room_id": "peds_ward",
+      "bed_room_id": "peds_ward",
+      "bed_id": "peds_ward-bed-01",
+      "base_form": "bed",
+      "rel_x": 0.2,
+      "rel_y": 0.4
     }
   ]
 }
