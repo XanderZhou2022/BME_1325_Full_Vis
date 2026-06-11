@@ -1,5 +1,5 @@
 {
-  "lastSeq": 69,
+  "lastSeq": 83,
   "events": [
     {
       "eventSeq": 1,
@@ -2928,6 +2928,188 @@
         "source": "maintenance",
         "operatorId": "codex",
         "timestamp": 1781196213
+      }
+    },
+    {
+      "event_seq": 70,
+      "eventSeq": 70,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-003",
+      "patientId": "P-OP-003",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-003"
+      }
+    },
+    {
+      "event_seq": 71,
+      "eventSeq": 71,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-001",
+      "patientId": "P-OP-001",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-001"
+      }
+    },
+    {
+      "event_seq": 72,
+      "eventSeq": 72,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-ST-OP-002",
+      "patientId": "P-ST-OP-002",
+      "request": {
+        "source": "console",
+        "patientId": "P-ST-OP-002"
+      }
+    },
+    {
+      "event_seq": 73,
+      "eventSeq": 73,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-ST-OP-004",
+      "patientId": "P-ST-OP-004",
+      "request": {
+        "source": "console",
+        "patientId": "P-ST-OP-004"
+      }
+    },
+    {
+      "event_seq": 74,
+      "eventSeq": 74,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-ST-OP-005",
+      "patientId": "P-ST-OP-005",
+      "request": {
+        "source": "console",
+        "patientId": "P-ST-OP-005"
+      }
+    },
+    {
+      "event_seq": 75,
+      "eventSeq": 75,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-009",
+      "patientId": "P-OP-009",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-009"
+      }
+    },
+    {
+      "event_seq": 76,
+      "eventSeq": 76,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-010",
+      "patientId": "P-OP-010",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-010"
+      }
+    },
+    {
+      "event_seq": 77,
+      "eventSeq": 77,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-011",
+      "patientId": "P-OP-011",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-011"
+      }
+    },
+    {
+      "event_seq": 78,
+      "eventSeq": 78,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-012",
+      "patientId": "P-OP-012",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-012"
+      }
+    },
+    {
+      "event_seq": 79,
+      "eventSeq": 79,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-014",
+      "patientId": "P-OP-014",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-014"
+      }
+    },
+    {
+      "event_seq": 80,
+      "eventSeq": 80,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-016",
+      "patientId": "P-OP-016",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-016"
+      }
+    },
+    {
+      "event_seq": 81,
+      "eventSeq": 81,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-017",
+      "patientId": "P-OP-017",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-017"
+      }
+    },
+    {
+      "event_seq": 82,
+      "eventSeq": 82,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-018",
+      "patientId": "P-OP-018",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-018"
+      }
+    },
+    {
+      "event_seq": 83,
+      "eventSeq": 83,
+      "accepted": true,
+      "event_id": "PATIENT_DELETE",
+      "eventId": "PATIENT_DELETE",
+      "patient_id": "P-OP-019",
+      "patientId": "P-OP-019",
+      "request": {
+        "source": "console",
+        "patientId": "P-OP-019"
       }
     }
   ],

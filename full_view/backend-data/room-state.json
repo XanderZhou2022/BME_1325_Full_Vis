@@ -291,64 +291,7 @@
       "reservedBy": null,
       "occupiedBeds": 0,
       "capacityBeds": 0,
-      "queue": [
-        {
-          "patientId": "P-OP-009",
-          "patient_id": "P-OP-009",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        },
-        {
-          "patientId": "P-OP-011",
-          "patient_id": "P-OP-011",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        },
-        {
-          "patientId": "P-OP-012",
-          "patient_id": "P-OP-012",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        },
-        {
-          "patientId": "P-OP-014",
-          "patient_id": "P-OP-014",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        },
-        {
-          "patientId": "P-OP-016",
-          "patient_id": "P-OP-016",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        },
-        {
-          "patientId": "P-OP-018",
-          "patient_id": "P-OP-018",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        },
-        {
-          "patientId": "P-OP-019",
-          "patient_id": "P-OP-019",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        }
-      ],
+      "queue": [],
       "bedAssignments": [],
       "bedIds": [],
       "room_id": "consultation_a_2",
@@ -363,16 +306,7 @@
       "reservedBy": null,
       "occupiedBeds": 0,
       "capacityBeds": 0,
-      "queue": [
-        {
-          "patientId": "P-ST-OP-005",
-          "patient_id": "P-ST-OP-005",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        }
-      ],
+      "queue": [],
       "bedAssignments": [],
       "bedIds": [],
       "room_id": "consultation_b_2",
@@ -387,16 +321,7 @@
       "reservedBy": null,
       "occupiedBeds": 0,
       "capacityBeds": 0,
-      "queue": [
-        {
-          "patientId": "P-ST-OP-004",
-          "patient_id": "P-ST-OP-004",
-          "fromRoomId": "outpatient_waiting",
-          "from_room_id": "outpatient_waiting",
-          "eventId": "OP_TRIAGE_TO_CONSULT_ROOM",
-          "event_id": "OP_TRIAGE_TO_CONSULT_ROOM"
-        }
-      ],
+      "queue": [],
       "bedAssignments": [],
       "bedIds": [],
       "room_id": "internal_2",
