@@ -1,9 +1,9 @@
 {
-  "mode": "patient-movement-only",
+  "mode": "patient-and-staff-movement",
   "id": "ward",
-  "label": "Ward Patient Moves",
+  "label": "Ward Patient & Staff Moves",
   "sourceFile": "ward-move-rules",
-  "updatedAt": "2026-06-11T10:11:36.749Z",
+  "updatedAt": "2026-06-12T00:00:00.000Z",
   "rules": [
     {
       "id": "ward-move-1",
@@ -439,6 +439,102 @@
       },
       "sourceFile": "patient-movement-curated",
       "event_id": "WARD_DISCHARGE_EXIT_HOSPITAL"
+    },
+    {
+      "id": "ward-staff-visit-1",
+      "name": "护士执行医嘱到病房",
+      "eventId": "WARD_NURSE_ORDER_VISIT",
+      "event_id": "WARD_NURSE_ORDER_VISIT",
+      "classification": "医护移动",
+      "trigger": "住院护士收到医嘱或即时护理任务。",
+      "rooms": [
+        "R-WARD-NURSE-STATION",
+        "R-WARD-DOCTOR-OFFICE",
+        "R-WARD-RESP",
+        "R-WARD-CARD",
+        "R-WARD-GASTRO",
+        "R-WARD-NEURO",
+        "R-WARD-ENDO",
+        "R-WARD-GENSURG",
+        "R-WARD-ORTHO",
+        "R-WARD-OBGYN",
+        "R-WARD-PEDS"
+      ],
+      "roomsText": "nurse_station、ward patient room、return nurse_station",
+      "agents": "护士、住院部 handler、Fullview Core。",
+      "prechecks": "staffId 必须是 Fullview 标准护士 ID；患者存在；目标病房为 R-* 标准房间。",
+      "actions": "护士从护士站移动到患者所在病房，停留执行医嘱后返回护士站。",
+      "successState": "只生成 staffMovePlan；患者位置、床位和 encounter 状态不变。",
+      "blocking": "非标准 staffId 或非护士角色时返回 STAFF_ID_NOT_STANDARD / STAFF_ROLE_MISMATCH。",
+      "visualization": "护士图标从 Nurse Station 到患者病房，停留后自动返回。",
+      "movement": {
+        "schema": "staff-visit",
+        "staffRole": "nurse",
+        "from": "R-WARD-NURSE-STATION",
+        "to": "current_patient_room",
+        "returnTo": "R-WARD-NURSE-STATION",
+        "durationSeconds": 8,
+        "pathPolicy": {
+          "requiresPath": true,
+          "useElevator": false,
+          "avoidWalls": true,
+          "hallwayPreference": "center",
+          "stopAtDoorBeforeEntering": true
+        },
+        "resourcePolicy": {
+          "changesPatientLocation": false,
+          "changesBedAssignment": false
+        }
+      },
+      "sourceFile": "department-update-20260612"
+    },
+    {
+      "id": "ward-staff-visit-2",
+      "name": "医生查房到病房",
+      "eventId": "WARD_DOCTOR_ROUND_VISIT",
+      "event_id": "WARD_DOCTOR_ROUND_VISIT",
+      "classification": "医护移动",
+      "trigger": "住院医生发起查房或复核。",
+      "rooms": [
+        "R-WARD-NURSE-STATION",
+        "R-WARD-DOCTOR-OFFICE",
+        "R-WARD-RESP",
+        "R-WARD-CARD",
+        "R-WARD-GASTRO",
+        "R-WARD-NEURO",
+        "R-WARD-ENDO",
+        "R-WARD-GENSURG",
+        "R-WARD-ORTHO",
+        "R-WARD-OBGYN",
+        "R-WARD-PEDS"
+      ],
+      "roomsText": "doctor_office、ward patient room、return doctor_office",
+      "agents": "医生、住院部 handler、Fullview Core。",
+      "prechecks": "staffId 必须是 Fullview 标准医生 ID；患者存在；目标病房为 R-* 标准房间。",
+      "actions": "医生从医生办公室移动到患者所在病房，停留查房后返回医生办公室。",
+      "successState": "只生成 staffMovePlan；患者位置、床位和 encounter 状态不变。",
+      "blocking": "非标准 staffId 或非医生角色时返回 STAFF_ID_NOT_STANDARD / STAFF_ROLE_MISMATCH。",
+      "visualization": "医生图标从 Doctor Office 到患者病房，停留后自动返回。",
+      "movement": {
+        "schema": "staff-visit",
+        "staffRole": "doctor",
+        "from": "R-WARD-DOCTOR-OFFICE",
+        "to": "current_patient_room",
+        "returnTo": "R-WARD-DOCTOR-OFFICE",
+        "durationSeconds": 9,
+        "pathPolicy": {
+          "requiresPath": true,
+          "useElevator": false,
+          "avoidWalls": true,
+          "hallwayPreference": "center",
+          "stopAtDoorBeforeEntering": true
+        },
+        "resourcePolicy": {
+          "changesPatientLocation": false,
+          "changesBedAssignment": false
+        }
+      },
+      "sourceFile": "department-update-20260612"
     }
   ]
 }

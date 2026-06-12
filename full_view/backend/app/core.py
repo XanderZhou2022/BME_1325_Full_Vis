@@ -493,6 +493,12 @@ def clinical_event(conn, department_id, payload):
     patient = get_patient(conn, payload["patient_id"])
     if not patient:
         return rejected_core_response(payload, "PATIENT_NOT_FOUND", f"No patient found for {payload['patient_id']}.")
+    staff_event_id = payload.get("event_id") or payload.get("event_type")
+    if staff_event_id in {"WARD_NURSE_ORDER_VISIT", "WARD_DOCTOR_ROUND_VISIT"}:
+        payload["event_id"] = staff_event_id
+        rule_error = ensure_rule_allowed(department_id, "clinical_event", staff_event_id)
+        if rule_error:
+            return rejected_core_response(payload, rule_error["code"], rule_error["message"], rule_error.get("details"))
     staff_visit = maybe_build_staff_visit_plan(conn, department_id, payload, patient)
     if staff_visit.get("error"):
         return rejected_core_response(payload, staff_visit["error"], staff_visit["message"])
@@ -514,7 +520,7 @@ def apply_rule_move(conn, department_id, payload, event_type, target_department_
     if not rule:
         return rejected_core_response(payload, "RULE_NOT_FOUND", f"No rule found for {payload.get('event_id')}.")
     from_room_id = payload.get("from_room_id") or patient["current_room_id"]
-    requested_to_room_id = payload.get("to_room_id")
+    requested_to_room_id = resolve_symbolic_target_room(conn, payload.get("to_room_id"), patient)
     if from_room_id and from_room_id != "outside" and not room_exists(conn, from_room_id):
         return rejected_core_response(payload, "ROOM_NOT_FOUND", f"Unknown from_room_id: {from_room_id}.")
     if requested_to_room_id and requested_to_room_id != "exit" and not room_exists(conn, requested_to_room_id):
@@ -539,7 +545,9 @@ def apply_rule_move(conn, department_id, payload, event_type, target_department_
     if release_source_bed:
         release_patient_bed(conn, payload["patient_id"])
     if final_form == "bed" and target_room_id:
-        bed_id = assign_available_bed(conn, payload["patient_id"], payload.get("encounter_id"), target_room_id)
+        bed_id = retained_patient_bed_id(conn, payload["patient_id"], patient["current_bed_id"], target_room_id)
+        if not bed_id:
+            bed_id = assign_available_bed(conn, payload["patient_id"], payload.get("encounter_id"), target_room_id)
         if not bed_id:
             code = "ICU_BED_UNAVAILABLE" if target_department_id == "icu" else "WARD_BED_UNAVAILABLE" if target_department_id == "ward" else "BED_UNAVAILABLE"
             event_seq = write_event(conn, event_type, payload, department_id, target_department_id, accepted=False, reason_code=code)
@@ -712,6 +720,33 @@ def clinical_targets(department_id, payload):
     return targets
 
 
+def resolve_symbolic_target_room(conn, requested_to_room_id, patient):
+    if requested_to_room_id in {"source_icu_bed_room", "source_ward_room"}:
+        room_id = retained_patient_bed_room(conn, patient["current_bed_id"], patient["patient_id"])
+        return room_id or requested_to_room_id
+    return requested_to_room_id
+
+
+def retained_patient_bed_room(conn, bed_id, patient_id):
+    if not bed_id:
+        return None
+    row = conn.execute(
+        "SELECT room_id FROM beds WHERE bed_id=? AND patient_id=? AND status='occupied'",
+        (bed_id, patient_id),
+    ).fetchone()
+    return row["room_id"] if row else None
+
+
+def retained_patient_bed_id(conn, patient_id, bed_id, target_room_id):
+    if not bed_id:
+        return None
+    row = conn.execute(
+        "SELECT bed_id FROM beds WHERE bed_id=? AND room_id=? AND patient_id=? AND status='occupied'",
+        (bed_id, target_room_id, patient_id),
+    ).fetchone()
+    return row["bed_id"] if row else None
+
+
 def maybe_build_staff_visit_plan(conn, department_id, payload, patient):
     event_id = payload.get("event_id") or payload.get("eventId") or payload.get("event_type")
     if event_id not in {"WARD_NURSE_ORDER_VISIT", "WARD_DOCTOR_ROUND_VISIT"}:
@@ -753,6 +788,9 @@ def maybe_build_patient_escort_plan(conn, department_id, payload):
     staff = find_standard_staff(staff_id)
     if not staff:
         return {"error": "STAFF_ID_NOT_STANDARD", "message": f"staff_id must be a Fullview standard staff id, got {staff_id}."}
+    role = staff.get("role") or staff.get("type")
+    if role == "porter":
+        return {"porter_id": canonical_staff_id(staff), "porter_return": {"kind": "hallway"}}
     if department_id == "ward" and (payload.get("event_id") in {"WARD_TO_DIAGNOSTIC_MOVE", "WARD_DIAGNOSTIC_RETURN"}):
         return_room_id = "R-WARD-NURSE-STATION" if (staff.get("role") or staff.get("type")) == "nurse" else "R-WARD-DOCTOR-OFFICE"
     else:
@@ -763,15 +801,24 @@ def maybe_build_patient_escort_plan(conn, department_id, payload):
 
 
 def validate_special_rule_source(conn, payload, patient, requested_to_room_id):
-    if payload.get("event_id") != "ICU_TO_MDT_CONSULT_MOVE":
-        return None
-    allowed_sources = {"R-ICU-BEDS-A", "R-ICU-BEDS-B", "R-ICU-ISOLATION"}
-    allowed_targets = {"R-MDT-CALL", "R-MDT-MEETING"}
-    source = patient["current_room_id"] or payload.get("from_room_id")
-    if source not in allowed_sources:
-        return {"code": "PATIENT_NOT_IN_ICU_BED", "message": "ICU_TO_MDT_CONSULT_MOVE requires the patient to be in an ICU bed room."}
-    if requested_to_room_id not in allowed_targets:
-        return {"code": "TARGET_NOT_ALLOWED", "message": "ICU_TO_MDT_CONSULT_MOVE target must be R-MDT-CALL or R-MDT-MEETING."}
+    event_id = payload.get("event_id")
+    if event_id == "ICU_TO_MDT_CONSULT_MOVE":
+        allowed_sources = {"R-ICU-BEDS-A", "R-ICU-BEDS-B", "R-ICU-ISOLATION"}
+        allowed_targets = {"R-MDT-CALL", "R-MDT-MEETING"}
+        source = patient["current_room_id"] or payload.get("from_room_id")
+        if source not in allowed_sources:
+            return {"code": "PATIENT_NOT_IN_ICU_BED", "message": "ICU_TO_MDT_CONSULT_MOVE requires the patient to be in an ICU bed room."}
+        if requested_to_room_id not in allowed_targets:
+            return {"code": "TARGET_NOT_ALLOWED", "message": "ICU_TO_MDT_CONSULT_MOVE target must be R-MDT-CALL or R-MDT-MEETING."}
+    if event_id == "ICU_MDT_CONSULT_RETURN":
+        allowed_sources = {"R-MDT-CALL", "R-MDT-MEETING"}
+        retained_room = retained_patient_bed_room(conn, patient["current_bed_id"], patient["patient_id"])
+        if patient["current_room_id"] not in allowed_sources:
+            return {"code": "PATIENT_NOT_IN_MDT_CONSULT", "message": "ICU_MDT_CONSULT_RETURN requires the patient to be in an MDT consultation room."}
+        if not retained_room:
+            return {"code": "ICU_SOURCE_BED_NOT_RETAINED", "message": "The original ICU bed is not retained by this patient."}
+        if requested_to_room_id != retained_room:
+            return {"code": "TARGET_NOT_RETAINED_ICU_BED", "message": "Return target must be the patient's retained ICU bed room."}
     return None
 
 
@@ -1016,7 +1063,7 @@ def default_room_for_department(department_id):
 
 def rules_for_department(department_id):
     if department_id == "mdt":
-        return {"movement_request": [], "transfer_request": [], "discharge_request": []}
+        return {"movement_request": [], "transfer_request": [], "discharge_request": [], "clinical_event": []}
     department_rules = rules_in_category(RULE_CATEGORY_BY_DEPARTMENT.get(department_id))
     transfer_rules = [rule for rule in rules_in_category("transfer") if transfer_source_department(rule) == department_id]
     transfer_rules += [rule for rule in department_rules if rule_kind(rule) == "transfer"]
@@ -1024,6 +1071,7 @@ def rules_for_department(department_id):
         "movement_request": [rule_summary(rule, department_id) for rule in department_rules if rule_kind(rule) == "movement"],
         "transfer_request": [rule_summary(rule, "transfer") for rule in transfer_rules],
         "discharge_request": [rule_summary(rule, department_id) for rule in department_rules if rule_kind(rule) == "discharge"],
+        "clinical_event": [rule_summary(rule, department_id) for rule in department_rules if rule_kind(rule) == "clinical_event"],
     }
 
 
@@ -1063,6 +1111,9 @@ def rule_summary(rule, category_id):
         "to": movement.get("to"),
         "via": movement.get("via", []),
         "transport": movement.get("transport", "walking"),
+        "movementSchema": movement.get("schema"),
+        "staffRole": movement.get("staffRole") or movement.get("staff_role"),
+        "durationSeconds": movement.get("durationSeconds") or movement.get("duration_seconds"),
         "finalForm": movement.get("finalForm") or movement.get("final_form", "walking"),
         "rooms": rule.get("rooms", []),
         "trigger": rule.get("trigger", ""),
@@ -1073,6 +1124,8 @@ def rule_summary(rule, category_id):
 
 def rule_kind(rule):
     movement = rule.get("movement") or {}
+    if movement.get("schema") == "staff-visit":
+        return "clinical_event"
     target = movement.get("to")
     classification = str(rule.get("classification") or "")
     if target == "exit" or "出院" in classification or "离院" in classification or "EXIT" in (rule.get("eventId") or ""):

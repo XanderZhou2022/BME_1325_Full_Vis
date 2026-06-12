@@ -4,9 +4,10 @@ import {
   fetchEventRuleIndex,
   fetchHospitalEvents,
   fetchHospitalSnapshot,
+  requestDepartmentHandler,
   requestPatientAdmission,
   requestPatientMove,
-} from "./hospital-api.js?v=queue-delete-20260612";
+} from "./hospital-api.js?v=staff-rules-20260612";
 
 const summary = document.getElementById("consoleSummary");
 const roomCount = document.getElementById("roomCount");
@@ -77,8 +78,10 @@ roomDetail.addEventListener("click", (event) => {
   selectPersonForOperation(button.dataset.personType, button.dataset.personId);
 });
 movePatient.addEventListener("change", () => {
-  state.selectedPersonId = movePatient.value;
-  state.selectedPersonType = "patient";
+  if (state.selectedPersonType !== "staff") {
+    state.selectedPersonId = movePatient.value;
+    state.selectedPersonType = "patient";
+  }
   renderSelectedPersonSummary();
   renderRoomDetail();
   renderMoveRules();
@@ -211,13 +214,13 @@ function renderMoveForm() {
 
 function renderMoveRules() {
   const previousEventId = moveEvent.value;
-  const rules = legalMoveRulesForSelectedPatient();
+  const rules = legalRulesForSelectedPerson();
   moveEvent.innerHTML = state.rules
     .filter((rule) => rules.includes(rule))
     .map((rule) => `<option value="${escapeAttr(rule.eventId)}">${escapeHtml(rule.eventId)} · ${escapeHtml(rule.name)}</option>`)
     .join("");
   if (!rules.length) {
-    moveEvent.innerHTML = `<option value="" disabled selected>No legal move rule for this patient's current room</option>`;
+    moveEvent.innerHTML = `<option value="" disabled selected>${escapeHtml(noRuleMessage())}</option>`;
   } else if (previousEventId && rules.some((rule) => rule.eventId === previousEventId)) {
     moveEvent.value = previousEventId;
   }
@@ -262,12 +265,11 @@ function selectPersonForOperation(type, personId) {
   state.selectedPersonType = type;
   if (type === "patient") {
     movePatient.value = personId;
-    renderMoveRules();
-    applySelectedRuleDestination({ syncRoomDetail: false });
   } else {
-    moveSubmit.disabled = true;
     eventStatus.textContent = "Staff selected";
   }
+  renderMoveRules();
+  applySelectedRuleDestination({ syncRoomDetail: false });
   renderSelectedPersonSummary();
   renderRoomDetail();
 }
@@ -292,11 +294,24 @@ function selectedPerson() {
   if (state.selectedPersonType === "patient") {
     return state.snapshot.patients.find((person) => person.patientId === state.selectedPersonId) || null;
   }
-  return state.snapshot.staff.find((person) => person.employeeId === state.selectedPersonId) || null;
+  return selectedStaff();
 }
 
 function selectedPatient() {
   return state.snapshot.patients.find((item) => item.patientId === movePatient.value) || null;
+}
+
+function selectedStaff() {
+  return state.snapshot.staff.find((person) => staffIdentifier(person) === state.selectedPersonId) || null;
+}
+
+function staffIdentifier(staff) {
+  return staff?.employeeId || staff?.staffId || staff?.staff_id || staff?.employee_id || staff?.id || "";
+}
+
+function legalRulesForSelectedPerson() {
+  if (state.selectedPersonType === "staff") return legalStaffRulesForSelectedStaff();
+  return legalMoveRulesForSelectedPatient();
 }
 
 function legalMoveRulesForSelectedPatient() {
@@ -308,6 +323,22 @@ function legalMoveRulesForSelectedPatient() {
     rule.categoryId !== "transfer" &&
     sourceAllowedForRoom(rule, room)
   ));
+}
+
+function legalStaffRulesForSelectedStaff() {
+  const staff = selectedStaff();
+  if (!staff) return [];
+  const role = String(staff.role || staff.type || "").toLowerCase();
+  return state.rules.filter((rule) => (
+    rule.movement?.schema === "staff-visit" &&
+    rule.categoryId === "ward" &&
+    (!rule.movement?.staffRole || String(rule.movement.staffRole).toLowerCase() === role)
+  ));
+}
+
+function noRuleMessage() {
+  if (state.selectedPersonType === "staff") return "No staff movement rule for this staff role";
+  return "No legal move rule for this patient's current room";
 }
 
 function sourceAllowedForRoom(rule, room) {
@@ -375,7 +406,7 @@ function symbolicDestinationRoom(targetId) {
   if (targetId === "source_ward_room") return selectedPatientRoomOfKind("ward");
   if (targetId === "source_icu_bed_room") return selectedPatientRoomOfKind("icu");
   if (targetId === "source_ed_room") return selectedPatientRoomOnFloor(1);
-  if (targetId === "current_consult_room" || targetId === "current_room") return selectedPatientRoom();
+  if (targetId === "current_consult_room" || targetId === "current_room" || targetId === "current_patient_room") return selectedPatientRoom();
   return null;
 }
 
@@ -411,12 +442,12 @@ function roomById(roomId) {
 
 async function submitMoveEvent(event) {
   event.preventDefault();
-  if (state.selectedPersonType && state.selectedPersonType !== "patient") {
-    eventStatus.textContent = "Only patient move events are supported here.";
+  if (!moveEvent.value) {
+    eventStatus.textContent = noRuleMessage();
     return;
   }
-  if (!moveEvent.value) {
-    eventStatus.textContent = "No legal move rule for this patient.";
+  if (state.selectedPersonType === "staff") {
+    await submitStaffMoveEvent();
     return;
   }
   const patient = state.snapshot.patients.find((item) => item.patientId === movePatient.value);
@@ -433,7 +464,64 @@ async function submitMoveEvent(event) {
       toRoomId: moveTarget.value,
       context: { reason: moveReason.value.trim() },
     });
-    eventStatus.textContent = response.accepted ? `Accepted #${response.eventSeq}` : `${response.reasonCode}`;
+    if (response.accepted) {
+      eventStatus.textContent = `Accepted #${response.eventSeq}`;
+    } else {
+      const reason = response.reasonCode || "Rejected";
+      const message = response.message || "Move request was rejected by Fullview Core.";
+      eventStatus.textContent = `${reason}: ${message}`;
+      window.alert(`${reason}\n${message}`);
+    }
+    await loadConsole();
+    await refreshEvents();
+  } catch (error) {
+    eventStatus.textContent = error.message;
+  }
+}
+
+async function submitStaffMoveEvent() {
+  const rule = selectedMoveRule();
+  const staff = selectedStaff();
+  const patient = selectedPatient();
+  if (!rule || !staff) {
+    eventStatus.textContent = "Select a staff movement rule.";
+    return;
+  }
+  if (!patient) {
+    eventStatus.textContent = "Select a target patient for this staff visit.";
+    return;
+  }
+  const movement = rule.movement || {};
+  const staffId = staffIdentifier(staff);
+  const fromRoomId = movement.from || staff.roomId;
+  const toRoomId = moveTarget.value || patient.roomId;
+  const returnRoomId = movement.returnTo || movement.return_room_id || fromRoomId;
+  eventStatus.textContent = "Sending...";
+  try {
+    const response = await requestDepartmentHandler(
+      "ward",
+      "clinical_event",
+      {
+        patient_id: patient.patientId,
+        encounter_id: patient.encounterId || patient.encounter_id,
+        event_type: rule.eventId,
+        event_id: rule.eventId,
+        staffId,
+        fromRoomId,
+        toRoomId,
+        returnRoomId,
+        durationSeconds: movement.durationSeconds || 8,
+        reason: moveReason.value.trim() || rule.name,
+        summary: {
+          source: "console-staff-rule",
+          staff_role: staff.role || staff.type,
+          target_patient_room: patient.roomId,
+        },
+      },
+      `console-staff-${rule.eventId}-${Date.now()}`
+    );
+    const coreResponse = response?.data?.coreResponse || {};
+    eventStatus.textContent = coreResponse.accepted ? `Accepted #${coreResponse.eventSeq}` : `${coreResponse.reasonCode || response?.error?.code || "Rejected"}`;
     await loadConsole();
     await refreshEvents();
   } catch (error) {
@@ -570,7 +658,7 @@ function peopleList(people, type) {
   return `
     <div class="console-people-list">
       ${people.map((person) => {
-        const personId = person.patientId || person.employeeId;
+        const personId = person.patientId || staffIdentifier(person);
         const selected = state.selectedPersonType === type && state.selectedPersonId === personId;
         const row = `
           <button class="console-person-row${selected ? " is-active" : ""}" type="button" data-person-type="${escapeAttr(type)}" data-person-id="${escapeAttr(personId)}">

@@ -866,8 +866,9 @@ function reflowStaff() {
   state.staff.forEach((member) => {
     if (member.locationType === "hallway" || member.location_type === "hallway") {
       const floor = Number(member.floor ?? member.floor_id ?? member.current_location?.floor_id ?? 0);
-      const x = Number(member.x ?? member.current_location?.x ?? (member.tile_x ?? member.current_location?.tile_x ?? 0) * TILE);
-      const y = Number(member.y ?? member.current_location?.y ?? (member.tile_y ?? member.current_location?.tile_y ?? 0) * TILE);
+      const fallback = fallbackHallwayPointForStaff(member, floor);
+      const x = Number(member.x ?? member.current_location?.x ?? ((member.tile_x ?? member.current_location?.tile_x) != null ? (member.tile_x ?? member.current_location?.tile_x) * TILE : fallback.x));
+      const y = Number(member.y ?? member.current_location?.y ?? ((member.tile_y ?? member.current_location?.tile_y) != null ? (member.tile_y ?? member.current_location?.tile_y) * TILE : fallback.y));
       member.floor = floor;
       member.x = x;
       member.y = y;
@@ -893,6 +894,33 @@ function reflowStaff() {
     member.y = point.y;
     placedStaff.push({ floor: member.floor, x: member.x, y: member.y });
   });
+}
+
+function fallbackHallwayPointForStaff(member, floor) {
+  const anchorRoomId = member.hallway_anchor_room_id || member.current_location?.anchor_room_id;
+  const anchorRoom = anchorRoomId ? roomById(anchorRoomId) : null;
+  if (anchorRoom) return hallwayPointNearRoom(anchorRoom);
+  const rooms = ROOMS.filter((room) => room.floor === floor);
+  if (rooms.length) return hallwayPointNearRoom(rooms[stableIndex(member.id || member.staff_id || member.employeeId, rooms.length)]);
+  return { x: TILE * 4, y: TILE * 4 };
+}
+
+function hallwayPointNearRoom(room) {
+  const tileX = room.x + room.w / 2;
+  const tileY = room.y >= 26 ? room.y - 1.4 : room.y + room.h + 1.4;
+  return {
+    x: clamp(tileX, 3.5, 64.5) * TILE,
+    y: clamp(tileY, 3.5, 36.5) * TILE,
+  };
+}
+
+function stableIndex(value, size) {
+  const text = String(value || "");
+  let hash = 0;
+  for (let index = 0; index < text.length; index += 1) {
+    hash = (hash * 31 + text.charCodeAt(index)) >>> 0;
+  }
+  return size ? hash % size : 0;
 }
 
 function staffForFloor(floorId) {
@@ -973,6 +1001,7 @@ function createPatientRouteFromPlan(patient, plan, event = {}) {
   const assignedBedId = plan.bedId || event.statusUpdates?.bedId || event.status_updates?.bed_id || patient.bedId || patient.bed_id;
   const destination = findAvailableRoomSpot(targetRoom, patient.id, collisions, assignedBedId) || roomCenter(targetRoom);
   const roomIds = [...(plan.viaRoomIds || []), plan.toRoomId].filter(Boolean);
+  const porterReturn = patientTransportPorterReturn(plan.porterId, plan.porterReturn);
   const route = {
     destination,
     finalForm: plan.finalForm,
@@ -980,7 +1009,7 @@ function createPatientRouteFromPlan(patient, plan, event = {}) {
     targetRoomId: targetRoom.id,
     speed: plan.transport === "stretcher" ? 150 : 170,
     porterId: plan.porterId || null,
-    porterReturn: plan.porterReturn || null,
+    porterReturn,
     segmentIndex: 0,
     waypointIndex: 0,
     segments: [],
@@ -1014,6 +1043,47 @@ function createPatientRouteFromPlan(patient, plan, event = {}) {
   }
 
   return route.segments.length ? route : null;
+}
+
+function patientTransportPorterReturn(porterId, backendReturn = null) {
+  if (!porterId) return backendReturn || null;
+  const porter = findStaff(porterId);
+  if (!porter) return backendReturn || null;
+  return porterReturnPointFromCurrent(porter, backendReturn, false);
+}
+
+function porterReturnPointFromCurrent(porter, fallback = {}, preferFallback = true) {
+  const fallbackFloor = Number(fallback?.floor ?? fallback?.floorId);
+  const currentFloor = Number(porter.floor ?? porter.floor_id ?? porter.current_location?.floor_id);
+  const floor = Number.isFinite(preferFallback ? fallbackFloor : currentFloor)
+    ? (preferFallback ? fallbackFloor : currentFloor)
+    : Number.isFinite(preferFallback ? currentFloor : fallbackFloor)
+      ? (preferFallback ? currentFloor : fallbackFloor)
+      : 1;
+  const hallwayFallback = fallbackHallwayPointForStaff(porter, floor);
+  const currentX = Number(porter.x ?? porter.current_location?.x ?? (((porter.tile_x ?? porter.current_location?.tile_x) ?? null) != null ? (porter.tile_x ?? porter.current_location?.tile_x) * TILE : NaN));
+  const currentY = Number(porter.y ?? porter.current_location?.y ?? (((porter.tile_y ?? porter.current_location?.tile_y) ?? null) != null ? (porter.tile_y ?? porter.current_location?.tile_y) * TILE : NaN));
+  const fallbackX = Number(fallback?.x ?? (fallback?.tileX != null ? fallback.tileX * TILE : NaN));
+  const fallbackY = Number(fallback?.y ?? (fallback?.tileY != null ? fallback.tileY * TILE : NaN));
+  const x = Number.isFinite(preferFallback ? fallbackX : currentX)
+    ? (preferFallback ? fallbackX : currentX)
+    : Number.isFinite(preferFallback ? currentX : fallbackX)
+      ? (preferFallback ? currentX : fallbackX)
+      : hallwayFallback.x;
+  const y = Number.isFinite(preferFallback ? fallbackY : currentY)
+    ? (preferFallback ? fallbackY : currentY)
+    : Number.isFinite(preferFallback ? currentY : fallbackY)
+      ? (preferFallback ? currentY : fallbackY)
+      : hallwayFallback.y;
+  return {
+    kind: "hallway",
+    floor,
+    floorId: floor,
+    x,
+    y,
+    tileX: x / TILE,
+    tileY: y / TILE,
+  };
 }
 
 function updatePatientMoves(delta) {
@@ -1122,10 +1192,11 @@ function startPorterReturnMove(move, targetRoom, patient) {
     return ids.includes(move.porterId);
   });
   if (!porter) return;
-  const returnFloor = Number(move.porterReturn.floor ?? move.porterReturn.floorId ?? porter.floor);
+  const porterReturn = porterReturnPointFromCurrent(porter, move.porterReturn);
+  const returnFloor = Number(porterReturn.floor ?? porterReturn.floorId ?? porter.floor);
   const returnPoint = {
-    x: Number(move.porterReturn.x ?? porter.x),
-    y: Number(move.porterReturn.y ?? porter.y),
+    x: Number(porterReturn.x ?? porter.x),
+    y: Number(porterReturn.y ?? porter.y),
   };
   const startFloor = targetRoom?.floor ?? patient.floor ?? returnFloor;
   const startPoint = { x: patient.x, y: patient.y };
@@ -1143,7 +1214,7 @@ function startPorterReturnMove(move, targetRoom, patient) {
   }
   state.porterMoves.set(porter.id, {
     porter,
-    porterReturn: move.porterReturn,
+    porterReturn,
     speed: 165,
     movePhase: 0,
     segmentIndex: 0,
@@ -1254,16 +1325,17 @@ function placePorterAfterMove(move) {
     return ids.includes(move.porterId);
   });
   if (!porter) return;
+  const porterReturn = porterReturnPointFromCurrent(porter, move.porterReturn);
   porter.locationType = "hallway";
   porter.location_type = "hallway";
   porter.roomId = null;
   porter.room_id = null;
-  porter.floor = Number(move.porterReturn.floor ?? move.porterReturn.floorId ?? porter.floor);
+  porter.floor = Number(porterReturn.floor ?? porterReturn.floorId ?? porter.floor);
   porter.floor_id = porter.floor;
-  porter.x = Number(move.porterReturn.x ?? porter.x);
-  porter.y = Number(move.porterReturn.y ?? porter.y);
-  porter.tile_x = Number(move.porterReturn.tileX ?? porter.x / TILE);
-  porter.tile_y = Number(move.porterReturn.tileY ?? porter.y / TILE);
+  porter.x = Number(porterReturn.x ?? porter.x);
+  porter.y = Number(porterReturn.y ?? porter.y);
+  porter.tile_x = Number(porterReturn.tileX ?? porter.x / TILE);
+  porter.tile_y = Number(porterReturn.tileY ?? porter.y / TILE);
   porter.current_location = {
     kind: "hallway",
     location_type: "hallway",

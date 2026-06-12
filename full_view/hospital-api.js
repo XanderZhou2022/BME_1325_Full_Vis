@@ -34,6 +34,18 @@ export async function requestPatientAdmission(payload) {
   return response.json();
 }
 
+export async function requestDepartmentHandler(departmentId, requestType, payload, idempotencyKey = "") {
+  const headers = { "Content-Type": "application/json" };
+  if (idempotencyKey) headers["Idempotency-Key"] = idempotencyKey;
+  const response = await fetch(`./api/v1/departments/${encodeURIComponent(departmentId)}/requests/${encodeURIComponent(requestType)}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error(`Unable to send ${departmentId} ${requestType}: ${response.status}`);
+  return response.json();
+}
+
 export async function deletePatient(patientId) {
   const response = await fetch(`./api/hospital/patients/${encodeURIComponent(patientId)}`, {
     method: "DELETE",

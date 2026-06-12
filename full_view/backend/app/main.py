@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 import json
 import sqlite3
 from typing import Any
@@ -177,16 +178,34 @@ async def hospital_move(request: Request):
     with db.connect() as conn:
         patient = conn.execute("SELECT * FROM patients WHERE patient_id=?", (patient_id,)).fetchone()
     department_id = patient["current_department_id"] if patient else "outpatient"
+    event_id = payload.get("eventId") or payload.get("event_id")
+    request_type = console_request_type_for_event(event_id)
+    target_department_id = core.target_department_for_transfer_event(event_id) if request_type == "transfer_request" else None
     normalized = {
         "patient_id": patient_id,
         "encounter_id": payload.get("encounterId") or payload.get("encounter_id") or active_encounter_id(patient_id),
-        "event_id": payload.get("eventId") or payload.get("event_id"),
+        "event_id": event_id,
         "from_room_id": payload.get("fromRoomId") or payload.get("from_room_id"),
         "to_room_id": payload.get("toRoomId") or payload.get("to_room_id"),
+        "to_department_id": target_department_id,
         "reason": payload.get("reason") or "console movement",
         "summary": {"source": "console"},
     }
-    return core.handle_department_request(department_id, "movement_request", normalized, "")
+    return core.handle_department_request(department_id, request_type, normalized, "")
+
+
+def console_request_type_for_event(event_id: str | None) -> str:
+    rule = core.find_rule(event_id) if event_id else None
+    if not rule:
+        return "movement_request"
+    kind = core.rule_kind(rule)
+    if kind == "transfer":
+        return "transfer_request"
+    if kind == "discharge":
+        return "discharge_request"
+    if kind == "clinical_event":
+        return "clinical_event"
+    return "movement_request"
 
 
 @app.post("/api/hospital/patients/admit")
@@ -202,9 +221,12 @@ def delete_patient(patient_id: str):
         row = conn.execute("SELECT * FROM patients WHERE patient_id=?", (patient_id,)).fetchone()
         if not row:
             return {"accepted": False, "eventId": "PATIENT_DELETE", "reasonCode": "PATIENT_NOT_FOUND", "message": f"No patient found for {patient_id}."}
+        now = utc_now()
         conn.execute("UPDATE beds SET status='available', patient_id=NULL, updated_at=? WHERE patient_id=?", (utc_now(), patient_id))
         conn.execute("UPDATE bed_assignments SET status='released', released_at=? WHERE patient_id=? AND released_at IS NULL", (utc_now(), patient_id))
-        conn.execute("DELETE FROM patients WHERE patient_id=?", (patient_id,))
+        conn.execute("UPDATE encounters SET status='CLOSED', closed_at=COALESCE(closed_at, ?), updated_at=? WHERE patient_id=? AND status!='CLOSED'", (now, now, patient_id))
+        conn.execute("UPDATE episodes SET status='CLOSED', ended_at=COALESCE(ended_at, ?) WHERE patient_id=? AND status!='CLOSED'", (now, patient_id))
+        conn.execute("UPDATE patients SET status='DELETED', current_room_id=NULL, current_bed_id=NULL, updated_at=? WHERE patient_id=?", (now, patient_id))
         event_seq = core.write_event(conn, "patient.deleted", {"patient_id": patient_id, "correlation_id": core.new_event_id(), "producer": "fullview.console"}, "dashboard", None, True)
     return {"accepted": True, "eventSeq": event_seq, "eventId": "PATIENT_DELETE", "patientId": patient_id, "snapshotRefresh": True}
 
@@ -249,11 +271,22 @@ def build_snapshot():
     with db.connect() as conn:
         floors = snapshot_floors()
         room_rows = conn.execute("SELECT * FROM locations ORDER BY floor, room_id").fetchall()
-        patient_rows = conn.execute("SELECT * FROM patients WHERE status != 'DISCHARGED' ORDER BY patient_id").fetchall()
+        patient_rows = conn.execute("SELECT * FROM patients WHERE status NOT IN ('DISCHARGED', 'DELETED') ORDER BY patient_id").fetchall()
         bed_rows = conn.execute("SELECT * FROM beds ORDER BY room_id, bed_index").fetchall()
+        encounter_rows = conn.execute(
+            """
+            SELECT patient_id, encounter_id
+            FROM encounters
+            WHERE status='OPEN'
+            ORDER BY opened_at DESC
+            """
+        ).fetchall()
         last_seq = conn.execute("SELECT COALESCE(MAX(event_seq), 0) FROM hospital_events").fetchone()[0]
     bed_room_by_id = {bed["bed_id"]: bed["room_id"] for bed in bed_rows}
-    patients = [patient_view(row, bed_room_by_id) for row in patient_rows]
+    encounter_by_patient = {}
+    for row in encounter_rows:
+        encounter_by_patient.setdefault(row["patient_id"], row["encounter_id"])
+    patients = [patient_view(row, bed_room_by_id, encounter_by_patient) for row in patient_rows]
     patients_by_room: dict[str, list[dict[str, Any]]] = {}
     for patient in patients:
         if patient.get("roomId"):
@@ -261,8 +294,22 @@ def build_snapshot():
     beds_by_room: dict[str, list[dict[str, Any]]] = {}
     for bed in bed_rows:
         beds_by_room.setdefault(bed["room_id"], []).append(bed_view(bed))
-    rooms = [room_view(row, patients_by_room.get(row["room_id"], []), beds_by_room.get(row["room_id"], [])) for row in room_rows]
-    staff = read_json(DATA_DIR / "staff.json", {"staff": []}).get("staff", [])
+    staff = normalize_staff_records(read_json(DATA_DIR / "staff.json", {"staff": []}).get("staff", []), room_rows)
+    staff_by_room: dict[str, list[dict[str, Any]]] = {}
+    for member in staff:
+        room_id = member.get("roomId") or member.get("room_id")
+        if room_id:
+            staff_by_room.setdefault(room_id, []).append(member)
+    rooms = [
+        room_view(
+            row,
+            patients_by_room.get(row["room_id"], []),
+            staff_by_room.get(row["room_id"], []),
+            beds_by_room.get(row["room_id"], []),
+            index,
+        )
+        for index, row in enumerate(room_rows, start=1)
+    ]
     return {
         "floors": floors,
         "rooms": rooms,
@@ -271,6 +318,186 @@ def build_snapshot():
         "departments": department_status(patients),
         "eventSeq": last_seq,
     }
+
+
+def normalize_staff_records(records, room_rows):
+    rooms_by_id = {row["room_id"]: row for row in room_rows}
+    staff = [dict(member) for member in records]
+    normalize_porter_home_locations(staff, rooms_by_id)
+    assign_hallway_staff_positions(staff, rooms_by_id)
+    return staff
+
+
+def normalize_porter_home_locations(staff, rooms_by_id):
+    for member in staff:
+        if (member.get("role") or member.get("type")) != "porter":
+            continue
+        home_floor = porter_home_floor(member)
+        if not home_floor:
+            continue
+        member["floor"] = home_floor
+        member["floor_id"] = home_floor
+        member["locationType"] = "hallway"
+        member["location_type"] = "hallway"
+        member["roomId"] = None
+        member["room_id"] = None
+        seed = member.get("staff_id") or member.get("employeeId") or member.get("employee_id") or member.get("id")
+        if seed:
+            member["hallway_seed"] = seed
+        anchor_room_id = member.get("hallway_anchor_room_id")
+        anchor_row = rooms_by_id.get(anchor_room_id) if anchor_room_id else None
+        if anchor_row and int(anchor_row["floor"]) != home_floor:
+            member.pop("hallway_anchor_room_id", None)
+        location = dict(member.get("current_location") or {})
+        location["kind"] = "hallway"
+        location["location_type"] = "hallway"
+        location["floor_id"] = home_floor
+        if anchor_row and int(anchor_row["floor"]) != home_floor:
+            location.pop("anchor_room_id", None)
+        member["current_location"] = location
+
+
+def porter_home_floor(member):
+    for value in [member.get("staff_id"), member.get("employeeId"), member.get("employee_id"), member.get("id"), member.get("hallway_seed")]:
+        text = str(value or "").upper()
+        marker = "POT-"
+        if marker not in text:
+            continue
+        after = text.split(marker, 1)[1]
+        floor_text = after.split("F", 1)[0]
+        if floor_text.isdigit():
+            return int(floor_text)
+    return None
+
+
+def assign_hallway_staff_positions(staff, rooms_by_id):
+    groups: dict[int, list[dict[str, Any]]] = {}
+    for member in staff:
+        if not is_hallway_staff(member):
+            continue
+        floor = int(member.get("floor_id") or member.get("floor") or (member.get("current_location") or {}).get("floor_id") or 0)
+        if floor:
+            groups.setdefault(floor, []).append(member)
+
+    for floor, members in groups.items():
+        candidates = hallway_candidates_for_floor(floor, rooms_by_id)
+        if not candidates:
+            continue
+        chosen = []
+        ordered = sorted(members, key=lambda member: stable_hash(member.get("id") or member.get("staff_id") or member.get("employeeId") or "staff"))
+        for index, member in enumerate(ordered):
+            anchor_room_id = member.get("hallway_anchor_room_id") or (member.get("current_location") or {}).get("anchor_room_id")
+            anchor = hallway_point_for_room(rooms_by_id[anchor_room_id]) if anchor_room_id in rooms_by_id else None
+            point = choose_hallway_point(member, candidates, chosen, index, anchor)
+            chosen.append(point)
+            set_staff_hallway_point(member, point)
+
+
+def is_hallway_staff(member):
+    location = member.get("current_location") or {}
+    return (member.get("location_type") or member.get("locationType") or location.get("location_type") or location.get("kind")) == "hallway"
+
+
+def choose_hallway_point(member, candidates, chosen, index, anchor=None):
+    seed = member.get("hallway_seed") or member.get("staff_id") or member.get("employeeId") or member.get("id") or f"staff-{index}"
+    if anchor:
+        ordered = sorted(candidates, key=lambda point: squared_distance(point, anchor) + stable_hash(f"{seed}:{point['tileX']}:{point['tileY']}") / 10**18)
+    else:
+        ordered = sorted(candidates, key=lambda point: stable_hash(f"{seed}:{point['tileX']}:{point['tileY']}"))
+    for min_distance in [4.4, 3.5, 2.7, 1.9, 0]:
+        for point in ordered:
+            if all(tile_distance(point, used) >= min_distance for used in chosen):
+                return point
+    return ordered[index % len(ordered)]
+
+
+def set_staff_hallway_point(member, point):
+    member["location_type"] = "hallway"
+    member["locationType"] = "hallway"
+    member["room_id"] = None
+    member["roomId"] = None
+    member["floor"] = point["floor"]
+    member["floor_id"] = point["floor"]
+    member["tile_x"] = point["tileX"]
+    member["tile_y"] = point["tileY"]
+    member["x"] = point["x"]
+    member["y"] = point["y"]
+    location = dict(member.get("current_location") or {})
+    location.update({
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": point["floor"],
+        "tile_x": point["tileX"],
+        "tile_y": point["tileY"],
+        "x": point["x"],
+        "y": point["y"],
+    })
+    member["current_location"] = location
+
+
+def hallway_candidates_for_floor(floor, rooms_by_id):
+    rooms = [row for row in rooms_by_id.values() if row["floor"] == floor]
+    raw = []
+    for row in rooms:
+        spec = core.json_loads(row["map_json"])
+        x, y, w, h = (float(spec.get(key) or 0) for key in ("x", "y", "w", "h"))
+        if w <= 0 or h <= 0:
+            continue
+        for offset in frange(x + 1.4, x + w - 1.4, 2.6):
+            raw.append({"floor": floor, "tileX": offset, "tileY": y - 1.55})
+            raw.append({"floor": floor, "tileX": offset, "tileY": y + h + 1.55})
+        for offset in frange(y + 1.4, y + h - 1.4, 2.6):
+            raw.append({"floor": floor, "tileX": x - 1.55, "tileY": offset})
+            raw.append({"floor": floor, "tileX": x + w + 1.55, "tileY": offset})
+
+    deduped = {}
+    for point in raw:
+        if point_inside_any_room(point, rooms, padding=0.9):
+            continue
+        key = (round(point["tileX"], 1), round(point["tileY"], 1))
+        deduped[key] = world_point(floor, key[0], key[1])
+    return list(deduped.values())
+
+
+def hallway_point_for_room(row):
+    spec = core.json_loads(row["map_json"])
+    x, y, w, h = (float(spec.get(key) or 0) for key in ("x", "y", "w", "h"))
+    tile_x = max(3.5, min(64.5, x + w / 2))
+    tile_y = y - 1.4 if y >= 26 else y + h + 1.4
+    tile_y = max(3.5, min(36.5, tile_y))
+    return world_point(row["floor"], round(tile_x, 2), round(tile_y, 2))
+
+
+def point_inside_any_room(point, rooms, padding=0.0):
+    for row in rooms:
+        spec = core.json_loads(row["map_json"])
+        x, y, w, h = (float(spec.get(key) or 0) for key in ("x", "y", "w", "h"))
+        if x - padding <= point["tileX"] <= x + w + padding and y - padding <= point["tileY"] <= y + h + padding:
+            return True
+    return False
+
+
+def world_point(floor, tile_x, tile_y):
+    return {"floor": floor, "floorId": floor, "tileX": tile_x, "tileY": tile_y, "x": tile_x * 32, "y": tile_y * 32}
+
+
+def frange(start, stop, step):
+    value = start
+    while value <= stop:
+        yield value
+        value += step
+
+
+def stable_hash(value):
+    return int(hashlib.sha1(str(value).encode("utf-8")).hexdigest()[:12], 16)
+
+
+def squared_distance(a, b):
+    return (a["tileX"] - b["tileX"]) ** 2 + (a["tileY"] - b["tileY"]) ** 2
+
+
+def tile_distance(a, b):
+    return ((a["tileX"] - b["tileX"]) ** 2 + (a["tileY"] - b["tileY"]) ** 2) ** 0.5
 
 
 def snapshot_floors():
@@ -290,8 +517,9 @@ def snapshot_floors():
     return floors
 
 
-def room_view(row, patients, beds):
+def room_view(row, patients, staff, beds, index):
     occupied = sum(1 for bed in beds if bed["occupied"])
+    map_spec = core.json_loads(row["map_json"])
     return {
         "id": row["room_id"],
         "roomId": row["room_id"],
@@ -300,11 +528,22 @@ def room_view(row, patients, beds):
         "kind": row["kind"],
         "departmentId": row["department_id"],
         "label": row["display_name"],
+        "roomCode": map_spec.get("roomCode") or f"{row['floor']}F-Room{index}",
+        "room_code": map_spec.get("roomCode") or f"{row['floor']}F-Room{index}",
+        "protected": bool(map_spec.get("protected")),
         "capacityBeds": row["capacity_beds"],
         "occupiedBeds": occupied,
         "availableBeds": max(0, row["capacity_beds"] - occupied),
+        "patientCount": len(patients),
+        "patient_count": len(patients),
+        "staffCount": len(staff),
+        "staff_count": len(staff),
+        "queue": [],
+        "queueLength": 0,
+        "queue_length": 0,
         "patients": patients,
-        "staff": [],
+        "staff": staff,
+        "beds": beds,
         "bedAssignments": beds,
         "bedIds": [bed["bedId"] for bed in beds],
     }
@@ -323,14 +562,17 @@ def bed_view(row):
     }
 
 
-def patient_view(row, bed_room_by_id=None):
+def patient_view(row, bed_room_by_id=None, encounter_by_patient=None):
     profile = core.json_loads(row["profile_json"])
     room_id = row["current_room_id"]
     bed_room_id = (bed_room_by_id or {}).get(row["current_bed_id"])
+    encounter_id = (encounter_by_patient or {}).get(row["patient_id"])
     return {
         "id": row["patient_id"],
         "patientId": row["patient_id"],
         "patient_id": row["patient_id"],
+        "encounterId": encounter_id,
+        "encounter_id": encounter_id,
         "type": "patient",
         "name": row["name"],
         "department": core.DEPARTMENT_LABELS.get(row["current_department_id"], row["current_department_id"] or "Hospital"),

@@ -1,6 +1,6 @@
 {
-  "mode": "patient-movement-only",
-  "description": "Only patient movement and movement-blocking rules are kept here. Each rule uses the patient-move standard for transport mode, escorts, equipment, path policy, and resource policy.",
+  "mode": "patient-and-staff-movement",
+  "description": "Patient movement plus ward staff visit rules. Patient moves use patient-move; ward staff visits use staff-visit and do not change patient location or bed state.",
   "categories": [
     {
       "id": "outpatient",
@@ -21,14 +21,14 @@
       "label": "ICU Patient Moves",
       "file": "icu.json",
       "sourceFile": "icu-move-rules",
-      "ruleCount": 6
+      "ruleCount": 8
     },
     {
       "id": "ward",
-      "label": "Ward Patient Moves",
+      "label": "Ward Patient & Staff Moves",
       "file": "ward.json",
       "sourceFile": "ward-move-rules",
-      "ruleCount": 6
+      "ruleCount": 8
     },
     {
       "id": "transfer",

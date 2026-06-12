@@ -554,6 +554,86 @@
       "notes": "ICU source bed is retained because MDT consultation is not discharge or transfer of care.",
       "sourceFile": "department-update-20260612",
       "event_id": "ICU_TO_MDT_CONSULT_MOVE"
+    },
+    {
+      "id": "icu-move-8",
+      "name": "MDT 会诊结束返回 ICU 床位",
+      "eventId": "ICU_MDT_CONSULT_RETURN",
+      "event_id": "ICU_MDT_CONSULT_RETURN",
+      "classification": "ICU移动",
+      "trigger": "ICU 患者完成 MDT 会诊，需返回原 ICU 床位继续监护。",
+      "rooms": [
+        "R-MDT-CALL",
+        "R-MDT-MEETING",
+        "R-F4-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-ICU-STATION",
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION"
+      ],
+      "roomsText": "mdt_call、mdt_meeting、elevator_4、elevator_3、icu_station、icu_beds_a、icu_beds_b、icu_isolation",
+      "agents": "患者、ICU 护士、转运员、MDT/ICU handler。",
+      "prechecks": "患者当前位于 MDT 会诊房间；原 ICU 床位仍由该患者保留占用。",
+      "actions": "患者从 MDT 会诊房间经 4F/3F 电梯返回原 ICU 床位。",
+      "successState": "患者回到 ICU 原床位；床位仍绑定该患者；会诊移动闭环完成。",
+      "blocking": "患者不在 MDT 会诊房间或原 ICU 床位不再绑定该患者时阻塞返回。",
+      "visualization": "患者以 stretcher 形式从 4F MDT 返回 3F ICU 原床。",
+      "movement": {
+        "schema": "patient-move",
+        "from": [
+          "R-MDT-CALL",
+          "R-MDT-MEETING"
+        ],
+        "to": "source_icu_bed_room",
+        "via": [
+          "R-F4-ELEVATOR",
+          "R-F3-ELEVATOR",
+          "R-ICU-STATION"
+        ],
+        "transport": "stretcher",
+        "acuity": "critical",
+        "patientFormDuringMove": "stretcher",
+        "finalForm": "bed",
+        "escortRequired": true,
+        "escortRoles": [
+          "porter",
+          "icu_nurse"
+        ],
+        "equipment": [
+          "portable_monitor",
+          "oxygen",
+          "transport_bag"
+        ],
+        "pathPolicy": {
+          "requiresPath": true,
+          "useElevator": true,
+          "avoidWalls": true,
+          "hallwayPreference": "center",
+          "stopAtDoorBeforeEntering": true
+        },
+        "resourcePolicy": {
+          "lockBeforeMove": true,
+          "releaseSourceOnArrival": true,
+          "occupyTargetOnArrival": false,
+          "keepSourceReservedUntilArrival": true,
+          "retainSourceBed": true,
+          "releaseSourceBed": false
+        },
+        "failurePolicy": {
+          "onNoPath": "stay_source",
+          "onResourceBlocked": "stay_source",
+          "onEscortUnavailable": "stay_source"
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "bed",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "icu_nurse"
+        ]
+      },
+      "sourceFile": "department-update-20260612"
     }
   ]
 }

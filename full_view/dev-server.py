@@ -352,7 +352,7 @@ def request_type_description(request_type, department_id):
 
 def rules_for_department(department_id):
     if department_id == "mdt":
-        return {"movement_request": [], "transfer_request": [], "discharge_request": []}
+        return {"movement_request": [], "transfer_request": [], "discharge_request": [], "clinical_event": []}
     department_rules = movement_rules_for_category(department_id)
     transfer_rule_entries = [
         ("transfer", rule)
@@ -376,6 +376,11 @@ def rules_for_department(department_id):
             rule_summary(rule, department_id)
             for rule in department_rules
             if rule_kind(rule) == "discharge"
+        ],
+        "clinical_event": [
+            rule_summary(rule, department_id)
+            for rule in department_rules
+            if rule_kind(rule) == "clinical_event"
         ],
     }
 
@@ -409,6 +414,8 @@ def rule_event_id(rule):
 
 def rule_kind(rule):
     movement = rule.get("movement", {})
+    if movement.get("schema") == "staff-visit":
+        return "clinical_event"
     target = movement.get("to")
     classification = str(rule.get("classification") or "")
     if target == "exit" or "离院" in classification or "出院" in rule.get("name", ""):
@@ -430,6 +437,9 @@ def rule_summary(rule, category_id):
         "to": movement.get("to"),
         "via": movement.get("via", []),
         "transport": movement.get("transport", "walking"),
+        "movementSchema": movement.get("schema"),
+        "staffRole": movement.get("staffRole") or movement.get("staff_role"),
+        "durationSeconds": movement.get("durationSeconds") or movement.get("duration_seconds"),
         "finalForm": movement.get("finalForm") or movement.get("final_form", "walking"),
         "rooms": rule.get("rooms", []),
         "trigger": rule.get("trigger", ""),
@@ -888,6 +898,31 @@ def clinical_example_for(department_id, patient_id, encounter_id):
             "summary": {"case_summary": "MDT reviewed the debug case."},
             "recommendations": ["continue monitoring", "repeat imaging if symptoms worsen"],
             "required_updates": [],
+        }
+    if department_id == "ward":
+        return {
+            "patient_id": patient_id,
+            "encounter_id": encounter_id,
+            "event_type": "WARD_NURSE_ORDER_VISIT",
+            "event_id": "WARD_NURSE_ORDER_VISIT",
+            "staffId": "N-WD-001",
+            "fromRoomId": "R-WARD-NURSE-STATION",
+            "toRoomId": "R-WARD-CARD",
+            "returnRoomId": "R-WARD-NURSE-STATION",
+            "durationSeconds": 8,
+            "reason": "nurse execute immediate order",
+            "summary": {"note": "Ward nurse visit debug event"},
+            "additionalExamples": [
+                {
+                    "event_type": "WARD_DOCTOR_ROUND_VISIT",
+                    "event_id": "WARD_DOCTOR_ROUND_VISIT",
+                    "staffId": "D-WD-001",
+                    "fromRoomId": "R-WARD-DOCTOR-OFFICE",
+                    "toRoomId": "R-WARD-CARD",
+                    "returnRoomId": "R-WARD-DOCTOR-OFFICE",
+                    "durationSeconds": 9,
+                }
+            ],
         }
     return {
         "patient_id": patient_id,
@@ -1553,18 +1588,86 @@ def handle_department_discharge(department_id, payload):
 def handle_department_clinical_event(department_id, payload):
     if not payload.get("patient_id"):
         return {"accepted": False, "reasonCode": "MISSING_PATIENT_ID", "message": "patient_id is required."}
-    event_id = str(payload.get("event_type") or "clinical.summary_updated").upper().replace(".", "_")
+    event_id = payload.get("event_id") or payload.get("event_type") or "clinical.summary_updated"
+    staff_plan = None
+    if event_id in {"WARD_NURSE_ORDER_VISIT", "WARD_DOCTOR_ROUND_VISIT"}:
+        rule_error = ensure_rule_allowed_for_department(department_id, "clinical_event", event_id)
+        if rule_error:
+            return rule_error
+        patients = [normalize_patient_record(patient) for patient in read_json(PATIENTS_FILE).get("patients", [])]
+        patient = find_patient(patients, payload.get("patient_id"))
+        if not patient:
+            return {"accepted": False, "reasonCode": "PATIENT_NOT_FOUND", "message": f"No patient found for {payload.get('patient_id')}."}
+        staff_result = build_staff_visit_plan(department_id, event_id, payload, patient)
+        if staff_result.get("error"):
+            return {"accepted": False, "reasonCode": staff_result["error"], "message": staff_result["message"]}
+        staff_plan = staff_result["plan"]
     return append_core_event(
-        event_id=event_id,
+        event_id=str(event_id).upper().replace(".", "_"),
         patient_id=payload.get("patient_id"),
         accepted=True,
         request=payload,
         message=f"{department_id} clinical event stored.",
-        event_type=payload.get("event_type") or "clinical.summary_updated",
+        event_type="staff.visit" if staff_plan else payload.get("event_type") or "clinical.summary_updated",
+        staff_move_plan=staff_plan,
     )
 
 
-def append_core_event(event_id, patient_id, accepted, request, message="", event_type=None, snapshot_refresh=False):
+def build_staff_visit_plan(department_id, event_id, payload, patient):
+    if department_id != "ward":
+        return {"error": "STAFF_VISIT_DEPARTMENT_MISMATCH", "message": "Ward staff visit events must be submitted by the ward handler."}
+    staff_id = payload.get("staffId") or payload.get("staff_id")
+    staff = find_standard_staff(staff_id)
+    if not staff:
+        return {"error": "STAFF_ID_NOT_STANDARD", "message": f"staffId must be a Fullview standard staff id, got {staff_id or 'empty'}."}
+    role = staff.get("role") or staff.get("type")
+    expected_role = "nurse" if event_id == "WARD_NURSE_ORDER_VISIT" else "doctor"
+    if role != expected_role:
+        return {"error": "STAFF_ROLE_MISMATCH", "message": f"{event_id} requires a {expected_role} staff member."}
+    rooms_by_id = {room["id"]: room for room in normalize_map(read_json(MAP_CONFIG))[1]}
+    from_room_id = payload.get("fromRoomId") or payload.get("from_room_id") or default_staff_from_room(expected_role)
+    to_room_id = payload.get("toRoomId") or payload.get("to_room_id") or patient.get("roomId")
+    return_room_id = payload.get("returnRoomId") or payload.get("return_room_id") or default_staff_from_room(expected_role)
+    for label, room_id in {"fromRoomId": from_room_id, "toRoomId": to_room_id, "returnRoomId": return_room_id}.items():
+        if not room_id or not str(room_id).startswith("R-") or room_id not in rooms_by_id:
+            return {"error": "ROOM_NOT_FOUND", "message": f"{label} must be an existing Fullview room id."}
+    duration = int(payload.get("durationSeconds") or payload.get("duration_seconds") or (8 if expected_role == "nurse" else 9))
+    plan = {
+        "kind": "staff-visit",
+        "staffId": staff.get("staff_id") or staff.get("employeeId") or staff_id,
+        "fromRoomId": from_room_id,
+        "toRoomId": to_room_id,
+        "returnRoomId": return_room_id,
+        "patientId": payload.get("patient_id"),
+        "durationSeconds": duration,
+        "reason": payload.get("reason") or ("nurse execute_immediate" if expected_role == "nurse" else "doctor ward round"),
+    }
+    return {"plan": plan}
+
+
+def default_staff_from_room(role):
+    return "R-WARD-NURSE-STATION" if role == "nurse" else "R-WARD-DOCTOR-OFFICE"
+
+
+def find_standard_staff(staff_id):
+    if not staff_id:
+        return None
+    staff_id = str(staff_id)
+    for member in read_json(STAFF_FILE).get("staff", []):
+        normalized = normalize_staff_record(dict(member))
+        ids = {
+            normalized.get("id"),
+            normalized.get("staffId"),
+            normalized.get("staff_id"),
+            normalized.get("employeeId"),
+            normalized.get("employee_id"),
+        }
+        if staff_id in {item for item in ids if item}:
+            return normalized
+    return None
+
+
+def append_core_event(event_id, patient_id, accepted, request, message="", event_type=None, snapshot_refresh=False, staff_move_plan=None):
     event_log = read_json(EVENT_LOG_FILE)
     event_seq = next_event_seq(event_log)
     response = {
@@ -1579,6 +1682,18 @@ def append_core_event(event_id, patient_id, accepted, request, message="", event
         "eventType": event_type or event_id.lower(),
         "event_type": event_type or event_id.lower(),
     }
+    if staff_move_plan:
+        response["staffMovePlan"] = staff_move_plan
+        response["staff_move_plan"] = {
+            "kind": staff_move_plan.get("kind"),
+            "staff_id": staff_move_plan.get("staffId"),
+            "from_room_id": staff_move_plan.get("fromRoomId"),
+            "to_room_id": staff_move_plan.get("toRoomId"),
+            "return_room_id": staff_move_plan.get("returnRoomId"),
+            "patient_id": staff_move_plan.get("patientId"),
+            "duration_seconds": staff_move_plan.get("durationSeconds"),
+            "reason": staff_move_plan.get("reason"),
+        }
     if snapshot_refresh:
         response["snapshotRefresh"] = True
         response["snapshot_refresh"] = True
@@ -2500,6 +2615,9 @@ def append_event(event_log, response, request):
     if response.get("animationPlan"):
         event["animation_plan"] = response.get("animation_plan") or response["animationPlan"]
         event["animationPlan"] = response["animationPlan"]
+    if response.get("staffMovePlan"):
+        event["staffMovePlan"] = response["staffMovePlan"]
+        event["staff_move_plan"] = response.get("staff_move_plan")
     if response.get("snapshotRefresh") or response.get("snapshot_refresh"):
         event["snapshotRefresh"] = True
         event["snapshot_refresh"] = True
