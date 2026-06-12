@@ -81,6 +81,7 @@ const state = {
   patients: PATIENTS.map((patient) => ({ ...patient, baseForm: patient.form })),
   staff: STAFF.map((member) => ({ ...member })),
   patientMoves: new Map(),
+  pendingPatientEvents: new Map(),
   porterMoves: new Map(),
   player,
   playerTravel: null,
@@ -221,6 +222,7 @@ async function refreshHospitalSnapshot({ preserveMoves = true } = {}) {
     const snapshot = await fetchHospitalSnapshot();
     applyHospitalSnapshot(snapshot, { preserveMoves });
     state.lastEventSeq = Math.max(state.lastEventSeq, snapshot.eventSeq || 0);
+    [...state.pendingPatientEvents.keys()].forEach((patientId) => flushPendingPatientMove(patientId));
   } catch (error) {
     console.warn("Hospital snapshot unavailable; using local seed data.", error);
   }
@@ -271,7 +273,7 @@ async function pollHospitalEvents() {
     const result = await fetchHospitalEvents(state.lastEventSeq);
     for (const event of result.events || []) {
       state.lastEventSeq = Math.max(state.lastEventSeq, event.eventSeq || 0);
-      if (event.accepted && event.animationPlan) startBackendPatientMove(event);
+      if (event.accepted && event.animationPlan) startOrQueueBackendPatientMove(event);
       if (event.accepted && !event.animationPlan && (event.eventId === "PATIENT_DELETE" || event.snapshotRefresh)) {
         refreshHospitalSnapshot({ preserveMoves: false });
       }
@@ -283,10 +285,49 @@ async function pollHospitalEvents() {
   }
 }
 
+function startOrQueueBackendPatientMove(event) {
+  const patient = findPatient(event.patientId);
+  if (!patient) {
+    queueBackendPatientMove(event);
+    refreshHospitalSnapshot({ preserveMoves: true });
+    return;
+  }
+  if (state.patientMoves.has(patient.id)) {
+    queueBackendPatientMove(event);
+    return;
+  }
+  startBackendPatientMove(event);
+}
+
+function queueBackendPatientMove(event) {
+  const key = event.patientId || event.patient_id;
+  if (!key) return;
+  const queue = state.pendingPatientEvents.get(key) || [];
+  queue.push(event);
+  state.pendingPatientEvents.set(key, queue);
+}
+
+function flushPendingPatientMove(patientId) {
+  const patient = findPatient(patientId);
+  const key = patient?.patientId || patientId;
+  const queue = state.pendingPatientEvents.get(key) || state.pendingPatientEvents.get(patientId);
+  if (!patient || !queue?.length || state.patientMoves.has(patient.id)) return;
+  const nextEvent = queue.shift();
+  if (queue.length) state.pendingPatientEvents.set(key, queue);
+  else {
+    state.pendingPatientEvents.delete(key);
+    state.pendingPatientEvents.delete(patientId);
+  }
+  startBackendPatientMove(nextEvent);
+}
+
 function startBackendPatientMove(event) {
   const patient = findPatient(event.patientId);
   const plan = event.animationPlan;
-  if (!patient || state.patientMoves.has(patient.id)) return;
+  if (!patient || state.patientMoves.has(patient.id)) {
+    queueBackendPatientMove(event);
+    return;
+  }
   const route = createPatientRouteFromPlan(patient, plan, event);
   if (!route) {
     roomReadout.textContent = `No route found for ${event.eventId}`;
@@ -1066,6 +1107,7 @@ function finishPatientMove(patient, move) {
   patient.movePhase = 0;
   if (state.selectedEntityId === patient.id && targetRoom) renderRoomInfo(targetRoom);
   refreshHospitalSnapshot({ preserveMoves: true });
+  flushPendingPatientMove(patient.patientId || patient.id);
 }
 
 function startPorterReturnMove(move, targetRoom, patient) {

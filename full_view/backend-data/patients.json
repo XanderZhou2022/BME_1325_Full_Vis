@@ -2,13 +2,13 @@
   "patients": [
     {
       "id": "walk-er-1",
-      "patientId": "P-ER-001",
+      "patientId": "P-a426663e",
       "type": "patient",
       "name": "Alex Morgan",
       "department": "Emergency",
       "symptoms": "Acute abdominal pain, dizziness",
       "status": "ADMITTED",
-      "roomId": "resp_ward",
+      "roomId": "R-WARD-RESP",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -19,14 +19,14 @@
       "gender": null,
       "phase": 3.33,
       "local_person_id": "walk-er-1",
-      "patient_id": "P-ER-001",
+      "patient_id": "P-a426663e",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "resp_ward"
+        "room_id": "R-WARD-RESP"
       },
       "home_bed": {
-        "room_id": "resp_ward",
-        "bed_id": "resp_ward-bed-03",
+        "room_id": "R-WARD-RESP",
+        "bed_id": "B-WARD-RESP-03",
         "retained": true
       },
       "clinical": {
@@ -47,24 +47,24 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "room_id": "resp_ward",
+      "room_id": "R-WARD-RESP",
       "base_form": "walking",
       "rel_x": 0.2,
       "rel_y": 0.4,
-      "bedRoomId": "resp_ward",
-      "bed_room_id": "resp_ward",
-      "bedId": "resp_ward-bed-03",
-      "bed_id": "resp_ward-bed-03"
+      "bedRoomId": "R-WARD-RESP",
+      "bed_room_id": "R-WARD-RESP",
+      "bedId": "B-WARD-RESP-03",
+      "bed_id": "B-WARD-RESP-03"
     },
     {
       "id": "walk-mdt-1",
-      "patientId": "P-MDT-001",
+      "patientId": "P-f98baa56",
       "type": "patient",
       "name": "Jordan Wu",
       "department": "MDT Center",
       "symptoms": "Complex tumor case review",
       "status": "ARRIVED",
-      "roomId": "mdt_lounge",
+      "roomId": "R-MDT-LOUNGE",
       "relX": 0.62,
       "relY": 0.55,
       "form": "walking",
@@ -75,10 +75,10 @@
       "gender": null,
       "phase": 3.7,
       "local_person_id": "walk-mdt-1",
-      "patient_id": "P-MDT-001",
+      "patient_id": "P-f98baa56",
       "department_id": "mdt",
       "current_location": {
-        "room_id": "mdt_lounge"
+        "room_id": "R-MDT-LOUNGE"
       },
       "home_bed": {},
       "clinical": {
@@ -99,20 +99,20 @@
         "skin": null,
         "blanket": null
       },
-      "room_id": "mdt_lounge",
+      "room_id": "R-MDT-LOUNGE",
       "base_form": "walking",
       "rel_x": 0.62,
       "rel_y": 0.55
     },
     {
       "id": "wait-er-1",
-      "patientId": "P-ER-002",
+      "patientId": "P-e29c3775",
       "type": "patient",
       "name": "Jamie Chen",
       "department": "Emergency",
       "symptoms": "Fever and sore throat",
       "status": "IN_CONSULTATION",
-      "roomId": "ed_minor",
+      "roomId": "R-ED-MINOR",
       "relX": 0.72,
       "relY": 0.58,
       "form": "consultation",
@@ -123,10 +123,10 @@
       "gender": null,
       "phase": 0,
       "local_person_id": "wait-er-1",
-      "patient_id": "P-ER-002",
+      "patient_id": "P-e29c3775",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "ed_minor"
+        "room_id": "R-ED-MINOR"
       },
       "home_bed": {},
       "clinical": {
@@ -147,20 +147,20 @@
         "skin": null,
         "blanket": null
       },
-      "room_id": "ed_minor",
+      "room_id": "R-ED-MINOR",
       "base_form": "waiting",
       "rel_x": 0.72,
       "rel_y": 0.58
     },
     {
       "id": "wait-er-2",
-      "patientId": "P-ER-003",
+      "patientId": "P-a1e1c359",
       "type": "patient",
       "name": "Riley Patel",
       "department": "Emergency",
       "symptoms": "Minor trauma, awaiting triage",
       "status": "ADMITTED",
-      "roomId": "gastro_ward",
+      "roomId": "R-WARD-GASTRO",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -171,14 +171,14 @@
       "gender": null,
       "phase": 0,
       "local_person_id": "wait-er-2",
-      "patient_id": "P-ER-003",
+      "patient_id": "P-a1e1c359",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "gastro_ward"
+        "room_id": "R-WARD-GASTRO"
       },
       "home_bed": {
-        "room_id": "gastro_ward",
-        "bed_id": "gastro_ward-bed-01"
+        "room_id": "R-WARD-GASTRO",
+        "bed_id": "B-WARD-GASTRO-01"
       },
       "clinical": {
         "status": "ADMITTED",
@@ -198,42 +198,45 @@
         "skin": null,
         "blanket": null
       },
-      "room_id": "gastro_ward",
+      "room_id": "R-WARD-GASTRO",
       "base_form": "waiting",
       "rel_x": 0.2,
       "rel_y": 0.4,
-      "bedRoomId": "gastro_ward",
-      "bedId": "gastro_ward-bed-01",
-      "bed_room_id": "gastro_ward",
-      "bed_id": "gastro_ward-bed-01"
+      "bedRoomId": "R-WARD-GASTRO",
+      "bedId": "B-WARD-GASTRO-01",
+      "bed_room_id": "R-WARD-GASTRO",
+      "bed_id": "B-WARD-GASTRO-01"
     },
     {
       "id": "wait-op-1",
-      "patientId": "P-OP-002",
+      "patientId": "P-f19dc61a",
       "type": "patient",
       "name": "Morgan Liu",
       "department": "Outpatient",
       "symptoms": "Cough, mild fever",
-      "status": "DISCHARGED",
-      "roomId": "ed_entrance",
-      "relX": 0.5,
-      "relY": 0.58,
-      "form": "walking",
+      "status": "ADMITTED",
+      "roomId": "R-WARD-RESP",
+      "relX": 0.2,
+      "relY": 0.4,
+      "form": "bed",
       "baseForm": "waiting",
       "color": "#7899c6",
-      "skin": null,
-      "blanket": null,
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
       "gender": null,
       "phase": 0,
       "local_person_id": "wait-op-1",
-      "patient_id": "P-OP-002",
+      "patient_id": "P-f19dc61a",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "ed_entrance"
+        "room_id": "R-WARD-RESP"
       },
-      "home_bed": {},
+      "home_bed": {
+        "room_id": "R-WARD-RESP",
+        "bed_id": "B-WARD-RESP-04"
+      },
       "clinical": {
-        "status": "DISCHARGED",
+        "status": "ADMITTED",
         "symptoms": "Cough, mild fever",
         "care_phase": null,
         "ctas_level": null,
@@ -242,28 +245,32 @@
         "latest_interventions": []
       },
       "visual": {
-        "form": "walking",
+        "form": "bed",
         "base_form": "waiting",
-        "rel_x": 0.5,
-        "rel_y": 0.58,
+        "rel_x": 0.2,
+        "rel_y": 0.4,
         "color": "#7899c6",
         "skin": null,
         "blanket": null
       },
-      "room_id": "ed_entrance",
+      "room_id": "R-WARD-RESP",
       "base_form": "waiting",
-      "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "bedRoomId": "R-WARD-RESP",
+      "bedId": "B-WARD-RESP-04",
+      "bed_room_id": "R-WARD-RESP",
+      "bed_id": "B-WARD-RESP-04"
     },
     {
       "id": "wait-ward-1",
-      "patientId": "P-WD-001",
+      "patientId": "P-4ab7b08c",
       "type": "patient",
       "name": "Harper Sun",
       "department": "Ward",
       "symptoms": "Family waiting for ward update",
       "status": "ADMITTED",
-      "roomId": "resp_ward",
+      "roomId": "R-WARD-RESP",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -274,14 +281,14 @@
       "gender": null,
       "phase": 0,
       "local_person_id": "wait-ward-1",
-      "patient_id": "P-WD-001",
+      "patient_id": "P-4ab7b08c",
       "department_id": "ward",
       "current_location": {
-        "room_id": "resp_ward"
+        "room_id": "R-WARD-RESP"
       },
       "home_bed": {
-        "room_id": "resp_ward",
-        "bed_id": "resp_ward-bed-04",
+        "room_id": "R-WARD-RESP",
+        "bed_id": "B-WARD-RESP-04",
         "retained": true
       },
       "clinical": {
@@ -302,24 +309,24 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "room_id": "resp_ward",
+      "room_id": "R-WARD-RESP",
       "base_form": "waiting",
       "rel_x": 0.2,
       "rel_y": 0.4,
-      "bedRoomId": "resp_ward",
-      "bed_room_id": "resp_ward",
-      "bedId": "resp_ward-bed-04",
-      "bed_id": "resp_ward-bed-04"
+      "bedRoomId": "R-WARD-RESP",
+      "bed_room_id": "R-WARD-RESP",
+      "bedId": "B-WARD-RESP-04",
+      "bed_id": "B-WARD-RESP-04"
     },
     {
       "id": "consult-a",
-      "patientId": "P-OP-004",
+      "patientId": "P-b2c45307",
       "type": "patient",
       "name": "Lin Xia",
       "department": "Outpatient",
       "symptoms": "Chest discomfort consultation",
       "status": "ADMITTED",
-      "roomId": "card_ward",
+      "roomId": "R-WARD-CARD",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -330,14 +337,14 @@
       "gender": null,
       "phase": 0,
       "local_person_id": "consult-a",
-      "patient_id": "P-OP-004",
+      "patient_id": "P-b2c45307",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "card_ward"
+        "room_id": "R-WARD-CARD"
       },
       "home_bed": {
-        "room_id": "card_ward",
-        "bed_id": "card_ward-bed-04"
+        "room_id": "R-WARD-CARD",
+        "bed_id": "B-WARD-CARD-03"
       },
       "clinical": {
         "status": "ADMITTED",
@@ -357,24 +364,24 @@
         "skin": null,
         "blanket": null
       },
-      "room_id": "card_ward",
+      "room_id": "R-WARD-CARD",
       "base_form": "consultation",
       "rel_x": 0.2,
       "rel_y": 0.4,
-      "bedRoomId": "card_ward",
-      "bedId": "card_ward-bed-04",
-      "bed_room_id": "card_ward",
-      "bed_id": "card_ward-bed-04"
+      "bedRoomId": "R-WARD-CARD",
+      "bedId": "B-WARD-CARD-03",
+      "bed_room_id": "R-WARD-CARD",
+      "bed_id": "B-WARD-CARD-03"
     },
     {
       "id": "consult-b",
-      "patientId": "P-OP-005",
+      "patientId": "P-7953d15d",
       "type": "patient",
       "name": "Noah Smith",
       "department": "Outpatient",
       "symptoms": "Skin rash and itching",
       "status": "IN_CONSULTATION",
-      "roomId": "consultation_b_2",
+      "roomId": "R-OP-CONSULTATION-B",
       "relX": 0.72,
       "relY": 0.56,
       "form": "consultation",
@@ -387,10 +394,10 @@
       "doctorProfileId": "doctor-op-b",
       "phase": 0,
       "local_person_id": "consult-b",
-      "patient_id": "P-OP-005",
+      "patient_id": "P-7953d15d",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "consultation_b_2"
+        "room_id": "R-OP-CONSULTATION-B"
       },
       "home_bed": {},
       "clinical": {
@@ -411,7 +418,7 @@
         "skin": null,
         "blanket": null
       },
-      "room_id": "consultation_b_2",
+      "room_id": "R-OP-CONSULTATION-B",
       "base_form": "consultation",
       "rel_x": 0.72,
       "rel_y": 0.56,
@@ -420,13 +427,13 @@
     },
     {
       "id": "consult-int",
-      "patientId": "P-IM-001",
+      "patientId": "P-8808980a",
       "type": "patient",
       "name": "Avery Zhao",
       "department": "Internal Medicine",
       "symptoms": "Diabetes follow-up",
       "status": "IN_CONSULTATION",
-      "roomId": "internal_2",
+      "roomId": "R-OP-INTERNAL",
       "relX": 0.42,
       "relY": 0.58,
       "form": "consultation",
@@ -439,10 +446,10 @@
       "doctorProfileId": "doctor-op-internal",
       "phase": 0,
       "local_person_id": "consult-int",
-      "patient_id": "P-IM-001",
+      "patient_id": "P-8808980a",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "internal_2"
+        "room_id": "R-OP-INTERNAL"
       },
       "home_bed": {},
       "clinical": {
@@ -463,7 +470,7 @@
         "skin": null,
         "blanket": null
       },
-      "room_id": "internal_2",
+      "room_id": "R-OP-INTERNAL",
       "base_form": "consultation",
       "rel_x": 0.42,
       "rel_y": 0.58,
@@ -472,13 +479,13 @@
     },
     {
       "id": "icu-bed-a",
-      "patientId": "P-ICU-001",
+      "patientId": "P-5e56a778",
       "type": "patient",
       "name": "Ethan Zhang",
       "department": "ICU",
       "symptoms": "Postoperative respiratory monitoring",
       "status": "ADMITTED",
-      "roomId": "icu_beds_a",
+      "roomId": "R-ICU-BEDS-A",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -488,17 +495,17 @@
       "blanket": "#d46d8e",
       "gender": null,
       "phase": 0,
-      "bedRoomId": "icu_beds_a",
-      "bedId": "icu_beds_a-bed-01",
+      "bedRoomId": "R-ICU-BEDS-A",
+      "bedId": "B-ICU-BEDS-A-01",
       "local_person_id": "icu-bed-a",
-      "patient_id": "P-ICU-001",
+      "patient_id": "P-5e56a778",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_beds_a"
+        "room_id": "R-ICU-BEDS-A"
       },
       "home_bed": {
-        "room_id": "icu_beds_a",
-        "bed_id": "icu_beds_a-bed-01",
+        "room_id": "R-ICU-BEDS-A",
+        "bed_id": "B-ICU-BEDS-A-01",
         "retained": true
       },
       "clinical": {
@@ -519,22 +526,22 @@
         "skin": "#f2c799",
         "blanket": "#d46d8e"
       },
-      "room_id": "icu_beds_a",
-      "bed_room_id": "icu_beds_a",
-      "bed_id": "icu_beds_a-bed-01",
+      "room_id": "R-ICU-BEDS-A",
+      "bed_room_id": "R-ICU-BEDS-A",
+      "bed_id": "B-ICU-BEDS-A-01",
       "base_form": "bed",
       "rel_x": 0.2,
       "rel_y": 0.4
     },
     {
       "id": "icu-bed-b",
-      "patientId": "P-ICU-002",
+      "patientId": "P-2d52ed03",
       "type": "patient",
       "name": "Mia Huang",
       "department": "ICU",
       "symptoms": "Sepsis observation",
       "status": "ADMITTED",
-      "roomId": "icu_beds_b",
+      "roomId": "R-ICU-BEDS-B",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -544,17 +551,17 @@
       "blanket": "#d46d8e",
       "gender": null,
       "phase": 0,
-      "bedRoomId": "icu_beds_b",
-      "bedId": "icu_beds_b-bed-01",
+      "bedRoomId": "R-ICU-BEDS-B",
+      "bedId": "B-ICU-BEDS-B-01",
       "local_person_id": "icu-bed-b",
-      "patient_id": "P-ICU-002",
+      "patient_id": "P-2d52ed03",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_beds_b"
+        "room_id": "R-ICU-BEDS-B"
       },
       "home_bed": {
-        "room_id": "icu_beds_b",
-        "bed_id": "icu_beds_b-bed-01",
+        "room_id": "R-ICU-BEDS-B",
+        "bed_id": "B-ICU-BEDS-B-01",
         "retained": true
       },
       "clinical": {
@@ -575,22 +582,22 @@
         "skin": "#f2c799",
         "blanket": "#d46d8e"
       },
-      "room_id": "icu_beds_b",
-      "bed_room_id": "icu_beds_b",
-      "bed_id": "icu_beds_b-bed-01",
+      "room_id": "R-ICU-BEDS-B",
+      "bed_room_id": "R-ICU-BEDS-B",
+      "bed_id": "B-ICU-BEDS-B-01",
       "base_form": "bed",
       "rel_x": 0.2,
       "rel_y": 0.4
     },
     {
       "id": "icu-isolation",
-      "patientId": "P-ICU-003",
+      "patientId": "P-0d060f5e",
       "type": "patient",
       "name": "Lucas Yang",
       "department": "ICU Isolation",
       "symptoms": "Infectious disease isolation care",
       "status": "ADMITTED",
-      "roomId": "icu_isolation",
+      "roomId": "R-ICU-ISOLATION",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -600,17 +607,17 @@
       "blanket": "#cf6f8c",
       "gender": null,
       "phase": 0,
-      "bedRoomId": "icu_isolation",
-      "bedId": "icu_isolation-bed-01",
+      "bedRoomId": "R-ICU-ISOLATION",
+      "bedId": "B-ICU-ISOLATION-01",
       "local_person_id": "icu-isolation",
-      "patient_id": "P-ICU-003",
+      "patient_id": "P-0d060f5e",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_isolation"
+        "room_id": "R-ICU-ISOLATION"
       },
       "home_bed": {
-        "room_id": "icu_isolation",
-        "bed_id": "icu_isolation-bed-01",
+        "room_id": "R-ICU-ISOLATION",
+        "bed_id": "B-ICU-ISOLATION-01",
         "retained": true
       },
       "clinical": {
@@ -631,22 +638,22 @@
         "skin": "#f2c799",
         "blanket": "#cf6f8c"
       },
-      "room_id": "icu_isolation",
-      "bed_room_id": "icu_isolation",
-      "bed_id": "icu_isolation-bed-01",
+      "room_id": "R-ICU-ISOLATION",
+      "bed_room_id": "R-ICU-ISOLATION",
+      "bed_id": "B-ICU-ISOLATION-01",
       "base_form": "bed",
       "rel_x": 0.2,
       "rel_y": 0.4
     },
     {
       "id": "ward-bed-a",
-      "patientId": "P-WD-002",
+      "patientId": "P-812124a7",
       "type": "patient",
       "name": "Grace Li",
       "department": "Ward",
       "symptoms": "Postoperative recovery",
       "status": "ADMITTED",
-      "roomId": "resp_ward",
+      "roomId": "R-WARD-RESP",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -656,17 +663,17 @@
       "blanket": "#76c59d",
       "gender": null,
       "phase": 0,
-      "bedRoomId": "resp_ward",
-      "bedId": "resp_ward-bed-01",
+      "bedRoomId": "R-WARD-RESP",
+      "bedId": "B-WARD-RESP-01",
       "local_person_id": "ward-bed-a",
-      "patient_id": "P-WD-002",
+      "patient_id": "P-812124a7",
       "department_id": "ward",
       "current_location": {
-        "room_id": "resp_ward"
+        "room_id": "R-WARD-RESP"
       },
       "home_bed": {
-        "room_id": "resp_ward",
-        "bed_id": "resp_ward-bed-01",
+        "room_id": "R-WARD-RESP",
+        "bed_id": "B-WARD-RESP-01",
         "retained": true
       },
       "clinical": {
@@ -687,22 +694,22 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "room_id": "resp_ward",
-      "bed_room_id": "resp_ward",
-      "bed_id": "resp_ward-bed-01",
+      "room_id": "R-WARD-RESP",
+      "bed_room_id": "R-WARD-RESP",
+      "bed_id": "B-WARD-RESP-01",
       "base_form": "bed",
       "rel_x": 0.2,
       "rel_y": 0.4
     },
     {
       "id": "ward-bed-b",
-      "patientId": "P-WD-003",
+      "patientId": "P-c6617e6b",
       "type": "patient",
       "name": "Owen Wang",
       "department": "Ward",
       "symptoms": "Pneumonia recovery",
       "status": "ADMITTED",
-      "roomId": "card_ward",
+      "roomId": "R-WARD-CARD",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -712,17 +719,17 @@
       "blanket": "#76c59d",
       "gender": null,
       "phase": 0,
-      "bedRoomId": "card_ward",
-      "bedId": "card_ward-bed-01",
+      "bedRoomId": "R-WARD-CARD",
+      "bedId": "B-WARD-CARD-01",
       "local_person_id": "ward-bed-b",
-      "patient_id": "P-WD-003",
+      "patient_id": "P-c6617e6b",
       "department_id": "ward",
       "current_location": {
-        "room_id": "card_ward"
+        "room_id": "R-WARD-CARD"
       },
       "home_bed": {
-        "room_id": "card_ward",
-        "bed_id": "card_ward-bed-01",
+        "room_id": "R-WARD-CARD",
+        "bed_id": "B-WARD-CARD-01",
         "retained": true
       },
       "clinical": {
@@ -743,22 +750,22 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "room_id": "card_ward",
-      "bed_room_id": "card_ward",
-      "bed_id": "card_ward-bed-01",
+      "room_id": "R-WARD-CARD",
+      "bed_room_id": "R-WARD-CARD",
+      "bed_id": "B-WARD-CARD-01",
       "base_form": "bed",
       "rel_x": 0.2,
       "rel_y": 0.4
     },
     {
       "id": "ward-bed-c",
-      "patientId": "P-WD-004",
+      "patientId": "P-7a156428",
       "type": "patient",
       "name": "Nora Xu",
       "department": "Ward",
       "symptoms": "Fracture rehabilitation",
       "status": "ADMITTED",
-      "roomId": "peds_ward",
+      "roomId": "R-WARD-PEDS",
       "relX": 0.2,
       "relY": 0.4,
       "form": "bed",
@@ -768,17 +775,17 @@
       "blanket": "#76c59d",
       "gender": null,
       "phase": 0,
-      "bedRoomId": "peds_ward",
-      "bedId": "peds_ward-bed-01",
+      "bedRoomId": "R-WARD-PEDS",
+      "bedId": "B-WARD-PEDS-01",
       "local_person_id": "ward-bed-c",
-      "patient_id": "P-WD-004",
+      "patient_id": "P-7a156428",
       "department_id": "ward",
       "current_location": {
-        "room_id": "peds_ward"
+        "room_id": "R-WARD-PEDS"
       },
       "home_bed": {
-        "room_id": "peds_ward",
-        "bed_id": "peds_ward-bed-01",
+        "room_id": "R-WARD-PEDS",
+        "bed_id": "B-WARD-PEDS-01",
         "retained": true
       },
       "clinical": {
@@ -799,9 +806,9 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "room_id": "peds_ward",
-      "bed_room_id": "peds_ward",
-      "bed_id": "peds_ward-bed-01",
+      "room_id": "R-WARD-PEDS",
+      "bed_room_id": "R-WARD-PEDS",
+      "bed_id": "B-WARD-PEDS-01",
       "base_form": "bed",
       "rel_x": 0.2,
       "rel_y": 0.4
@@ -809,8 +816,8 @@
     {
       "id": "stress-er-entrance-1",
       "local_person_id": "stress-er-entrance-1",
-      "patientId": "P-ST-ER-001",
-      "patient_id": "P-ST-ER-001",
+      "patientId": "P-f802b9b3",
+      "patient_id": "P-f802b9b3",
       "type": "patient",
       "name": "Maya Torres",
       "gender": "female",
@@ -818,10 +825,10 @@
       "department_id": "emergency",
       "symptoms": "Chest tightness after climbing stairs",
       "status": "ARRIVED",
-      "roomId": "ed_entrance",
-      "room_id": "ed_entrance",
+      "roomId": "R-ED-ENTRANCE",
+      "room_id": "R-ED-ENTRANCE",
       "current_location": {
-        "room_id": "ed_entrance"
+        "room_id": "R-ED-ENTRANCE"
       },
       "home_bed": {},
       "form": "walking",
@@ -857,8 +864,8 @@
     {
       "id": "stress-er-registration-1",
       "local_person_id": "stress-er-registration-1",
-      "patientId": "P-ST-ER-002",
-      "patient_id": "P-ST-ER-002",
+      "patientId": "P-7603c124",
+      "patient_id": "P-7603c124",
       "type": "patient",
       "name": "Owen Miller",
       "gender": "male",
@@ -866,10 +873,10 @@
       "department_id": "emergency",
       "symptoms": "High fever, dehydration risk",
       "status": "ARRIVED",
-      "roomId": "ed_registration",
-      "room_id": "ed_registration",
+      "roomId": "R-ED-REGISTRATION",
+      "room_id": "R-ED-REGISTRATION",
       "current_location": {
-        "room_id": "ed_registration"
+        "room_id": "R-ED-REGISTRATION"
       },
       "home_bed": {},
       "form": "walking",
@@ -905,8 +912,8 @@
     {
       "id": "stress-er-redresus-1",
       "local_person_id": "stress-er-redresus-1",
-      "patientId": "P-ST-ER-003",
-      "patient_id": "P-ST-ER-003",
+      "patientId": "P-3ff04cd7",
+      "patient_id": "P-3ff04cd7",
       "type": "patient",
       "name": "Grace Huang",
       "gender": "female",
@@ -914,10 +921,10 @@
       "department_id": "emergency",
       "symptoms": "Severe dyspnea, unstable oxygen saturation",
       "status": "ADMITTED",
-      "roomId": "ed_red_resus",
-      "room_id": "ed_red_resus",
+      "roomId": "R-ED-RED-RESUS",
+      "room_id": "R-ED-RED-RESUS",
       "current_location": {
-        "room_id": "ed_red_resus"
+        "room_id": "R-ED-RED-RESUS"
       },
       "home_bed": {},
       "form": "stretcher",
@@ -953,8 +960,8 @@
     {
       "id": "stress-er-major-1",
       "local_person_id": "stress-er-major-1",
-      "patientId": "P-ST-ER-004",
-      "patient_id": "P-ST-ER-004",
+      "patientId": "P-27fa5278",
+      "patient_id": "P-27fa5278",
       "type": "patient",
       "name": "Noah Stein",
       "gender": "male",
@@ -962,10 +969,10 @@
       "department_id": "emergency",
       "symptoms": "Fall injury, needs inpatient observation",
       "status": "ADMITTED",
-      "roomId": "ed_major",
-      "room_id": "ed_major",
+      "roomId": "R-ED-MAJOR",
+      "room_id": "R-ED-MAJOR",
       "current_location": {
-        "room_id": "ed_major"
+        "room_id": "R-ED-MAJOR"
       },
       "home_bed": {},
       "form": "stretcher",
@@ -1001,8 +1008,8 @@
     {
       "id": "stress-er-waiting-1",
       "local_person_id": "stress-er-waiting-1",
-      "patientId": "P-ST-ER-005",
-      "patient_id": "P-ST-ER-005",
+      "patientId": "P-cfa7f47d",
+      "patient_id": "P-cfa7f47d",
       "type": "patient",
       "name": "Aisha Khan",
       "gender": "female",
@@ -1010,10 +1017,10 @@
       "department_id": "emergency",
       "symptoms": "Abdominal pain, awaiting consult",
       "status": "IN_CONSULTATION",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1049,8 +1056,8 @@
     {
       "id": "stress-op-registration-1",
       "local_person_id": "stress-op-registration-1",
-      "patientId": "P-ST-OP-001",
-      "patient_id": "P-ST-OP-001",
+      "patientId": "P-4e8f4886",
+      "patient_id": "P-4e8f4886",
       "type": "patient",
       "name": "Liam Zhao",
       "gender": "male",
@@ -1058,10 +1065,10 @@
       "department_id": "outpatient",
       "symptoms": "Hypertension follow-up",
       "status": "IN_CONSULTATION",
-      "roomId": "registration_2",
-      "room_id": "registration_2",
+      "roomId": "R-OP-REGISTRATION",
+      "room_id": "R-OP-REGISTRATION",
       "current_location": {
-        "room_id": "registration_2"
+        "room_id": "R-OP-REGISTRATION"
       },
       "home_bed": {},
       "form": "walking",
@@ -1097,8 +1104,8 @@
     {
       "id": "stress-op-consult-1",
       "local_person_id": "stress-op-consult-1",
-      "patientId": "P-ST-OP-003",
-      "patient_id": "P-ST-OP-003",
+      "patientId": "P-75e67397",
+      "patient_id": "P-75e67397",
       "type": "patient",
       "name": "Ethan Cole",
       "gender": "male",
@@ -1106,10 +1113,10 @@
       "department_id": "outpatient",
       "symptoms": "Diabetes medication review",
       "status": "ARRIVED",
-      "roomId": "payment_2",
-      "room_id": "payment_2",
+      "roomId": "R-OP-PAYMENT",
+      "room_id": "R-OP-PAYMENT",
       "current_location": {
-        "room_id": "payment_2"
+        "room_id": "R-OP-PAYMENT"
       },
       "home_bed": {},
       "form": "walking",
@@ -1149,8 +1156,8 @@
     {
       "id": "stress-icu-admission-1",
       "local_person_id": "stress-icu-admission-1",
-      "patientId": "P-ST-ICU-001",
-      "patient_id": "P-ST-ICU-001",
+      "patientId": "P-3fc3e29a",
+      "patient_id": "P-3fc3e29a",
       "type": "patient",
       "name": "Hannah Li",
       "gender": "female",
@@ -1158,14 +1165,14 @@
       "department_id": "icu",
       "symptoms": "Postoperative shock, direct ICU admission",
       "status": "ADMITTED",
-      "roomId": "icu_beds_a",
-      "room_id": "icu_beds_a",
+      "roomId": "R-ICU-BEDS-A",
+      "room_id": "R-ICU-BEDS-A",
       "current_location": {
-        "room_id": "icu_beds_a"
+        "room_id": "R-ICU-BEDS-A"
       },
       "home_bed": {
-        "room_id": "icu_beds_a",
-        "bed_id": "icu_beds_a-bed-02",
+        "room_id": "R-ICU-BEDS-A",
+        "bed_id": "B-ICU-BEDS-A-02",
         "retained": true
       },
       "form": "bed",
@@ -1197,16 +1204,16 @@
         "skin": "#f2c799",
         "blanket": "#d46d8e"
       },
-      "bedRoomId": "icu_beds_a",
-      "bed_room_id": "icu_beds_a",
-      "bedId": "icu_beds_a-bed-02",
-      "bed_id": "icu_beds_a-bed-02"
+      "bedRoomId": "R-ICU-BEDS-A",
+      "bed_room_id": "R-ICU-BEDS-A",
+      "bedId": "B-ICU-BEDS-A-02",
+      "bed_id": "B-ICU-BEDS-A-02"
     },
     {
       "id": "stress-ward-admission-1",
       "local_person_id": "stress-ward-admission-1",
-      "patientId": "P-ST-WD-001",
-      "patient_id": "P-ST-WD-001",
+      "patientId": "P-fd9f1985",
+      "patient_id": "P-fd9f1985",
       "type": "patient",
       "name": "Ben Carter",
       "gender": "male",
@@ -1214,14 +1221,14 @@
       "department_id": "ward",
       "symptoms": "Community acquired pneumonia admission",
       "status": "ADMITTED",
-      "roomId": "card_ward",
-      "room_id": "card_ward",
+      "roomId": "R-WARD-CARD",
+      "room_id": "R-WARD-CARD",
       "current_location": {
-        "room_id": "card_ward"
+        "room_id": "R-WARD-CARD"
       },
       "home_bed": {
-        "room_id": "card_ward",
-        "bed_id": "card_ward-bed-02",
+        "room_id": "R-WARD-CARD",
+        "bed_id": "B-WARD-CARD-02",
         "retained": true
       },
       "form": "bed",
@@ -1253,16 +1260,16 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "bedRoomId": "card_ward",
-      "bed_room_id": "card_ward",
-      "bedId": "card_ward-bed-02",
-      "bed_id": "card_ward-bed-02"
+      "bedRoomId": "R-WARD-CARD",
+      "bed_room_id": "R-WARD-CARD",
+      "bedId": "B-WARD-CARD-02",
+      "bed_id": "B-WARD-CARD-02"
     },
     {
       "id": "stress-ward-resp-1",
       "local_person_id": "stress-ward-resp-1",
-      "patientId": "P-ST-WD-002",
-      "patient_id": "P-ST-WD-002",
+      "patientId": "P-bd9b9feb",
+      "patient_id": "P-bd9b9feb",
       "type": "patient",
       "name": "Irene Xu",
       "gender": "female",
@@ -1270,14 +1277,14 @@
       "department_id": "ward",
       "symptoms": "Respiratory ward patient, scheduled CT check",
       "status": "IN_EXAM",
-      "roomId": "resp_ward",
-      "room_id": "resp_ward",
+      "roomId": "R-WARD-RESP",
+      "room_id": "R-WARD-RESP",
       "current_location": {
-        "room_id": "resp_ward"
+        "room_id": "R-WARD-RESP"
       },
       "home_bed": {
-        "room_id": "resp_ward",
-        "bed_id": "resp_ward-bed-02"
+        "room_id": "R-WARD-RESP",
+        "bed_id": "B-WARD-RESP-02"
       },
       "form": "bed",
       "baseForm": "bed",
@@ -1308,16 +1315,16 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "bedRoomId": "resp_ward",
-      "bedId": "resp_ward-bed-02",
-      "bed_room_id": "resp_ward",
-      "bed_id": "resp_ward-bed-02"
+      "bedRoomId": "R-WARD-RESP",
+      "bedId": "B-WARD-RESP-02",
+      "bed_room_id": "R-WARD-RESP",
+      "bed_id": "B-WARD-RESP-02"
     },
     {
       "id": "intake-emergency-004",
       "local_person_id": "intake-emergency-004",
-      "patientId": "P-ER-004",
-      "patient_id": "P-ER-004",
+      "patientId": "P-d9d7543d",
+      "patient_id": "P-d9d7543d",
       "type": "patient",
       "name": "Nora Evans",
       "gender": "male",
@@ -1325,10 +1332,10 @@
       "department_id": "emergency",
       "symptoms": "头晕乏力，血压偏低",
       "status": "ARRIVED",
-      "roomId": "ed_triage",
-      "room_id": "ed_triage",
+      "roomId": "R-ED-TRIAGE",
+      "room_id": "R-ED-TRIAGE",
       "current_location": {
-        "room_id": "ed_triage"
+        "room_id": "R-ED-TRIAGE"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1364,8 +1371,8 @@
     {
       "id": "intake-outpatient-006",
       "local_person_id": "intake-outpatient-006",
-      "patientId": "P-OP-006",
-      "patient_id": "P-OP-006",
+      "patientId": "P-c3ce03d3",
+      "patient_id": "P-c3ce03d3",
       "type": "patient",
       "name": "王若溪",
       "gender": "male",
@@ -1373,10 +1380,10 @@
       "department_id": "outpatient",
       "symptoms": "慢性咳嗽复诊",
       "status": "ARRIVED",
-      "roomId": "triage_2",
-      "room_id": "triage_2",
+      "roomId": "R-OP-TRIAGE",
+      "room_id": "R-OP-TRIAGE",
       "current_location": {
-        "room_id": "triage_2"
+        "room_id": "R-OP-TRIAGE"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1412,8 +1419,8 @@
     {
       "id": "intake-emergency-005",
       "local_person_id": "intake-emergency-005",
-      "patientId": "P-ER-005",
-      "patient_id": "P-ER-005",
+      "patientId": "P-9e1c7646",
+      "patient_id": "P-9e1c7646",
       "type": "patient",
       "name": "林佳怡",
       "gender": "female",
@@ -1421,10 +1428,10 @@
       "department_id": "emergency",
       "symptoms": "外伤后疼痛，等待急诊评估",
       "status": "ARRIVED",
-      "roomId": "ed_triage",
-      "room_id": "ed_triage",
+      "roomId": "R-ED-TRIAGE",
+      "room_id": "R-ED-TRIAGE",
       "current_location": {
-        "room_id": "ed_triage"
+        "room_id": "R-ED-TRIAGE"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1460,8 +1467,8 @@
     {
       "id": "intake-outpatient-007",
       "local_person_id": "intake-outpatient-007",
-      "patientId": "P-OP-007",
-      "patient_id": "P-OP-007",
+      "patientId": "P-a744d2d4",
+      "patient_id": "P-a744d2d4",
       "type": "patient",
       "name": "Mason Clark",
       "gender": "female",
@@ -1469,10 +1476,10 @@
       "department_id": "outpatient",
       "symptoms": "高血压用药随访",
       "status": "ARRIVED",
-      "roomId": "triage_2",
-      "room_id": "triage_2",
+      "roomId": "R-OP-TRIAGE",
+      "room_id": "R-OP-TRIAGE",
       "current_location": {
-        "room_id": "triage_2"
+        "room_id": "R-OP-TRIAGE"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1508,8 +1515,8 @@
     {
       "id": "intake-outpatient-008",
       "local_person_id": "intake-outpatient-008",
-      "patientId": "P-OP-008",
-      "patient_id": "P-OP-008",
+      "patientId": "P-9ad6e082",
+      "patient_id": "P-9ad6e082",
       "type": "patient",
       "name": "赵子涵",
       "gender": "male",
@@ -1517,10 +1524,10 @@
       "department_id": "outpatient",
       "symptoms": "腹痛门诊初诊",
       "status": "ARRIVED",
-      "roomId": "payment_2",
-      "room_id": "payment_2",
+      "roomId": "R-OP-PAYMENT",
+      "room_id": "R-OP-PAYMENT",
       "current_location": {
-        "room_id": "payment_2"
+        "room_id": "R-OP-PAYMENT"
       },
       "home_bed": {},
       "form": "walking",
@@ -1560,8 +1567,8 @@
     {
       "id": "intake-outpatient-015",
       "local_person_id": "intake-outpatient-015",
-      "patientId": "P-OP-015",
-      "patient_id": "P-OP-015",
+      "patientId": "P-81624793",
+      "patient_id": "P-81624793",
       "type": "patient",
       "name": "刘亦辰",
       "gender": "female",
@@ -1569,10 +1576,10 @@
       "department_id": "outpatient",
       "symptoms": "术后复查与检验申请",
       "status": "DISCHARGED",
-      "roomId": "ed_entrance",
-      "room_id": "ed_entrance",
+      "roomId": "R-ED-ENTRANCE",
+      "room_id": "R-ED-ENTRANCE",
       "current_location": {
-        "room_id": "ed_entrance"
+        "room_id": "R-ED-ENTRANCE"
       },
       "home_bed": {},
       "form": "walking",
@@ -1606,62 +1613,10 @@
       }
     },
     {
-      "id": "intake-outpatient-020",
-      "local_person_id": "intake-outpatient-020",
-      "patientId": "P-OP-020",
-      "patient_id": "P-OP-020",
-      "type": "patient",
-      "name": "刘亦辰",
-      "gender": "male",
-      "department": "Outpatient",
-      "department_id": "outpatient",
-      "symptoms": "术后复查与检验申请",
-      "status": "IN_CONSULTATION",
-      "roomId": "consultation_a_2",
-      "room_id": "consultation_a_2",
-      "current_location": {
-        "room_id": "consultation_a_2"
-      },
-      "home_bed": {},
-      "form": "consultation",
-      "baseForm": "walking",
-      "base_form": "walking",
-      "relX": 0.72,
-      "relY": 0.58,
-      "rel_x": 0.72,
-      "rel_y": 0.58,
-      "color": "#7899c6",
-      "skin": null,
-      "blanket": null,
-      "phase": 0,
-      "clinical": {
-        "status": "IN_CONSULTATION",
-        "symptoms": "术后复查与检验申请",
-        "care_phase": "entry_triage",
-        "ctas_level": null,
-        "active_problems": [],
-        "active_risks": [],
-        "latest_interventions": []
-      },
-      "visual": {
-        "form": "consultation",
-        "base_form": "walking",
-        "rel_x": 0.72,
-        "rel_y": 0.58,
-        "color": "#7899c6",
-        "skin": null,
-        "blanket": null
-      },
-      "doctorProfileId": "doctor-op-a",
-      "doctor_profile_id": "doctor-op-a",
-      "doctorGender": "female",
-      "doctor_gender": "female"
-    },
-    {
       "id": "intake-emergency-006",
       "local_person_id": "intake-emergency-006",
-      "patientId": "P-ER-006",
-      "patient_id": "P-ER-006",
+      "patientId": "P-f3604e33",
+      "patient_id": "P-f3604e33",
       "type": "patient",
       "name": "陈安然",
       "gender": "male",
@@ -1669,14 +1624,14 @@
       "department_id": "emergency",
       "symptoms": "胸闷伴轻度呼吸困难",
       "status": "ADMITTED",
-      "roomId": "card_ward",
-      "room_id": "card_ward",
+      "roomId": "R-WARD-CARD",
+      "room_id": "R-WARD-CARD",
       "current_location": {
-        "room_id": "card_ward"
+        "room_id": "R-WARD-CARD"
       },
       "home_bed": {
-        "room_id": "card_ward",
-        "bed_id": "card_ward-bed-03",
+        "room_id": "R-WARD-CARD",
+        "bed_id": "B-WARD-CARD-04",
         "retained": true
       },
       "form": "bed",
@@ -1708,16 +1663,16 @@
         "skin": "#f2c799",
         "blanket": "#76c59d"
       },
-      "bedRoomId": "card_ward",
-      "bed_room_id": "card_ward",
-      "bedId": "card_ward-bed-03",
-      "bed_id": "card_ward-bed-03"
+      "bedRoomId": "R-WARD-CARD",
+      "bed_room_id": "R-WARD-CARD",
+      "bedId": "B-WARD-CARD-04",
+      "bed_id": "B-WARD-CARD-04"
     },
     {
       "id": "intake-emergency-007",
       "local_person_id": "intake-emergency-007",
-      "patientId": "P-ER-007",
-      "patient_id": "P-ER-007",
+      "patientId": "P-b472cc9d",
+      "patient_id": "P-b472cc9d",
       "type": "patient",
       "name": "Lucas Bennett",
       "gender": "female",
@@ -1725,10 +1680,10 @@
       "department_id": "emergency",
       "symptoms": "右下腹痛，需急诊分诊",
       "status": "WAITING",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1764,8 +1719,8 @@
     {
       "id": "intake-emergency-008",
       "local_person_id": "intake-emergency-008",
-      "patientId": "P-ER-008",
-      "patient_id": "P-ER-008",
+      "patientId": "P-36a56ed7",
+      "patient_id": "P-36a56ed7",
       "type": "patient",
       "name": "周明",
       "gender": "male",
@@ -1773,10 +1728,10 @@
       "department_id": "emergency",
       "symptoms": "发热寒战，疑似感染",
       "status": "WAITING",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1812,8 +1767,8 @@
     {
       "id": "intake-emergency-009",
       "local_person_id": "intake-emergency-009",
-      "patientId": "P-ER-009",
-      "patient_id": "P-ER-009",
+      "patientId": "P-7fc0b518",
+      "patient_id": "P-7fc0b518",
       "type": "patient",
       "name": "Nora Evans",
       "gender": "female",
@@ -1821,10 +1776,10 @@
       "department_id": "emergency",
       "symptoms": "头晕乏力，血压偏低",
       "status": "WAITING",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1860,8 +1815,8 @@
     {
       "id": "intake-emergency-010",
       "local_person_id": "intake-emergency-010",
-      "patientId": "P-ER-010",
-      "patient_id": "P-ER-010",
+      "patientId": "P-38edda00",
+      "patient_id": "P-38edda00",
       "type": "patient",
       "name": "林佳怡",
       "gender": "male",
@@ -1869,10 +1824,10 @@
       "department_id": "emergency",
       "symptoms": "外伤后疼痛，等待急诊评估",
       "status": "WAITING",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1908,8 +1863,8 @@
     {
       "id": "intake-emergency-011",
       "local_person_id": "intake-emergency-011",
-      "patientId": "P-ER-011",
-      "patient_id": "P-ER-011",
+      "patientId": "P-5a7d1017",
+      "patient_id": "P-5a7d1017",
       "type": "patient",
       "name": "陈安然",
       "gender": "female",
@@ -1917,10 +1872,10 @@
       "department_id": "emergency",
       "symptoms": "胸闷伴轻度呼吸困难",
       "status": "WAITING",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -1956,8 +1911,8 @@
     {
       "id": "intake-emergency-012",
       "local_person_id": "intake-emergency-012",
-      "patientId": "P-ER-012",
-      "patient_id": "P-ER-012",
+      "patientId": "P-adbfabb8",
+      "patient_id": "P-adbfabb8",
       "type": "patient",
       "name": "Lucas Bennett",
       "gender": "male",
@@ -1965,10 +1920,10 @@
       "department_id": "emergency",
       "symptoms": "右下腹痛，需急诊分诊",
       "status": "WAITING",
-      "roomId": "ed_waiting",
-      "room_id": "ed_waiting",
+      "roomId": "R-ED-WAITING",
+      "room_id": "R-ED-WAITING",
       "current_location": {
-        "room_id": "ed_waiting"
+        "room_id": "R-ED-WAITING"
       },
       "home_bed": {},
       "form": "waiting",
@@ -2004,19 +1959,19 @@
     {
       "id": "intake-outpatient-021",
       "local_person_id": "intake-outpatient-021",
-      "patientId": "P-OP-021",
-      "patient_id": "P-OP-021",
+      "patientId": "P-8f306d76",
+      "patient_id": "P-8f306d76",
       "type": "patient",
       "name": "王若溪",
       "gender": "female",
       "department": "Outpatient",
       "department_id": "outpatient",
       "symptoms": "慢性咳嗽复诊",
-      "status": "ARRIVED",
-      "roomId": "pharmacy_2",
-      "room_id": "pharmacy_2",
+      "status": "DISCHARGED",
+      "roomId": "R-ICU-ADMISSION",
+      "room_id": "R-ICU-ADMISSION",
       "current_location": {
-        "room_id": "pharmacy_2"
+        "room_id": "R-ICU-ADMISSION"
       },
       "home_bed": {},
       "form": "walking",
@@ -2027,11 +1982,11 @@
       "rel_x": 0.5,
       "rel_y": 0.58,
       "color": "#8f7ed0",
-      "skin": null,
-      "blanket": null,
+      "skin": "#f2c799",
+      "blanket": "#d46d8e",
       "phase": 0,
       "clinical": {
-        "status": "ARRIVED",
+        "status": "DISCHARGED",
         "symptoms": "慢性咳嗽复诊",
         "care_phase": "entry_triage",
         "ctas_level": null,
@@ -2052,6 +2007,824 @@
       "doctor_profile_id": "stress-doctor-op-fever",
       "doctorGender": "female",
       "doctor_gender": "female"
+    },
+    {
+      "id": "intake-outpatient-022",
+      "local_person_id": "intake-outpatient-022",
+      "patientId": "P-62d1da45",
+      "patient_id": "P-62d1da45",
+      "type": "patient",
+      "name": "Mason Clark",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "symptoms": "高血压用药随访",
+      "status": "ADMITTED",
+      "roomId": "R-ICU-BEDS-A",
+      "room_id": "R-ICU-BEDS-A",
+      "current_location": {
+        "room_id": "R-ICU-BEDS-A"
+      },
+      "home_bed": {
+        "room_id": "R-ICU-BEDS-A",
+        "bed_id": "B-ICU-BEDS-A-03"
+      },
+      "form": "bed",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#d46d8e",
+      "phase": 0,
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "高血压用药随访",
+        "care_phase": "entry_triage",
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "bedRoomId": "R-ICU-BEDS-A",
+      "bedId": "B-ICU-BEDS-A-03",
+      "bed_room_id": "R-ICU-BEDS-A",
+      "bed_id": "B-ICU-BEDS-A-03"
+    },
+    {
+      "id": "intake-outpatient-023",
+      "local_person_id": "intake-outpatient-023",
+      "patientId": "P-56891d36",
+      "patient_id": "P-56891d36",
+      "type": "patient",
+      "name": "赵子涵",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "symptoms": "腹痛门诊初诊",
+      "status": "ADMITTED",
+      "roomId": "R-ICU-BEDS-A",
+      "room_id": "R-ICU-BEDS-A",
+      "current_location": {
+        "room_id": "R-ICU-BEDS-A"
+      },
+      "home_bed": {
+        "room_id": "R-ICU-BEDS-A",
+        "bed_id": "B-ICU-BEDS-A-04"
+      },
+      "form": "bed",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#8f7ed0",
+      "skin": "#f2c799",
+      "blanket": "#d46d8e",
+      "phase": 0,
+      "clinical": {
+        "status": "ADMITTED",
+        "symptoms": "腹痛门诊初诊",
+        "care_phase": "entry_triage",
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": []
+      },
+      "visual": {
+        "form": "bed",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#8f7ed0",
+        "skin": null,
+        "blanket": null
+      },
+      "bedRoomId": "R-ICU-BEDS-A",
+      "bedId": "B-ICU-BEDS-A-04",
+      "bed_room_id": "R-ICU-BEDS-A",
+      "bed_id": "B-ICU-BEDS-A-04"
+    },
+    {
+      "id": "outpatient-api-pa145236",
+      "local_person_id": "outpatient-api-pa145236",
+      "patient_id": "P-63f7b784",
+      "patientId": "P-63f7b784",
+      "type": "patient",
+      "name": "Debug OP A 145236",
+      "gender": "unknown",
+      "department_id": "outpatient",
+      "department": "Outpatient",
+      "symptoms": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "住院 A 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "doctor-op-a",
+      "doctor_profile_id": "doctor-op-a",
+      "doctorGender": "female",
+      "doctor_gender": "female"
+    },
+    {
+      "id": "outpatient-api-pb145236",
+      "local_person_id": "outpatient-api-pb145236",
+      "patient_id": "P-238dfb5b",
+      "patientId": "P-238dfb5b",
+      "type": "patient",
+      "name": "Debug OP B 145236",
+      "gender": "unknown",
+      "department_id": "outpatient",
+      "department": "Outpatient",
+      "symptoms": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-NEURO",
+      "roomId": "R-WARD-NEURO",
+      "current_location": {
+        "room_id": "R-WARD-NEURO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "住院 B 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "doctor-op-surgery",
+      "doctor_profile_id": "doctor-op-surgery",
+      "doctorGender": "female",
+      "doctor_gender": "female"
+    },
+    {
+      "id": "emergency-api-da145236",
+      "local_person_id": "emergency-api-da145236",
+      "patient_id": "P-19bd9d80",
+      "patientId": "P-19bd9d80",
+      "type": "patient",
+      "name": "Debug ED A 145236",
+      "gender": "unknown",
+      "department_id": "emergency",
+      "department": "Emergency",
+      "symptoms": "急诊闭环：胸痛气促，检查后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "急诊闭环：胸痛气促，检查后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "急诊闭环：胸痛气促，检查后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "急诊转住院 A 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      }
+    },
+    {
+      "id": "icu-api-ua145236",
+      "local_person_id": "icu-api-ua145236",
+      "patient_id": "P-ca2a93fb",
+      "patientId": "P-ca2a93fb",
+      "type": "patient",
+      "name": "Debug ICU A 145236",
+      "gender": "unknown",
+      "department_id": "icu",
+      "department": "ICU",
+      "symptoms": "ICU 闭环：入 ICU 后转普通住院并出院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "ICU 闭环：入 ICU 后转普通住院并出院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "ICU 闭环：入 ICU 后转普通住院并出院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "ICU A 转住院后完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      }
+    },
+    {
+      "id": "outpatient-api-pa145442",
+      "local_person_id": "outpatient-api-pa145442",
+      "patient_id": "P-c24e8832",
+      "patientId": "P-c24e8832",
+      "type": "patient",
+      "name": "Debug OP A 145442",
+      "gender": "unknown",
+      "department_id": "outpatient",
+      "department": "Outpatient",
+      "symptoms": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "住院 A 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "doctor-op-a",
+      "doctor_profile_id": "doctor-op-a",
+      "doctorGender": "female",
+      "doctor_gender": "female"
+    },
+    {
+      "id": "outpatient-api-pb145442",
+      "local_person_id": "outpatient-api-pb145442",
+      "patient_id": "P-b073b993",
+      "patientId": "P-b073b993",
+      "type": "patient",
+      "name": "Debug OP B 145442",
+      "gender": "unknown",
+      "department_id": "outpatient",
+      "department": "Outpatient",
+      "symptoms": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-NEURO",
+      "roomId": "R-WARD-NEURO",
+      "current_location": {
+        "room_id": "R-WARD-NEURO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "住院 B 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "doctor-op-surgery",
+      "doctor_profile_id": "doctor-op-surgery",
+      "doctorGender": "female",
+      "doctor_gender": "female"
+    },
+    {
+      "id": "emergency-api-da145442",
+      "local_person_id": "emergency-api-da145442",
+      "patient_id": "P-aeec15d7",
+      "patientId": "P-aeec15d7",
+      "type": "patient",
+      "name": "Debug ED A 145442",
+      "gender": "unknown",
+      "department_id": "emergency",
+      "department": "Emergency",
+      "symptoms": "急诊闭环：胸痛气促，检查后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "急诊闭环：胸痛气促，检查后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "急诊闭环：胸痛气促，检查后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "急诊转住院 A 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      }
+    },
+    {
+      "id": "icu-api-ua145442",
+      "local_person_id": "icu-api-ua145442",
+      "patient_id": "P-466f5ff7",
+      "patientId": "P-466f5ff7",
+      "type": "patient",
+      "name": "Debug ICU A 145442",
+      "gender": "unknown",
+      "department_id": "icu",
+      "department": "ICU",
+      "symptoms": "ICU 闭环：入 ICU 后转普通住院并出院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "ICU 闭环：入 ICU 后转普通住院并出院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "ICU 闭环：入 ICU 后转普通住院并出院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "ICU A 转住院后完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      }
+    },
+    {
+      "id": "outpatient-api-pa145558",
+      "local_person_id": "outpatient-api-pa145558",
+      "patient_id": "P-4bef063b",
+      "patientId": "P-4bef063b",
+      "type": "patient",
+      "name": "Debug OP A 145558",
+      "gender": "unknown",
+      "department_id": "outpatient",
+      "department": "Outpatient",
+      "symptoms": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "门诊闭环 A：咳嗽复诊，需要检查后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "住院 A 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "doctor-op-a",
+      "doctor_profile_id": "doctor-op-a",
+      "doctorGender": "female",
+      "doctor_gender": "female"
+    },
+    {
+      "id": "outpatient-api-pb145558",
+      "local_person_id": "outpatient-api-pb145558",
+      "patient_id": "P-56996a2a",
+      "patientId": "P-56996a2a",
+      "type": "patient",
+      "name": "Debug OP B 145558",
+      "gender": "unknown",
+      "department_id": "outpatient",
+      "department": "Outpatient",
+      "symptoms": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-NEURO",
+      "roomId": "R-WARD-NEURO",
+      "current_location": {
+        "room_id": "R-WARD-NEURO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "门诊闭环 B：皮疹和低热，转外科评估后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "住院 B 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      },
+      "doctorProfileId": "doctor-op-surgery",
+      "doctor_profile_id": "doctor-op-surgery",
+      "doctorGender": "female",
+      "doctor_gender": "female"
+    },
+    {
+      "id": "emergency-api-da145558",
+      "local_person_id": "emergency-api-da145558",
+      "patient_id": "P-38fdf1f8",
+      "patientId": "P-38fdf1f8",
+      "type": "patient",
+      "name": "Debug ED A 145558",
+      "gender": "unknown",
+      "department_id": "emergency",
+      "department": "Emergency",
+      "symptoms": "急诊闭环：胸痛气促，检查后住院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "急诊闭环：胸痛气促，检查后住院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "急诊闭环：胸痛气促，检查后住院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "急诊转住院 A 完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      }
+    },
+    {
+      "id": "icu-api-ua145558",
+      "local_person_id": "icu-api-ua145558",
+      "patient_id": "P-5d90fb58",
+      "patientId": "P-5d90fb58",
+      "type": "patient",
+      "name": "Debug ICU A 145558",
+      "gender": "unknown",
+      "department_id": "icu",
+      "department": "ICU",
+      "symptoms": "ICU 闭环：入 ICU 后转普通住院并出院",
+      "status": "DISCHARGED",
+      "room_id": "R-WARD-GASTRO",
+      "roomId": "R-WARD-GASTRO",
+      "current_location": {
+        "room_id": "R-WARD-GASTRO"
+      },
+      "home_bed": {},
+      "form": "hidden",
+      "baseForm": "walking",
+      "base_form": "walking",
+      "relX": 0.2,
+      "relY": 0.4,
+      "rel_x": 0.2,
+      "rel_y": 0.4,
+      "color": "#7899c6",
+      "skin": "#f2c799",
+      "blanket": "#76c59d",
+      "phase": 0,
+      "clinical": {
+        "status": "DISCHARGED",
+        "symptoms": "ICU 闭环：入 ICU 后转普通住院并出院",
+        "care_phase": null,
+        "ctas_level": null,
+        "active_problems": [],
+        "active_risks": [],
+        "latest_interventions": [],
+        "department_payload": {
+          "chief_complaint": "ICU 闭环：入 ICU 后转普通住院并出院",
+          "debug_scenario": "closed_loop_multi_patient_v1"
+        },
+        "discharge_summary": {
+          "final_status": "stable",
+          "debug_outcome": "closed_loop_discharged"
+        },
+        "discharge_reason": "ICU A 转住院后完成出院"
+      },
+      "visual": {
+        "form": "hidden",
+        "base_form": "walking",
+        "rel_x": 0.2,
+        "rel_y": 0.4,
+        "color": "#7899c6",
+        "skin": null,
+        "blanket": null
+      }
     }
   ]
 }

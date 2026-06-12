@@ -12,10 +12,10 @@
       "classification": "跨楼层移动",
       "trigger": "急诊患者需要 ICU 监护或抢救。",
       "rooms": [
-        "ed_handoff",
-        "elevator_1",
-        "elevator_3",
-        "icu_admission"
+        "R-ED-HANDOFF",
+        "R-F1-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-ICU-ADMISSION"
       ],
       "roomsText": "ed_handoff、elevator_1、elevator_3、icu_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -27,11 +27,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_ed_room",
-        "to": "icu_admission",
+        "to": "R-ICU-ADMISSION",
         "via": [
-          "ed_handoff",
-          "elevator_1",
-          "elevator_3"
+          "R-ED-HANDOFF",
+          "R-F1-ELEVATOR",
+          "R-F3-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "critical",
@@ -83,10 +83,10 @@
       "classification": "跨楼层移动",
       "trigger": "急诊患者需要普通住院。",
       "rooms": [
-        "ed_handoff",
-        "elevator_1",
-        "elevator_5",
-        "ward_admission"
+        "R-ED-HANDOFF",
+        "R-F1-ELEVATOR",
+        "R-F5-ELEVATOR",
+        "R-WARD-WARD-ADMISSION"
       ],
       "roomsText": "ed_handoff、elevator_1、elevator_5、ward_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -98,11 +98,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_ed_room",
-        "to": "ward_admission",
+        "to": "R-WARD-WARD-ADMISSION",
         "via": [
-          "ed_handoff",
-          "elevator_1",
-          "elevator_5"
+          "R-ED-HANDOFF",
+          "R-F1-ELEVATOR",
+          "R-F5-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "routine",
@@ -152,11 +152,11 @@
       "classification": "跨楼层移动",
       "trigger": "门诊发现急危重风险。",
       "rooms": [
-        "triage_2",
-        "elevator_2",
-        "elevator_1",
-        "ed_handoff",
-        "ed_red_resus"
+        "R-OP-TRIAGE",
+        "R-OP-ELEVATOR",
+        "R-F1-ELEVATOR",
+        "R-ED-HANDOFF",
+        "R-ED-RED-RESUS"
       ],
       "roomsText": "triage_2、elevator_2、elevator_1、ed_handoff、ed_red_resus",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -169,13 +169,13 @@
         "schema": "patient-move",
         "from": "current_op_room",
         "to": [
-          "ed_handoff",
-          "ed_red_resus",
-          "ed_observation"
+          "R-ED-HANDOFF",
+          "R-ED-RED-RESUS",
+          "R-ED-OBSERVATION"
         ],
         "via": [
-          "elevator_2",
-          "elevator_1"
+          "R-OP-ELEVATOR",
+          "R-F1-ELEVATOR"
         ],
         "transport": "wheelchair",
         "acuity": "urgent",
@@ -225,10 +225,10 @@
       "classification": "跨楼层移动",
       "trigger": "门诊医生判断患者需要入院。",
       "rooms": [
-        "doctor_entry_2",
-        "elevator_2",
-        "elevator_5",
-        "ward_admission"
+        "R-OP-DOCTOR-ENTRY",
+        "R-OP-ELEVATOR",
+        "R-F5-ELEVATOR",
+        "R-WARD-WARD-ADMISSION"
       ],
       "roomsText": "doctor_entry_2、elevator_2、elevator_5、ward_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -240,11 +240,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_op_room",
-        "to": "ward_admission",
+        "to": "R-WARD-WARD-ADMISSION",
         "via": [
-          "doctor_entry_2",
-          "elevator_2",
-          "elevator_5"
+          "R-OP-DOCTOR-ENTRY",
+          "R-OP-ELEVATOR",
+          "R-F5-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "routine",
@@ -295,9 +295,9 @@
       "trigger": "ICU 患者稳定可转普通病区。",
       "rooms": [
         "icu_transfer",
-        "elevator_3",
-        "elevator_5",
-        "ward_admission"
+        "R-F3-ELEVATOR",
+        "R-F5-ELEVATOR",
+        "R-WARD-WARD-ADMISSION"
       ],
       "roomsText": "icu_transfer、elevator_3、elevator_5、ward_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -309,11 +309,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_icu_bed_room",
-        "to": "ward_admission",
+        "to": "R-WARD-WARD-ADMISSION",
         "via": [
           "icu_transfer",
-          "elevator_3",
-          "elevator_5"
+          "R-F3-ELEVATOR",
+          "R-F5-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "urgent",
@@ -365,9 +365,9 @@
       "classification": "跨楼层移动",
       "trigger": "住院患者病情恶化需要 ICU。",
       "rooms": [
-        "elevator_5",
-        "elevator_3",
-        "icu_admission"
+        "R-F5-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-ICU-ADMISSION"
       ],
       "roomsText": "elevator_5、elevator_3、icu_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -379,10 +379,10 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_ward_room",
-        "to": "icu_admission",
+        "to": "R-ICU-ADMISSION",
         "via": [
-          "elevator_5",
-          "elevator_3"
+          "R-F5-ELEVATOR",
+          "R-F3-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "urgent",

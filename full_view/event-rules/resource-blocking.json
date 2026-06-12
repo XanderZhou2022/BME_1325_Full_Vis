@@ -12,10 +12,10 @@
       "classification": "移动阻塞",
       "trigger": "任意患者准备转入 ICU，但 ICU 无匹配空床。",
       "rooms": [
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation",
-        "intervention_bay"
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION",
+        "R-ICU-INTERVENTION-BAY"
       ],
       "roomsText": "icu_beds_a、icu_beds_b、icu_isolation、intervention_bay",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",
@@ -52,16 +52,16 @@
       "classification": "移动阻塞",
       "trigger": "任意患者准备转入住院，但目标专科无床。",
       "rooms": [
-        "ward_admission",
-        "resp_ward",
-        "card_ward",
-        "gastro_ward",
-        "neuro_ward",
-        "endo_ward",
-        "gensurg_ward",
-        "ortho_ward",
-        "obgyn_ward",
-        "peds_ward"
+        "R-WARD-WARD-ADMISSION",
+        "R-WARD-RESP",
+        "R-WARD-CARD",
+        "R-WARD-GASTRO",
+        "R-WARD-NEURO",
+        "R-WARD-ENDO",
+        "R-WARD-GENSURG",
+        "R-WARD-ORTHO",
+        "R-WARD-OBGYN",
+        "R-WARD-PEDS"
       ],
       "roomsText": "ward_admission、resp_ward、card_ward、gastro_ward、neuro_ward、endo_ward、gensurg_ward、ortho_ward、obgyn_ward、peds_ward",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",
@@ -98,8 +98,8 @@
       "classification": "移动阻塞",
       "trigger": "候诊患者准备进入诊室，但目标诊室被占用。",
       "rooms": [
-        "outpatient_waiting",
-        "ed_waiting"
+        "R-OP-OUTPATIENT-WAITING",
+        "R-ED-WAITING"
       ],
       "roomsText": "outpatient_waiting、ed_waiting",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",
@@ -136,9 +136,9 @@
       "classification": "移动阻塞",
       "trigger": "患者准备进入检查房，但检查房正在服务其他任务。",
       "rooms": [
-        "lab_2",
-        "ed_diagnostic",
-        "diagnostic_center"
+        "R-OP-LAB",
+        "R-ED-DIAGNOSTIC",
+        "R-WARD-DIAGNOSTIC-CENTER"
       ],
       "roomsText": "lab_2、ed_diagnostic、diagnostic_center",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",
@@ -175,9 +175,9 @@
       "classification": "移动阻塞",
       "trigger": "患者准备前往药房，但处方缺失、未支付、库存不足或窗口不可用。",
       "rooms": [
-        "pharmacy_2"
+        "R-OP-PHARMACY"
       ],
-      "roomsText": "pharmacy_2",
+      "roomsText": "R-OP-PHARMACY",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",
       "prechecks": "在移动前检查目标房间、床位、队列、路径和人员资源。",
       "actions": "患者不移动到 pharmacy_2。",
@@ -212,10 +212,10 @@
       "classification": "移动阻塞",
       "trigger": "跨楼层或危重患者转运需要陪护或担架，但资源不足。",
       "rooms": [
-        "elevator_1",
-        "elevator_2",
-        "elevator_3",
-        "elevator_5"
+        "R-F1-ELEVATOR",
+        "R-OP-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-F5-ELEVATOR"
       ],
       "roomsText": "elevator_1、elevator_2、elevator_3、elevator_5",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",
@@ -322,11 +322,11 @@
       "classification": "移动阻塞",
       "trigger": "跨楼层路径无法从起点到电梯或从电梯到目标房间。",
       "rooms": [
-        "elevator_1",
-        "elevator_2",
-        "elevator_3",
-        "elevator_4",
-        "elevator_5"
+        "R-F1-ELEVATOR",
+        "R-OP-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-F4-ELEVATOR",
+        "R-F5-ELEVATOR"
       ],
       "roomsText": "elevator_1、elevator_2、elevator_3、elevator_4、elevator_5",
       "agents": "患者、发起科室、接收科室、BedManager、转运系统。",

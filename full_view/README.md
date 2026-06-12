@@ -1,6 +1,6 @@
 # Full Hospital View
 
-`hospital/full_view` 是 SIM Hospital 的全院可视化与轻量后端模块。仓库发布说明请先阅读上一级 [README.md](../README.md)，department 接入步骤请阅读 [Fullview 接入手册](../docs/fullview-integration-manual.md)。
+`hospital/full_view` 是 SIM Hospital 的全院可视化与轻量后端模块。仓库发布说明请先阅读上一级 [README.md](../README.md)，department 接入步骤请阅读 [Fullview 接入手册](../docs/fullview-integration-manual.md)。如果需要申请房间布局或移动规则变更，请使用 [Fullview 变更请求格式规范](../docs/fullview-change-request-format.md)。
 
 ## 运行
 

@@ -12,9 +12,9 @@
       "classification": "急诊移动",
       "trigger": "新患者到达医院急诊入口。",
       "rooms": [
-        "ed_entrance"
+        "R-ED-ENTRANCE"
       ],
-      "roomsText": "ed_entrance",
+      "roomsText": "R-ED-ENTRANCE",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
       "prechecks": "无同一 patient_id 的未完成 encounter。",
       "actions": "创建患者并放置到 ed_entrance。",
@@ -24,7 +24,7 @@
       "movement": {
         "schema": "patient-move",
         "from": "outside",
-        "to": "ed_entrance",
+        "to": "R-ED-ENTRANCE",
         "via": [],
         "transport": "walking",
         "acuity": "routine",
@@ -66,8 +66,8 @@
       "classification": "急诊移动",
       "trigger": "患者到达急诊入口后需要登记。",
       "rooms": [
-        "ed_entrance",
-        "ed_registration"
+        "R-ED-ENTRANCE",
+        "R-ED-REGISTRATION"
       ],
       "roomsText": "ed_entrance、ed_registration",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -78,8 +78,8 @@
       "visualization": "患者从入口走到登记区。",
       "movement": {
         "schema": "patient-move",
-        "from": "ed_entrance",
-        "to": "ed_registration",
+        "from": "R-ED-ENTRANCE",
+        "to": "R-ED-REGISTRATION",
         "via": [],
         "transport": "walking",
         "acuity": "routine",
@@ -121,9 +121,9 @@
       "classification": "急诊移动",
       "trigger": "急诊登记完成。",
       "rooms": [
-        "ed_registration",
-        "ed_triage",
-        "ed_waiting"
+        "R-ED-REGISTRATION",
+        "R-ED-TRIAGE",
+        "R-ED-WAITING"
       ],
       "roomsText": "ed_registration、ed_triage、ed_waiting",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -134,10 +134,10 @@
       "visualization": "患者从登记区移动到分诊或等待区。",
       "movement": {
         "schema": "patient-move",
-        "from": "ed_registration",
+        "from": "R-ED-REGISTRATION",
         "to": [
-          "ed_triage",
-          "ed_waiting"
+          "R-ED-TRIAGE",
+          "R-ED-WAITING"
         ],
         "via": [],
         "transport": "walking",
@@ -180,12 +180,12 @@
       "classification": "急诊移动",
       "trigger": "急诊分诊完成并产生 CTAS/zone。",
       "rooms": [
-        "ed_triage",
-        "ed_red_resus",
-        "ed_trauma",
-        "ed_major",
-        "ed_minor",
-        "ed_waiting"
+        "R-ED-TRIAGE",
+        "R-ED-RED-RESUS",
+        "R-ED-TRAUMA",
+        "R-ED-MAJOR",
+        "R-ED-MINOR",
+        "R-ED-WAITING"
       ],
       "roomsText": "ed_triage、ed_red_resus、ed_trauma、ed_major、ed_minor、ed_waiting",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -196,13 +196,13 @@
       "visualization": "患者从分诊移动到抢救床、创伤室或诊疗区。",
       "movement": {
         "schema": "patient-move",
-        "from": "ed_triage",
+        "from": "R-ED-TRIAGE",
         "to": [
-          "ed_red_resus",
-          "ed_trauma",
-          "ed_major",
-          "ed_minor",
-          "ed_waiting"
+          "R-ED-RED-RESUS",
+          "R-ED-TRAUMA",
+          "R-ED-MAJOR",
+          "R-ED-MINOR",
+          "R-ED-WAITING"
         ],
         "via": [],
         "transport": "wheelchair",
@@ -249,10 +249,10 @@
       "classification": "急诊移动",
       "trigger": "急诊诊疗房间空闲，候诊队列中有患者。",
       "rooms": [
-        "ed_waiting",
-        "ed_minor",
-        "ed_major",
-        "ed_doctor_room"
+        "R-ED-WAITING",
+        "R-ED-MINOR",
+        "R-ED-MAJOR",
+        "R-ED-DOCTOR-ROOM"
       ],
       "roomsText": "ed_waiting、ed_minor、ed_major、ed_doctor_room",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -263,11 +263,11 @@
       "visualization": "患者从 waiting 走到急诊诊疗房间。",
       "movement": {
         "schema": "patient-move",
-        "from": "ed_waiting",
+        "from": "R-ED-WAITING",
         "to": [
-          "ed_minor",
-          "ed_major",
-          "ed_doctor_room"
+          "R-ED-MINOR",
+          "R-ED-MAJOR",
+          "R-ED-DOCTOR-ROOM"
         ],
         "via": [],
         "transport": "walking",
@@ -310,11 +310,11 @@
       "classification": "急诊移动",
       "trigger": "急诊医生开立检查。",
       "rooms": [
-        "ed_doctor_room",
-        "ed_major",
-        "ed_red_resus",
-        "ed_observation",
-        "ed_diagnostic"
+        "R-ED-DOCTOR-ROOM",
+        "R-ED-MAJOR",
+        "R-ED-RED-RESUS",
+        "R-ED-OBSERVATION",
+        "R-ED-DIAGNOSTIC"
       ],
       "roomsText": "ed_doctor_room、ed_major、ed_red_resus、ed_observation、ed_diagnostic",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -326,7 +326,7 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_ed_room",
-        "to": "ed_diagnostic",
+        "to": "R-ED-DIAGNOSTIC",
         "via": [],
         "transport": "stretcher",
         "acuity": "urgent",
@@ -377,11 +377,11 @@
       "classification": "急诊移动",
       "trigger": "急诊检查完成。",
       "rooms": [
-        "ed_diagnostic",
-        "ed_doctor_room",
-        "ed_major",
-        "ed_red_resus",
-        "ed_observation"
+        "R-ED-DIAGNOSTIC",
+        "R-ED-DOCTOR-ROOM",
+        "R-ED-MAJOR",
+        "R-ED-RED-RESUS",
+        "R-ED-OBSERVATION"
       ],
       "roomsText": "ed_diagnostic、ed_doctor_room、ed_major、ed_red_resus、ed_observation",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -392,7 +392,7 @@
       "visualization": "患者从检查房返回原房间。",
       "movement": {
         "schema": "patient-move",
-        "from": "ed_diagnostic",
+        "from": "R-ED-DIAGNOSTIC",
         "to": "source_ed_room",
         "via": [],
         "transport": "stretcher",
@@ -444,15 +444,15 @@
       "classification": "跨部门移动",
       "trigger": "急诊患者需要 ICU 接收。",
       "rooms": [
-        "ed_red_resus",
-        "ed_observation",
-        "ed_handoff",
-        "elevator_1",
-        "elevator_3",
-        "icu_admission",
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation"
+        "R-ED-RED-RESUS",
+        "R-ED-OBSERVATION",
+        "R-ED-HANDOFF",
+        "R-F1-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-ICU-ADMISSION",
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION"
       ],
       "roomsText": "ed_red_resus、ed_observation、ed_handoff、elevator_1、elevator_3、icu_admission、icu_beds_a、icu_beds_b、icu_isolation",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -464,11 +464,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_ed_bed_room",
-        "to": "icu_admission",
+        "to": "R-ICU-ADMISSION",
         "via": [
-          "ed_handoff",
-          "elevator_1",
-          "elevator_3"
+          "R-ED-HANDOFF",
+          "R-F1-ELEVATOR",
+          "R-F3-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "critical",
@@ -520,11 +520,11 @@
       "classification": "跨部门移动",
       "trigger": "急诊患者稳定但需要住院。",
       "rooms": [
-        "ed_observation",
-        "ed_handoff",
-        "elevator_1",
-        "elevator_5",
-        "ward_admission"
+        "R-ED-OBSERVATION",
+        "R-ED-HANDOFF",
+        "R-F1-ELEVATOR",
+        "R-F5-ELEVATOR",
+        "R-WARD-WARD-ADMISSION"
       ],
       "roomsText": "ed_observation、ed_handoff、elevator_1、elevator_5、ward_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -536,11 +536,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_ed_room",
-        "to": "ward_admission",
+        "to": "R-WARD-WARD-ADMISSION",
         "via": [
-          "ed_handoff",
-          "elevator_1",
-          "elevator_5"
+          "R-ED-HANDOFF",
+          "R-F1-ELEVATOR",
+          "R-F5-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "routine",
@@ -590,11 +590,11 @@
       "classification": "急诊离院",
       "trigger": "急诊医生判断无需继续急诊、住院或 ICU。",
       "rooms": [
-        "ed_minor",
-        "ed_major",
-        "ed_doctor_room",
-        "ed_observation",
-        "ed_entrance"
+        "R-ED-MINOR",
+        "R-ED-MAJOR",
+        "R-ED-DOCTOR-ROOM",
+        "R-ED-OBSERVATION",
+        "R-ED-ENTRANCE"
       ],
       "roomsText": "ed_minor、ed_major、ed_doctor_room、ed_observation、ed_entrance",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",

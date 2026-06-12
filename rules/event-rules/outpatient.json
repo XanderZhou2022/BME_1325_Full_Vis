@@ -12,9 +12,9 @@
       "classification": "门诊移动",
       "trigger": "患者完成挂号登记。",
       "rooms": [
-        "registration_2",
-        "triage_2",
-        "outpatient_waiting"
+        "R-OP-REGISTRATION",
+        "R-OP-TRIAGE",
+        "R-OP-OUTPATIENT-WAITING"
       ],
       "roomsText": "registration_2、triage_2、outpatient_waiting",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -25,10 +25,10 @@
       "visualization": "患者从 registration_2 走到 triage_2 或 outpatient_waiting。",
       "movement": {
         "schema": "patient-move",
-        "from": "registration_2",
+        "from": "R-OP-REGISTRATION",
         "to": [
-          "triage_2",
-          "outpatient_waiting"
+          "R-OP-TRIAGE",
+          "R-OP-OUTPATIENT-WAITING"
         ],
         "via": [],
         "transport": "walking",
@@ -71,15 +71,15 @@
       "classification": "门诊移动",
       "trigger": "患者完成门诊分诊，需要进入专科诊室。",
       "rooms": [
-        "triage_2",
-        "outpatient_waiting",
-        "consultation_a_2",
-        "consultation_b_2",
-        "internal_2",
-        "surgery_2",
-        "pediatrics_2",
-        "fever_2",
-        "obgyn_2"
+        "R-OP-TRIAGE",
+        "R-OP-OUTPATIENT-WAITING",
+        "R-OP-CONSULTATION-A",
+        "R-OP-CONSULTATION-B",
+        "R-OP-INTERNAL",
+        "R-OP-SURGERY",
+        "R-OP-PEDIATRICS",
+        "R-OP-FEVER",
+        "R-OP-OBGYN"
       ],
       "roomsText": "triage_2、outpatient_waiting、consultation_a_2、consultation_b_2、internal_2、surgery_2、pediatrics_2、fever_2、obgyn_2",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -91,17 +91,17 @@
       "movement": {
         "schema": "patient-move",
         "from": [
-          "triage_2",
-          "outpatient_waiting"
+          "R-OP-TRIAGE",
+          "R-OP-OUTPATIENT-WAITING"
         ],
         "to": [
-          "consultation_a_2",
-          "consultation_b_2",
-          "internal_2",
-          "surgery_2",
-          "pediatrics_2",
-          "fever_2",
-          "obgyn_2"
+          "R-OP-CONSULTATION-A",
+          "R-OP-CONSULTATION-B",
+          "R-OP-INTERNAL",
+          "R-OP-SURGERY",
+          "R-OP-PEDIATRICS",
+          "R-OP-FEVER",
+          "R-OP-OBGYN"
         ],
         "via": [],
         "transport": "walking",
@@ -144,14 +144,14 @@
       "classification": "门诊移动",
       "trigger": "医生开立检查或治疗项目，需要先缴费。",
       "rooms": [
-        "consultation_a_2",
-        "consultation_b_2",
-        "internal_2",
-        "surgery_2",
-        "pediatrics_2",
-        "fever_2",
-        "obgyn_2",
-        "payment_2"
+        "R-OP-CONSULTATION-A",
+        "R-OP-CONSULTATION-B",
+        "R-OP-INTERNAL",
+        "R-OP-SURGERY",
+        "R-OP-PEDIATRICS",
+        "R-OP-FEVER",
+        "R-OP-OBGYN",
+        "R-OP-PAYMENT"
       ],
       "roomsText": "consultation_a_2、consultation_b_2、internal_2、surgery_2、pediatrics_2、fever_2、obgyn_2、payment_2",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -163,7 +163,7 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_consult_room",
-        "to": "payment_2",
+        "to": "R-OP-PAYMENT",
         "via": [],
         "transport": "walking",
         "acuity": "routine",
@@ -205,8 +205,8 @@
       "classification": "门诊移动",
       "trigger": "患者检查项目缴费完成。",
       "rooms": [
-        "payment_2",
-        "lab_2"
+        "R-OP-PAYMENT",
+        "R-OP-LAB"
       ],
       "roomsText": "payment_2、lab_2",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -217,8 +217,8 @@
       "visualization": "患者从 payment_2 走到 lab_2。",
       "movement": {
         "schema": "patient-move",
-        "from": "payment_2",
-        "to": "lab_2",
+        "from": "R-OP-PAYMENT",
+        "to": "R-OP-LAB",
         "via": [],
         "transport": "walking",
         "acuity": "routine",
@@ -260,8 +260,8 @@
       "classification": "门诊移动",
       "trigger": "门诊检查完成并生成或等待结果。",
       "rooms": [
-        "lab_2",
-        "outpatient_waiting"
+        "R-OP-LAB",
+        "R-OP-OUTPATIENT-WAITING"
       ],
       "roomsText": "lab_2、outpatient_waiting",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -272,8 +272,8 @@
       "visualization": "患者从 lab_2 返回 outpatient_waiting。",
       "movement": {
         "schema": "patient-move",
-        "from": "lab_2",
-        "to": "outpatient_waiting",
+        "from": "R-OP-LAB",
+        "to": "R-OP-OUTPATIENT-WAITING",
         "via": [],
         "transport": "walking",
         "acuity": "routine",
@@ -315,14 +315,14 @@
       "classification": "门诊移动",
       "trigger": "检查结果可用，患者等待医生复诊。",
       "rooms": [
-        "outpatient_waiting",
-        "consultation_a_2",
-        "consultation_b_2",
-        "internal_2",
-        "surgery_2",
-        "pediatrics_2",
-        "fever_2",
-        "obgyn_2"
+        "R-OP-OUTPATIENT-WAITING",
+        "R-OP-CONSULTATION-A",
+        "R-OP-CONSULTATION-B",
+        "R-OP-INTERNAL",
+        "R-OP-SURGERY",
+        "R-OP-PEDIATRICS",
+        "R-OP-FEVER",
+        "R-OP-OBGYN"
       ],
       "roomsText": "outpatient_waiting、consultation_a_2、consultation_b_2、internal_2、surgery_2、pediatrics_2、fever_2、obgyn_2",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -333,7 +333,7 @@
       "visualization": "患者从 waiting 回到诊室。",
       "movement": {
         "schema": "patient-move",
-        "from": "outpatient_waiting",
+        "from": "R-OP-OUTPATIENT-WAITING",
         "to": "current_consult_room",
         "via": [],
         "transport": "walking",
@@ -376,14 +376,14 @@
       "classification": "门诊移动",
       "trigger": "医生开立处方且患者完成必要支付。",
       "rooms": [
-        "consultation_a_2",
-        "consultation_b_2",
-        "internal_2",
-        "surgery_2",
-        "pediatrics_2",
-        "fever_2",
-        "obgyn_2",
-        "pharmacy_2"
+        "R-OP-CONSULTATION-A",
+        "R-OP-CONSULTATION-B",
+        "R-OP-INTERNAL",
+        "R-OP-SURGERY",
+        "R-OP-PEDIATRICS",
+        "R-OP-FEVER",
+        "R-OP-OBGYN",
+        "R-OP-PHARMACY"
       ],
       "roomsText": "consultation_a_2、consultation_b_2、internal_2、surgery_2、pediatrics_2、fever_2、obgyn_2、pharmacy_2",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -395,7 +395,7 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_consult_room",
-        "to": "pharmacy_2",
+        "to": "R-OP-PHARMACY",
         "via": [],
         "transport": "walking",
         "acuity": "routine",
@@ -437,10 +437,10 @@
       "classification": "门诊离院",
       "trigger": "患者无待检查、待缴费、待取药或待转诊事项。",
       "rooms": [
-        "pharmacy_2",
-        "outpatient_waiting",
-        "consultation_a_2",
-        "consultation_b_2"
+        "R-OP-PHARMACY",
+        "R-OP-OUTPATIENT-WAITING",
+        "R-OP-CONSULTATION-A",
+        "R-OP-CONSULTATION-B"
       ],
       "roomsText": "pharmacy_2、outpatient_waiting、consultation_a_2、consultation_b_2",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -494,10 +494,10 @@
       "classification": "跨部门移动",
       "trigger": "门诊医生判断患者需要入院。",
       "rooms": [
-        "doctor_entry_2",
-        "elevator_2",
-        "elevator_5",
-        "ward_admission"
+        "R-OP-DOCTOR-ENTRY",
+        "R-OP-ELEVATOR",
+        "R-F5-ELEVATOR",
+        "R-WARD-WARD-ADMISSION"
       ],
       "roomsText": "doctor_entry_2、elevator_2、elevator_5、ward_admission",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -509,10 +509,10 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_consult_room",
-        "to": "ward_admission",
+        "to": "R-WARD-WARD-ADMISSION",
         "via": [
-          "elevator_2",
-          "elevator_5"
+          "R-OP-ELEVATOR",
+          "R-F5-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "routine",
@@ -562,13 +562,13 @@
       "classification": "跨部门移动",
       "trigger": "门诊发现极危重患者，需要直接 ICU 接收。",
       "rooms": [
-        "triage_2",
-        "elevator_2",
-        "elevator_3",
-        "icu_admission",
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation"
+        "R-OP-TRIAGE",
+        "R-OP-ELEVATOR",
+        "R-F3-ELEVATOR",
+        "R-ICU-ADMISSION",
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION"
       ],
       "roomsText": "triage_2、elevator_2、elevator_3、icu_admission、icu_beds_a、icu_beds_b、icu_isolation",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -580,10 +580,10 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_room",
-        "to": "icu_admission",
+        "to": "R-ICU-ADMISSION",
         "via": [
-          "elevator_2",
-          "elevator_3"
+          "R-OP-ELEVATOR",
+          "R-F3-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "critical",

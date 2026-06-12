@@ -61,7 +61,8 @@ hospital/
 ├── README.md                         # 仓库总说明
 ├── docs/
 │   ├── assets/                       # README 截图资源
-│   └── fullview-integration-manual.md # department 接入手册
+│   ├── fullview-integration-manual.md # department 接入手册
+│   └── fullview-change-request-format.md # 房间/rule 变更请求格式
 ├── full_view/
 │   ├── index.html                    # 全院地图页面
 │   ├── console.html                  # Operations Console
@@ -235,6 +236,7 @@ Content-Type: application/json
 更详细的接入步骤见：
 
 - [Fullview 接入手册](docs/fullview-integration-manual.md)
+- [房间与规则变更请求格式](docs/fullview-change-request-format.md)
 - [核心数据标准](full_view/HOSPITAL_CORE_STANDARD.md)
 - [API 文档](full_view/API.md)
 - [事件规则说明](rules/README.md)

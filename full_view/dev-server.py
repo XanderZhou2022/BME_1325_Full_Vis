@@ -1,8 +1,10 @@
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from datetime import datetime, timezone
 import hashlib
 import json
 import sys
+import uuid
 from urllib.parse import parse_qs, unquote, urlparse
 
 
@@ -14,6 +16,8 @@ PATIENTS_FILE = BACKEND_DATA / "patients.json"
 STAFF_FILE = BACKEND_DATA / "staff.json"
 ROOM_STATE_FILE = BACKEND_DATA / "room-state.json"
 EVENT_LOG_FILE = BACKEND_DATA / "event-log.json"
+DEPARTMENT_REQUESTS_FILE = BACKEND_DATA / "department-requests.json"
+IDEMPOTENCY_FILE = BACKEND_DATA / "idempotency-keys.json"
 CARE_ROOM_KINDS = {"icu", "ward"}
 CONSULT_ROOM_KINDS = {"consultation", "internal_medicine", "surgery", "pediatrics", "fever", "obgyn"}
 TILE_SIZE = 32
@@ -39,6 +43,22 @@ DEPARTMENT_DISPLAY = {
     "mdt": "MDT Center",
     "hospital": "Hospital",
 }
+DEPARTMENT_ORDER = ["outpatient", "emergency", "icu", "mdt", "ward"]
+DEPARTMENT_PRODUCERS = {
+    "outpatient": "groupA.outpatient",
+    "emergency": "groupB.ed",
+    "icu": "groupC.icu",
+    "mdt": "groupM.mdt",
+    "ward": "groupD.inpatient",
+}
+REQUEST_TYPES = [
+    "patient_upsert",
+    "encounter_open",
+    "movement_request",
+    "transfer_request",
+    "discharge_request",
+    "clinical_event",
+]
 
 
 class HospitalViewHandler(SimpleHTTPRequestHandler):
@@ -64,6 +84,19 @@ class HospitalViewHandler(SimpleHTTPRequestHandler):
             after = int(first_query_value(query, "after", "0") or "0")
             events = read_json(EVENT_LOG_FILE).get("events", [])
             self.send_json({"events": [event for event in events if event.get("eventSeq", 0) > after]})
+            return
+        if route == "/api/v1/departments":
+            self.send_json({"departments": list_departments()})
+            return
+        if route == "/api/v1/debug/scenarios/closed-loop":
+            self.send_json(api_ok(build_closed_loop_debug_scenario()))
+            return
+        if route.startswith("/api/v1/departments/"):
+            response = handle_department_get(route)
+            if response is None:
+                self.send_error(404, "Unknown department API endpoint")
+                return
+            self.send_json(response)
             return
         if route == "/api/event-rules":
             self.send_json(read_json(RULES_DIR / "index.json"))
@@ -91,6 +124,17 @@ class HospitalViewHandler(SimpleHTTPRequestHandler):
             if body is None:
                 return
             self.send_json(handle_admit_patient(body))
+            return
+        if route.startswith("/api/v1/departments/"):
+            body = self.read_json_body()
+            if body is None:
+                return
+            idempotency_key = self.headers.get("Idempotency-Key", "")
+            response = handle_department_post(route, body, idempotency_key)
+            if response is None:
+                self.send_error(404, "Unknown department API endpoint")
+                return
+            self.send_json(response)
             return
         self.send_error(404, "Unknown API endpoint")
 
@@ -166,6 +210,779 @@ class HospitalViewHandler(SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
+
+
+def utc_now_iso():
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def new_event_id():
+    return "evt_" + uuid.uuid4().hex[:26].upper()
+
+
+def new_trace_id():
+    return "trc_" + uuid.uuid4().hex[:26]
+
+
+def list_departments():
+    return [department_summary(department_id) for department_id in DEPARTMENT_ORDER]
+
+
+def department_summary(department_id):
+    meta = department_meta(department_id)
+    return {
+        "id": department_id,
+        "label": meta["label"],
+        "producer": DEPARTMENT_PRODUCERS[department_id],
+        "enabledRequestTypes": meta["enabled_request_types"],
+        "dashboardPath": f"/department-dashboard.html#{department_id}",
+    }
+
+
+def department_meta(department_id):
+    labels = {
+        "outpatient": "Outpatient",
+        "emergency": "Emergency",
+        "icu": "ICU",
+        "mdt": "MDT",
+        "ward": "Ward",
+    }
+    enabled = {
+        "outpatient": ["patient_upsert", "encounter_open", "movement_request", "transfer_request", "clinical_event"],
+        "emergency": ["patient_upsert", "encounter_open", "movement_request", "transfer_request", "clinical_event"],
+        "icu": ["patient_upsert", "encounter_open", "movement_request", "transfer_request", "discharge_request", "clinical_event"],
+        "mdt": ["patient_upsert", "encounter_open", "clinical_event"],
+        "ward": ["patient_upsert", "encounter_open", "movement_request", "transfer_request", "discharge_request", "clinical_event"],
+    }
+    if department_id not in enabled:
+        return None
+    return {
+        "id": department_id,
+        "label": labels[department_id],
+        "producer": DEPARTMENT_PRODUCERS[department_id],
+        "enabled_request_types": enabled[department_id],
+    }
+
+
+def handle_department_get(route):
+    parts = route.strip("/").split("/")
+    if len(parts) < 5 or parts[:3] != ["api", "v1", "departments"]:
+        return None
+    department_id = parts[3]
+    meta = department_meta(department_id)
+    if not meta:
+        return api_error("DEPARTMENT_NOT_FOUND", f"Unknown department: {department_id}")
+    resource = parts[4]
+    if resource == "capabilities":
+        return api_ok(department_capabilities(department_id))
+    if resource == "schemas":
+        return api_ok({key: request_schema(key) for key in meta["enabled_request_types"]})
+    if resource == "examples":
+        return api_ok(department_examples(department_id))
+    if resource == "requests" and len(parts) >= 6 and parts[5] == "recent":
+        return api_ok({"requests": recent_department_requests(department_id)})
+    return None
+
+
+def handle_department_post(route, body, idempotency_key):
+    parts = route.strip("/").split("/")
+    if len(parts) < 6 or parts[:3] != ["api", "v1", "departments"]:
+        return None
+    department_id = parts[3]
+    route_kind = parts[4]
+    request_type = parts[5]
+    if route_kind not in {"requests", "playground"}:
+        return None
+    return handle_department_request(department_id, request_type, body, idempotency_key)
+
+
+def department_capabilities(department_id):
+    meta = department_meta(department_id)
+    rules = rules_for_department(department_id)
+    return {
+        **department_summary(department_id),
+        "architecture": "Department Handler -> Fullview Core -> backend-data/event-log -> Map/Console/Dashboard",
+        "requestTypes": [
+            {
+                "id": request_type,
+                "label": request_type.replace("_", " ").title(),
+                "description": request_type_description(request_type, department_id),
+                "method": "POST",
+                "path": f"/api/v1/departments/{department_id}/requests/{request_type}",
+                "playgroundPath": f"/api/v1/departments/{department_id}/playground/{request_type}",
+                "enabled": request_type in meta["enabled_request_types"],
+                "allowedRules": rules.get(request_type, []),
+            }
+            for request_type in meta["enabled_request_types"]
+        ],
+        "rulesSource": {
+            "index": "/api/event-rules",
+            "categories": sorted({rule["categoryId"] for group in rules.values() for rule in group}),
+        },
+        "errorCodes": [
+            "DEPARTMENT_NOT_FOUND",
+            "REQUEST_TYPE_NOT_ENABLED",
+            "MISSING_PATIENT_ID",
+            "MISSING_ENCOUNTER_ID",
+            "MISSING_EVENT_ID",
+            "RULE_NOT_ALLOWED_FOR_DEPARTMENT",
+            "PATIENT_NOT_FOUND",
+            "TARGET_ROOM_NOT_FOUND",
+            "NO_BED_AVAILABLE",
+            "ICU_BED_UNAVAILABLE",
+            "WARD_BED_UNAVAILABLE",
+            "MOVEMENT_RULE_REJECTED",
+        ],
+    }
+
+
+def request_type_description(request_type, department_id):
+    descriptions = {
+        "patient_upsert": "Create or refresh the hospital-wide patient profile before clinical actions.",
+        "encounter_open": "Open or refresh an encounter and link it to this department handler.",
+        "movement_request": "Ask Fullview Core to move a patient by an existing movement rule.",
+        "transfer_request": "Ask Fullview Core to coordinate a cross-department transfer.",
+        "discharge_request": "Ask Fullview Core to discharge a patient and release owned resources.",
+        "clinical_event": "Submit a clinical fact, consultation note, or department summary without moving the patient.",
+    }
+    if department_id == "mdt" and request_type == "clinical_event":
+        return "Submit MDT consultation requests/results; this handler does not directly control beds or patient movement."
+    return descriptions.get(request_type, request_type)
+
+
+def rules_for_department(department_id):
+    if department_id == "mdt":
+        return {"movement_request": [], "transfer_request": [], "discharge_request": []}
+    department_rules = movement_rules_for_category(department_id)
+    transfer_rule_entries = [
+        ("transfer", rule)
+        for rule in transfer_rules_for_department(department_id)
+    ] + [
+        (department_id, rule)
+        for rule in department_rules
+        if rule_kind(rule) == "transfer"
+    ]
+    return {
+        "movement_request": [
+            rule_summary(rule, department_id)
+            for rule in department_rules
+            if rule_kind(rule) == "movement"
+        ],
+        "transfer_request": [
+            rule_summary(rule, category_id)
+            for category_id, rule in transfer_rule_entries
+        ],
+        "discharge_request": [
+            rule_summary(rule, department_id)
+            for rule in department_rules
+            if rule_kind(rule) == "discharge"
+        ],
+    }
+
+
+def movement_rules_for_category(category_id):
+    rules_path = category_rule_path(category_id)
+    if not rules_path:
+        return []
+    return read_json(rules_path).get("rules", [])
+
+
+def transfer_rules_for_department(department_id):
+    return [
+        rule for rule in movement_rules_for_category("transfer")
+        if transfer_source_department_for_rule(rule) == department_id
+    ]
+
+
+def category_rule_path(category_id):
+    index = read_json(RULES_DIR / "index.json")
+    for category in index.get("categories", []):
+        if category.get("id") == category_id:
+            path = RULES_DIR / category.get("file", "")
+            return path if path.exists() else None
+    return None
+
+
+def rule_event_id(rule):
+    return rule.get("eventId") or rule.get("event_id") or ""
+
+
+def rule_kind(rule):
+    movement = rule.get("movement", {})
+    target = movement.get("to")
+    classification = str(rule.get("classification") or "")
+    if target == "exit" or "离院" in classification or "出院" in rule.get("name", ""):
+        return "discharge"
+    if "跨部门" in classification:
+        return "transfer"
+    return "movement"
+
+
+def rule_summary(rule, category_id):
+    movement = rule.get("movement", {})
+    return {
+        "eventId": rule_event_id(rule),
+        "event_id": rule_event_id(rule),
+        "name": rule.get("name", ""),
+        "classification": rule.get("classification", ""),
+        "categoryId": category_id,
+        "from": movement.get("from"),
+        "to": movement.get("to"),
+        "via": movement.get("via", []),
+        "transport": movement.get("transport", "walking"),
+        "finalForm": movement.get("finalForm") or movement.get("final_form", "walking"),
+        "rooms": rule.get("rooms", []),
+        "trigger": rule.get("trigger", ""),
+        "prechecks": rule.get("prechecks", ""),
+        "blocking": rule.get("blocking", ""),
+    }
+
+
+def first_rule_for_request(department_id, request_type):
+    rules = rules_for_department(department_id).get(request_type, [])
+    if not rules:
+        return None
+    preferred = {
+        ("outpatient", "movement_request"): "OP_CONSULT_TO_PAYMENT",
+        ("emergency", "movement_request"): "ED_TO_DIAGNOSTIC_MOVE",
+        ("icu", "movement_request"): "ICU_TO_EXAM_OR_INTERVENTION",
+        ("ward", "movement_request"): "WARD_TO_DIAGNOSTIC_MOVE",
+        ("outpatient", "transfer_request"): "TRANSFER_OP_TO_WARD",
+        ("emergency", "transfer_request"): "TRANSFER_ED_TO_ICU",
+        ("icu", "transfer_request"): "TRANSFER_ICU_TO_WARD",
+        ("ward", "transfer_request"): "TRANSFER_WARD_TO_ICU",
+    }.get((department_id, request_type))
+    selected = next((rule for rule in rules if rule.get("eventId") == preferred), rules[0])
+    event_id = selected.get("eventId")
+    return find_rule(event_id) if event_id else None
+
+
+def allowed_event_ids_for_request(department_id, request_type):
+    return {
+        rule["eventId"]
+        for rule in rules_for_department(department_id).get(request_type, [])
+        if rule.get("eventId")
+    }
+
+
+def ensure_rule_allowed_for_department(department_id, request_type, event_id):
+    allowed = allowed_event_ids_for_request(department_id, request_type)
+    if not event_id:
+        return {"accepted": False, "reasonCode": "MISSING_EVENT_ID", "message": "event_id is required."}
+    if event_id not in allowed:
+        return {
+            "accepted": False,
+            "reasonCode": "RULE_NOT_ALLOWED_FOR_DEPARTMENT",
+            "message": f"{event_id} is not allowed for {department_id} {request_type}.",
+            "allowedEventIds": sorted(allowed),
+        }
+    return None
+
+
+def transfer_source_department_for_rule(rule):
+    event_id = rule_event_id(rule)
+    if event_id.startswith("TRANSFER_ED_"):
+        return "emergency"
+    if event_id.startswith("TRANSFER_OP_"):
+        return "outpatient"
+    if event_id.startswith("TRANSFER_ICU_"):
+        return "icu"
+    if event_id.startswith("TRANSFER_WARD_"):
+        return "ward"
+    movement = rule.get("movement", {})
+    return source_department_for_rule_value(movement.get("from"))
+
+
+def target_department_for_transfer_rule(rule):
+    if not rule:
+        return None
+    event_id = rule_event_id(rule)
+    route_targets = {
+        "TRANSFER_ED_TO_ICU": "icu",
+        "TRANSFER_ED_TO_WARD": "ward",
+        "TRANSFER_OP_TO_ED": "emergency",
+        "TRANSFER_OP_TO_WARD": "ward",
+        "TRANSFER_ICU_TO_WARD": "ward",
+        "TRANSFER_WARD_TO_ICU": "icu",
+    }
+    if event_id in route_targets:
+        return route_targets[event_id]
+    return target_department_for_rule_value(rule.get("movement", {}).get("to"))
+
+
+def source_department_for_rule_value(value):
+    values = value if isinstance(value, list) else [value]
+    for item in values:
+        if item in {"current_ed_room", "current_ed_bed_room"} or str(item).startswith("ed_"):
+            return "emergency"
+        if item == "current_op_room" or str(item).endswith("_2") or item == "outpatient_waiting":
+            return "outpatient"
+        if item in {"current_icu_bed_room", "source_icu_bed_room", "current_icu_exam_room"} or str(item).startswith("icu_"):
+            return "icu"
+        if item in {"current_ward_room", "source_ward_room", "target_ward_room"} or "ward" in str(item):
+            return "ward"
+    return None
+
+
+def target_department_for_rule_value(value):
+    values = value if isinstance(value, list) else [value]
+    for item in values:
+        if item in {"icu_admission", "current_icu_bed_room", "source_icu_bed_room"} or str(item).startswith("icu_"):
+            return "icu"
+        if item in {"ward_admission", "target_ward_room", "source_ward_room"} or "ward" in str(item):
+            return "ward"
+        if str(item).startswith("ed_"):
+            return "emergency"
+        if str(item).endswith("_2") or item == "outpatient_waiting":
+            return "outpatient"
+    return None
+
+
+def example_room_for_rule_value(value, department_id, direction):
+    values = value if isinstance(value, list) else [value]
+    for item in values:
+        if isinstance(item, str) and item and not is_symbolic_room(item) and item != "exit":
+            return item
+    fallback = {
+        "outpatient": {"from": "consultation_b_2", "to": "payment_2"},
+        "emergency": {"from": "ed_minor", "to": "ed_diagnostic"},
+        "icu": {"from": "icu_beds_a", "to": "intervention_bay"},
+        "ward": {"from": "resp_ward", "to": "diagnostic_center"},
+    }.get(department_id, {})
+    symbolic = values[0] if values else None
+    symbolic_rooms = {
+        "current_ed_room": "ed_minor",
+        "current_ed_bed_room": "ed_observation",
+        "current_op_room": "consultation_b_2",
+        "current_consult_room": "consultation_b_2",
+        "current_icu_bed_room": "icu_beds_a",
+        "source_icu_bed_room": "icu_beds_a",
+        "current_icu_exam_room": "intervention_bay",
+        "current_ward_room": "resp_ward",
+        "source_ward_room": "resp_ward",
+        "target_ward_room": "resp_ward",
+        "current_room": default_room_for_department(department_id),
+    }
+    return symbolic_rooms.get(symbolic) or fallback.get(direction) or default_room_for_department(department_id)
+
+
+def request_schema(request_type):
+    base = {
+        "type": "object",
+        "required": ["patient_id"],
+        "properties": {
+            "patient_id": {"type": "string"},
+            "encounter_id": {"type": "string"},
+            "reason": {"type": "string"},
+            "summary": {"type": "object"},
+        },
+    }
+    schemas = {
+        "patient_upsert": {
+            **base,
+            "required": ["patient_id", "name"],
+            "properties": {
+                **base["properties"],
+                "name": {"type": "string"},
+                "gender": {"type": "string", "enum": ["male", "female", "other", "unknown"]},
+                "age": {"type": "integer"},
+                "contact": {"type": "string"},
+                "allergies": {"type": "array"},
+                "chronic_conditions": {"type": "array"},
+                "blood_type": {"type": "string"},
+            },
+        },
+        "encounter_open": {**base, "required": ["patient_id", "encounter_id"]},
+        "movement_request": {
+            **base,
+            "required": ["patient_id", "event_id", "from_room_id", "to_room_id"],
+            "properties": {
+                **base["properties"],
+                "event_id": {"type": "string", "description": "Must match an allowed Rules Admin eventId."},
+                "from_room_id": {"type": "string"},
+                "to_room_id": {"type": "string"},
+            },
+        },
+        "transfer_request": {
+            **base,
+            "required": ["patient_id", "encounter_id", "from_room_id", "to_department_id", "reason"],
+            "properties": {
+                **base["properties"],
+                "event_id": {"type": "string", "description": "Optional; when provided it must match an allowed transfer rule."},
+                "from_room_id": {"type": "string"},
+                "to_room_id": {"type": "string", "description": "Optional; defaults to the rule target room."},
+                "to_department_id": {"type": "string"},
+                "ctas_level": {"type": "string"},
+                "requested_resources": {"type": "object"},
+            },
+        },
+        "discharge_request": {
+            **base,
+            "required": ["patient_id", "encounter_id", "reason"],
+            "properties": {
+                **base["properties"],
+                "event_id": {"type": "string", "description": "Optional; defaults to the department discharge rule."},
+                "admission_id": {"type": "string"},
+                "bed_id": {"type": "string"},
+            },
+        },
+        "clinical_event": {
+            **base,
+            "required": ["patient_id", "event_type", "summary"],
+            "properties": {
+                **base["properties"],
+                "event_type": {"type": "string"},
+                "clinical_summary": {"type": "object"},
+                "recommendations": {"type": "array"},
+                "required_updates": {"type": "array"},
+            },
+        },
+    }
+    return schemas.get(request_type, base)
+
+
+def department_examples(department_id):
+    patient_id = example_patient_id_for(department_id)
+    encounter_id = "E-20260612103000-9f3a"
+    examples = {
+        "patient_upsert": {
+            "patient_id": patient_id,
+            "name": "Debug Patient",
+            "gender": "unknown",
+            "age": 56,
+            "contact": "13800000000",
+            "allergies": ["penicillin"],
+            "chronic_conditions": ["hypertension"],
+            "blood_type": "A+",
+        },
+        "encounter_open": {
+            "patient_id": patient_id,
+            "encounter_id": encounter_id,
+            "reason": f"{department_id} debug encounter",
+            "summary": {"chief_complaint": "debug flow"},
+        },
+        "movement_request": movement_example_for(department_id, patient_id, encounter_id),
+        "transfer_request": transfer_example_for(department_id, patient_id, encounter_id),
+        "discharge_request": {
+            "patient_id": patient_id,
+            "encounter_id": encounter_id,
+            "event_id": discharge_event_id_for_department(department_id),
+            "admission_id": "ADM-DEBUG-001",
+            "bed_id": "icu_beds_a-bed-01",
+            "reason": "stable for discharge",
+            "summary": {"final_status": "stable", "follow_up": "outpatient review in 7 days"},
+        },
+        "clinical_event": clinical_example_for(department_id, patient_id, encounter_id),
+    }
+    enabled = department_meta(department_id)["enabled_request_types"]
+    return {key: value for key, value in examples.items() if key in enabled}
+
+
+def build_closed_loop_debug_scenario():
+    return {
+        "id": "closed_loop_multi_patient_v1",
+        "label": "Closed-loop multi-patient flow",
+        "description": "Creates debug patients, moves them through department handlers, and discharges every patient at the end.",
+        "defaults": {
+            "stepDelayMs": 1800,
+            "idempotencyPrefix": "debug-closed-loop",
+        },
+        "patients": [
+            {"key": "opA", "label": "OP A: registration -> triage -> consult -> lab -> ward -> discharge"},
+            {"key": "opB", "label": "OP B: alternate consult room -> ward -> discharge"},
+            {"key": "edA", "label": "ED A: arrival -> triage -> treatment -> diagnostic -> ward -> discharge"},
+            {"key": "icuA", "label": "ICU A: admission -> ICU bed -> exam -> ward -> discharge"},
+        ],
+        "steps": [
+            scenario_upsert("opA", "outpatient", "registration_2", "Debug OP A {{runId}}", "门诊闭环 A：咳嗽复诊，需要检查后住院"),
+            scenario_move("opA", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "registration_2", "triage_2", "门诊 A 完成挂号后进入分诊"),
+            scenario_move("opA", "outpatient", "OP_TRIAGE_TO_CONSULT_ROOM", "triage_2", "consultation_a_2", "门诊 A 分诊到 consultation_a_2"),
+            scenario_move("opA", "outpatient", "OP_CONSULT_TO_PAYMENT", "consultation_a_2", "payment_2", "门诊 A 诊后缴费"),
+            scenario_move("opA", "outpatient", "OP_PAYMENT_TO_LAB", "payment_2", "lab_2", "门诊 A 缴费后检验"),
+            scenario_move("opA", "outpatient", "OP_LAB_RETURN_TO_WAITING", "lab_2", "outpatient_waiting", "门诊 A 检验完成返回候诊"),
+            scenario_move("opA", "outpatient", "OP_SECOND_CONSULT_MOVE", "outpatient_waiting", "consultation_a_2", "门诊 A 复诊回到 consultation_a_2"),
+            scenario_transfer("opA", "outpatient", "OP_TO_WARD_MOVE", "consultation_a_2", "ward_admission", "ward", "门诊 A 转住院"),
+            scenario_move("opA", "ward", "WARD_TO_DIAGNOSTIC_MOVE", "{{opA.currentRoom}}", "diagnostic_center", "住院 A 前往检查中心"),
+            scenario_move("opA", "ward", "WARD_DIAGNOSTIC_RETURN", "diagnostic_center", "{{opA.bedRoom}}", "住院 A 检查后返回原病房"),
+            scenario_discharge("opA", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "住院 A 完成出院"),
+
+            scenario_upsert("opB", "outpatient", "registration_2", "Debug OP B {{runId}}", "门诊闭环 B：皮疹和低热，转外科评估后住院"),
+            scenario_move("opB", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "registration_2", "outpatient_waiting", "门诊 B 挂号后进入候诊区"),
+            scenario_move("opB", "outpatient", "OP_TRIAGE_TO_CONSULT_ROOM", "outpatient_waiting", "surgery_2", "门诊 B 分诊到 surgery_2"),
+            scenario_transfer("opB", "outpatient", "OP_TO_WARD_MOVE", "surgery_2", "ward_admission", "ward", "门诊 B 转住院"),
+            scenario_move("opB", "ward", "WARD_BED_TO_BED_MOVE", "{{opB.currentRoom}}", "neuro_ward", "住院 B 从初始病房调整到神经病房"),
+            scenario_discharge("opB", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "住院 B 完成出院"),
+
+            scenario_upsert("edA", "emergency", "ed_entrance", "Debug ED A {{runId}}", "急诊闭环：胸痛气促，检查后住院"),
+            scenario_move("edA", "emergency", "ED_ENTRANCE_TO_REGISTRATION", "ed_entrance", "ed_registration", "急诊 A 到登记"),
+            scenario_move("edA", "emergency", "ED_REGISTRATION_TO_TRIAGE_OR_WAITING", "ed_registration", "ed_triage", "急诊 A 登记后分诊"),
+            scenario_move("edA", "emergency", "ED_TRIAGE_TO_TREATMENT_AREA", "ed_triage", "ed_major", "急诊 A 进入治疗区"),
+            scenario_move("edA", "emergency", "ED_TO_DIAGNOSTIC_MOVE", "ed_major", "ed_diagnostic", "急诊 A 前往检查"),
+            scenario_move("edA", "emergency", "ED_DIAGNOSTIC_RETURN", "ed_diagnostic", "ed_major", "急诊 A 检查返回"),
+            scenario_transfer("edA", "emergency", "TRANSFER_ED_TO_WARD", "ed_major", "ward_admission", "ward", "急诊 A 转住院"),
+            scenario_discharge("edA", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "急诊转住院 A 完成出院"),
+
+            scenario_upsert("icuA", "icu", "icu_admission", "Debug ICU A {{runId}}", "ICU 闭环：入 ICU 后转普通住院并出院"),
+            scenario_move("icuA", "icu", "ICU_ADMISSION_TO_BED", "icu_admission", "icu_beds_b", "ICU A 接收入床"),
+            scenario_move("icuA", "icu", "ICU_TO_EXAM_OR_INTERVENTION", "{{icuA.currentRoom}}", "intervention_bay", "ICU A 前往干预区"),
+            scenario_move("icuA", "icu", "ICU_RETURN_TO_BED", "intervention_bay", "{{icuA.bedRoom}}", "ICU A 返回原 ICU 床"),
+            scenario_transfer("icuA", "icu", "TRANSFER_ICU_TO_WARD", "{{icuA.currentRoom}}", "ward_admission", "ward", "ICU A 转普通住院"),
+            scenario_discharge("icuA", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "ICU A 转住院后完成出院"),
+        ],
+    }
+
+
+def scenario_patient_id(patient_key):
+    return f"P-DBG-{patient_key.upper()}-{{{{runId}}}}"
+
+
+def scenario_encounter_id(patient_key):
+    return f"E-DBG-{patient_key.upper()}-{{{{runId}}}}"
+
+
+def scenario_upsert(patient_key, department_id, room_id, name, symptoms):
+    return {
+        "patientKey": patient_key,
+        "departmentId": department_id,
+        "requestType": "patient_upsert",
+        "title": f"{patient_key} upsert",
+        "description": f"{patient_key} enters {department_id}.",
+        "waitMs": 1100,
+        "payload": {
+            "patient_id": scenario_patient_id(patient_key),
+            "encounter_id": scenario_encounter_id(patient_key),
+            "name": name,
+            "gender": "unknown",
+            "age": 48,
+            "room_id": room_id,
+            "status": "ARRIVED",
+            "symptoms": symptoms,
+            "summary": {"chief_complaint": symptoms, "debug_scenario": "closed_loop_multi_patient_v1"},
+        },
+    }
+
+
+def scenario_move(patient_key, department_id, event_id, from_room_id, to_room_id, description):
+    return {
+        "patientKey": patient_key,
+        "departmentId": department_id,
+        "requestType": "movement_request",
+        "title": event_id,
+        "description": description,
+        "waitMs": 1800,
+        "payload": {
+            "patient_id": scenario_patient_id(patient_key),
+            "encounter_id": scenario_encounter_id(patient_key),
+            "event_id": event_id,
+            "from_room_id": from_room_id,
+            "to_room_id": to_room_id,
+            "reason": description,
+            "summary": {"debug_step": description},
+        },
+    }
+
+
+def scenario_transfer(patient_key, department_id, event_id, from_room_id, to_room_id, to_department_id, description):
+    return {
+        "patientKey": patient_key,
+        "departmentId": department_id,
+        "requestType": "transfer_request",
+        "title": event_id,
+        "description": description,
+        "waitMs": 2200,
+        "payload": {
+            "patient_id": scenario_patient_id(patient_key),
+            "encounter_id": scenario_encounter_id(patient_key),
+            "event_id": event_id,
+            "from_room_id": from_room_id,
+            "to_room_id": to_room_id,
+            "to_department_id": to_department_id,
+            "reason": description,
+            "summary": {
+                "chief_complaint": description,
+                "key_findings": ["debug closed-loop transfer"],
+                "active_diagnoses": ["debug scenario"],
+            },
+            "requested_resources": {"bed_type": to_department_id.upper(), "monitor": to_department_id == "icu"},
+        },
+    }
+
+
+def scenario_discharge(patient_key, department_id, event_id, description):
+    return {
+        "patientKey": patient_key,
+        "departmentId": department_id,
+        "requestType": "discharge_request",
+        "title": event_id,
+        "description": description,
+        "waitMs": 1600,
+        "payload": {
+            "patient_id": scenario_patient_id(patient_key),
+            "encounter_id": scenario_encounter_id(patient_key),
+            "event_id": event_id,
+            "reason": description,
+            "summary": {"final_status": "stable", "debug_outcome": "closed_loop_discharged"},
+        },
+    }
+
+
+def example_patient_id_for(department_id):
+    return {
+        "outpatient": "P-OP-005",
+        "emergency": "P-ER-002",
+        "icu": "P-ICU-001",
+        "mdt": "P-MDT-001",
+        "ward": "P-WD-002",
+    }.get(department_id, "P-a1b2c3d4")
+
+
+def movement_example_for(department_id, patient_id, encounter_id):
+    rule = first_rule_for_request(department_id, "movement_request")
+    event_id = rule.get("eventId") if rule else "ED_WAITING_TO_CONSULT_ROOM"
+    movement = rule.get("movement", {}) if rule else {"from": "ed_waiting", "to": "ed_minor"}
+    from_room_id = example_room_for_rule_value(movement.get("from"), department_id, "from")
+    to_room_id = example_room_for_rule_value(movement.get("to"), department_id, "to")
+    return {
+        "patient_id": patient_id,
+        "encounter_id": encounter_id,
+        "event_id": event_id,
+        "from_room_id": from_room_id,
+        "to_room_id": to_room_id,
+        "reason": "dashboard movement debug",
+    }
+
+
+def transfer_example_for(department_id, patient_id, encounter_id):
+    rule = first_rule_for_request(department_id, "transfer_request")
+    event_id = rule.get("eventId") if rule else None
+    movement = rule.get("movement", {}) if rule else {}
+    target = target_department_for_transfer_rule(rule) or {"emergency": "icu", "outpatient": "ward", "icu": "ward", "ward": "icu"}.get(department_id, "icu")
+    source_room = example_room_for_rule_value(movement.get("from"), department_id, "from")
+    target_room = example_room_for_rule_value(movement.get("to"), target, "to")
+    return {
+        "patient_id": patient_id,
+        "encounter_id": encounter_id,
+        "event_id": event_id,
+        "from_room_id": source_room,
+        "to_room_id": target_room,
+        "to_department_id": target,
+        "reason": "needs higher level coordinated care",
+        "ctas_level": "L2",
+        "summary": {
+            "chief_complaint": "dashboard transfer debug",
+            "key_findings": ["requires monitored bed"],
+            "active_diagnoses": ["debug diagnosis"],
+            "vital_baseline": {"hr": 92, "sbp": 118, "dbp": 74, "spo2": 96, "temp": 36.8, "rr": 18},
+        },
+        "requested_resources": {"bed_type": target.upper(), "monitor": True},
+    }
+
+
+def clinical_example_for(department_id, patient_id, encounter_id):
+    if department_id == "mdt":
+        return {
+            "patient_id": patient_id,
+            "encounter_id": encounter_id,
+            "event_type": "mdt.consultation_completed",
+            "consultation_id": "MDT-DEBUG-001",
+            "summary": {"case_summary": "MDT reviewed the debug case."},
+            "recommendations": ["continue monitoring", "repeat imaging if symptoms worsen"],
+            "required_updates": [],
+        }
+    return {
+        "patient_id": patient_id,
+        "encounter_id": encounter_id,
+        "event_type": "clinical.summary_updated",
+        "summary": {"note": f"{department_id} debug clinical update"},
+    }
+
+
+def handle_department_request(department_id, request_type, payload, idempotency_key=""):
+    trace_id = new_trace_id()
+    meta = department_meta(department_id)
+    if not meta:
+        return api_error("DEPARTMENT_NOT_FOUND", f"Unknown department: {department_id}", trace_id=trace_id)
+    if request_type not in meta["enabled_request_types"]:
+        return api_error("REQUEST_TYPE_NOT_ENABLED", f"{request_type} is not enabled for {department_id}.", trace_id=trace_id)
+
+    idempotency_key = str(idempotency_key or "").strip()
+    if idempotency_key:
+        replay = idempotency_lookup(department_id, request_type, idempotency_key)
+        if replay:
+            replay["data"]["idempotencyReplay"] = True
+            return replay
+
+    normalized = normalize_department_handler_payload(department_id, request_type, payload)
+    result = dispatch_department_request(department_id, request_type, normalized)
+    status = "accepted" if result.get("accepted") else "rejected"
+    error_code = result.get("reasonCode") or result.get("error_code") or result.get("error", {}).get("code")
+    response = api_ok(
+        {
+            "departmentId": department_id,
+            "requestType": request_type,
+            "status": status,
+            "accepted": bool(result.get("accepted")),
+            "correlationId": normalized["correlation_id"],
+            "normalizedPayload": normalized,
+            "coreResponse": result,
+        },
+        trace_id=trace_id,
+    )
+    if not result.get("accepted"):
+        response["error"] = {
+            "code": error_code or "REQUEST_REJECTED",
+            "message": result.get("message") or "Request rejected by Fullview Core.",
+            "details": result,
+        }
+    log_department_request(
+        department_id=department_id,
+        request_type=request_type,
+        idempotency_key=idempotency_key,
+        raw_payload=payload,
+        normalized_payload=normalized,
+        status=status,
+        core_response=result,
+        error_code=error_code,
+        trace_id=trace_id,
+    )
+    if idempotency_key:
+        idempotency_store(department_id, request_type, idempotency_key, response)
+    return response
+
+
+def normalize_department_handler_payload(department_id, request_type, payload):
+    payload = dict(payload or {})
+    correlation_id = payload.get("correlation_id") or payload.get("correlationId") or new_event_id()
+    normalized = {
+        **payload,
+        "department_id": department_id,
+        "source_department_id": department_id,
+        "producer": DEPARTMENT_PRODUCERS[department_id],
+        "request_type": request_type,
+        "correlation_id": correlation_id,
+        "received_at": utc_now_iso(),
+    }
+    if "patientId" in normalized and "patient_id" not in normalized:
+        normalized["patient_id"] = normalized["patientId"]
+    if "encounterId" in normalized and "encounter_id" not in normalized:
+        normalized["encounter_id"] = normalized["encounterId"]
+    return normalized
+
+
+def dispatch_department_request(department_id, request_type, payload):
+    if request_type == "patient_upsert":
+        return handle_department_patient_upsert(department_id, payload)
+    if request_type == "encounter_open":
+        return handle_department_encounter_open(department_id, payload)
+    if request_type == "movement_request":
+        return handle_department_movement(department_id, payload)
+    if request_type == "transfer_request":
+        return handle_department_transfer(department_id, payload)
+    if request_type == "discharge_request":
+        return handle_department_discharge(department_id, payload)
+    if request_type == "clinical_event":
+        return handle_department_clinical_event(department_id, payload)
+    return {"accepted": False, "reasonCode": "REQUEST_TYPE_UNKNOWN", "message": f"Unknown request type: {request_type}"}
 
 
 def build_snapshot():
@@ -427,6 +1244,474 @@ def handle_delete_patient(patient_id):
         write_json(ROOM_STATE_FILE, room_state)
     write_json(EVENT_LOG_FILE, event_log)
     return response
+
+
+def handle_department_patient_upsert(department_id, payload):
+    patient_id = str(payload.get("patient_id") or "").strip() or f"P-{uuid.uuid4().hex[:8]}"
+    if not patient_id:
+        return {"accepted": False, "reasonCode": "MISSING_PATIENT_ID", "message": "patient_id is required."}
+
+    patients_data = read_json(PATIENTS_FILE)
+    map_config = read_json(MAP_CONFIG)
+    _, rooms = normalize_map(map_config)
+    rooms_by_id = {room["id"]: room for room in rooms}
+    patients = [normalize_patient_record(patient) for patient in patients_data.get("patients", [])]
+    patient = find_patient(patients, patient_id)
+    default_room_id = default_room_for_department(department_id)
+    clinical_summary = payload.get("summary") or payload.get("clinical_summary") or {}
+
+    if patient:
+        patient["name"] = payload.get("name") or payload.get("patient_name") or patient.get("name") or "Unknown Patient"
+        patient["gender"] = payload.get("gender", patient.get("gender", "unknown"))
+        patient["department_id"] = department_id
+        patient["department"] = DEPARTMENT_DISPLAY.get(department_id, department_id)
+        patient["status"] = payload.get("status") or patient.get("status") or "ARRIVED"
+        patient.setdefault("clinical", {}).update({
+            "status": patient["status"],
+            "symptoms": payload.get("symptoms") or clinical_summary.get("chief_complaint") or patient.get("symptoms", ""),
+            "department_payload": clinical_summary,
+        })
+    else:
+        room_id = payload.get("room_id") or payload.get("roomId") or default_room_id
+        patient = normalize_patient_record({
+            "id": f"{department_id}-api-{patient_id.lower().replace('-', '')[-8:]}",
+            "local_person_id": f"{department_id}-api-{patient_id.lower().replace('-', '')[-8:]}",
+            "patient_id": patient_id,
+            "patientId": patient_id,
+            "type": "patient",
+            "name": payload.get("name") or payload.get("patient_name") or "Unknown Patient",
+            "gender": payload.get("gender", "unknown"),
+            "department_id": department_id,
+            "department": DEPARTMENT_DISPLAY.get(department_id, department_id),
+            "symptoms": payload.get("symptoms") or clinical_summary.get("chief_complaint", ""),
+            "status": payload.get("status") or "ARRIVED",
+            "room_id": room_id,
+            "roomId": room_id,
+            "current_location": {"room_id": room_id},
+            "home_bed": {},
+            "form": payload.get("form") or default_form_for_room(rooms_by_id.get(room_id, {})),
+            "baseForm": "walking",
+            "base_form": "walking",
+            "relX": 0.5,
+            "relY": 0.58,
+            "rel_x": 0.5,
+            "rel_y": 0.58,
+            "color": payload.get("color") or "#7899c6",
+            "skin": payload.get("skin"),
+            "blanket": payload.get("blanket"),
+            "phase": 0,
+            "clinical": {
+                "status": payload.get("status") or "ARRIVED",
+                "symptoms": payload.get("symptoms") or clinical_summary.get("chief_complaint", ""),
+                "care_phase": payload.get("care_phase"),
+                "ctas_level": payload.get("ctas_level"),
+                "active_problems": payload.get("active_problems", []),
+                "active_risks": payload.get("active_risks", []),
+                "latest_interventions": payload.get("latest_interventions", []),
+                "department_payload": clinical_summary,
+            },
+            "visual": {
+                "form": payload.get("form") or default_form_for_room(rooms_by_id.get(room_id, {})),
+                "base_form": "walking",
+                "rel_x": 0.5,
+                "rel_y": 0.58,
+                "color": payload.get("color") or "#7899c6",
+                "skin": payload.get("skin"),
+                "blanket": payload.get("blanket"),
+            },
+        })
+        patients.append(patient)
+
+    patients_data["patients"] = patients
+    write_json(PATIENTS_FILE, patients_data)
+    response = append_core_event(
+        event_id="DEPARTMENT_PATIENT_UPSERT",
+        patient_id=patient_id,
+        accepted=True,
+        request=payload,
+        message=f"Patient {patient_id} stored for {department_id}.",
+        event_type="patient.upserted",
+        snapshot_refresh=True,
+    )
+    return {
+        **response,
+        "accepted": True,
+        "eventId": "DEPARTMENT_PATIENT_UPSERT",
+        "patientId": patient_id,
+        "patient": patient,
+        "message": f"Patient {patient_id} stored for {department_id}.",
+    }
+
+
+def handle_department_encounter_open(department_id, payload):
+    if not payload.get("patient_id"):
+        return {"accepted": False, "reasonCode": "MISSING_PATIENT_ID", "message": "patient_id is required."}
+    if not payload.get("encounter_id"):
+        return {"accepted": False, "reasonCode": "MISSING_ENCOUNTER_ID", "message": "encounter_id is required."}
+    upsert = handle_department_patient_upsert(department_id, payload)
+    if not upsert.get("accepted"):
+        return upsert
+    return append_core_event(
+        event_id="ENCOUNTER_OPENED",
+        patient_id=payload.get("patient_id"),
+        accepted=True,
+        request=payload,
+        message=f"Encounter {payload.get('encounter_id')} opened by {department_id}.",
+        event_type="encounter.opened",
+    )
+
+
+def handle_department_movement(department_id, payload):
+    required = ["patient_id", "event_id", "from_room_id", "to_room_id"]
+    missing = [key for key in required if not payload.get(key)]
+    if missing:
+        return {"accepted": False, "reasonCode": f"MISSING_{missing[0].upper()}", "message": f"{missing[0]} is required."}
+    rule_error = ensure_rule_allowed_for_department(department_id, "movement_request", payload.get("event_id"))
+    if rule_error:
+        return rule_error
+    return handle_move_request({
+        "request_id": payload.get("request_id") or payload.get("correlation_id"),
+        "source": payload.get("producer") or DEPARTMENT_PRODUCERS.get(department_id),
+        "operator_id": f"{department_id}-handler",
+        "event_id": payload.get("event_id"),
+        "patient_id": payload.get("patient_id"),
+        "from_room_id": payload.get("from_room_id"),
+        "to_room_id": payload.get("to_room_id"),
+        "context": {
+            "reason": payload.get("reason", ""),
+            "department_id": department_id,
+            "encounter_id": payload.get("encounter_id"),
+            "handoff": payload.get("handoff") or payload.get("summary"),
+        },
+    })
+
+
+def handle_department_transfer(department_id, payload):
+    if not payload.get("patient_id"):
+        return {"accepted": False, "reasonCode": "MISSING_PATIENT_ID", "message": "patient_id is required."}
+    if not payload.get("from_room_id"):
+        return {"accepted": False, "reasonCode": "MISSING_FROM_ROOM_ID", "message": "from_room_id is required."}
+    target_department = str(payload.get("to_department_id") or payload.get("target_department_id") or "").strip().lower()
+    event_id, target_room_id = transfer_rule_for(department_id, target_department)
+    event_id = payload.get("event_id") or payload.get("eventId") or event_id
+    rule_error = ensure_rule_allowed_for_department(department_id, "transfer_request", event_id)
+    if rule_error:
+        return rule_error
+    rule = find_rule(event_id)
+    rule_target_department = target_department_for_transfer_rule(rule)
+    if target_department and rule_target_department and target_department != rule_target_department:
+        return {
+            "accepted": False,
+            "reasonCode": "TRANSFER_RULE_TARGET_MISMATCH",
+            "message": f"{event_id} targets {rule_target_department}, not {target_department}.",
+            "ruleTargetDepartment": rule_target_department,
+        }
+    if not target_department:
+        target_department = rule_target_department or ""
+    target_room_id = payload.get("to_room_id") or payload.get("toRoomId") or target_room_id or example_room_for_rule_value(rule.get("movement", {}).get("to"), target_department, "to")
+    if not event_id:
+        return {
+            "accepted": False,
+            "reasonCode": "TRANSFER_ROUTE_UNSUPPORTED",
+            "message": f"No Fullview transfer rule for {department_id} -> {target_department}.",
+        }
+
+    response = handle_move_request({
+        "request_id": payload.get("request_id") or payload.get("correlation_id"),
+        "source": payload.get("producer") or DEPARTMENT_PRODUCERS.get(department_id),
+        "operator_id": f"{department_id}-handler",
+        "event_id": event_id,
+        "patient_id": payload.get("patient_id"),
+        "from_room_id": payload.get("from_room_id"),
+        "to_room_id": target_room_id,
+        "context": {
+            "reason": payload.get("reason", ""),
+            "encounter_id": payload.get("encounter_id"),
+            "to_department_id": target_department,
+            "ctas_level": payload.get("ctas_level"),
+            "requested_resources": payload.get("requested_resources", {}),
+            "handoff_summary": payload.get("summary", {}),
+        },
+    })
+    if not response.get("accepted") and target_department == "icu" and response.get("reasonCode") in {"NO_BED_AVAILABLE", "TARGET_ROOM_NOT_FOUND"}:
+        response["reasonCode"] = "ICU_BED_UNAVAILABLE"
+        response["message"] = "ICU has no available Fullview bed for this transfer."
+    if not response.get("accepted") and target_department == "ward" and response.get("reasonCode") in {"NO_BED_AVAILABLE", "TARGET_ROOM_NOT_FOUND"}:
+        response["reasonCode"] = "WARD_BED_UNAVAILABLE"
+        response["message"] = "Ward has no available Fullview bed for this transfer."
+    return response
+
+
+def handle_department_discharge(department_id, payload):
+    patient_id = payload.get("patient_id")
+    if not patient_id:
+        return {"accepted": False, "reasonCode": "MISSING_PATIENT_ID", "message": "patient_id is required."}
+    event_id = payload.get("event_id") or payload.get("eventId") or discharge_event_id_for_department(department_id)
+    rule_error = ensure_rule_allowed_for_department(department_id, "discharge_request", event_id)
+    if rule_error:
+        return rule_error
+
+    patients_data = read_json(PATIENTS_FILE)
+    staff_data = read_json(STAFF_FILE)
+    room_state = read_json(ROOM_STATE_FILE)
+    event_log = read_json(EVENT_LOG_FILE)
+    map_config = read_json(MAP_CONFIG)
+    _, rooms = normalize_map(map_config)
+    rooms_by_id = {room["id"]: room for room in rooms}
+    patients = [normalize_patient_record(patient) for patient in patients_data.get("patients", [])]
+    staff = [normalize_staff_record(member) for member in staff_data.get("staff", [])]
+    recompute_room_state(room_state, patients, rooms_by_id)
+    patient = find_patient(patients, patient_id)
+    event_seq = next_event_seq(event_log)
+
+    if not patient:
+        response = {
+            "accepted": False,
+            "eventSeq": event_seq,
+            "eventId": event_id,
+            "patientId": patient_id,
+            "reasonCode": "PATIENT_NOT_FOUND",
+            "message": f"No patient found for {patient_id}.",
+        }
+        append_event(event_log, response, payload)
+        write_json(EVENT_LOG_FILE, event_log)
+        return response
+
+    previous_room_id = patient.get("roomId")
+    rule = find_rule(event_id) or {}
+    movement = rule.get("movement", {})
+    visible_target_room_id = visible_discharge_target_room_id(movement, previous_room_id, rooms_by_id)
+    release_patient_bed(room_state, patient)
+    remove_patient_from_all_queues(room_state, patient_identifier(patient))
+    set_patient_status(patient, "DISCHARGED")
+    set_patient_visual_form(patient, "hidden")
+    patient.setdefault("clinical", {})["discharge_summary"] = payload.get("summary", {})
+    patient.setdefault("clinical", {})["discharge_reason"] = payload.get("reason", "")
+    sanitize_patient_staff_references(patients, staff)
+    recompute_room_state(room_state, patients, rooms_by_id)
+    patients_data["patients"] = patients
+    write_json(PATIENTS_FILE, patients_data)
+    write_json(ROOM_STATE_FILE, room_state)
+
+    response = {
+        "accepted": True,
+        "event_seq": event_seq,
+        "eventSeq": event_seq,
+        "event_id": event_id,
+        "eventId": event_id,
+        "patient_id": patient_identifier(patient),
+        "patientId": patient_identifier(patient),
+        "message": f"Patient {patient_identifier(patient)} discharged by {department_id}.",
+        "statusUpdates": {
+            "patientStatus": "DISCHARGED",
+            "fromRoomReleased": True,
+            "sourceBedRetained": False,
+            "previousRoomId": previous_room_id,
+        },
+        "status_updates": {
+            "patient_status": "DISCHARGED",
+            "from_room_released": True,
+            "source_bed_retained": False,
+            "previous_room_id": previous_room_id,
+        },
+        "animation_plan": {
+            "kind": "patient-move",
+            "transport": movement.get("transport", "walking"),
+            "escort_roles": movement.get("escort_roles") or movement.get("escortRoles", []),
+            "equipment": movement.get("equipment", []),
+            "from_room_id": previous_room_id,
+            "to_room_id": visible_target_room_id,
+            "requested_to_room_id": "exit",
+            "via_room_ids": [
+                room_id for room_id in movement.get("via", [])
+                if room_id in rooms_by_id and room_id != visible_target_room_id
+            ],
+            "final_form": "hidden",
+            "patient_form_during_move": movement.get("patient_form_during_move") or movement.get("patientFormDuringMove", movement.get("transport", "walking")),
+        },
+        "animationPlan": {
+            "kind": "patient-move",
+            "transport": movement.get("transport", "walking"),
+            "escortRoles": movement.get("escort_roles") or movement.get("escortRoles", []),
+            "equipment": movement.get("equipment", []),
+            "fromRoomId": previous_room_id,
+            "toRoomId": visible_target_room_id,
+            "requestedToRoomId": "exit",
+            "viaRoomIds": [
+                room_id for room_id in movement.get("via", [])
+                if room_id in rooms_by_id and room_id != visible_target_room_id
+            ],
+            "finalForm": "hidden",
+            "patientFormDuringMove": movement.get("patient_form_during_move") or movement.get("patientFormDuringMove", movement.get("transport", "walking")),
+        },
+    }
+    append_event(event_log, response, payload)
+    write_json(EVENT_LOG_FILE, event_log)
+    return response
+
+
+def handle_department_clinical_event(department_id, payload):
+    if not payload.get("patient_id"):
+        return {"accepted": False, "reasonCode": "MISSING_PATIENT_ID", "message": "patient_id is required."}
+    event_id = str(payload.get("event_type") or "clinical.summary_updated").upper().replace(".", "_")
+    return append_core_event(
+        event_id=event_id,
+        patient_id=payload.get("patient_id"),
+        accepted=True,
+        request=payload,
+        message=f"{department_id} clinical event stored.",
+        event_type=payload.get("event_type") or "clinical.summary_updated",
+    )
+
+
+def append_core_event(event_id, patient_id, accepted, request, message="", event_type=None, snapshot_refresh=False):
+    event_log = read_json(EVENT_LOG_FILE)
+    event_seq = next_event_seq(event_log)
+    response = {
+        "accepted": accepted,
+        "event_seq": event_seq,
+        "eventSeq": event_seq,
+        "event_id": event_id,
+        "eventId": event_id,
+        "patient_id": patient_id,
+        "patientId": patient_id,
+        "message": message,
+        "eventType": event_type or event_id.lower(),
+        "event_type": event_type or event_id.lower(),
+    }
+    if snapshot_refresh:
+        response["snapshotRefresh"] = True
+        response["snapshot_refresh"] = True
+    append_event(event_log, response, request)
+    write_json(EVENT_LOG_FILE, event_log)
+    return response
+
+
+def transfer_rule_for(source_department, target_department):
+    route = (source_department, target_department)
+    rules = {
+        ("emergency", "icu"): ("TRANSFER_ED_TO_ICU", "icu_admission"),
+        ("emergency", "ward"): ("TRANSFER_ED_TO_WARD", "ward_admission"),
+        ("outpatient", "emergency"): ("TRANSFER_OP_TO_ED", "ed_handoff"),
+        ("outpatient", "ward"): ("TRANSFER_OP_TO_WARD", "ward_admission"),
+        ("outpatient", "icu"): ("OP_TO_ICU_MOVE", "icu_admission"),
+        ("icu", "ward"): ("TRANSFER_ICU_TO_WARD", "ward_admission"),
+        ("icu", "emergency"): ("ICU_TO_ED_MOVE", "ed_red_resus"),
+        ("ward", "icu"): ("TRANSFER_WARD_TO_ICU", "icu_admission"),
+    }
+    return rules.get(route, (None, None))
+
+
+def discharge_event_id_for_department(department_id):
+    preferred = {
+        "icu": "ICU_PATIENT_EXIT_HOSPITAL",
+        "ward": "WARD_DISCHARGE_EXIT_HOSPITAL",
+    }.get(department_id)
+    allowed = allowed_event_ids_for_request(department_id, "discharge_request")
+    if preferred in allowed:
+        return preferred
+    return next(iter(sorted(allowed)), preferred or "PATIENT_DISCHARGE")
+
+
+def visible_discharge_target_room_id(movement, previous_room_id, rooms_by_id):
+    via = [
+        room_id for room_id in movement.get("via", [])
+        if room_id in rooms_by_id
+    ]
+    if via:
+        return via[-1]
+    if previous_room_id in rooms_by_id:
+        return previous_room_id
+    return "discharge_desk" if "discharge_desk" in rooms_by_id else next(iter(rooms_by_id.keys()), previous_room_id)
+
+
+def default_room_for_department(department_id):
+    return {
+        "outpatient": "registration_2",
+        "emergency": "ed_registration",
+        "icu": "icu_admission",
+        "mdt": "mdt_lounge",
+        "ward": "ward_admission",
+    }.get(department_id, "ed_entrance")
+
+
+def default_form_for_room(room):
+    if room.get("kind") in CARE_ROOM_KINDS:
+        return "bed"
+    if room.get("kind") == "waiting":
+        return "waiting"
+    return "walking"
+
+
+def recent_department_requests(department_id, limit=20):
+    data = read_json_default(DEPARTMENT_REQUESTS_FILE, {"requests": []})
+    rows = [
+        row for row in data.get("requests", [])
+        if row.get("department_id") == department_id or row.get("departmentId") == department_id
+    ]
+    return list(reversed(rows[-limit:]))
+
+
+def log_department_request(department_id, request_type, idempotency_key, raw_payload, normalized_payload, status, core_response, error_code, trace_id):
+    data = read_json_default(DEPARTMENT_REQUESTS_FILE, {"requests": []})
+    request_id = f"dreq_{uuid.uuid4().hex[:12]}"
+    created_at = utc_now_iso()
+    record = {
+        "request_id": request_id,
+        "requestId": request_id,
+        "department_id": department_id,
+        "departmentId": department_id,
+        "request_type": request_type,
+        "requestType": request_type,
+        "idempotency_key": idempotency_key or None,
+        "idempotencyKey": idempotency_key or None,
+        "raw_payload": raw_payload,
+        "rawPayload": raw_payload,
+        "normalized_payload": normalized_payload,
+        "normalizedPayload": normalized_payload,
+        "status": status,
+        "core_response": core_response,
+        "coreResponse": core_response,
+        "error_code": error_code,
+        "errorCode": error_code,
+        "correlation_id": normalized_payload.get("correlation_id"),
+        "correlationId": normalized_payload.get("correlation_id"),
+        "trace_id": trace_id,
+        "traceId": trace_id,
+        "created_at": created_at,
+        "createdAt": created_at,
+    }
+    data.setdefault("requests", []).append(record)
+    data["requests"] = data["requests"][-500:]
+    write_json(DEPARTMENT_REQUESTS_FILE, data)
+
+
+def idempotency_key_for(department_id, request_type, idempotency_key):
+    return f"{department_id}:{request_type}:{idempotency_key}"
+
+
+def idempotency_lookup(department_id, request_type, idempotency_key):
+    data = read_json_default(IDEMPOTENCY_FILE, {"keys": {}})
+    return data.get("keys", {}).get(idempotency_key_for(department_id, request_type, idempotency_key))
+
+
+def idempotency_store(department_id, request_type, idempotency_key, response):
+    data = read_json_default(IDEMPOTENCY_FILE, {"keys": {}})
+    data.setdefault("keys", {})[idempotency_key_for(department_id, request_type, idempotency_key)] = response
+    write_json(IDEMPOTENCY_FILE, data)
+
+
+def api_ok(data, trace_id=None):
+    return {"ok": True, "data": data, "error": None, "trace_id": trace_id or new_trace_id()}
+
+
+def api_error(code, message, details=None, trace_id=None):
+    return {
+        "ok": False,
+        "data": None,
+        "error": {"code": code, "message": message, "details": details or {}},
+        "trace_id": trace_id or new_trace_id(),
+    }
 
 
 def movement_escort_roles(movement):
@@ -1215,6 +2500,9 @@ def append_event(event_log, response, request):
     if response.get("animationPlan"):
         event["animation_plan"] = response.get("animation_plan") or response["animationPlan"]
         event["animationPlan"] = response["animationPlan"]
+    if response.get("snapshotRefresh") or response.get("snapshot_refresh"):
+        event["snapshotRefresh"] = True
+        event["snapshot_refresh"] = True
     if response.get("reasonCode"):
         event["reasonCode"] = response["reasonCode"]
         event["message"] = response.get("message", "")
@@ -1786,13 +3074,16 @@ def assign_patient_bed(room_state, patient, room_id):
         return
     release_patient_bed(room_state, patient, except_room_id=room_id)
     state = room_state.setdefault("rooms", {}).setdefault(room_id, {"roomId": room_id, "reservedBy": None, "queue": []})
-    assignments = normalize_bed_assignments(state.get("bedAssignments", []), state.get("bedIds", []))
+    bed_ids = expanded_bed_ids(room_id, state)
+    state["bedIds"] = bed_ids
+    state["bed_ids"] = bed_ids
+    assignments = normalize_bed_assignments(state.get("bedAssignments", []), bed_ids)
     existing = next((assignment for assignment in assignments if (assignment.get("patient_id") or assignment.get("patientId")) == patient_id), None)
     if existing:
         bed_id = existing.get("bedId")
     else:
         used_bed_ids = {assignment.get("bed_id") or assignment.get("bedId") for assignment in assignments if assignment.get("bed_id") or assignment.get("bedId")}
-        bed_id = next_available_bed_id(state.get("bedIds", []), used_bed_ids)
+        bed_id = next_available_bed_id(bed_ids, used_bed_ids)
         if not bed_id:
             return
         assignments.append({"bedId": bed_id, "patientId": patient_id, "bed_id": bed_id, "patient_id": patient_id})
@@ -1806,6 +3097,18 @@ def assign_patient_bed(room_state, patient, room_id):
     patient.setdefault("home_bed", {})["bed_id"] = bed_id
     state["occupiedBeds"] = len(assignments)
     state["occupied_beds"] = len(assignments)
+
+
+def expanded_bed_ids(room_id, state):
+    bed_ids = list(state.get("bedIds") or state.get("bed_ids") or [])
+    capacity = max(int(state.get("capacityBeds", 0) or 0), int(state.get("capacity_beds", 0) or 0), len(bed_ids))
+    index = 1
+    while len(bed_ids) < capacity:
+        candidate = f"{room_id}-bed-{index:02d}"
+        if candidate not in bed_ids:
+            bed_ids.append(candidate)
+        index += 1
+    return bed_ids
 
 
 def release_patient_bed(room_state, patient, except_room_id=None):
@@ -1927,6 +3230,15 @@ def first_query_value(query, key, default=""):
 
 def read_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def read_json_default(path, default):
+    if not path.exists():
+        return json.loads(json.dumps(default))
+    try:
+        return read_json(path)
+    except json.JSONDecodeError:
+        return json.loads(json.dumps(default))
 
 
 def write_json(path, data):

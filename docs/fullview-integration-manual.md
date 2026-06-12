@@ -4,6 +4,8 @@
 
 Fullview 的职责是维护全院共享状态、资源占用、移动规则、事件日志和可视化动画。Department 的职责是维护本部门内部诊疗逻辑，并在需要跨房间、跨楼层或跨部门移动患者时，向 Fullview 发送标准事件请求。
 
+如果 department 需要新增/删除房间、调整房间布局、修改床位、或新增/修改移动规则，请不要直接改 Fullview JSON。请先按 [Fullview 变更请求格式规范](fullview-change-request-format.md) 提交 request，由 Fullview 维护者审核后统一更新。
+
 ## 1. 接入原则
 
 1. **Fullview 是全院共享状态权威**：患者当前在哪个房间、床位是否占用、事件是否被批准，由 Fullview 后端判断和记录。
@@ -455,4 +457,5 @@ Department 不直接移动前端人物，只发送 `POST /api/hospital/events/mo
 2. `full_view/HOSPITAL_CORE_STANDARD.md`：了解统一数据格式。
 3. `full_view/API.md`：了解接口字段。
 4. `rules/README.md`：了解规则设计原则。
-5. 本手册：按步骤接入 department。
+5. `docs/fullview-change-request-format.md`：提交房间/rule 变更申请。
+6. 本手册：按步骤接入 department。

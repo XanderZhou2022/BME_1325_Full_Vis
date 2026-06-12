@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>Department Handler Dashboard</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="dept-dashboard-shell">
+    <header class="dept-dashboard-top">
+      <div>
+        <div class="console-eyebrow">Sim Hospital</div>
+        <h1 class="console-title">Department Handler Dashboard</h1>
+      </div>
+      <p class="dept-dashboard-summary">
+        Department systems send requests here first; handlers normalize them and forward accepted work to Fullview Core.
+      </p>
+      <nav class="console-nav">
+        <a class="console-link" href="./index.html">Map</a>
+        <a class="console-link" href="./console.html">Console</a>
+        <button id="deptRefresh" class="console-link" type="button">Refresh</button>
+      </nav>
+    </header>
+
+    <section class="dept-scenario-panel">
+      <div>
+        <div class="console-eyebrow">Debug Scenario</div>
+        <h2>Closed-loop Multi-patient Test</h2>
+        <p>Creates several debug patients, sends real department handler requests, and discharges every patient at the end.</p>
+      </div>
+      <div class="dept-scenario-actions">
+        <a class="console-link" href="./index.html" target="_blank" rel="noreferrer">Open Map</a>
+        <button id="scenarioRun" class="console-submit" type="button">Run Closed-loop Test</button>
+      </div>
+      <div id="scenarioStatus" class="dept-scenario-status">Idle</div>
+      <div id="scenarioLog" class="dept-scenario-log"></div>
+    </section>
+
+    <section class="dept-dashboard-layout">
+      <aside class="dept-sidebar">
+        <div class="console-panel__head">
+          <h2>Departments</h2>
+          <span id="deptCount">0</span>
+        </div>
+        <div id="deptTabs" class="dept-tab-list"></div>
+      </aside>
+
+      <section class="dept-main">
+        <div class="dept-main-head">
+          <div>
+            <h2 id="deptTitle">Loading...</h2>
+            <p id="deptMeta">Waiting for handler registry.</p>
+          </div>
+          <div id="deptStatus" class="dept-status">Loading</div>
+        </div>
+
+        <div id="deptApiList" class="dept-api-list"></div>
+      </section>
+
+      <aside class="dept-recent-panel">
+        <div class="console-panel__head">
+          <h2>Recent Requests</h2>
+          <span id="deptRecentCount">0</span>
+        </div>
+        <div id="deptRecent" class="dept-recent-list"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script type="module" src="./department-dashboard.js?v=department-handlers-20260612"></script>
+</body>
+</html>

@@ -12,11 +12,11 @@
       "classification": "ICU移动",
       "trigger": "患者从急诊、门诊或住院转入 ICU 并完成接收。",
       "rooms": [
-        "icu_admission",
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation",
-        "intervention_bay"
+        "R-ICU-ADMISSION",
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION",
+        "R-ICU-INTERVENTION-BAY"
       ],
       "roomsText": "icu_admission、icu_beds_a、icu_beds_b、icu_isolation、intervention_bay",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -27,12 +27,12 @@
       "visualization": "患者到 ICU 后躺入空床。",
       "movement": {
         "schema": "patient-move",
-        "from": "icu_admission",
+        "from": "R-ICU-ADMISSION",
         "to": [
-          "icu_beds_a",
-          "icu_beds_b",
-          "icu_isolation",
-          "intervention_bay"
+          "R-ICU-BEDS-A",
+          "R-ICU-BEDS-B",
+          "R-ICU-ISOLATION",
+          "R-ICU-INTERVENTION-BAY"
         ],
         "via": [],
         "transport": "stretcher",
@@ -85,11 +85,11 @@
       "classification": "ICU移动",
       "trigger": "ICU 医生开立检查或床旁无法完成的处置。",
       "rooms": [
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation",
-        "intervention_bay",
-        "icu_equipment"
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION",
+        "R-ICU-INTERVENTION-BAY",
+        "R-ICU-EQUIPMENT"
       ],
       "roomsText": "icu_beds_a、icu_beds_b、icu_isolation、intervention_bay、icu_equipment",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -102,8 +102,8 @@
         "schema": "patient-move",
         "from": "current_icu_bed_room",
         "to": [
-          "intervention_bay",
-          "icu_equipment"
+          "R-ICU-INTERVENTION-BAY",
+          "R-ICU-EQUIPMENT"
         ],
         "via": [],
         "transport": "stretcher",
@@ -158,11 +158,11 @@
       "classification": "ICU移动",
       "trigger": "ICU 检查或干预完成。",
       "rooms": [
-        "intervention_bay",
-        "icu_equipment",
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation"
+        "R-ICU-INTERVENTION-BAY",
+        "R-ICU-EQUIPMENT",
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION"
       ],
       "roomsText": "intervention_bay、icu_equipment、icu_beds_a、icu_beds_b、icu_isolation",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -229,18 +229,18 @@
       "trigger": "ICU 患者病情稳定，可以转普通住院。",
       "rooms": [
         "icu_transfer",
-        "elevator_3",
-        "elevator_5",
-        "ward_admission",
-        "resp_ward",
-        "card_ward",
-        "gastro_ward",
-        "neuro_ward",
-        "endo_ward",
-        "gensurg_ward",
-        "ortho_ward",
-        "obgyn_ward",
-        "peds_ward"
+        "R-F3-ELEVATOR",
+        "R-F5-ELEVATOR",
+        "R-WARD-WARD-ADMISSION",
+        "R-WARD-RESP",
+        "R-WARD-CARD",
+        "R-WARD-GASTRO",
+        "R-WARD-NEURO",
+        "R-WARD-ENDO",
+        "R-WARD-GENSURG",
+        "R-WARD-ORTHO",
+        "R-WARD-OBGYN",
+        "R-WARD-PEDS"
       ],
       "roomsText": "icu_transfer、elevator_3、elevator_5、ward_admission、resp_ward、card_ward、gastro_ward、neuro_ward、endo_ward、gensurg_ward、ortho_ward、obgyn_ward、peds_ward",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -252,11 +252,11 @@
       "movement": {
         "schema": "patient-move",
         "from": "current_icu_bed_room",
-        "to": "ward_admission",
+        "to": "R-WARD-WARD-ADMISSION",
         "via": [
           "icu_transfer",
-          "elevator_3",
-          "elevator_5"
+          "R-F3-ELEVATOR",
+          "R-F5-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "urgent",
@@ -311,11 +311,11 @@
       "trigger": "模拟场景中 ICU 患者需要转回急诊抢救区或急诊复评。",
       "rooms": [
         "icu_transfer",
-        "elevator_3",
-        "elevator_1",
-        "ed_red_resus",
-        "ed_observation",
-        "ed_handoff"
+        "R-F3-ELEVATOR",
+        "R-F1-ELEVATOR",
+        "R-ED-RED-RESUS",
+        "R-ED-OBSERVATION",
+        "R-ED-HANDOFF"
       ],
       "roomsText": "icu_transfer、elevator_3、elevator_1、ed_red_resus、ed_observation、ed_handoff",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -328,13 +328,13 @@
         "schema": "patient-move",
         "from": "current_icu_bed_room",
         "to": [
-          "ed_red_resus",
-          "ed_observation"
+          "R-ED-RED-RESUS",
+          "R-ED-OBSERVATION"
         ],
         "via": [
           "icu_transfer",
-          "elevator_3",
-          "elevator_1"
+          "R-F3-ELEVATOR",
+          "R-F1-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "critical",
@@ -390,11 +390,11 @@
       "classification": "ICU离院",
       "trigger": "ICU 患者达到出 ICU/出院条件，模拟直接离院。",
       "rooms": [
-        "icu_beds_a",
-        "icu_beds_b",
-        "icu_isolation",
-        "intervention_bay",
-        "elevator_3"
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION",
+        "R-ICU-INTERVENTION-BAY",
+        "R-F3-ELEVATOR"
       ],
       "roomsText": "icu_beds_a、icu_beds_b、icu_isolation、intervention_bay、elevator_3",
       "agents": "患者、医生/护士、BedManager 或叫号/转运系统。",
@@ -408,7 +408,7 @@
         "from": "current_icu_bed_room",
         "to": "exit",
         "via": [
-          "elevator_3"
+          "R-F3-ELEVATOR"
         ],
         "transport": "stretcher",
         "acuity": "critical",

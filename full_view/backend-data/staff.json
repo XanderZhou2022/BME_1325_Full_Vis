@@ -7,7 +7,7 @@
       "role": "nurse",
       "name": "Nurse Emily Carter",
       "department": "Emergency",
-      "roomId": "ed_registration",
+      "roomId": "R-ED-REGISTRATION",
       "relX": 0.45818181818181813,
       "relY": 0.615,
       "gender": "female",
@@ -20,7 +20,7 @@
       "provider_id": "N-ER-001",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "ed_registration"
+        "room_id": "R-ED-REGISTRATION"
       },
       "visual": {
         "pose": "standing",
@@ -30,7 +30,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "ed_registration",
+      "room_id": "R-ED-REGISTRATION",
       "rel_x": 0.45818181818181813,
       "rel_y": 0.615
     },
@@ -41,7 +41,7 @@
       "role": "nurse",
       "name": "Nurse Daniel Lee",
       "department": "Emergency",
-      "roomId": "ed_bedside_nurse",
+      "roomId": "R-ED-BEDSIDE-NURSE",
       "relX": 0.3,
       "relY": 0.6,
       "gender": "male",
@@ -54,7 +54,7 @@
       "provider_id": "N-ER-002",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "ed_bedside_nurse"
+        "room_id": "R-ED-BEDSIDE-NURSE"
       },
       "visual": {
         "pose": "walking",
@@ -64,7 +64,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "ed_bedside_nurse",
+      "room_id": "R-ED-BEDSIDE-NURSE",
       "rel_x": 0.3,
       "rel_y": 0.6
     },
@@ -75,7 +75,7 @@
       "role": "doctor",
       "name": "Dr. Michael Chen",
       "department": "Emergency",
-      "roomId": "ed_doctor_room",
+      "roomId": "R-ED-DOCTOR-ROOM",
       "relX": 0.28,
       "relY": 0.58,
       "gender": "male",
@@ -88,7 +88,7 @@
       "provider_id": "D-ER-001",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "ed_doctor_room"
+        "room_id": "R-ED-DOCTOR-ROOM"
       },
       "visual": {
         "pose": "standing",
@@ -98,7 +98,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "ed_doctor_room",
+      "room_id": "R-ED-DOCTOR-ROOM",
       "rel_x": 0.28,
       "rel_y": 0.58
     },
@@ -109,7 +109,7 @@
       "role": "doctor",
       "name": "Dr. Sarah Lin",
       "department": "Emergency",
-      "roomId": "ed_red_resus",
+      "roomId": "R-ED-RED-RESUS",
       "relX": 0.5,
       "relY": 0.58,
       "gender": "female",
@@ -122,7 +122,7 @@
       "provider_id": "D-ER-002",
       "department_id": "emergency",
       "current_location": {
-        "room_id": "ed_red_resus"
+        "room_id": "R-ED-RED-RESUS"
       },
       "visual": {
         "pose": "standing",
@@ -132,7 +132,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "ed_red_resus",
+      "room_id": "R-ED-RED-RESUS",
       "rel_x": 0.5,
       "rel_y": 0.58
     },
@@ -143,7 +143,7 @@
       "role": "nurse",
       "name": "Nurse Anna Zhou",
       "department": "Registration",
-      "roomId": "registration_2",
+      "roomId": "R-OP-REGISTRATION",
       "relX": 0.45818181818181813,
       "relY": 0.615,
       "gender": "female",
@@ -156,7 +156,7 @@
       "provider_id": "N-OP-001",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "registration_2"
+        "room_id": "R-OP-REGISTRATION"
       },
       "visual": {
         "pose": "standing",
@@ -166,7 +166,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "registration_2",
+      "room_id": "R-OP-REGISTRATION",
       "rel_x": 0.45818181818181813,
       "rel_y": 0.615
     },
@@ -177,7 +177,7 @@
       "role": "nurse",
       "name": "Nurse Kevin Wu",
       "department": "Triage",
-      "roomId": "triage_2",
+      "roomId": "R-OP-TRIAGE",
       "relX": 0.5327272727272727,
       "relY": 0.5175,
       "gender": "male",
@@ -190,7 +190,7 @@
       "provider_id": "N-OP-002",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "triage_2"
+        "room_id": "R-OP-TRIAGE"
       },
       "visual": {
         "pose": "standing",
@@ -200,7 +200,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "triage_2",
+      "room_id": "R-OP-TRIAGE",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.5175
     },
@@ -211,7 +211,7 @@
       "role": "doctor",
       "name": "Dr. Emma Wang",
       "department": "Outpatient",
-      "roomId": "consultation_a_2",
+      "roomId": "R-OP-CONSULTATION-A",
       "relX": 0.84,
       "relY": 0.58,
       "gender": "female",
@@ -224,7 +224,7 @@
       "provider_id": "D-OP-001",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "consultation_a_2"
+        "room_id": "R-OP-CONSULTATION-A"
       },
       "visual": {
         "pose": "seated",
@@ -234,7 +234,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "consultation_a_2",
+      "room_id": "R-OP-CONSULTATION-A",
       "rel_x": 0.84,
       "rel_y": 0.58
     },
@@ -245,7 +245,7 @@
       "role": "doctor",
       "name": "Dr. Jason Liu",
       "department": "Outpatient",
-      "roomId": "consultation_b_2",
+      "roomId": "R-OP-CONSULTATION-B",
       "relX": 0.84,
       "relY": 0.58,
       "gender": "male",
@@ -258,7 +258,7 @@
       "provider_id": "D-OP-002",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "consultation_b_2"
+        "room_id": "R-OP-CONSULTATION-B"
       },
       "visual": {
         "pose": "seated",
@@ -268,7 +268,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "consultation_b_2",
+      "room_id": "R-OP-CONSULTATION-B",
       "rel_x": 0.84,
       "rel_y": 0.58
     },
@@ -279,7 +279,7 @@
       "role": "doctor",
       "name": "Dr. Brian Zhao",
       "department": "Internal Medicine",
-      "roomId": "internal_2",
+      "roomId": "R-OP-INTERNAL",
       "relX": 0.56,
       "relY": 0.58,
       "gender": "male",
@@ -292,7 +292,7 @@
       "provider_id": "D-IM-001",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "internal_2"
+        "room_id": "R-OP-INTERNAL"
       },
       "visual": {
         "pose": "seated",
@@ -302,7 +302,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "internal_2",
+      "room_id": "R-OP-INTERNAL",
       "rel_x": 0.56,
       "rel_y": 0.58
     },
@@ -313,7 +313,7 @@
       "role": "doctor",
       "name": "Dr. Olivia Sun",
       "department": "Surgery Clinic",
-      "roomId": "surgery_2",
+      "roomId": "R-OP-SURGERY",
       "relX": 0.56,
       "relY": 0.58,
       "gender": "female",
@@ -326,7 +326,7 @@
       "provider_id": "D-SG-001",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "surgery_2"
+        "room_id": "R-OP-SURGERY"
       },
       "visual": {
         "pose": "standing",
@@ -336,7 +336,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "surgery_2",
+      "room_id": "R-OP-SURGERY",
       "rel_x": 0.56,
       "rel_y": 0.58
     },
@@ -347,7 +347,7 @@
       "role": "nurse",
       "name": "Nurse Lily Huang",
       "department": "Outpatient Waiting",
-      "roomId": "outpatient_waiting",
+      "roomId": "R-OP-OUTPATIENT-WAITING",
       "relX": 0.5327272727272727,
       "relY": 0.7125,
       "gender": "female",
@@ -360,7 +360,7 @@
       "provider_id": "N-OP-003",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "outpatient_waiting"
+        "room_id": "R-OP-OUTPATIENT-WAITING"
       },
       "visual": {
         "pose": "walking",
@@ -370,7 +370,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "outpatient_waiting",
+      "room_id": "R-OP-OUTPATIENT-WAITING",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.7125
     },
@@ -381,7 +381,7 @@
       "role": "nurse",
       "name": "Nurse Fiona Yu",
       "department": "ICU",
-      "roomId": "icu_station",
+      "roomId": "R-ICU-STATION",
       "relX": 0.5327272727272727,
       "relY": 0.615,
       "gender": "female",
@@ -394,7 +394,7 @@
       "provider_id": "N-ICU-001",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_station"
+        "room_id": "R-ICU-STATION"
       },
       "visual": {
         "pose": "standing",
@@ -404,7 +404,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "icu_station",
+      "room_id": "R-ICU-STATION",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.615
     },
@@ -415,7 +415,7 @@
       "role": "nurse",
       "name": "Nurse Aaron Ma",
       "department": "ICU",
-      "roomId": "icu_station",
+      "roomId": "R-ICU-STATION",
       "relX": 0.45818181818181813,
       "relY": 0.615,
       "gender": "male",
@@ -428,7 +428,7 @@
       "provider_id": "N-ICU-002",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_station"
+        "room_id": "R-ICU-STATION"
       },
       "visual": {
         "pose": "standing",
@@ -438,7 +438,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "icu_station",
+      "room_id": "R-ICU-STATION",
       "rel_x": 0.45818181818181813,
       "rel_y": 0.615
     },
@@ -449,7 +449,7 @@
       "role": "doctor",
       "name": "Dr. Helen Guo",
       "department": "ICU",
-      "roomId": "icu_beds_a",
+      "roomId": "R-ICU-BEDS-A",
       "relX": 0.58,
       "relY": 0.58,
       "gender": "female",
@@ -462,7 +462,7 @@
       "provider_id": "D-ICU-001",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_beds_a"
+        "room_id": "R-ICU-BEDS-A"
       },
       "visual": {
         "pose": "monitoring",
@@ -472,7 +472,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "icu_beds_a",
+      "room_id": "R-ICU-BEDS-A",
       "rel_x": 0.58,
       "rel_y": 0.58
     },
@@ -483,7 +483,7 @@
       "role": "doctor",
       "name": "Dr. Mark Tang",
       "department": "ICU",
-      "roomId": "icu_beds_b",
+      "roomId": "R-ICU-BEDS-B",
       "relX": 0.5327272727272727,
       "relY": 0.615,
       "gender": "male",
@@ -496,7 +496,7 @@
       "provider_id": "D-ICU-002",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_beds_b"
+        "room_id": "R-ICU-BEDS-B"
       },
       "visual": {
         "pose": "monitoring",
@@ -506,7 +506,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "icu_beds_b",
+      "room_id": "R-ICU-BEDS-B",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.615
     },
@@ -517,7 +517,7 @@
       "role": "nurse",
       "name": "Nurse Amy Qian",
       "department": "ICU Isolation",
-      "roomId": "icu_isolation",
+      "roomId": "R-ICU-ISOLATION",
       "relX": 0.58,
       "relY": 0.58,
       "gender": "female",
@@ -530,7 +530,7 @@
       "provider_id": "N-ICU-003",
       "department_id": "icu",
       "current_location": {
-        "room_id": "icu_isolation"
+        "room_id": "R-ICU-ISOLATION"
       },
       "visual": {
         "pose": "monitoring",
@@ -540,7 +540,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "icu_isolation",
+      "room_id": "R-ICU-ISOLATION",
       "rel_x": 0.58,
       "rel_y": 0.58
     },
@@ -551,7 +551,7 @@
       "role": "doctor",
       "name": "Dr. Claire Luo",
       "department": "MDT Center",
-      "roomId": "head_doctor",
+      "roomId": "R-MDT-HEAD-DOCTOR",
       "relX": 0.5,
       "relY": 0.58,
       "gender": "female",
@@ -564,7 +564,7 @@
       "provider_id": "D-MDT-001",
       "department_id": "mdt",
       "current_location": {
-        "room_id": "head_doctor"
+        "room_id": "R-MDT-HEAD-DOCTOR"
       },
       "visual": {
         "pose": "seated",
@@ -574,7 +574,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "head_doctor",
+      "room_id": "R-MDT-HEAD-DOCTOR",
       "rel_x": 0.5,
       "rel_y": 0.58
     },
@@ -585,7 +585,7 @@
       "role": "doctor",
       "name": "Dr. Eric Fang",
       "department": "MDT Center",
-      "roomId": "mdt_meeting",
+      "roomId": "R-MDT-MEETING",
       "relX": 0.5,
       "relY": 0.58,
       "gender": "male",
@@ -598,7 +598,7 @@
       "provider_id": "D-MDT-002",
       "department_id": "mdt",
       "current_location": {
-        "room_id": "mdt_meeting"
+        "room_id": "R-MDT-MEETING"
       },
       "visual": {
         "pose": "seated",
@@ -608,7 +608,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "mdt_meeting",
+      "room_id": "R-MDT-MEETING",
       "rel_x": 0.5,
       "rel_y": 0.58
     },
@@ -619,7 +619,7 @@
       "role": "doctor",
       "name": "Dr. Sophia Gao",
       "department": "Imaging Review",
-      "roomId": "imaging_review",
+      "roomId": "R-MDT-IMAGING-REVIEW",
       "relX": 0.5,
       "relY": 0.58,
       "gender": "female",
@@ -632,7 +632,7 @@
       "provider_id": "D-IMG-001",
       "department_id": "mdt",
       "current_location": {
-        "room_id": "imaging_review"
+        "room_id": "R-MDT-IMAGING-REVIEW"
       },
       "visual": {
         "pose": "standing",
@@ -642,7 +642,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "imaging_review",
+      "room_id": "R-MDT-IMAGING-REVIEW",
       "rel_x": 0.5,
       "rel_y": 0.58
     },
@@ -653,7 +653,7 @@
       "role": "nurse",
       "name": "Nurse Wendy He",
       "department": "MDT Center",
-      "roomId": "final_plan",
+      "roomId": "R-MDT-FINAL-PLAN",
       "relX": 0.5,
       "relY": 0.58,
       "gender": "female",
@@ -666,7 +666,7 @@
       "provider_id": "N-MDT-001",
       "department_id": "mdt",
       "current_location": {
-        "room_id": "final_plan"
+        "room_id": "R-MDT-FINAL-PLAN"
       },
       "visual": {
         "pose": "standing",
@@ -676,7 +676,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "final_plan",
+      "room_id": "R-MDT-FINAL-PLAN",
       "rel_x": 0.5,
       "rel_y": 0.58
     },
@@ -687,7 +687,7 @@
       "role": "nurse",
       "name": "Nurse Bella Lin",
       "department": "Ward",
-      "roomId": "nurse_station",
+      "roomId": "R-WARD-NURSE-STATION",
       "relX": 0.5327272727272727,
       "relY": 0.615,
       "gender": "female",
@@ -700,7 +700,7 @@
       "provider_id": "N-WD-001",
       "department_id": "ward",
       "current_location": {
-        "room_id": "nurse_station"
+        "room_id": "R-WARD-NURSE-STATION"
       },
       "visual": {
         "pose": "standing",
@@ -710,7 +710,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "nurse_station",
+      "room_id": "R-WARD-NURSE-STATION",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.615
     },
@@ -721,7 +721,7 @@
       "role": "nurse",
       "name": "Nurse Leo Chen",
       "department": "Ward",
-      "roomId": "nurse_station",
+      "roomId": "R-WARD-NURSE-STATION",
       "relX": 0.45818181818181813,
       "relY": 0.615,
       "gender": "male",
@@ -734,7 +734,7 @@
       "provider_id": "N-WD-002",
       "department_id": "ward",
       "current_location": {
-        "room_id": "nurse_station"
+        "room_id": "R-WARD-NURSE-STATION"
       },
       "visual": {
         "pose": "walking",
@@ -744,7 +744,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "nurse_station",
+      "room_id": "R-WARD-NURSE-STATION",
       "rel_x": 0.45818181818181813,
       "rel_y": 0.615
     },
@@ -755,7 +755,7 @@
       "role": "doctor",
       "name": "Dr. Victor Shen",
       "department": "Ward",
-      "roomId": "doctor_office",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
       "relX": 0.28,
       "relY": 0.58,
       "gender": "male",
@@ -768,7 +768,7 @@
       "provider_id": "D-WD-001",
       "department_id": "ward",
       "current_location": {
-        "room_id": "doctor_office"
+        "room_id": "R-WARD-DOCTOR-OFFICE"
       },
       "visual": {
         "pose": "standing",
@@ -778,7 +778,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "doctor_office",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
       "rel_x": 0.28,
       "rel_y": 0.58
     },
@@ -789,7 +789,7 @@
       "role": "doctor",
       "name": "Dr. Rachel Xu",
       "department": "Ward",
-      "roomId": "resp_ward",
+      "roomId": "R-WARD-RESP",
       "relX": 0.5327272727272727,
       "relY": 0.615,
       "gender": "female",
@@ -802,7 +802,7 @@
       "provider_id": "D-WD-002",
       "department_id": "ward",
       "current_location": {
-        "room_id": "resp_ward"
+        "room_id": "R-WARD-RESP"
       },
       "visual": {
         "pose": "monitoring",
@@ -812,7 +812,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "resp_ward",
+      "room_id": "R-WARD-RESP",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.615
     },
@@ -823,7 +823,7 @@
       "role": "nurse",
       "name": "Nurse Ivy Deng",
       "department": "Ward",
-      "roomId": "gensurg_ward",
+      "roomId": "R-WARD-GENSURG",
       "relX": 0.28,
       "relY": 0.58,
       "gender": "female",
@@ -836,7 +836,7 @@
       "provider_id": "N-WD-003",
       "department_id": "ward",
       "current_location": {
-        "room_id": "gensurg_ward"
+        "room_id": "R-WARD-GENSURG"
       },
       "visual": {
         "pose": "monitoring",
@@ -846,7 +846,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "gensurg_ward",
+      "room_id": "R-WARD-GENSURG",
       "rel_x": 0.28,
       "rel_y": 0.58
     },
@@ -863,10 +863,10 @@
       "gender": "female",
       "department": "Emergency",
       "department_id": "emergency",
-      "roomId": "ed_triage",
-      "room_id": "ed_triage",
+      "roomId": "R-ED-TRIAGE",
+      "room_id": "R-ED-TRIAGE",
       "current_location": {
-        "room_id": "ed_triage"
+        "room_id": "R-ED-TRIAGE"
       },
       "relX": 0.5327272727272727,
       "relY": 0.5175,
@@ -897,10 +897,10 @@
       "gender": "male",
       "department": "Emergency",
       "department_id": "emergency",
-      "roomId": "ed_major",
-      "room_id": "ed_major",
+      "roomId": "R-ED-MAJOR",
+      "room_id": "R-ED-MAJOR",
       "current_location": {
-        "room_id": "ed_major"
+        "room_id": "R-ED-MAJOR"
       },
       "relX": 0.58,
       "relY": 0.58,
@@ -931,10 +931,10 @@
       "gender": "female",
       "department": "Emergency",
       "department_id": "emergency",
-      "roomId": "ed_handoff",
-      "room_id": "ed_handoff",
+      "roomId": "R-ED-HANDOFF",
+      "room_id": "R-ED-HANDOFF",
       "current_location": {
-        "room_id": "ed_handoff"
+        "room_id": "R-ED-HANDOFF"
       },
       "relX": 0.5,
       "relY": 0.58,
@@ -965,10 +965,10 @@
       "gender": "female",
       "department": "Outpatient",
       "department_id": "outpatient",
-      "roomId": "fever_2",
-      "room_id": "fever_2",
+      "roomId": "R-OP-FEVER",
+      "room_id": "R-OP-FEVER",
       "current_location": {
-        "room_id": "fever_2"
+        "room_id": "R-OP-FEVER"
       },
       "relX": 0.72,
       "relY": 0.58,
@@ -999,10 +999,10 @@
       "gender": "male",
       "department": "Outpatient",
       "department_id": "outpatient",
-      "roomId": "outpatient_waiting",
-      "room_id": "outpatient_waiting",
+      "roomId": "R-OP-OUTPATIENT-WAITING",
+      "room_id": "R-OP-OUTPATIENT-WAITING",
       "current_location": {
-        "room_id": "outpatient_waiting"
+        "room_id": "R-OP-OUTPATIENT-WAITING"
       },
       "relX": 0.45818181818181813,
       "relY": 0.615,
@@ -1033,10 +1033,10 @@
       "gender": "female",
       "department": "ICU",
       "department_id": "icu",
-      "roomId": "monitor_center",
-      "room_id": "monitor_center",
+      "roomId": "R-ICU-MONITOR-CENTER",
+      "room_id": "R-ICU-MONITOR-CENTER",
       "current_location": {
-        "room_id": "monitor_center"
+        "room_id": "R-ICU-MONITOR-CENTER"
       },
       "relX": 0.5,
       "relY": 0.58,
@@ -1067,10 +1067,10 @@
       "gender": "male",
       "department": "ICU",
       "department_id": "icu",
-      "roomId": "icu_beds_b",
-      "room_id": "icu_beds_b",
+      "roomId": "R-ICU-BEDS-B",
+      "room_id": "R-ICU-BEDS-B",
       "current_location": {
-        "room_id": "icu_beds_b"
+        "room_id": "R-ICU-BEDS-B"
       },
       "relX": 0.45818181818181813,
       "relY": 0.615,
@@ -1101,10 +1101,10 @@
       "gender": "male",
       "department": "Ward",
       "department_id": "ward",
-      "roomId": "gastro_ward",
-      "room_id": "gastro_ward",
+      "roomId": "R-WARD-GASTRO",
+      "room_id": "R-WARD-GASTRO",
       "current_location": {
-        "room_id": "gastro_ward"
+        "room_id": "R-WARD-GASTRO"
       },
       "relX": 0.6,
       "relY": 0.58,
@@ -1135,10 +1135,10 @@
       "gender": "female",
       "department": "Ward",
       "department_id": "ward",
-      "roomId": "resp_ward",
-      "room_id": "resp_ward",
+      "roomId": "R-WARD-RESP",
+      "room_id": "R-WARD-RESP",
       "current_location": {
-        "room_id": "resp_ward"
+        "room_id": "R-WARD-RESP"
       },
       "relX": 0.45818181818181813,
       "relY": 0.615,
@@ -1294,12 +1294,13 @@
       "department_id": "emergency",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 1,
-      "floor_id": 1,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 1
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-RESP"
       },
       "pose": "walking",
       "phase": 1.48,
@@ -1312,13 +1313,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-004",
+      "hallway_seed": "POT-1F-004:resp_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-RESP"
     },
     {
       "id": "porter-1f-05",
@@ -1335,12 +1337,13 @@
       "department_id": "emergency",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 1,
-      "floor_id": 1,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 1
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 1.85,
@@ -1353,13 +1356,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-005",
+      "hallway_seed": "POT-1F-005:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-1f-06",
@@ -1423,7 +1427,7 @@
         "kind": "hallway",
         "location_type": "hallway",
         "floor_id": 5,
-        "anchor_room_id": "gastro_ward"
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 2.59,
@@ -1439,7 +1443,7 @@
       "hallway_seed": "POT-1F-007:gastro_ward",
       "roomId": null,
       "room_id": null,
-      "hallway_anchor_room_id": "gastro_ward",
+      "hallway_anchor_room_id": "R-WARD-GASTRO",
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
@@ -1501,12 +1505,13 @@
       "department_id": "emergency",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 1,
-      "floor_id": 1,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 1
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-NEURO"
       },
       "pose": "walking",
       "phase": 3.33,
@@ -1519,13 +1524,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-009",
+      "hallway_seed": "POT-1F-009:neuro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-NEURO"
     },
     {
       "id": "porter-1f-10",
@@ -1542,12 +1548,13 @@
       "department_id": "emergency",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 1,
-      "floor_id": 1,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 1
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 3.7,
@@ -1560,13 +1567,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-1F-010",
+      "hallway_seed": "POT-1F-010:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-2f-01",
@@ -1583,12 +1591,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 3,
+      "floor_id": 3,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-A"
       },
       "pose": "walking",
       "phase": 0.37,
@@ -1601,13 +1610,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-001",
+      "hallway_seed": "POT-2F-001:icu_beds_a",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-ICU-BEDS-A"
     },
     {
       "id": "porter-2f-02",
@@ -1624,12 +1634,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 0.74,
@@ -1642,13 +1653,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-002",
+      "hallway_seed": "POT-2F-002:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-2f-03",
@@ -1665,12 +1677,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 3,
+      "floor_id": 3,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-A"
       },
       "pose": "walking",
       "phase": 1.1099999999999999,
@@ -1683,13 +1696,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-003",
+      "hallway_seed": "POT-2F-003:icu_beds_a",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-ICU-BEDS-A"
     },
     {
       "id": "porter-2f-04",
@@ -1706,12 +1720,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-NEURO"
       },
       "pose": "walking",
       "phase": 1.48,
@@ -1724,13 +1739,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-004",
+      "hallway_seed": "POT-2F-004:neuro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-NEURO"
     },
     {
       "id": "porter-2f-05",
@@ -1747,12 +1763,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 1.85,
@@ -1765,13 +1782,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-005",
+      "hallway_seed": "POT-2F-005:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-2f-06",
@@ -1788,12 +1806,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 2.2199999999999998,
@@ -1806,13 +1825,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-006",
+      "hallway_seed": "POT-2F-006:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-2f-07",
@@ -1870,12 +1890,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 2.96,
@@ -1888,13 +1909,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-008",
+      "hallway_seed": "POT-2F-008:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-2f-09",
@@ -1911,12 +1933,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-NEURO"
       },
       "pose": "walking",
       "phase": 3.33,
@@ -1929,13 +1952,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-009",
+      "hallway_seed": "POT-2F-009:neuro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-NEURO"
     },
     {
       "id": "porter-2f-10",
@@ -1952,12 +1976,13 @@
       "department_id": "outpatient",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 2,
-      "floor_id": 2,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 2
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 3.7,
@@ -1970,13 +1995,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-2F-010",
+      "hallway_seed": "POT-2F-010:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-3f-01",
@@ -2039,7 +2065,8 @@
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 3
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-B"
       },
       "pose": "walking",
       "phase": 0.74,
@@ -2052,13 +2079,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-002",
+      "hallway_seed": "POT-3F-002:icu_beds_b",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-ICU-BEDS-B"
     },
     {
       "id": "porter-3f-03",
@@ -2122,7 +2150,7 @@
         "kind": "hallway",
         "location_type": "hallway",
         "floor_id": 3,
-        "anchor_room_id": "icu_beds_a"
+        "anchor_room_id": "R-ICU-BEDS-A"
       },
       "pose": "walking",
       "phase": 1.48,
@@ -2138,7 +2166,7 @@
       "hallway_seed": "POT-3F-004:icu_beds_a",
       "roomId": null,
       "room_id": null,
-      "hallway_anchor_room_id": "icu_beds_a",
+      "hallway_anchor_room_id": "R-ICU-BEDS-A",
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
@@ -2159,12 +2187,13 @@
       "department_id": "icu",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 3,
-      "floor_id": 3,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 3
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 1.85,
@@ -2177,13 +2206,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-005",
+      "hallway_seed": "POT-3F-005:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-3f-06",
@@ -2323,12 +2353,13 @@
       "department_id": "icu",
       "locationType": "hallway",
       "location_type": "hallway",
-      "floor": 3,
-      "floor_id": 3,
+      "floor": 5,
+      "floor_id": 5,
       "current_location": {
         "kind": "hallway",
         "location_type": "hallway",
-        "floor_id": 3
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
       },
       "pose": "walking",
       "phase": 3.33,
@@ -2341,13 +2372,14 @@
         "rel_x": 0.5,
         "rel_y": 0.58
       },
-      "hallway_seed": "POT-3F-009",
+      "hallway_seed": "POT-3F-009:gastro_ward",
       "room_id": null,
       "roomId": null,
       "relX": 0.5,
       "relY": 0.58,
       "rel_x": 0.5,
-      "rel_y": 0.58
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
     },
     {
       "id": "porter-3f-10",
