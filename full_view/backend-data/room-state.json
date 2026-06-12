@@ -1080,7 +1080,7 @@
       "roomId": "R-WARD-RESP",
       "reservedBy": null,
       "occupiedBeds": 4,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [
         {
@@ -1110,15 +1110,31 @@
       ],
       "bedIds": [
         "B-WARD-RESP-01",
-        "B-WARD-RESP-02"
+        "B-WARD-RESP-02",
+        "B-WARD-RESP-03",
+        "B-WARD-RESP-04",
+        "B-WARD-RESP-05",
+        "B-WARD-RESP-06",
+        "B-WARD-RESP-07",
+        "B-WARD-RESP-08",
+        "B-WARD-RESP-09",
+        "B-WARD-RESP-10"
       ],
       "room_id": "R-WARD-RESP",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 4,
       "bed_ids": [
         "B-WARD-RESP-01",
-        "B-WARD-RESP-02"
+        "B-WARD-RESP-02",
+        "B-WARD-RESP-03",
+        "B-WARD-RESP-04",
+        "B-WARD-RESP-05",
+        "B-WARD-RESP-06",
+        "B-WARD-RESP-07",
+        "B-WARD-RESP-08",
+        "B-WARD-RESP-09",
+        "B-WARD-RESP-10"
       ],
       "bed_assignments": [
         {
@@ -1151,7 +1167,7 @@
       "roomId": "R-WARD-CARD",
       "reservedBy": null,
       "occupiedBeds": 4,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [
         {
@@ -1181,15 +1197,31 @@
       ],
       "bedIds": [
         "B-WARD-CARD-01",
-        "B-WARD-CARD-02"
+        "B-WARD-CARD-02",
+        "B-WARD-CARD-03",
+        "B-WARD-CARD-04",
+        "B-WARD-CARD-05",
+        "B-WARD-CARD-06",
+        "B-WARD-CARD-07",
+        "B-WARD-CARD-08",
+        "B-WARD-CARD-09",
+        "B-WARD-CARD-10"
       ],
       "room_id": "R-WARD-CARD",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 4,
       "bed_ids": [
         "B-WARD-CARD-01",
-        "B-WARD-CARD-02"
+        "B-WARD-CARD-02",
+        "B-WARD-CARD-03",
+        "B-WARD-CARD-04",
+        "B-WARD-CARD-05",
+        "B-WARD-CARD-06",
+        "B-WARD-CARD-07",
+        "B-WARD-CARD-08",
+        "B-WARD-CARD-09",
+        "B-WARD-CARD-10"
       ],
       "bed_assignments": [
         {
@@ -1222,7 +1254,7 @@
       "roomId": "R-WARD-GASTRO",
       "reservedBy": null,
       "occupiedBeds": 1,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [
         {
@@ -1234,15 +1266,31 @@
       ],
       "bedIds": [
         "B-WARD-GASTRO-01",
-        "B-WARD-GASTRO-02"
+        "B-WARD-GASTRO-02",
+        "B-WARD-GASTRO-03",
+        "B-WARD-GASTRO-04",
+        "B-WARD-GASTRO-05",
+        "B-WARD-GASTRO-06",
+        "B-WARD-GASTRO-07",
+        "B-WARD-GASTRO-08",
+        "B-WARD-GASTRO-09",
+        "B-WARD-GASTRO-10"
       ],
       "room_id": "R-WARD-GASTRO",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 1,
       "bed_ids": [
         "B-WARD-GASTRO-01",
-        "B-WARD-GASTRO-02"
+        "B-WARD-GASTRO-02",
+        "B-WARD-GASTRO-03",
+        "B-WARD-GASTRO-04",
+        "B-WARD-GASTRO-05",
+        "B-WARD-GASTRO-06",
+        "B-WARD-GASTRO-07",
+        "B-WARD-GASTRO-08",
+        "B-WARD-GASTRO-09",
+        "B-WARD-GASTRO-10"
       ],
       "bed_assignments": [
         {
@@ -1257,20 +1305,36 @@
       "roomId": "R-WARD-NEURO",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
         "B-WARD-NEURO-01",
-        "B-WARD-NEURO-02"
+        "B-WARD-NEURO-02",
+        "B-WARD-NEURO-03",
+        "B-WARD-NEURO-04",
+        "B-WARD-NEURO-05",
+        "B-WARD-NEURO-06",
+        "B-WARD-NEURO-07",
+        "B-WARD-NEURO-08",
+        "B-WARD-NEURO-09",
+        "B-WARD-NEURO-10"
       ],
       "room_id": "R-WARD-NEURO",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 0,
       "bed_ids": [
         "B-WARD-NEURO-01",
-        "B-WARD-NEURO-02"
+        "B-WARD-NEURO-02",
+        "B-WARD-NEURO-03",
+        "B-WARD-NEURO-04",
+        "B-WARD-NEURO-05",
+        "B-WARD-NEURO-06",
+        "B-WARD-NEURO-07",
+        "B-WARD-NEURO-08",
+        "B-WARD-NEURO-09",
+        "B-WARD-NEURO-10"
       ],
       "bed_assignments": []
     },
@@ -1278,20 +1342,36 @@
       "roomId": "R-WARD-ENDO",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
         "B-WARD-ENDO-01",
-        "B-WARD-ENDO-02"
+        "B-WARD-ENDO-02",
+        "B-WARD-ENDO-03",
+        "B-WARD-ENDO-04",
+        "B-WARD-ENDO-05",
+        "B-WARD-ENDO-06",
+        "B-WARD-ENDO-07",
+        "B-WARD-ENDO-08",
+        "B-WARD-ENDO-09",
+        "B-WARD-ENDO-10"
       ],
       "room_id": "R-WARD-ENDO",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 0,
       "bed_ids": [
         "B-WARD-ENDO-01",
-        "B-WARD-ENDO-02"
+        "B-WARD-ENDO-02",
+        "B-WARD-ENDO-03",
+        "B-WARD-ENDO-04",
+        "B-WARD-ENDO-05",
+        "B-WARD-ENDO-06",
+        "B-WARD-ENDO-07",
+        "B-WARD-ENDO-08",
+        "B-WARD-ENDO-09",
+        "B-WARD-ENDO-10"
       ],
       "bed_assignments": []
     },
@@ -1299,20 +1379,36 @@
       "roomId": "R-WARD-GENSURG",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
         "B-WARD-GENSURG-01",
-        "B-WARD-GENSURG-02"
+        "B-WARD-GENSURG-02",
+        "B-WARD-GENSURG-03",
+        "B-WARD-GENSURG-04",
+        "B-WARD-GENSURG-05",
+        "B-WARD-GENSURG-06",
+        "B-WARD-GENSURG-07",
+        "B-WARD-GENSURG-08",
+        "B-WARD-GENSURG-09",
+        "B-WARD-GENSURG-10"
       ],
       "room_id": "R-WARD-GENSURG",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 0,
       "bed_ids": [
         "B-WARD-GENSURG-01",
-        "B-WARD-GENSURG-02"
+        "B-WARD-GENSURG-02",
+        "B-WARD-GENSURG-03",
+        "B-WARD-GENSURG-04",
+        "B-WARD-GENSURG-05",
+        "B-WARD-GENSURG-06",
+        "B-WARD-GENSURG-07",
+        "B-WARD-GENSURG-08",
+        "B-WARD-GENSURG-09",
+        "B-WARD-GENSURG-10"
       ],
       "bed_assignments": []
     },
@@ -1320,20 +1416,36 @@
       "roomId": "R-WARD-ORTHO",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
         "B-WARD-ORTHO-01",
-        "B-WARD-ORTHO-02"
+        "B-WARD-ORTHO-02",
+        "B-WARD-ORTHO-03",
+        "B-WARD-ORTHO-04",
+        "B-WARD-ORTHO-05",
+        "B-WARD-ORTHO-06",
+        "B-WARD-ORTHO-07",
+        "B-WARD-ORTHO-08",
+        "B-WARD-ORTHO-09",
+        "B-WARD-ORTHO-10"
       ],
       "room_id": "R-WARD-ORTHO",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 0,
       "bed_ids": [
         "B-WARD-ORTHO-01",
-        "B-WARD-ORTHO-02"
+        "B-WARD-ORTHO-02",
+        "B-WARD-ORTHO-03",
+        "B-WARD-ORTHO-04",
+        "B-WARD-ORTHO-05",
+        "B-WARD-ORTHO-06",
+        "B-WARD-ORTHO-07",
+        "B-WARD-ORTHO-08",
+        "B-WARD-ORTHO-09",
+        "B-WARD-ORTHO-10"
       ],
       "bed_assignments": []
     },
@@ -1341,20 +1453,36 @@
       "roomId": "R-WARD-OBGYN",
       "reservedBy": null,
       "occupiedBeds": 0,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [],
       "bedIds": [
         "B-WARD-OBGYN-01",
-        "B-WARD-OBGYN-02"
+        "B-WARD-OBGYN-02",
+        "B-WARD-OBGYN-03",
+        "B-WARD-OBGYN-04",
+        "B-WARD-OBGYN-05",
+        "B-WARD-OBGYN-06",
+        "B-WARD-OBGYN-07",
+        "B-WARD-OBGYN-08",
+        "B-WARD-OBGYN-09",
+        "B-WARD-OBGYN-10"
       ],
       "room_id": "R-WARD-OBGYN",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 0,
       "bed_ids": [
         "B-WARD-OBGYN-01",
-        "B-WARD-OBGYN-02"
+        "B-WARD-OBGYN-02",
+        "B-WARD-OBGYN-03",
+        "B-WARD-OBGYN-04",
+        "B-WARD-OBGYN-05",
+        "B-WARD-OBGYN-06",
+        "B-WARD-OBGYN-07",
+        "B-WARD-OBGYN-08",
+        "B-WARD-OBGYN-09",
+        "B-WARD-OBGYN-10"
       ],
       "bed_assignments": []
     },
@@ -1362,7 +1490,7 @@
       "roomId": "R-WARD-PEDS",
       "reservedBy": null,
       "occupiedBeds": 1,
-      "capacityBeds": 4,
+      "capacityBeds": 10,
       "queue": [],
       "bedAssignments": [
         {
@@ -1374,15 +1502,31 @@
       ],
       "bedIds": [
         "B-WARD-PEDS-01",
-        "B-WARD-PEDS-02"
+        "B-WARD-PEDS-02",
+        "B-WARD-PEDS-03",
+        "B-WARD-PEDS-04",
+        "B-WARD-PEDS-05",
+        "B-WARD-PEDS-06",
+        "B-WARD-PEDS-07",
+        "B-WARD-PEDS-08",
+        "B-WARD-PEDS-09",
+        "B-WARD-PEDS-10"
       ],
       "room_id": "R-WARD-PEDS",
       "reserved_by": null,
-      "capacity_beds": 4,
+      "capacity_beds": 10,
       "occupied_beds": 1,
       "bed_ids": [
         "B-WARD-PEDS-01",
-        "B-WARD-PEDS-02"
+        "B-WARD-PEDS-02",
+        "B-WARD-PEDS-03",
+        "B-WARD-PEDS-04",
+        "B-WARD-PEDS-05",
+        "B-WARD-PEDS-06",
+        "B-WARD-PEDS-07",
+        "B-WARD-PEDS-08",
+        "B-WARD-PEDS-09",
+        "B-WARD-PEDS-10"
       ],
       "bed_assignments": [
         {

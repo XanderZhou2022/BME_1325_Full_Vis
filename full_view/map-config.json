@@ -1773,15 +1773,15 @@
           "id": "R-WARD-WARD-ADMISSION",
           "kind": "registration",
           "label": "Ward Admission",
-          "x": 6,
-          "y": 6,
-          "w": 11,
-          "h": 8,
+          "x": 54,
+          "y": 24,
+          "w": 10,
+          "h": 7,
           "accent": "#b99163",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 3.5,
               "length": 3
             }
           ],
@@ -1789,9 +1789,9 @@
             {
               "type": "desk",
               "x": 3,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.2
+              "y": 2.8,
+              "w": 3.1,
+              "h": 1.1
             }
           ],
           "visualRoomId": "ward_admission"
@@ -1800,25 +1800,25 @@
           "id": "R-WARD-NURSE-STATION",
           "kind": "nurse_station",
           "label": "Nurse Station",
-          "x": 19,
-          "y": 6,
-          "w": 11,
+          "x": 54,
+          "y": 5,
+          "w": 23,
           "h": 8,
           "accent": "#66bfa2",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 10,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "reception",
-              "x": 3,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.2
+              "x": 9,
+              "y": 3.1,
+              "w": 4,
+              "h": 1.1
             }
           ],
           "visualRoomId": "nurse_station"
@@ -1827,331 +1827,844 @@
           "id": "R-WARD-RESP",
           "kind": "ward",
           "label": "Resp Ward",
-          "x": 32,
-          "y": 6,
-          "w": 11,
+          "x": 5,
+          "y": 5,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "resp_ward"
+          "visualRoomId": "resp_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-CARD",
           "kind": "ward",
           "label": "Cardio Ward",
-          "x": 45,
-          "y": 6,
-          "w": 11,
+          "x": 21,
+          "y": 5,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "card_ward"
+          "visualRoomId": "card_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-GASTRO",
           "kind": "ward",
           "label": "Gastro Ward",
-          "x": 58,
-          "y": 6,
-          "w": 11,
+          "x": 37,
+          "y": 5,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "gastro_ward"
+          "visualRoomId": "gastro_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-NEURO",
           "kind": "ward",
           "label": "Neuro Ward",
-          "x": 6,
-          "y": 17,
-          "w": 11,
+          "x": 5,
+          "y": 15,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "neuro_ward"
+          "visualRoomId": "neuro_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-ENDO",
           "kind": "ward",
           "label": "Endo Ward",
-          "x": 19,
-          "y": 17,
-          "w": 11,
+          "x": 21,
+          "y": 15,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "endo_ward"
+          "visualRoomId": "endo_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-GENSURG",
           "kind": "ward",
           "label": "Gen Surg Ward",
-          "x": 32,
-          "y": 17,
-          "w": 11,
+          "x": 37,
+          "y": 15,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "gensurg_ward"
+          "visualRoomId": "gensurg_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-ORTHO",
           "kind": "ward",
           "label": "Ortho Ward",
-          "x": 45,
-          "y": 17,
-          "w": 11,
+          "x": 5,
+          "y": 25,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "ortho_ward"
+          "visualRoomId": "ortho_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-OBGYN",
           "kind": "ward",
           "label": "OB-GYN Ward",
-          "x": 58,
-          "y": 17,
-          "w": 11,
+          "x": 21,
+          "y": 25,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
               "side": "bottom",
-              "offset": 4,
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "obgyn_ward"
+          "visualRoomId": "obgyn_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-PEDS",
           "kind": "ward",
           "label": "Peds Ward",
-          "x": 6,
-          "y": 28,
-          "w": 11,
+          "x": 37,
+          "y": 25,
+          "w": 14,
           "h": 8,
           "accent": "#76c59d",
           "doors": [
             {
-              "side": "top",
-              "offset": 4,
+              "side": "bottom",
+              "offset": 5.5,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "bed",
-              "x": 2,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 1.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
             },
             {
               "type": "bed",
-              "x": 7,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.3
+              "x": 3.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 2.35,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 1.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 3.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 6.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 8.55,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
+            },
+            {
+              "type": "bed",
+              "x": 11.05,
+              "y": 5.15,
+              "w": 2,
+              "h": 0.95
             }
           ],
-          "visualRoomId": "peds_ward"
+          "visualRoomId": "peds_ward",
+          "maxBeds": 10
         },
         {
           "id": "R-WARD-DOCTOR-OFFICE",
           "kind": "doctor_office",
           "label": "Doctor Office",
-          "x": 19,
-          "y": 28,
-          "w": 11,
-          "h": 8,
+          "x": 54,
+          "y": 15,
+          "w": 23,
+          "h": 7,
           "accent": "#dca768",
           "doors": [
             {
-              "side": "top",
-              "offset": 4,
+              "side": "bottom",
+              "offset": 10,
               "length": 3
             }
           ],
           "items": [
             {
               "type": "desk",
-              "x": 3,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.2
+              "x": 9,
+              "y": 2.6,
+              "w": 4,
+              "h": 1.1
             }
           ],
           "visualRoomId": "doctor_office"
@@ -2160,15 +2673,15 @@
           "id": "R-WARD-DIAGNOSTIC-CENTER",
           "kind": "lab",
           "label": "Diagnostic Center",
-          "x": 32,
-          "y": 28,
-          "w": 11,
-          "h": 8,
+          "x": 67,
+          "y": 24,
+          "w": 10,
+          "h": 7,
           "accent": "#55b8c8",
           "doors": [
             {
-              "side": "top",
-              "offset": 4,
+              "side": "bottom",
+              "offset": 3.5,
               "length": 3
             }
           ],
@@ -2176,9 +2689,9 @@
             {
               "type": "screen",
               "x": 3,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.2
+              "y": 2.8,
+              "w": 3.1,
+              "h": 1.1
             }
           ],
           "visualRoomId": "diagnostic_center"
@@ -2187,15 +2700,15 @@
           "id": "R-WARD-DISCHARGE-DESK",
           "kind": "registration",
           "label": "Discharge Desk",
-          "x": 45,
-          "y": 28,
-          "w": 11,
-          "h": 8,
+          "x": 54,
+          "y": 33,
+          "w": 10,
+          "h": 7,
           "accent": "#c79b69",
           "doors": [
             {
               "side": "top",
-              "offset": 4,
+              "offset": 3.5,
               "length": 3
             }
           ],
@@ -2203,9 +2716,9 @@
             {
               "type": "desk",
               "x": 3,
-              "y": 3,
-              "w": 3.4,
-              "h": 1.2
+              "y": 2.8,
+              "w": 3.1,
+              "h": 1.1
             }
           ],
           "visualRoomId": "discharge_desk"
@@ -2214,10 +2727,10 @@
           "id": "R-F5-ELEVATOR",
           "kind": "elevator",
           "label": "5F Elevator",
-          "x": 62,
-          "y": 32,
+          "x": 67,
+          "y": 33,
           "w": 10,
-          "h": 10,
+          "h": 9,
           "accent": "#d7b07b",
           "doors": [
             {
@@ -2230,7 +2743,7 @@
             {
               "type": "elevator",
               "x": 3.2,
-              "y": 3.7,
+              "y": 3.4,
               "w": 3.6,
               "h": 1.6
             }
@@ -2240,5 +2753,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-06-12T05:12:31.234Z"
+  "updatedAt": "2026-06-12T14:56:43.623Z"
 }

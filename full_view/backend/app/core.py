@@ -180,7 +180,7 @@ def request_schema(request_type):
         "movement_request": {
             **base,
             "required": ["patient_id", "encounter_id", "event_id", "from_room_id", "to_room_id"],
-            "properties": {**base["properties"], "event_id": {"type": "string"}, "from_room_id": {"type": "string", "pattern": "R-*"}, "to_room_id": {"type": "string", "pattern": "R-*"}, "staff_id": {"type": "string", "description": "Optional Fullview standard escort staff id, e.g. N-WD-001."}},
+            "properties": {**base["properties"], "event_id": {"type": "string"}, "from_room_id": {"type": "string", "pattern": "R-*"}, "to_room_id": {"type": "string", "pattern": "R-*"}, "staff_id": {"type": "string", "description": "Optional Fullview standard escort staff id, e.g. NURSE_RESP_01."}},
         },
         "transfer_request": {
             **base,
@@ -195,7 +195,7 @@ def request_schema(request_type):
         "clinical_event": {
             **base,
             "required": ["patient_id", "event_type", "summary"],
-            "properties": {**base["properties"], "event_type": {"type": "string"}, "event_id": {"type": "string"}, "consultation_id": {"type": "string"}, "recommendations": {"type": "array"}, "staffId": {"type": "string", "description": "Fullview standard staff id, e.g. N-WD-001 or D-WD-001."}, "fromRoomId": {"type": "string", "pattern": "R-*"}, "toRoomId": {"type": "string", "pattern": "R-*"}, "returnRoomId": {"type": "string", "pattern": "R-*"}, "durationSeconds": {"type": "integer"}},
+            "properties": {**base["properties"], "event_type": {"type": "string"}, "event_id": {"type": "string"}, "consultation_id": {"type": "string"}, "recommendations": {"type": "array"}, "staffId": {"type": "string", "description": "Fullview standard staff id, e.g. NURSE_RESP_01 or DOCTOR_RESP_01."}, "fromRoomId": {"type": "string", "pattern": "R-*"}, "toRoomId": {"type": "string", "pattern": "R-*"}, "returnRoomId": {"type": "string", "pattern": "R-*"}, "durationSeconds": {"type": "integer"}},
         },
     }.get(request_type, base)
 
@@ -1211,7 +1211,7 @@ def movement_example_for(department_id, patient_id, encounter_id):
     if department_id == "ward" and example["event_id"] == "WARD_TO_DIAGNOSTIC_MOVE":
         example["from_room_id"] = "R-WARD-CARD"
         example["to_room_id"] = "R-WARD-DIAGNOSTIC-CENTER"
-        example["staff_id"] = "N-WD-001"
+        example["staff_id"] = "NURSE_CARD_01"
         example["reason"] = "nurse escorts patient to diagnostic center"
     return example
 
@@ -1269,9 +1269,9 @@ def clinical_example_for(department_id, patient_id, encounter_id):
             "encounter_id": encounter_id,
             "event_type": "WARD_NURSE_ORDER_VISIT",
             "event_id": "WARD_NURSE_ORDER_VISIT",
-            "staffId": "N-WD-001",
+            "staffId": "NURSE_RESP_01",
             "fromRoomId": "R-WARD-NURSE-STATION",
-            "toRoomId": "R-WARD-CARD",
+            "toRoomId": "R-WARD-RESP",
             "returnRoomId": "R-WARD-NURSE-STATION",
             "durationSeconds": 8,
             "reason": "nurse execute_immediate",
@@ -1282,9 +1282,9 @@ def clinical_example_for(department_id, patient_id, encounter_id):
                     "encounter_id": encounter_id,
                     "event_type": "WARD_DOCTOR_ROUND_VISIT",
                     "event_id": "WARD_DOCTOR_ROUND_VISIT",
-                    "staffId": "D-WD-001",
+                    "staffId": "DOCTOR_RESP_01",
                     "fromRoomId": "R-WARD-DOCTOR-OFFICE",
-                    "toRoomId": "R-WARD-CARD",
+                    "toRoomId": "R-WARD-RESP",
                     "returnRoomId": "R-WARD-DOCTOR-OFFICE",
                     "durationSeconds": 9,
                     "reason": "doctor ward round",

@@ -2,7 +2,7 @@ import { ELEVATOR_SPAWN, FLOOR_PLATE, TILE, WORLD } from "./layout.js";
 import { DEPARTMENT_STATUS, ROOM_KIND_LABELS } from "./status.js";
 
 const MAP_CONFIG_FILE = "./map-config.json";
-const MAP_CONFIG_STORAGE_KEY = "sim-hospital-map-config";
+const MAP_CONFIG_STORAGE_KEY = "sim-hospital-map-config-ward-beds-20260612";
 
 export { DEPARTMENT_STATUS, FLOOR_PLATE, ROOM_KIND_LABELS, TILE, WORLD };
 

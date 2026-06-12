@@ -687,32 +687,23 @@
       "role": "nurse",
       "name": "Nurse Bella Lin",
       "department": "Ward",
-      "roomId": "R-WARD-NURSE-STATION",
-      "relX": 0.5327272727272727,
-      "relY": 0.615,
       "gender": "female",
       "pose": "standing",
       "phase": 5.8,
-      "available": true,
+      "available": false,
       "local_person_id": "nurse-ward-station-a",
       "staff_id": "N-WD-001",
       "employee_id": "N-WD-001",
       "provider_id": "N-WD-001",
       "department_id": "ward",
-      "current_location": {
-        "room_id": "R-WARD-NURSE-STATION"
-      },
       "visual": {
-        "pose": "standing",
-        "rel_x": 0.5327272727272727,
-        "rel_y": 0.615
+        "pose": "standing"
       },
       "availability": {
-        "available": true
+        "available": false
       },
-      "room_id": "R-WARD-NURSE-STATION",
-      "rel_x": 0.5327272727272727,
-      "rel_y": 0.615
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "nurse-ward-station-b",
@@ -721,32 +712,23 @@
       "role": "nurse",
       "name": "Nurse Leo Chen",
       "department": "Ward",
-      "roomId": "R-WARD-NURSE-STATION",
-      "relX": 0.45818181818181813,
-      "relY": 0.615,
       "gender": "male",
       "pose": "walking",
       "phase": 5.8,
-      "available": true,
+      "available": false,
       "local_person_id": "nurse-ward-station-b",
       "staff_id": "N-WD-002",
       "employee_id": "N-WD-002",
       "provider_id": "N-WD-002",
       "department_id": "ward",
-      "current_location": {
-        "room_id": "R-WARD-NURSE-STATION"
-      },
       "visual": {
-        "pose": "walking",
-        "rel_x": 0.45818181818181813,
-        "rel_y": 0.615
+        "pose": "walking"
       },
       "availability": {
-        "available": true
+        "available": false
       },
-      "room_id": "R-WARD-NURSE-STATION",
-      "rel_x": 0.45818181818181813,
-      "rel_y": 0.615
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "doctor-ward-office",
@@ -755,32 +737,23 @@
       "role": "doctor",
       "name": "Dr. Victor Shen",
       "department": "Ward",
-      "roomId": "R-WARD-DOCTOR-OFFICE",
-      "relX": 0.28,
-      "relY": 0.58,
       "gender": "male",
       "pose": "standing",
       "phase": 5.22,
-      "available": true,
+      "available": false,
       "local_person_id": "doctor-ward-office",
       "staff_id": "D-WD-001",
       "employee_id": "D-WD-001",
       "provider_id": "D-WD-001",
       "department_id": "ward",
-      "current_location": {
-        "room_id": "R-WARD-DOCTOR-OFFICE"
-      },
       "visual": {
-        "pose": "standing",
-        "rel_x": 0.28,
-        "rel_y": 0.58
+        "pose": "standing"
       },
       "availability": {
-        "available": true
+        "available": false
       },
-      "room_id": "R-WARD-DOCTOR-OFFICE",
-      "rel_x": 0.28,
-      "rel_y": 0.58
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "doctor-ward-round",
@@ -789,32 +762,23 @@
       "role": "doctor",
       "name": "Dr. Rachel Xu",
       "department": "Ward",
-      "roomId": "R-WARD-RESP",
-      "relX": 0.5327272727272727,
-      "relY": 0.615,
       "gender": "female",
       "pose": "monitoring",
       "phase": 4.93,
-      "available": true,
+      "available": false,
       "local_person_id": "doctor-ward-round",
       "staff_id": "D-WD-002",
       "employee_id": "D-WD-002",
       "provider_id": "D-WD-002",
       "department_id": "ward",
-      "current_location": {
-        "room_id": "R-WARD-RESP"
-      },
       "visual": {
-        "pose": "monitoring",
-        "rel_x": 0.5327272727272727,
-        "rel_y": 0.615
+        "pose": "monitoring"
       },
       "availability": {
-        "available": true
+        "available": false
       },
-      "room_id": "R-WARD-RESP",
-      "rel_x": 0.5327272727272727,
-      "rel_y": 0.615
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "nurse-ward-room-c",
@@ -823,32 +787,23 @@
       "role": "nurse",
       "name": "Nurse Ivy Deng",
       "department": "Ward",
-      "roomId": "R-WARD-GENSURG",
-      "relX": 0.28,
-      "relY": 0.58,
       "gender": "female",
       "pose": "monitoring",
       "phase": 4.93,
-      "available": true,
+      "available": false,
       "local_person_id": "nurse-ward-room-c",
       "staff_id": "N-WD-003",
       "employee_id": "N-WD-003",
       "provider_id": "N-WD-003",
       "department_id": "ward",
-      "current_location": {
-        "room_id": "R-WARD-GENSURG"
-      },
       "visual": {
-        "pose": "monitoring",
-        "rel_x": 0.28,
-        "rel_y": 0.58
+        "pose": "monitoring"
       },
       "availability": {
-        "available": true
+        "available": false
       },
-      "room_id": "R-WARD-GENSURG",
-      "rel_x": 0.28,
-      "rel_y": 0.58
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "stress-nurse-er-triage",
@@ -1101,26 +1056,17 @@
       "gender": "male",
       "department": "Ward",
       "department_id": "ward",
-      "roomId": "R-WARD-GASTRO",
-      "room_id": "R-WARD-GASTRO",
-      "current_location": {
-        "room_id": "R-WARD-GASTRO"
-      },
-      "relX": 0.6,
-      "relY": 0.58,
-      "rel_x": 0.6,
-      "rel_y": 0.58,
       "pose": "monitoring",
       "phase": 0,
-      "available": true,
+      "available": false,
       "availability": {
-        "available": true
+        "available": false
       },
       "visual": {
-        "pose": "monitoring",
-        "rel_x": 0.6,
-        "rel_y": 0.58
-      }
+        "pose": "monitoring"
+      },
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "stress-nurse-ward-resp",
@@ -1135,26 +1081,17 @@
       "gender": "female",
       "department": "Ward",
       "department_id": "ward",
-      "roomId": "R-WARD-RESP",
-      "room_id": "R-WARD-RESP",
-      "current_location": {
-        "room_id": "R-WARD-RESP"
-      },
-      "relX": 0.45818181818181813,
-      "relY": 0.615,
-      "rel_x": 0.45818181818181813,
-      "rel_y": 0.615,
       "pose": "monitoring",
       "phase": 0,
-      "available": true,
+      "available": false,
       "availability": {
-        "available": true
+        "available": false
       },
       "visual": {
-        "pose": "monitoring",
-        "rel_x": 0.45818181818181813,
-        "rel_y": 0.615
-      }
+        "pose": "monitoring"
+      },
+      "legacy": true,
+      "hidden": true
     },
     {
       "id": "porter-1f-01",
@@ -3241,6 +3178,1329 @@
       "relY": 0.58,
       "rel_x": 0.5,
       "rel_y": 0.58
+    },
+    {
+      "id": "nurse-01",
+      "employeeId": "NURSE_01",
+      "employee_id": "NURSE_01",
+      "staff_id": "NURSE_01",
+      "provider_id": "NURSE_01",
+      "local_person_id": "nurse-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "医院前台登记护士",
+      "department": "住院部入院登记",
+      "department_id": "ward",
+      "roomId": "R-WARD-WARD-ADMISSION",
+      "room_id": "R-WARD-WARD-ADMISSION",
+      "current_location": {
+        "room_id": "R-WARD-WARD-ADMISSION"
+      },
+      "relX": 0.45,
+      "relY": 0.58,
+      "rel_x": 0.45,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.45,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false
+    },
+    {
+      "id": "charge-nurse-01",
+      "employeeId": "CHARGE_NURSE_01",
+      "employee_id": "CHARGE_NURSE_01",
+      "staff_id": "CHARGE_NURSE_01",
+      "provider_id": "CHARGE_NURSE_01",
+      "local_person_id": "charge-nurse-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "病区护士长",
+      "department": "住院部",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.42,
+      "relY": 0.58,
+      "rel_x": 0.42,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.42,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false
+    },
+    {
+      "id": "doctor-resp-01",
+      "employeeId": "DOCTOR_RESP_01",
+      "employee_id": "DOCTOR_RESP_01",
+      "staff_id": "DOCTOR_RESP_01",
+      "provider_id": "DOCTOR_RESP_01",
+      "local_person_id": "doctor-resp-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "呼吸内科医生01",
+      "department": "呼吸内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.34,
+      "relY": 0.44,
+      "rel_x": 0.34,
+      "rel_y": 0.44,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.34,
+        "rel_y": 0.44
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "RESP"
+    },
+    {
+      "id": "nurse-resp-01",
+      "employeeId": "NURSE_RESP_01",
+      "employee_id": "NURSE_RESP_01",
+      "staff_id": "NURSE_RESP_01",
+      "provider_id": "NURSE_RESP_01",
+      "local_person_id": "nurse-resp-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "呼吸内科护士01",
+      "department": "呼吸内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.24,
+      "relY": 0.46,
+      "rel_x": 0.24,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.24,
+        "rel_y": 0.46
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "RESP",
+      "bed_coverage": {
+        "room_id": "R-WARD-RESP",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-RESP-01",
+          "B-WARD-RESP-02",
+          "B-WARD-RESP-03",
+          "B-WARD-RESP-04",
+          "B-WARD-RESP-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-resp-02",
+      "employeeId": "NURSE_RESP_02",
+      "employee_id": "NURSE_RESP_02",
+      "staff_id": "NURSE_RESP_02",
+      "provider_id": "NURSE_RESP_02",
+      "local_person_id": "nurse-resp-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "呼吸内科护士02",
+      "department": "呼吸内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.3,
+      "relY": 0.58,
+      "rel_x": 0.3,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.3,
+        "rel_y": 0.58
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "RESP",
+      "bed_coverage": {
+        "room_id": "R-WARD-RESP",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-RESP-06",
+          "B-WARD-RESP-07",
+          "B-WARD-RESP-08",
+          "B-WARD-RESP-09",
+          "B-WARD-RESP-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-card-01",
+      "employeeId": "DOCTOR_CARD_01",
+      "employee_id": "DOCTOR_CARD_01",
+      "staff_id": "DOCTOR_CARD_01",
+      "provider_id": "DOCTOR_CARD_01",
+      "local_person_id": "doctor-card-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "心血管内科医生01",
+      "department": "心血管内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.46,
+      "relY": 0.44,
+      "rel_x": 0.46,
+      "rel_y": 0.44,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.44
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "CARD"
+    },
+    {
+      "id": "nurse-card-01",
+      "employeeId": "NURSE_CARD_01",
+      "employee_id": "NURSE_CARD_01",
+      "staff_id": "NURSE_CARD_01",
+      "provider_id": "NURSE_CARD_01",
+      "local_person_id": "nurse-card-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "心血管内科护士01",
+      "department": "心血管内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.36,
+      "relY": 0.46,
+      "rel_x": 0.36,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.36,
+        "rel_y": 0.46
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "CARD",
+      "bed_coverage": {
+        "room_id": "R-WARD-CARD",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-CARD-01",
+          "B-WARD-CARD-02",
+          "B-WARD-CARD-03",
+          "B-WARD-CARD-04",
+          "B-WARD-CARD-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-card-02",
+      "employeeId": "NURSE_CARD_02",
+      "employee_id": "NURSE_CARD_02",
+      "staff_id": "NURSE_CARD_02",
+      "provider_id": "NURSE_CARD_02",
+      "local_person_id": "nurse-card-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "心血管内科护士02",
+      "department": "心血管内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.42,
+      "relY": 0.58,
+      "rel_x": 0.42,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.42,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "CARD",
+      "bed_coverage": {
+        "room_id": "R-WARD-CARD",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-CARD-06",
+          "B-WARD-CARD-07",
+          "B-WARD-CARD-08",
+          "B-WARD-CARD-09",
+          "B-WARD-CARD-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-gastro-01",
+      "employeeId": "DOCTOR_GASTRO_01",
+      "employee_id": "DOCTOR_GASTRO_01",
+      "staff_id": "DOCTOR_GASTRO_01",
+      "provider_id": "DOCTOR_GASTRO_01",
+      "local_person_id": "doctor-gastro-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "消化内科医生01",
+      "department": "消化内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.5800000000000001,
+      "relY": 0.44,
+      "rel_x": 0.5800000000000001,
+      "rel_y": 0.44,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5800000000000001,
+        "rel_y": 0.44
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.64,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GASTRO"
+    },
+    {
+      "id": "nurse-gastro-01",
+      "employeeId": "NURSE_GASTRO_01",
+      "employee_id": "NURSE_GASTRO_01",
+      "staff_id": "NURSE_GASTRO_01",
+      "provider_id": "NURSE_GASTRO_01",
+      "local_person_id": "nurse-gastro-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "消化内科护士01",
+      "department": "消化内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.48,
+      "relY": 0.46,
+      "rel_x": 0.48,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.48,
+        "rel_y": 0.46
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GASTRO",
+      "bed_coverage": {
+        "room_id": "R-WARD-GASTRO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-GASTRO-01",
+          "B-WARD-GASTRO-02",
+          "B-WARD-GASTRO-03",
+          "B-WARD-GASTRO-04",
+          "B-WARD-GASTRO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-gastro-02",
+      "employeeId": "NURSE_GASTRO_02",
+      "employee_id": "NURSE_GASTRO_02",
+      "staff_id": "NURSE_GASTRO_02",
+      "provider_id": "NURSE_GASTRO_02",
+      "local_person_id": "nurse-gastro-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "消化内科护士02",
+      "department": "消化内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.54,
+      "relY": 0.58,
+      "rel_x": 0.54,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.54,
+        "rel_y": 0.58
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GASTRO",
+      "bed_coverage": {
+        "room_id": "R-WARD-GASTRO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-GASTRO-06",
+          "B-WARD-GASTRO-07",
+          "B-WARD-GASTRO-08",
+          "B-WARD-GASTRO-09",
+          "B-WARD-GASTRO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-neuro-01",
+      "employeeId": "DOCTOR_NEURO_01",
+      "employee_id": "DOCTOR_NEURO_01",
+      "staff_id": "DOCTOR_NEURO_01",
+      "provider_id": "DOCTOR_NEURO_01",
+      "local_person_id": "doctor-neuro-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "神经内科医生01",
+      "department": "神经内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.34,
+      "relY": 0.56,
+      "rel_x": 0.34,
+      "rel_y": 0.56,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.34,
+        "rel_y": 0.56
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "NEURO"
+    },
+    {
+      "id": "nurse-neuro-01",
+      "employeeId": "NURSE_NEURO_01",
+      "employee_id": "NURSE_NEURO_01",
+      "staff_id": "NURSE_NEURO_01",
+      "provider_id": "NURSE_NEURO_01",
+      "local_person_id": "nurse-neuro-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "神经内科护士01",
+      "department": "神经内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6,
+      "relY": 0.46,
+      "rel_x": 0.6,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6,
+        "rel_y": 0.46
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "NEURO",
+      "bed_coverage": {
+        "room_id": "R-WARD-NEURO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-NEURO-01",
+          "B-WARD-NEURO-02",
+          "B-WARD-NEURO-03",
+          "B-WARD-NEURO-04",
+          "B-WARD-NEURO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-neuro-02",
+      "employeeId": "NURSE_NEURO_02",
+      "employee_id": "NURSE_NEURO_02",
+      "staff_id": "NURSE_NEURO_02",
+      "provider_id": "NURSE_NEURO_02",
+      "local_person_id": "nurse-neuro-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "神经内科护士02",
+      "department": "神经内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6599999999999999,
+      "relY": 0.58,
+      "rel_x": 0.6599999999999999,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6599999999999999,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "NEURO",
+      "bed_coverage": {
+        "room_id": "R-WARD-NEURO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-NEURO-06",
+          "B-WARD-NEURO-07",
+          "B-WARD-NEURO-08",
+          "B-WARD-NEURO-09",
+          "B-WARD-NEURO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-endo-01",
+      "employeeId": "DOCTOR_ENDO_01",
+      "employee_id": "DOCTOR_ENDO_01",
+      "staff_id": "DOCTOR_ENDO_01",
+      "provider_id": "DOCTOR_ENDO_01",
+      "local_person_id": "doctor-endo-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "内分泌科医生01",
+      "department": "内分泌科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.46,
+      "relY": 0.56,
+      "rel_x": 0.46,
+      "rel_y": 0.56,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.56
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ENDO"
+    },
+    {
+      "id": "nurse-endo-01",
+      "employeeId": "NURSE_ENDO_01",
+      "employee_id": "NURSE_ENDO_01",
+      "staff_id": "NURSE_ENDO_01",
+      "provider_id": "NURSE_ENDO_01",
+      "local_person_id": "nurse-endo-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "内分泌科护士01",
+      "department": "内分泌科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.72,
+      "relY": 0.46,
+      "rel_x": 0.72,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.72,
+        "rel_y": 0.46
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ENDO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ENDO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-ENDO-01",
+          "B-WARD-ENDO-02",
+          "B-WARD-ENDO-03",
+          "B-WARD-ENDO-04",
+          "B-WARD-ENDO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-endo-02",
+      "employeeId": "NURSE_ENDO_02",
+      "employee_id": "NURSE_ENDO_02",
+      "staff_id": "NURSE_ENDO_02",
+      "provider_id": "NURSE_ENDO_02",
+      "local_person_id": "nurse-endo-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "内分泌科护士02",
+      "department": "内分泌科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.78,
+      "relY": 0.58,
+      "rel_x": 0.78,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.78,
+        "rel_y": 0.58
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ENDO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ENDO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-ENDO-06",
+          "B-WARD-ENDO-07",
+          "B-WARD-ENDO-08",
+          "B-WARD-ENDO-09",
+          "B-WARD-ENDO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-gensurg-01",
+      "employeeId": "DOCTOR_GENSURG_01",
+      "employee_id": "DOCTOR_GENSURG_01",
+      "staff_id": "DOCTOR_GENSURG_01",
+      "provider_id": "DOCTOR_GENSURG_01",
+      "local_person_id": "doctor-gensurg-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "普通外科医生01",
+      "department": "普通外科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.5800000000000001,
+      "relY": 0.56,
+      "rel_x": 0.5800000000000001,
+      "rel_y": 0.56,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5800000000000001,
+        "rel_y": 0.56
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 4.05,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GENSURG"
+    },
+    {
+      "id": "nurse-gensurg-01",
+      "employeeId": "NURSE_GENSURG_01",
+      "employee_id": "NURSE_GENSURG_01",
+      "staff_id": "NURSE_GENSURG_01",
+      "provider_id": "NURSE_GENSURG_01",
+      "local_person_id": "nurse-gensurg-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "普通外科护士01",
+      "department": "普通外科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.24,
+      "relY": 0.64,
+      "rel_x": 0.24,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.24,
+        "rel_y": 0.64
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.64,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GENSURG",
+      "bed_coverage": {
+        "room_id": "R-WARD-GENSURG",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-GENSURG-01",
+          "B-WARD-GENSURG-02",
+          "B-WARD-GENSURG-03",
+          "B-WARD-GENSURG-04",
+          "B-WARD-GENSURG-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-gensurg-02",
+      "employeeId": "NURSE_GENSURG_02",
+      "employee_id": "NURSE_GENSURG_02",
+      "staff_id": "NURSE_GENSURG_02",
+      "provider_id": "NURSE_GENSURG_02",
+      "local_person_id": "nurse-gensurg-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "普通外科护士02",
+      "department": "普通外科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.3,
+      "relY": 0.76,
+      "rel_x": 0.3,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.3,
+        "rel_y": 0.76
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.64,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GENSURG",
+      "bed_coverage": {
+        "room_id": "R-WARD-GENSURG",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-GENSURG-06",
+          "B-WARD-GENSURG-07",
+          "B-WARD-GENSURG-08",
+          "B-WARD-GENSURG-09",
+          "B-WARD-GENSURG-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-ortho-01",
+      "employeeId": "DOCTOR_ORTHO_01",
+      "employee_id": "DOCTOR_ORTHO_01",
+      "staff_id": "DOCTOR_ORTHO_01",
+      "provider_id": "DOCTOR_ORTHO_01",
+      "local_person_id": "doctor-ortho-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "骨科医生01",
+      "department": "骨科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.34,
+      "relY": 0.6799999999999999,
+      "rel_x": 0.34,
+      "rel_y": 0.6799999999999999,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.34,
+        "rel_y": 0.6799999999999999
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ORTHO"
+    },
+    {
+      "id": "nurse-ortho-01",
+      "employeeId": "NURSE_ORTHO_01",
+      "employee_id": "NURSE_ORTHO_01",
+      "staff_id": "NURSE_ORTHO_01",
+      "provider_id": "NURSE_ORTHO_01",
+      "local_person_id": "nurse-ortho-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "骨科护士01",
+      "department": "骨科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.36,
+      "relY": 0.64,
+      "rel_x": 0.36,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.36,
+        "rel_y": 0.64
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ORTHO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ORTHO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-ORTHO-01",
+          "B-WARD-ORTHO-02",
+          "B-WARD-ORTHO-03",
+          "B-WARD-ORTHO-04",
+          "B-WARD-ORTHO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-ortho-02",
+      "employeeId": "NURSE_ORTHO_02",
+      "employee_id": "NURSE_ORTHO_02",
+      "staff_id": "NURSE_ORTHO_02",
+      "provider_id": "NURSE_ORTHO_02",
+      "local_person_id": "nurse-ortho-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "骨科护士02",
+      "department": "骨科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.42,
+      "relY": 0.76,
+      "rel_x": 0.42,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.42,
+        "rel_y": 0.76
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ORTHO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ORTHO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-ORTHO-06",
+          "B-WARD-ORTHO-07",
+          "B-WARD-ORTHO-08",
+          "B-WARD-ORTHO-09",
+          "B-WARD-ORTHO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-obgyn-01",
+      "employeeId": "DOCTOR_OBGYN_01",
+      "employee_id": "DOCTOR_OBGYN_01",
+      "staff_id": "DOCTOR_OBGYN_01",
+      "provider_id": "DOCTOR_OBGYN_01",
+      "local_person_id": "doctor-obgyn-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "妇产科医生01",
+      "department": "妇产科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.46,
+      "relY": 0.6799999999999999,
+      "rel_x": 0.46,
+      "rel_y": 0.6799999999999999,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.6799999999999999
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "OBGYN"
+    },
+    {
+      "id": "nurse-obgyn-01",
+      "employeeId": "NURSE_OBGYN_01",
+      "employee_id": "NURSE_OBGYN_01",
+      "staff_id": "NURSE_OBGYN_01",
+      "provider_id": "NURSE_OBGYN_01",
+      "local_person_id": "nurse-obgyn-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "妇产科护士01",
+      "department": "妇产科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.48,
+      "relY": 0.64,
+      "rel_x": 0.48,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.48,
+        "rel_y": 0.64
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "OBGYN",
+      "bed_coverage": {
+        "room_id": "R-WARD-OBGYN",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-OBGYN-01",
+          "B-WARD-OBGYN-02",
+          "B-WARD-OBGYN-03",
+          "B-WARD-OBGYN-04",
+          "B-WARD-OBGYN-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-obgyn-02",
+      "employeeId": "NURSE_OBGYN_02",
+      "employee_id": "NURSE_OBGYN_02",
+      "staff_id": "NURSE_OBGYN_02",
+      "provider_id": "NURSE_OBGYN_02",
+      "local_person_id": "nurse-obgyn-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "妇产科护士02",
+      "department": "妇产科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.54,
+      "relY": 0.76,
+      "rel_x": 0.54,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.54,
+        "rel_y": 0.76
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "OBGYN",
+      "bed_coverage": {
+        "room_id": "R-WARD-OBGYN",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-OBGYN-06",
+          "B-WARD-OBGYN-07",
+          "B-WARD-OBGYN-08",
+          "B-WARD-OBGYN-09",
+          "B-WARD-OBGYN-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-ped-01",
+      "employeeId": "DOCTOR_PED_01",
+      "employee_id": "DOCTOR_PED_01",
+      "staff_id": "DOCTOR_PED_01",
+      "provider_id": "DOCTOR_PED_01",
+      "local_person_id": "doctor-ped-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "儿科医生01",
+      "department": "儿科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.5800000000000001,
+      "relY": 0.6799999999999999,
+      "rel_x": 0.5800000000000001,
+      "rel_y": 0.6799999999999999,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5800000000000001,
+        "rel_y": 0.6799999999999999
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "PED"
+    },
+    {
+      "id": "nurse-ped-01",
+      "employeeId": "NURSE_PED_01",
+      "employee_id": "NURSE_PED_01",
+      "staff_id": "NURSE_PED_01",
+      "provider_id": "NURSE_PED_01",
+      "local_person_id": "nurse-ped-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "儿科护士01",
+      "department": "儿科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6,
+      "relY": 0.64,
+      "rel_x": 0.6,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6,
+        "rel_y": 0.64
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "PED",
+      "bed_coverage": {
+        "room_id": "R-WARD-PEDS",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-PEDS-01",
+          "B-WARD-PEDS-02",
+          "B-WARD-PEDS-03",
+          "B-WARD-PEDS-04",
+          "B-WARD-PEDS-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-ped-02",
+      "employeeId": "NURSE_PED_02",
+      "employee_id": "NURSE_PED_02",
+      "staff_id": "NURSE_PED_02",
+      "provider_id": "NURSE_PED_02",
+      "local_person_id": "nurse-ped-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "儿科护士02",
+      "department": "儿科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6599999999999999,
+      "relY": 0.76,
+      "rel_x": 0.6599999999999999,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6599999999999999,
+        "rel_y": 0.76
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "PED",
+      "bed_coverage": {
+        "room_id": "R-WARD-PEDS",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-PEDS-06",
+          "B-WARD-PEDS-07",
+          "B-WARD-PEDS-08",
+          "B-WARD-PEDS-09",
+          "B-WARD-PEDS-10"
+        ]
+      }
     }
   ]
 }

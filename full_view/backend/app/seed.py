@@ -23,7 +23,7 @@ DEFAULT_BED_CAPACITY_BY_KIND = {
     "icu": 4,
     "rescue": 2,
     "emergency": 2,
-    "ward": 4,
+    "ward": 10,
 }
 
 
