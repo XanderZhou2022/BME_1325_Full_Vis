@@ -3,7 +3,7 @@
   "id": "icu",
   "label": "ICU Patient Moves",
   "sourceFile": "icu-move-rules",
-  "updatedAt": "2026-06-11T10:11:36.749Z",
+  "updatedAt": "2026-06-12T00:00:00.000Z",
   "rules": [
     {
       "id": "icu-move-1",
@@ -228,7 +228,7 @@
       "classification": "跨部门移动",
       "trigger": "ICU 患者病情稳定，可以转普通住院。",
       "rooms": [
-        "icu_transfer",
+        "R-ICU-STATION",
         "R-F3-ELEVATOR",
         "R-F5-ELEVATOR",
         "R-WARD-WARD-ADMISSION",
@@ -254,7 +254,7 @@
         "from": "current_icu_bed_room",
         "to": "R-WARD-WARD-ADMISSION",
         "via": [
-          "icu_transfer",
+          "R-ICU-STATION",
           "R-F3-ELEVATOR",
           "R-F5-ELEVATOR"
         ],
@@ -310,7 +310,7 @@
       "classification": "跨部门移动",
       "trigger": "模拟场景中 ICU 患者需要转回急诊抢救区或急诊复评。",
       "rooms": [
-        "icu_transfer",
+        "R-ICU-STATION",
         "R-F3-ELEVATOR",
         "R-F1-ELEVATOR",
         "R-ED-RED-RESUS",
@@ -332,7 +332,7 @@
           "R-ED-OBSERVATION"
         ],
         "via": [
-          "icu_transfer",
+          "R-ICU-STATION",
           "R-F3-ELEVATOR",
           "R-F1-ELEVATOR"
         ],
@@ -453,6 +453,107 @@
       },
       "sourceFile": "patient-movement-curated",
       "event_id": "ICU_PATIENT_EXIT_HOSPITAL"
+    },
+    {
+      "id": "icu-move-7",
+      "name": "ICU 患者前往 MDT 会诊",
+      "eventId": "ICU_TO_MDT_CONSULT_MOVE",
+      "classification": "ICU会诊移动",
+      "trigger": "ICU 请求 MDT 会诊，需要 Fullview 展示患者从 ICU 床位前往 4F MDT。",
+      "rooms": [
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION",
+        "R-ICU-STATION",
+        "R-F3-ELEVATOR",
+        "R-F4-ELEVATOR",
+        "R-MDT-CALL",
+        "R-MDT-MEETING",
+        "R-MDT-LOUNGE"
+      ],
+      "roomsText": "R-ICU-BEDS-A、R-ICU-BEDS-B、R-ICU-ISOLATION、R-MDT-CALL、R-MDT-MEETING",
+      "agents": "患者、ICU护士、转运人员、MDT会诊团队。",
+      "prechecks": "患者当前在 ICU 床位房间；MDT 目标房间存在；ICU 原床位保留。",
+      "actions": "患者从 ICU 床位经 3F/4F 电梯移动到 MDT 会诊房间。",
+      "successState": "患者在 MDT 会诊房间以 consultation 状态展示；ICU 原床位保留。",
+      "blocking": "患者不在 ICU 床位或目标 MDT 房间不存在时拒绝。",
+      "visualization": "患者以 stretcher 过渡，最终在 MDT 会诊房间显示为 consultation。",
+      "movement": {
+        "schema": "patient-move",
+        "from": "current_icu_bed_room",
+        "to": [
+          "R-MDT-CALL",
+          "R-MDT-MEETING"
+        ],
+        "via": [
+          "R-ICU-STATION",
+          "R-F3-ELEVATOR",
+          "R-F4-ELEVATOR"
+        ],
+        "transport": "stretcher",
+        "acuity": "urgent",
+        "patientFormDuringMove": "stretcher",
+        "finalForm": "consultation",
+        "escortRequired": true,
+        "escortRoles": [
+          "porter",
+          "icu_nurse"
+        ],
+        "equipment": [
+          "portable_monitor",
+          "oxygen",
+          "transport_bag"
+        ],
+        "pathPolicy": {
+          "requiresPath": true,
+          "useElevator": true,
+          "avoidWalls": true,
+          "hallwayPreference": "center",
+          "stopAtDoorBeforeEntering": true
+        },
+        "resourcePolicy": {
+          "lockBeforeMove": true,
+          "releaseSourceOnArrival": false,
+          "occupyTargetOnArrival": true,
+          "keepSourceReservedUntilArrival": true,
+          "retainSourceBed": true,
+          "releaseSourceBed": false
+        },
+        "queuePolicy": {
+          "whenTargetBusy": "queue",
+          "queueRoomId": "R-MDT-LOUNGE",
+          "autoAdvance": true
+        },
+        "failurePolicy": {
+          "onNoPath": "stay_source",
+          "onResourceBlocked": "stay_source",
+          "onEscortUnavailable": "stay_source"
+        },
+        "patient_form_during_move": "stretcher",
+        "final_form": "consultation",
+        "escort_required": true,
+        "escort_roles": [
+          "porter",
+          "icu_nurse"
+        ]
+      },
+      "allowed_sources": [
+        "R-ICU-BEDS-A",
+        "R-ICU-BEDS-B",
+        "R-ICU-ISOLATION"
+      ],
+      "allowed_targets": [
+        "R-MDT-CALL",
+        "R-MDT-MEETING"
+      ],
+      "reject_conditions": [
+        "patient is not currently in an ICU bed room",
+        "target MDT room does not exist",
+        "required ICU nurse or porter is unavailable"
+      ],
+      "notes": "ICU source bed is retained because MDT consultation is not discharge or transfer of care.",
+      "sourceFile": "department-update-20260612",
+      "event_id": "ICU_TO_MDT_CONSULT_MOVE"
     }
   ]
 }

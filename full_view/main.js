@@ -83,6 +83,7 @@ const state = {
   patientMoves: new Map(),
   pendingPatientEvents: new Map(),
   porterMoves: new Map(),
+  staffMoves: new Map(),
   player,
   playerTravel: null,
   selectedEntityId: null,
@@ -202,6 +203,7 @@ function loop(now) {
   updatePlayerTravel(delta);
   updatePatientMoves(delta);
   updatePorterMoves(delta);
+  updateStaffVisitMoves(delta);
   updateCameraControl(now);
 
   render(transition, transitionProgress, now);
@@ -241,8 +243,8 @@ function applyHospitalSnapshot(snapshot, { preserveMoves = true } = {}) {
     };
   });
   state.staff = (snapshot.staff || []).map((member) => {
-    const returning = returningPorterForSnapshotMember(member);
-    if (returning) return returning;
+    const moving = movingStaffForSnapshotMember(member);
+    if (moving) return moving;
     return {
       ...member,
       role: member.role || member.type,
@@ -257,9 +259,11 @@ function applyHospitalSnapshot(snapshot, { preserveMoves = true } = {}) {
   }
 }
 
-function returningPorterForSnapshotMember(member) {
+function movingStaffForSnapshotMember(member) {
   const ids = [member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean);
   for (const id of ids) {
+    const staffVisit = state.staffMoves.get(id);
+    if (staffVisit?.staff) return staffVisit.staff;
     const move = state.porterMoves.get(id);
     if (move?.porter) return move.porter;
   }
@@ -274,6 +278,7 @@ async function pollHospitalEvents() {
     for (const event of result.events || []) {
       state.lastEventSeq = Math.max(state.lastEventSeq, event.eventSeq || 0);
       if (event.accepted && event.animationPlan) startOrQueueBackendPatientMove(event);
+      if (event.accepted && event.staffMovePlan) startStaffVisitMove(event.staffMovePlan, event);
       if (event.accepted && !event.animationPlan && (event.eventId === "PATIENT_DELETE" || event.snapshotRefresh)) {
         refreshHospitalSnapshot({ preserveMoves: false });
       }
@@ -1162,8 +1167,8 @@ function createPorterReturnRoute(startFloor, startPoint, returnFloor, returnPoin
     return { segments: [{ type: "path", floor: returnFloor, waypoints }] };
   }
 
-  const startElevator = roomById(`elevator_${startFloor}`);
-  const returnElevator = roomById(`elevator_${returnFloor}`);
+  const startElevator = roomById(`R-F${startFloor}-ELEVATOR`);
+  const returnElevator = roomById(`R-F${returnFloor}-ELEVATOR`);
   if (!startElevator || !returnElevator) return null;
   const pathToElevator = createRoomPath({
     floorId: startFloor,
@@ -1270,6 +1275,184 @@ function placePorterAfterMove(move) {
   };
 }
 
+function startStaffVisitMove(plan, event = {}) {
+  const staff = findStaff(plan.staffId || plan.staff_id);
+  if (!staff || state.staffMoves.has(staff.id)) return;
+  const fromRoom = roomById(plan.fromRoomId || plan.from_room_id) || roomById(staff.roomId);
+  const targetRoom = roomById(plan.toRoomId || plan.to_room_id);
+  const returnRoom = roomById(plan.returnRoomId || plan.return_room_id) || fromRoom;
+  if (!targetRoom || !returnRoom) {
+    roomReadout.textContent = `No staff route found for ${event.eventId || "staff visit"}`;
+    return;
+  }
+
+  const startPoint = fromRoom ? roomCenter(fromRoom) : { x: staff.x, y: staff.y };
+  const startFloor = fromRoom?.floor ?? staff.floor;
+  staff.floor = startFloor;
+  staff.floor_id = startFloor;
+  staff.x = startPoint.x;
+  staff.y = startPoint.y;
+  staff.roomId = null;
+  staff.room_id = null;
+  staff.locationType = "staff-visit";
+  staff.location_type = "staff-visit";
+
+  const targetPoint = staffVisitPoint(targetRoom, staff, "visit");
+  const returnPoint = staffVisitPoint(returnRoom, staff, "return");
+  const outbound = createStaffRouteSegments(startFloor, startPoint, targetRoom, targetPoint);
+  const inbound = createStaffRouteSegments(targetRoom.floor, targetPoint, returnRoom, returnPoint);
+  if (!outbound.length || !inbound.length) {
+    roomReadout.textContent = `No staff route found for ${event.eventId || "staff visit"}`;
+    return;
+  }
+
+  state.staffMoves.set(staff.id, {
+    staff,
+    plan,
+    returnRoomId: returnRoom.id,
+    returnPoint,
+    speed: 165,
+    segmentIndex: 0,
+    waypointIndex: 0,
+    waitRemaining: Number(plan.durationSeconds ?? plan.duration_seconds ?? 8),
+    segments: [
+      ...outbound,
+      { type: "wait", floor: targetRoom.floor, position: targetPoint },
+      ...inbound,
+    ],
+  });
+  state.selectedEntityId = staff.id;
+  state.selectedRoomId = targetRoom.id;
+  updateRoomReadout();
+}
+
+function updateStaffVisitMoves(delta) {
+  state.staffMoves.forEach((move, staffId) => {
+    const segment = move.segments[move.segmentIndex];
+    if (!segment) {
+      finishStaffVisitMove(staffId, move);
+      return;
+    }
+    if (segment.type === "wait") {
+      move.staff.floor = segment.floor;
+      move.staff.floor_id = segment.floor;
+      move.staff.x = segment.position.x;
+      move.staff.y = segment.position.y;
+      move.waitRemaining -= delta;
+      if (move.waitRemaining <= 0) {
+        move.segmentIndex += 1;
+        move.waypointIndex = 0;
+      }
+      return;
+    }
+    if (segment.type === "floor-switch") {
+      move.staff.floor = segment.floor;
+      move.staff.floor_id = segment.floor;
+      move.staff.x = segment.position.x;
+      move.staff.y = segment.position.y;
+      move.segmentIndex += 1;
+      move.waypointIndex = 0;
+      return;
+    }
+    moveStaffAlongSegment(move, segment, delta);
+  });
+}
+
+function moveStaffAlongSegment(move, segment, delta) {
+  const target = segment.waypoints[move.waypointIndex];
+  if (!target) {
+    move.segmentIndex += 1;
+    move.waypointIndex = 0;
+    return;
+  }
+  const staff = move.staff;
+  staff.floor = segment.floor;
+  staff.floor_id = segment.floor;
+  const dx = target.x - staff.x;
+  const dy = target.y - staff.y;
+  const distanceToTarget = Math.hypot(dx, dy);
+  if (distanceToTarget < 4) {
+    staff.x = target.x;
+    staff.y = target.y;
+    move.waypointIndex += 1;
+    return;
+  }
+  const step = Math.min(distanceToTarget, move.speed * delta);
+  staff.x += (dx / distanceToTarget) * step;
+  staff.y += (dy / distanceToTarget) * step;
+  staff.movePhase = (staff.movePhase || 0) + delta * 8;
+}
+
+function finishStaffVisitMove(staffId, move) {
+  state.staffMoves.delete(staffId);
+  const room = roomById(move.returnRoomId);
+  const staff = move.staff;
+  if (room) {
+    staff.floor = room.floor;
+    staff.floor_id = room.floor;
+    staff.roomId = room.id;
+    staff.room_id = room.id;
+    const rel = relativePointInRoom(move.returnPoint, room);
+    staff.relX = rel.relX;
+    staff.relY = rel.relY;
+    staff.x = move.returnPoint.x;
+    staff.y = move.returnPoint.y;
+  }
+  staff.locationType = "room";
+  staff.location_type = "room";
+  staff.movePhase = 0;
+  if (room) renderRoomInfo(room);
+}
+
+function createStaffRouteSegments(startFloor, startPoint, targetRoom, targetPoint) {
+  const collisions = [...state.geometry.walls, ...propColliders];
+  if (startFloor === targetRoom.floor) {
+    const path = createRoomPath({
+      floorId: targetRoom.floor,
+      start: startPoint,
+      targetRoom,
+      targetPoint,
+      collisions,
+    });
+    return path ? [{ type: "path", floor: targetRoom.floor, waypoints: path }] : [];
+  }
+
+  const startElevator = roomById(`R-F${startFloor}-ELEVATOR`);
+  const targetElevator = roomById(`R-F${targetRoom.floor}-ELEVATOR`);
+  if (!startElevator || !targetElevator) {
+    return [
+      { type: "floor-switch", floor: targetRoom.floor, position: roomCenter(targetRoom) },
+      { type: "path", floor: targetRoom.floor, waypoints: [targetPoint] },
+    ];
+  }
+  const pathToElevator = createRoomPath({
+    floorId: startFloor,
+    start: startPoint,
+    targetRoom: startElevator,
+    targetPoint: roomCenter(startElevator),
+    collisions,
+  });
+  const pathFromElevator = createRoomPath({
+    floorId: targetRoom.floor,
+    start: roomCenter(targetElevator),
+    targetRoom,
+    targetPoint,
+    collisions,
+  });
+  if (!pathToElevator || !pathFromElevator) return [];
+  return [
+    { type: "path", floor: startFloor, waypoints: pathToElevator },
+    { type: "floor-switch", floor: targetRoom.floor, position: roomCenter(targetElevator) },
+    { type: "path", floor: targetRoom.floor, waypoints: pathFromElevator },
+  ];
+}
+
+function staffVisitPoint(room, staff, mode) {
+  const relX = mode === "return" ? (staff.relX || 0.5) : 0.5;
+  const relY = mode === "return" ? (staff.relY || 0.58) : 0.58;
+  return staffPointAvoidingPeopleAndProps(staff, room, roomRelativePoint(room, relX, relY));
+}
+
 function nearestRoomToPoint(rooms, point) {
   if (!rooms.length) return null;
   return rooms
@@ -1285,6 +1468,14 @@ function findPatient(patientId) {
   return state.patients.find((patient) => patient.id === patientId || patient.patientId === patientId) || null;
 }
 
+function findStaff(staffId) {
+  if (!staffId) return null;
+  return state.staff.find((member) => {
+    const ids = [member.id, member.staffId, member.staff_id, member.employeeId, member.employee_id].filter(Boolean);
+    return ids.includes(staffId);
+  }) || null;
+}
+
 function roomById(roomId) {
   return ROOMS.find((room) => room.id === roomId) || null;
 }
@@ -1293,6 +1484,13 @@ function roomCenter(room) {
   return {
     x: (room.x + room.w / 2) * TILE,
     y: (room.y + room.h / 2) * TILE,
+  };
+}
+
+function roomRelativePoint(room, relX, relY) {
+  return {
+    x: (room.x + room.w * Number(relX)) * TILE,
+    y: (room.y + room.h * Number(relY)) * TILE,
   };
 }
 

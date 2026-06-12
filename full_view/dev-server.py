@@ -3274,9 +3274,15 @@ def mirror_rule_index():
 
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    server = ThreadingHTTPServer(("127.0.0.1", port), HospitalViewHandler)
-    print(f"Serving full hospital view at http://127.0.0.1:{port}/")
-    print("Map editor writes to hospital/full_view/map-config.json")
-    print("Rules editor writes to hospital/rules/event-rules/*.json")
-    print("Hospital APIs read/write hospital/full_view/backend-data/*.json")
-    server.serve_forever()
+    try:
+        import uvicorn
+
+        print(f"Serving full hospital view with FastAPI Core at http://127.0.0.1:{port}/")
+        print("SQLite source of truth: hospital/full_view/backend-data/fullview.sqlite")
+        print("Static UI: hospital/full_view/*.html")
+        uvicorn.run("backend.app.main:app", host="127.0.0.1", port=port, reload=False)
+    except Exception as error:
+        print(f"FastAPI Core failed to start ({error}); falling back to legacy JSON dev server.")
+        server = ThreadingHTTPServer(("127.0.0.1", port), HospitalViewHandler)
+        print(f"Serving legacy full hospital view at http://127.0.0.1:{port}/")
+        server.serve_forever()

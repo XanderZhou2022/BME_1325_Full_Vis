@@ -529,7 +529,7 @@ function renderEvents() {
     <article class="console-event ${event.accepted ? "is-accepted" : "is-rejected"}">
       <strong>#${event.eventSeq} ${escapeHtml(event.eventId || "EVENT")}</strong>
       <span>${escapeHtml(event.patientId || "")}</span>
-      <p class="console-event-route">${event.accepted ? formatAnimation(event.animationPlan) : `${escapeHtml(event.reasonCode)}: ${escapeHtml(event.message)}`}</p>
+      <p class="console-event-route">${event.accepted ? formatEventRoute(event) : `${escapeHtml(event.reasonCode)}: ${escapeHtml(event.message)}`}</p>
     </article>
   `).join("") : `<div class="console-detail-empty">No events yet.</div>`;
 }
@@ -681,6 +681,20 @@ function normalizeBedAssignments(assignments, roomId, capacity) {
       patientId: assignment,
     };
   }).filter((assignment, index) => assignment.patientId && index < capacity);
+}
+
+function formatEventRoute(event) {
+  if (event.staffMovePlan) return formatStaffMove(event.staffMovePlan);
+  return formatAnimation(event.animationPlan);
+}
+
+function formatStaffMove(plan) {
+  const staffId = plan.staffId || plan.staff_id || "staff";
+  const from = plan.fromRoomId || plan.from_room_id || "?";
+  const to = plan.toRoomId || plan.to_room_id || "?";
+  const back = plan.returnRoomId || plan.return_room_id || "?";
+  const patient = plan.patientId || plan.patient_id || "";
+  return escapeHtml(`${staffId} ${from} -> ${to} -> ${back}${patient ? ` · ${patient}` : ""}`);
 }
 
 function formatAnimation(plan) {

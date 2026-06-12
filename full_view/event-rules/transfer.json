@@ -294,7 +294,7 @@
       "classification": "跨楼层移动",
       "trigger": "ICU 患者稳定可转普通病区。",
       "rooms": [
-        "icu_transfer",
+        "R-ICU-STATION",
         "R-F3-ELEVATOR",
         "R-F5-ELEVATOR",
         "R-WARD-WARD-ADMISSION"
@@ -311,7 +311,7 @@
         "from": "current_icu_bed_room",
         "to": "R-WARD-WARD-ADMISSION",
         "via": [
-          "icu_transfer",
+          "R-ICU-STATION",
           "R-F3-ELEVATOR",
           "R-F5-ELEVATOR"
         ],

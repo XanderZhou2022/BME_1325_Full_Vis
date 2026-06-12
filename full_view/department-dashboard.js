@@ -291,11 +291,12 @@ async function runClosedLoopScenario() {
 function buildScenarioContext(scenario, runId) {
   const patients = {};
   (scenario.patients || []).forEach((patient) => {
+    const seed = `${patient.key}-${runId}`;
     patients[patient.key] = {
       key: patient.key,
       label: patient.label,
-      patientId: `P-DBG-${patient.key.toUpperCase()}-${runId}`,
-      encounterId: `E-DBG-${patient.key.toUpperCase()}-${runId}`,
+      patientId: `P-${hashHex(seed, 8)}`,
+      encounterId: `E-20260612${runId}-${hashHex(`enc-${seed}`, 4)}`,
       currentRoom: "",
       bedRoom: "",
       discharged: false,
@@ -379,6 +380,15 @@ function timestampRunId() {
   const now = new Date();
   const pad = (value) => String(value).padStart(2, "0");
   return `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+}
+
+function hashHex(value, length) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, "0").slice(0, length);
 }
 
 function delay(ms) {
