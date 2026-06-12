@@ -320,7 +320,6 @@ function legalMoveRulesForSelectedPatient() {
   return state.rules.filter((rule) => (
     !rule.movement?.blocked &&
     rule.categoryId !== "resource-blocking" &&
-    rule.categoryId !== "transfer" &&
     sourceAllowedForRoom(rule, room)
   ));
 }

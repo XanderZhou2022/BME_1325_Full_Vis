@@ -191,7 +191,20 @@ async def hospital_move(request: Request):
         "reason": payload.get("reason") or "console movement",
         "summary": {"source": "console"},
     }
-    return core.handle_department_request(department_id, request_type, normalized, "")
+    response = core.handle_department_request(department_id, request_type, normalized, "")
+    core_response = (response.get("data") or {}).get("coreResponse") if isinstance(response, dict) else None
+    if core_response:
+        return core_response
+    error = (response.get("error") or {}) if isinstance(response, dict) else {}
+    return {
+        "accepted": False,
+        "eventId": event_id,
+        "event_id": event_id,
+        "patientId": patient_id,
+        "patient_id": patient_id,
+        "reasonCode": error.get("code") or "REQUEST_REJECTED",
+        "message": error.get("message") or "Move request was rejected by Fullview Core.",
+    }
 
 
 def console_request_type_for_event(event_id: str | None) -> str:

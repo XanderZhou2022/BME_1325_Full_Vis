@@ -1804,7 +1804,9 @@ function bedPatientPointForPatient(room, patient) {
 
 function bedPatientPointById(room, bedId) {
   if (!bedId) return null;
-  const bed = bedPropsForRoom(room).find((item) => item.bedId === bedId);
+  const bed = bedPropsForRoom(room).find((item) => {
+    return item.bedId === bedId || item.visualBedId === bedId || item.legacyBedId === bedId;
+  });
   return bed ? bedPatientPoint(bed) : null;
 }
 
@@ -1813,8 +1815,14 @@ function bedPropsForRoom(room) {
     .filter((item) => item.floor === room.floor && item.type === "bed" && item.roomId === room.id)
     .map((item, index) => ({
       ...item,
-      bedId: `${room.id}-bed-${String(index + 1).padStart(2, "0")}`,
+      bedId: canonicalBedIdForRoom(room, index),
+      visualBedId: canonicalBedIdForRoom(room, index),
+      legacyBedId: `${room.id}-bed-${String(index + 1).padStart(2, "0")}`,
     }));
+}
+
+function canonicalBedIdForRoom(room, index) {
+  return `${room.id.replace(/^R-/, "B-")}-${String(index + 1).padStart(2, "0")}`;
 }
 
 function bedPatientPoint(item) {
