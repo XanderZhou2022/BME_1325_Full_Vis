@@ -7,6 +7,7 @@ import sqlite3
 from typing import Any
 
 from fastapi import FastAPI, Header, HTTPException, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -16,6 +17,12 @@ from .seed import dump_json, utc_now
 
 
 app = FastAPI(title="Fullview Canonical Core", version="1.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")

@@ -235,6 +235,7 @@ Content-Type: application/json
 
 更详细的接入步骤见：
 
+- [**远程服务器访问与 API 请求指南**](docs/remote-server-access.md) — 各组通过 IP 访问前端、发送请求接入
 - [Fullview 接入手册](docs/fullview-integration-manual.md)
 - [房间与规则变更请求格式](docs/fullview-change-request-format.md)
 - [核心数据标准](full_view/HOSPITAL_CORE_STANDARD.md)

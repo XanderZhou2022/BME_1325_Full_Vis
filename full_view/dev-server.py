@@ -201,12 +201,16 @@ class HospitalViewHandler(SimpleHTTPRequestHandler):
         payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.send_header("Content-Length", str(len(payload)))
         self.end_headers()
         self.wfile.write(payload)
 
     def do_OPTIONS(self):
         self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
@@ -3392,15 +3396,18 @@ def mirror_rule_index():
 
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
+    host = sys.argv[2] if len(sys.argv) > 2 else "0.0.0.0"
     try:
         import uvicorn
 
-        print(f"Serving full hospital view with FastAPI Core at http://127.0.0.1:{port}/")
+        print(f"Serving full hospital view with FastAPI Core at http://{host}:{port}/")
         print("SQLite source of truth: hospital/full_view/backend-data/fullview.sqlite")
         print("Static UI: hospital/full_view/*.html")
-        uvicorn.run("backend.app.main:app", host="127.0.0.1", port=port, reload=False)
+        print("Others can access via your server IP, e.g. http://<your-ip>:{port}/")
+        uvicorn.run("backend.app.main:app", host=host, port=port, reload=False)
     except Exception as error:
         print(f"FastAPI Core failed to start ({error}); falling back to legacy JSON dev server.")
-        server = ThreadingHTTPServer(("127.0.0.1", port), HospitalViewHandler)
-        print(f"Serving legacy full hospital view at http://127.0.0.1:{port}/")
+        server = ThreadingHTTPServer((host, port), HospitalViewHandler)
+        print(f"Serving legacy full hospital view at http://{host}:{port}/")
+        print("Others can access via your server IP, e.g. http://<your-ip>:{port}/")
         server.serve_forever()
