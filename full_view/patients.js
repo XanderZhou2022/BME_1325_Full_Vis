@@ -3,14 +3,14 @@ import { placeInRoom } from "./placement.js";
 export const PATIENTS = [
   // Walking patients use room-relative anchors so layout edits keep them inside valid areas.
   walkingPatient("walk-er-1", "R-ED-PAGER", 0.55, 0.52, "#5f8ec9"),
-  walkingPatient("walk-op-1", "R-OP-OUTPATIENT-WAITING", 0.78, 0.55, "#5f8ec9"),
+  walkingPatient("walk-op-1", "R-OP-QUEUE-INTERNAL", 0.78, 0.55, "#5f8ec9"),
   walkingPatient("walk-mdt-1", "R-MDT-LOUNGE", 0.62, 0.55, "#8f7ed0"),
 
   // Waiting patients in waiting areas.
   waitingPatient("wait-er-1", "R-ED-WAITING", 0.36, 0.62, "#7899c6"),
   waitingPatient("wait-er-2", "R-ED-WAITING", 0.64, 0.62, "#c69072"),
-  waitingPatient("wait-op-1", "R-OP-OUTPATIENT-WAITING", 0.32, 0.62, "#7899c6"),
-  waitingPatient("wait-op-2", "R-OP-OUTPATIENT-WAITING", 0.58, 0.62, "#c69072"),
+  waitingPatient("wait-op-1", "R-OP-QUEUE-INTERNAL", 0.32, 0.62, "#7899c6"),
+  waitingPatient("wait-op-2", "R-OP-QUEUE-SURGERY", 0.58, 0.62, "#c69072"),
   waitingPatient("wait-ward-1", "R-WARD-WARD-ADMISSION", 0.72, 0.58, "#7fa98f"),
 
   // Outpatient consultation scenes.

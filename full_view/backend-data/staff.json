@@ -347,7 +347,7 @@
       "role": "nurse",
       "name": "Nurse Lily Huang",
       "department": "Outpatient Waiting",
-      "roomId": "R-OP-OUTPATIENT-WAITING",
+      "roomId": "R-OP-QUEUE-INTERNAL",
       "relX": 0.5327272727272727,
       "relY": 0.7125,
       "gender": "female",
@@ -360,7 +360,7 @@
       "provider_id": "N-OP-003",
       "department_id": "outpatient",
       "current_location": {
-        "room_id": "R-OP-OUTPATIENT-WAITING"
+        "room_id": "R-OP-QUEUE-INTERNAL"
       },
       "visual": {
         "pose": "walking",
@@ -370,7 +370,7 @@
       "availability": {
         "available": true
       },
-      "room_id": "R-OP-OUTPATIENT-WAITING",
+      "room_id": "R-OP-QUEUE-INTERNAL",
       "rel_x": 0.5327272727272727,
       "rel_y": 0.7125
     },
@@ -954,10 +954,10 @@
       "gender": "male",
       "department": "Outpatient",
       "department_id": "outpatient",
-      "roomId": "R-OP-OUTPATIENT-WAITING",
-      "room_id": "R-OP-OUTPATIENT-WAITING",
+      "roomId": "R-OP-QUEUE-INTERNAL",
+      "room_id": "R-OP-QUEUE-INTERNAL",
       "current_location": {
-        "room_id": "R-OP-OUTPATIENT-WAITING"
+        "room_id": "R-OP-QUEUE-INTERNAL"
       },
       "relX": 0.45818181818181813,
       "relY": 0.615,

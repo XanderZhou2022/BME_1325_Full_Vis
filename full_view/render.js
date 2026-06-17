@@ -21,6 +21,7 @@ const FLOOR_COLORS = {
 const PROP_STYLES = {
   bed: { fill: "#f8e8d0", trim: "#b45e6d" },
   cabinet: { fill: "#b7c58b", trim: "#637f45" },
+  chair: { fill: "#bfa06a", trim: "#765936" },
   desk: { fill: "#c58a58", trim: "#7a4d32" },
   elevator: { fill: "#b9a27d", trim: "#5e5144" },
   reception: { fill: "#d1a15f", trim: "#8a5e35" },

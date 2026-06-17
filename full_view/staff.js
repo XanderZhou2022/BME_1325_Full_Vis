@@ -12,7 +12,7 @@ export const STAFF = [
   doctor("doctor-op-b", "R-OP-CONSULTATION-B", "male", 0.84, 0.58, "seated"),
   doctor("doctor-op-internal", "R-OP-INTERNAL", "male", 0.56, 0.58, "seated"),
   doctor("doctor-op-surgery", "R-OP-SURGERY", "female", 0.56, 0.58, "standing"),
-  nurse("nurse-op-wait", "R-OP-OUTPATIENT-WAITING", "female", 0.45, 0.60, "walking"),
+  nurse("nurse-op-queue", "R-OP-QUEUE-INTERNAL", "female", 0.45, 0.60, "walking"),
 
   nurse("nurse-icu-station-a", "R-ICU-STATION", "female", 0.30, 0.58, "standing"),
   nurse("nurse-icu-station-b", "R-ICU-STATION", "male", 0.62, 0.58, "standing"),

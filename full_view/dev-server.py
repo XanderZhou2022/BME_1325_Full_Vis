@@ -457,7 +457,7 @@ def first_rule_for_request(department_id, request_type):
     if not rules:
         return None
     preferred = {
-        ("outpatient", "movement_request"): "OP_CONSULT_TO_PAYMENT",
+        ("outpatient", "movement_request"): "OP_TRIAGE_TO_SPECIALTY_CONSULT",
         ("emergency", "movement_request"): "ED_TO_DIAGNOSTIC_MOVE",
         ("icu", "movement_request"): "ICU_TO_EXAM_OR_INTERVENTION",
         ("ward", "movement_request"): "WARD_TO_DIAGNOSTIC_MOVE",
@@ -527,13 +527,13 @@ def target_department_for_transfer_rule(rule):
 def source_department_for_rule_value(value):
     values = value if isinstance(value, list) else [value]
     for item in values:
-        if item in {"current_ed_room", "current_ed_bed_room"} or str(item).startswith("ed_"):
+        if item in {"current_ed_room", "current_ed_bed_room"} or str(item).startswith("ed_") or str(item).startswith("R-ED-"):
             return "emergency"
-        if item == "current_op_room" or str(item).endswith("_2") or item == "outpatient_waiting":
+        if item == "current_op_room" or str(item).endswith("_2") or item == "outpatient_waiting" or str(item).startswith("R-OP-"):
             return "outpatient"
-        if item in {"current_icu_bed_room", "source_icu_bed_room", "current_icu_exam_room"} or str(item).startswith("icu_"):
+        if item in {"current_icu_bed_room", "source_icu_bed_room", "current_icu_exam_room"} or str(item).startswith("icu_") or str(item).startswith("R-ICU-"):
             return "icu"
-        if item in {"current_ward_room", "source_ward_room", "target_ward_room"} or "ward" in str(item):
+        if item in {"current_ward_room", "source_ward_room", "target_ward_room"} or "ward" in str(item) or str(item).startswith("R-WARD-"):
             return "ward"
     return None
 
@@ -541,13 +541,13 @@ def source_department_for_rule_value(value):
 def target_department_for_rule_value(value):
     values = value if isinstance(value, list) else [value]
     for item in values:
-        if item in {"icu_admission", "current_icu_bed_room", "source_icu_bed_room"} or str(item).startswith("icu_"):
+        if item in {"icu_admission", "current_icu_bed_room", "source_icu_bed_room"} or str(item).startswith("icu_") or str(item).startswith("R-ICU-"):
             return "icu"
-        if item in {"ward_admission", "target_ward_room", "source_ward_room"} or "ward" in str(item):
+        if item in {"ward_admission", "target_ward_room", "source_ward_room"} or "ward" in str(item) or str(item).startswith("R-WARD-"):
             return "ward"
-        if str(item).startswith("ed_"):
+        if str(item).startswith("ed_") or str(item).startswith("R-ED-"):
             return "emergency"
-        if str(item).endswith("_2") or item == "outpatient_waiting":
+        if str(item).endswith("_2") or item == "outpatient_waiting" or str(item).startswith("R-OP-"):
             return "outpatient"
     return None
 
@@ -710,19 +710,19 @@ def build_closed_loop_debug_scenario():
         "steps": [
             scenario_upsert("opA", "outpatient", "registration_2", "Debug OP A {{runId}}", "门诊闭环 A：咳嗽复诊，需要检查后住院"),
             scenario_move("opA", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "registration_2", "triage_2", "门诊 A 完成挂号后进入分诊"),
-            scenario_move("opA", "outpatient", "OP_TRIAGE_TO_CONSULT_ROOM", "triage_2", "consultation_a_2", "门诊 A 分诊到 consultation_a_2"),
-            scenario_move("opA", "outpatient", "OP_CONSULT_TO_PAYMENT", "consultation_a_2", "payment_2", "门诊 A 诊后缴费"),
+            scenario_move("opA", "outpatient", "OP_TRIAGE_TO_SPECIALTY_CONSULT", "triage_2", "internal_2", "门诊 A 分诊到内科诊室"),
+            scenario_move("opA", "outpatient", "OP_CONSULT_TO_PAYMENT", "internal_2", "payment_2", "门诊 A 诊后缴费"),
             scenario_move("opA", "outpatient", "OP_PAYMENT_TO_LAB", "payment_2", "lab_2", "门诊 A 缴费后检验"),
-            scenario_move("opA", "outpatient", "OP_LAB_RETURN_TO_WAITING", "lab_2", "outpatient_waiting", "门诊 A 检验完成返回候诊"),
-            scenario_move("opA", "outpatient", "OP_SECOND_CONSULT_MOVE", "outpatient_waiting", "consultation_a_2", "门诊 A 复诊回到 consultation_a_2"),
-            scenario_transfer("opA", "outpatient", "OP_TO_WARD_MOVE", "consultation_a_2", "ward_admission", "ward", "门诊 A 转住院"),
+            scenario_move("opA", "outpatient", "OP_LAB_RETURN_TO_WAITING", "lab_2", "R-OP-QUEUE-INTERNAL", "门诊 A 检查完成后到内科门口队列"),
+            scenario_move("opA", "outpatient", "OP_TARGET_DOOR_QUEUE_ADVANCE", "R-OP-QUEUE-INTERNAL", "R-OP-INTERNAL-B", "门诊 A 从内科门口队列进入复诊诊室"),
+            scenario_transfer("opA", "outpatient", "OP_TO_WARD_MOVE", "R-OP-INTERNAL-B", "ward_admission", "ward", "门诊 A 转住院"),
             scenario_move("opA", "ward", "WARD_TO_DIAGNOSTIC_MOVE", "{{opA.currentRoom}}", "diagnostic_center", "住院 A 前往检查中心"),
             scenario_move("opA", "ward", "WARD_DIAGNOSTIC_RETURN", "diagnostic_center", "{{opA.bedRoom}}", "住院 A 检查后返回原病房"),
             scenario_discharge("opA", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "住院 A 完成出院"),
 
             scenario_upsert("opB", "outpatient", "registration_2", "Debug OP B {{runId}}", "门诊闭环 B：皮疹和低热，转外科评估后住院"),
-            scenario_move("opB", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "registration_2", "outpatient_waiting", "门诊 B 挂号后进入候诊区"),
-            scenario_move("opB", "outpatient", "OP_TRIAGE_TO_CONSULT_ROOM", "outpatient_waiting", "surgery_2", "门诊 B 分诊到 surgery_2"),
+            scenario_move("opB", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "registration_2", "triage_2", "门诊 B 挂号后进入分诊"),
+            scenario_move("opB", "outpatient", "OP_TRIAGE_TO_SPECIALTY_CONSULT", "triage_2", "surgery_2", "门诊 B 分诊到 surgery_2"),
             scenario_transfer("opB", "outpatient", "OP_TO_WARD_MOVE", "surgery_2", "ward_admission", "ward", "门诊 B 转住院"),
             scenario_move("opB", "ward", "WARD_BED_TO_BED_MOVE", "{{opB.currentRoom}}", "neuro_ward", "住院 B 从初始病房调整到神经病房"),
             scenario_discharge("opB", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "住院 B 完成出院"),
@@ -856,7 +856,7 @@ def movement_example_for(department_id, patient_id, encounter_id):
     movement = rule.get("movement", {}) if rule else {"from": "ed_waiting", "to": "ed_minor"}
     from_room_id = example_room_for_rule_value(movement.get("from"), department_id, "from")
     to_room_id = example_room_for_rule_value(movement.get("to"), department_id, "to")
-    return {
+    example = {
         "patient_id": patient_id,
         "encounter_id": encounter_id,
         "event_id": event_id,
@@ -864,6 +864,43 @@ def movement_example_for(department_id, patient_id, encounter_id):
         "to_room_id": to_room_id,
         "reason": "dashboard movement debug",
     }
+    if department_id == "outpatient" and event_id == "OP_TRIAGE_TO_SPECIALTY_CONSULT":
+        example.update(
+            {
+                "from_room_id": "R-OP-TRIAGE",
+                "to_room_id": "R-OP-INTERNAL",
+                "reason": "triage sends patient to internal consult slot",
+                "additional_examples": {
+                    "door_queue_when_internal_full": {
+                        "patient_id": patient_id,
+                        "encounter_id": encounter_id,
+                        "event_id": "OP_CURRENT_TO_TARGET_DOOR_QUEUE",
+                        "from_room_id": "R-OP-TRIAGE",
+                        "to_room_id": "R-OP-QUEUE-INTERNAL",
+                        "reason": "internal consult slots are full; wait at internal door queue",
+                    },
+                    "queue_advance_to_internal": {
+                        "patient_id": patient_id,
+                        "encounter_id": encounter_id,
+                        "event_id": "OP_TARGET_DOOR_QUEUE_ADVANCE",
+                        "from_room_id": "R-OP-QUEUE-INTERNAL",
+                        "to_room_id": "R-OP-INTERNAL",
+                        "reason": "internal consult slot is now available",
+                    },
+                    "surgery_procedure": {
+                        "patient_id": patient_id,
+                        "encounter_id": encounter_id,
+                        "event_id": "OP_TRIAGE_TO_SPECIALTY_CONSULT",
+                        "from_room_id": "R-OP-TRIAGE",
+                        "to_room_id": "R-OP-SURGERY-PROCEDURE",
+                        "reason": "surgery sends patient to outpatient procedure room",
+                    },
+                },
+            }
+        )
+    if department_id == "ward" and event_id == "WARD_TO_DIAGNOSTIC_MOVE":
+        example["staff_id"] = "NURSE_RESP_01"
+    return example
 
 
 def transfer_example_for(department_id, patient_id, encounter_id):
@@ -2462,7 +2499,7 @@ def intake_move_request(department, patient, rooms_by_id, patients, request):
         target_room_id = first_triage_target(
             patients,
             primary_room_id="triage_2",
-            waiting_room_id="outpatient_waiting",
+            waiting_room_id="triage_2",
             primary_limit=2,
         )
         event_id = "OP_REGISTRATION_TO_TRIAGE_OR_WAITING"
@@ -2960,6 +2997,8 @@ def normalize_map(map_config):
         floor_id = int(floor.get("id"))
         floor_room_ids = []
         for room in floor.get("rooms", []):
+            if room.get("hidden"):
+                continue
             floor_counts[floor_id] = floor_counts.get(floor_id, 0) + 1
             room_id = room.get("id")
             items = room.get("items", [])

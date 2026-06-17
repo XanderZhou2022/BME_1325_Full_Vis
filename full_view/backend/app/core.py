@@ -525,6 +525,9 @@ def apply_rule_move(conn, department_id, payload, event_type, target_department_
         return rejected_core_response(payload, "ROOM_NOT_FOUND", f"Unknown from_room_id: {from_room_id}.")
     if requested_to_room_id and requested_to_room_id != "exit" and not room_exists(conn, requested_to_room_id):
         return rejected_core_response(payload, "ROOM_NOT_FOUND", f"Unknown to_room_id: {requested_to_room_id}.")
+    room_scope_error = validate_rule_room_scope(conn, rule, payload, patient, from_room_id, requested_to_room_id)
+    if room_scope_error:
+        return rejected_core_response(payload, room_scope_error["code"], room_scope_error["message"], room_scope_error.get("details"))
     source_error = validate_special_rule_source(conn, payload, patient, requested_to_room_id)
     if source_error:
         return rejected_core_response(payload, source_error["code"], source_error["message"])
@@ -535,13 +538,23 @@ def apply_rule_move(conn, department_id, payload, event_type, target_department_
     final_form = movement.get("finalForm") or movement.get("final_form") or "walking"
     resource_policy = movement.get("resourcePolicy") or movement.get("resource_policy") or {}
     target_room_id = resolve_target_room(conn, department_id, target_department_id, requested_to_room_id, final_form)
+    final_form = final_form_for_target(conn, department_id, target_room_id, final_form)
     if not target_room_id and final_form != "hidden":
         code = "ICU_BED_UNAVAILABLE" if target_department_id == "icu" else "WARD_BED_UNAVAILABLE" if target_department_id == "ward" else "BED_UNAVAILABLE"
         event_seq = write_event(conn, event_type, payload, department_id, target_department_id, accepted=False, reason_code=code)
         return rejected_core_response(payload, code, f"No available {target_department_id or department_id} bed/resource.", {"eventSeq": event_seq})
+    resource_error = validate_outpatient_room_resource(conn, department_id, payload, patient, from_room_id, target_room_id)
+    if resource_error:
+        event_seq = write_event(conn, event_type, payload, department_id, target_department_id, accepted=False, reason_code=resource_error["code"])
+        details = {"eventSeq": event_seq, **resource_error.get("details", {})}
+        return rejected_core_response(payload, resource_error["code"], resource_error["message"], details)
     bed_id = None
     source_bed_retained = bool(resource_policy.get("retainSourceBed") or resource_policy.get("retain_source_bed"))
     release_source_bed = bool(resource_policy.get("releaseSourceBed") or resource_policy.get("release_source_bed") or (final_form == "bed" and not source_bed_retained))
+    if department_id == "outpatient" and final_form != "bed" and not source_bed_retained and patient["current_bed_id"]:
+        source_bed_room = retained_patient_bed_room(conn, patient["current_bed_id"], payload["patient_id"])
+        if source_bed_room and source_bed_room == from_room_id:
+            release_source_bed = True
     if release_source_bed:
         release_patient_bed(conn, payload["patient_id"])
     if final_form == "bed" and target_room_id:
@@ -1044,6 +1057,159 @@ def room_exists(conn, room_id):
     return bool(room_id and conn.execute("SELECT 1 FROM locations WHERE room_id=?", (room_id,)).fetchone())
 
 
+def room_row(conn, room_id):
+    if not room_id:
+        return None
+    return conn.execute("SELECT * FROM locations WHERE room_id=?", (room_id,)).fetchone()
+
+
+def room_map_json(row):
+    return json_loads(row["map_json"]) if row else {}
+
+
+def movement_room_values(value):
+    if value is None:
+        return []
+    return value if isinstance(value, list) else [value]
+
+
+def validate_rule_room_scope(conn, rule, payload, patient, from_room_id, requested_to_room_id):
+    movement = rule.get("movement") or {}
+    if from_room_id and from_room_id != "outside" and not rule_room_allowed(conn, movement.get("from"), from_room_id, patient, "from"):
+        return {
+            "code": "SOURCE_NOT_ALLOWED",
+            "message": f"{from_room_id} is not an allowed source for {payload.get('event_id')}.",
+            "details": {"allowedSourceRoomIds": movement_room_values(movement.get("from"))},
+        }
+    if requested_to_room_id and requested_to_room_id != "exit" and not rule_room_allowed(conn, movement.get("to"), requested_to_room_id, patient, "to"):
+        return {
+            "code": "TARGET_NOT_ALLOWED",
+            "message": f"{requested_to_room_id} is not an allowed target for {payload.get('event_id')}.",
+            "details": {"allowedTargetRoomIds": movement_room_values(movement.get("to"))},
+        }
+    return None
+
+
+def rule_room_allowed(conn, value, room_id, patient, direction):
+    values = movement_room_values(value)
+    if not values:
+        return True
+    if room_id in values:
+        return True
+    if "current_room" in values and room_id == patient["current_room_id"]:
+        return True
+    if "current_consult_room" in values and is_outpatient_limited_target(conn, room_id):
+        return True
+    if direction == "to" and any(str(item).startswith("source_") for item in values):
+        retained_room = retained_patient_bed_room(conn, patient["current_bed_id"], patient["patient_id"])
+        if retained_room and retained_room == room_id:
+            return True
+    return False
+
+
+def final_form_for_target(conn, department_id, target_room_id, final_form):
+    row = room_row(conn, target_room_id)
+    if not row or department_id != "outpatient":
+        return final_form
+    if row["capacity_beds"] > 0 and room_map_json(row).get("department_group") == "surgery":
+        return "bed"
+    return final_form
+
+
+def validate_outpatient_room_resource(conn, department_id, payload, patient, from_room_id, target_room_id):
+    if department_id != "outpatient" or not target_room_id:
+        return None
+    event_id = payload.get("event_id")
+    if event_id == "OP_CURRENT_TO_TARGET_DOOR_QUEUE":
+        targets = queue_targets(conn, target_room_id)
+        if not targets:
+            return {"code": "TARGET_NOT_ALLOWED", "message": f"{target_room_id} is not an outpatient door queue."}
+        if any(outpatient_target_available(conn, room_id, patient["patient_id"]) for room_id in targets):
+            return {
+                "code": "TARGET_STILL_AVAILABLE",
+                "message": "A matching target room still has a free slot or bed; do not queue this patient yet.",
+                "details": {"queueFor": targets},
+            }
+        return None
+    if event_id == "OP_TARGET_DOOR_QUEUE_ADVANCE":
+        if from_room_id != patient["current_room_id"]:
+            return {"code": "PATIENT_NOT_IN_MATCHING_QUEUE", "message": "Patient is not currently in the submitted queue room."}
+        targets = queue_targets(conn, from_room_id)
+        if target_room_id not in targets:
+            return {
+                "code": "PATIENT_NOT_IN_MATCHING_QUEUE",
+                "message": f"{target_room_id} is not served by queue {from_room_id}.",
+                "details": {"queueFor": targets},
+            }
+        if not outpatient_target_available(conn, target_room_id, patient["patient_id"]):
+            return {"code": "OUTPATIENT_SLOT_UNAVAILABLE", "message": f"No free outpatient slot or bed in {target_room_id}."}
+        return None
+    if is_outpatient_queue(conn, target_room_id):
+        return None
+    if is_outpatient_limited_target(conn, target_room_id) and not outpatient_target_available(conn, target_room_id, patient["patient_id"]):
+        return {"code": "OUTPATIENT_SLOT_UNAVAILABLE", "message": f"No free outpatient slot or bed in {target_room_id}."}
+    return None
+
+
+def is_outpatient_queue(conn, room_id):
+    row = room_row(conn, room_id)
+    spec = room_map_json(row)
+    return bool(row and row["department_id"] == "outpatient" and (spec.get("queueAnchor") or spec.get("queue_anchor")))
+
+
+def queue_targets(conn, queue_room_id):
+    row = room_row(conn, queue_room_id)
+    spec = room_map_json(row)
+    values = spec.get("queueFor") or spec.get("queue_for") or []
+    return [item for item in values if room_exists(conn, item)]
+
+
+def is_outpatient_limited_target(conn, room_id):
+    row = room_row(conn, room_id)
+    if not row or row["department_id"] != "outpatient":
+        return False
+    if is_outpatient_queue(conn, room_id):
+        return False
+    return row["capacity_beds"] > 0 or consult_slot_count(row) > 0
+
+
+def consult_slot_count(row):
+    spec = room_map_json(row)
+    explicit = spec.get("consultSlots") if spec.get("consultSlots") is not None else spec.get("consult_slots")
+    if explicit is not None:
+        return max(0, int(explicit))
+    kind = row["kind"]
+    if kind not in {"consultation", "internal_medicine", "surgery", "pediatrics", "fever", "obgyn", "lab", "surgery_procedure"}:
+        return 0
+    items = spec.get("items") or []
+    count = sum(1 for item in items if item.get("type") in {"desk", "screen"})
+    return max(1, count)
+
+
+def outpatient_target_available(conn, room_id, patient_id=None):
+    row = room_row(conn, room_id)
+    if not row:
+        return False
+    if row["capacity_beds"] > 0:
+        available = conn.execute("SELECT 1 FROM beds WHERE room_id=? AND status='available' LIMIT 1", (room_id,)).fetchone()
+        retained = patient_id and conn.execute("SELECT 1 FROM beds WHERE room_id=? AND patient_id=? AND status='occupied' LIMIT 1", (room_id, patient_id)).fetchone()
+        return bool(available or retained)
+    slots = consult_slot_count(row)
+    if slots <= 0:
+        return True
+    occupied = conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM patients
+        WHERE current_room_id=?
+          AND status NOT IN ('DISCHARGED', 'DELETED')
+          AND (? IS NULL OR patient_id<>?)
+        """,
+        (room_id, patient_id, patient_id),
+    ).fetchone()[0]
+    return occupied < slots
+
+
 def department_for_room(conn, room_id):
     if not room_id:
         return None
@@ -1175,6 +1341,7 @@ def discharge_event_id_for_department(department_id):
 def first_rule_for_request(department_id, request_type):
     rules = rules_for_department(department_id).get(request_type, [])
     preferred = {
+        ("outpatient", "movement_request"): "OP_TRIAGE_TO_SPECIALTY_CONSULT",
         ("icu", "movement_request"): "ICU_TO_MDT_CONSULT_MOVE",
         ("ward", "movement_request"): "WARD_TO_DIAGNOSTIC_MOVE",
     }.get((department_id, request_type))
@@ -1211,8 +1378,38 @@ def movement_example_for(department_id, patient_id, encounter_id):
     if department_id == "ward" and example["event_id"] == "WARD_TO_DIAGNOSTIC_MOVE":
         example["from_room_id"] = "R-WARD-CARD"
         example["to_room_id"] = "R-WARD-DIAGNOSTIC-CENTER"
-        example["staff_id"] = "NURSE_CARD_01"
+        example["staff_id"] = "NURSE_RESP_01"
         example["reason"] = "nurse escorts patient to diagnostic center"
+    if department_id == "outpatient" and example["event_id"] == "OP_TRIAGE_TO_SPECIALTY_CONSULT":
+        example["from_room_id"] = "R-OP-TRIAGE"
+        example["to_room_id"] = "R-OP-INTERNAL"
+        example["reason"] = "triage sends patient to internal consult slot"
+        example["additional_examples"] = {
+            "door_queue_when_internal_full": {
+                "patient_id": patient_id,
+                "encounter_id": encounter_id,
+                "event_id": "OP_CURRENT_TO_TARGET_DOOR_QUEUE",
+                "from_room_id": "R-OP-TRIAGE",
+                "to_room_id": "R-OP-QUEUE-INTERNAL",
+                "reason": "internal consult slots are full; wait at internal door queue",
+            },
+            "queue_advance_to_internal": {
+                "patient_id": patient_id,
+                "encounter_id": encounter_id,
+                "event_id": "OP_TARGET_DOOR_QUEUE_ADVANCE",
+                "from_room_id": "R-OP-QUEUE-INTERNAL",
+                "to_room_id": "R-OP-INTERNAL",
+                "reason": "internal consult slot is now available",
+            },
+            "surgery_procedure": {
+                "patient_id": patient_id,
+                "encounter_id": encounter_id,
+                "event_id": "OP_TRIAGE_TO_SPECIALTY_CONSULT",
+                "from_room_id": "R-OP-TRIAGE",
+                "to_room_id": "R-OP-SURGERY-PROCEDURE",
+                "reason": "surgery sends patient to outpatient procedure room",
+            },
+        }
     return example
 
 

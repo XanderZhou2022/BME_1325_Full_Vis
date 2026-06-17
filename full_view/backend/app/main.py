@@ -290,7 +290,11 @@ def closed_loop_scenario():
 def build_snapshot():
     with db.connect() as conn:
         floors = snapshot_floors()
-        room_rows = conn.execute("SELECT * FROM locations ORDER BY floor, room_id").fetchall()
+        room_rows = [
+            row
+            for row in conn.execute("SELECT * FROM locations ORDER BY floor, room_id").fetchall()
+            if not core.json_loads(row["map_json"]).get("hidden")
+        ]
         patient_rows = conn.execute("SELECT * FROM patients WHERE status NOT IN ('DISCHARGED', 'DELETED') ORDER BY patient_id").fetchall()
         bed_rows = conn.execute("SELECT * FROM beds ORDER BY room_id, bed_index").fetchall()
         encounter_rows = conn.execute(
@@ -531,7 +535,7 @@ def snapshot_floors():
                 "shortLabel": floor.get("shortLabel") or f"{floor.get('id')}F",
                 "subtitle": floor.get("subtitle") or "",
                 "departmentKinds": floor.get("departmentKinds") or [],
-                "rooms": [room.get("id") for room in floor.get("rooms", [])],
+                "rooms": [room.get("id") for room in floor.get("rooms", []) if not room.get("hidden")],
             }
         )
     return floors
@@ -717,18 +721,18 @@ def build_closed_loop_debug_scenario():
         "steps": [
             scenario_upsert("opA", "outpatient", "R-OP-REGISTRATION", "Debug OP A {{runId}}", "门诊闭环 A：检查后住院"),
             scenario_move("opA", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "R-OP-REGISTRATION", "R-OP-TRIAGE", "门诊 A 完成挂号后进入分诊"),
-            scenario_move("opA", "outpatient", "OP_TRIAGE_TO_CONSULT_ROOM", "R-OP-TRIAGE", "R-OP-CONSULTATION-A", "门诊 A 分诊到诊室 A"),
-            scenario_move("opA", "outpatient", "OP_CONSULT_TO_PAYMENT", "R-OP-CONSULTATION-A", "R-OP-PAYMENT", "门诊 A 诊后缴费"),
+            scenario_move("opA", "outpatient", "OP_TRIAGE_TO_SPECIALTY_CONSULT", "R-OP-TRIAGE", "R-OP-INTERNAL", "门诊 A 分诊到内科诊室"),
+            scenario_move("opA", "outpatient", "OP_CONSULT_TO_PAYMENT", "R-OP-INTERNAL", "R-OP-PAYMENT", "门诊 A 诊后缴费"),
             scenario_move("opA", "outpatient", "OP_PAYMENT_TO_LAB", "R-OP-PAYMENT", "R-OP-LAB", "门诊 A 缴费后检验"),
-            scenario_move("opA", "outpatient", "OP_LAB_RETURN_TO_WAITING", "R-OP-LAB", "R-OP-OUTPATIENT-WAITING", "门诊 A 检验完成返回候诊"),
-            scenario_move("opA", "outpatient", "OP_SECOND_CONSULT_MOVE", "R-OP-OUTPATIENT-WAITING", "R-OP-CONSULTATION-A", "门诊 A 复诊"),
-            scenario_transfer("opA", "outpatient", "OP_TO_WARD_MOVE", "R-OP-CONSULTATION-A", "R-WARD-WARD-ADMISSION", "ward", "门诊 A 转住院"),
+            scenario_move("opA", "outpatient", "OP_LAB_RETURN_TO_WAITING", "R-OP-LAB", "R-OP-QUEUE-INTERNAL", "门诊 A 检查完成后到内科门口队列"),
+            scenario_move("opA", "outpatient", "OP_TARGET_DOOR_QUEUE_ADVANCE", "R-OP-QUEUE-INTERNAL", "R-OP-INTERNAL-B", "门诊 A 从内科门口队列进入复诊诊室"),
+            scenario_transfer("opA", "outpatient", "OP_TO_WARD_MOVE", "R-OP-INTERNAL-B", "R-WARD-WARD-ADMISSION", "ward", "门诊 A 转住院"),
             scenario_move("opA", "ward", "WARD_TO_DIAGNOSTIC_MOVE", "{{opA.currentRoom}}", "R-WARD-DIAGNOSTIC-CENTER", "住院 A 前往检查中心"),
             scenario_move("opA", "ward", "WARD_DIAGNOSTIC_RETURN", "R-WARD-DIAGNOSTIC-CENTER", "{{opA.bedRoom}}", "住院 A 检查后返回原病房"),
             scenario_discharge("opA", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "住院 A 完成出院"),
             scenario_upsert("opB", "outpatient", "R-OP-REGISTRATION", "Debug OP B {{runId}}", "门诊闭环 B：转外科评估后住院"),
-            scenario_move("opB", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "R-OP-REGISTRATION", "R-OP-OUTPATIENT-WAITING", "门诊 B 挂号后候诊"),
-            scenario_move("opB", "outpatient", "OP_TRIAGE_TO_CONSULT_ROOM", "R-OP-OUTPATIENT-WAITING", "R-OP-SURGERY", "门诊 B 分诊到外科"),
+            scenario_move("opB", "outpatient", "OP_REGISTRATION_TO_TRIAGE_OR_WAITING", "R-OP-REGISTRATION", "R-OP-TRIAGE", "门诊 B 挂号后进入分诊"),
+            scenario_move("opB", "outpatient", "OP_TRIAGE_TO_SPECIALTY_CONSULT", "R-OP-TRIAGE", "R-OP-SURGERY", "门诊 B 分诊到外科"),
             scenario_transfer("opB", "outpatient", "OP_TO_WARD_MOVE", "R-OP-SURGERY", "R-WARD-WARD-ADMISSION", "ward", "门诊 B 转住院"),
             scenario_move("opB", "ward", "WARD_BED_TO_BED_MOVE", "{{opB.currentRoom}}", "R-WARD-NEURO", "住院 B 调整到神经病房"),
             scenario_discharge("opB", "ward", "WARD_DISCHARGE_EXIT_HOSPITAL", "住院 B 完成出院"),

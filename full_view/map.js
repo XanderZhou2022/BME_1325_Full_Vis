@@ -2,7 +2,7 @@ import { ELEVATOR_SPAWN, FLOOR_PLATE, TILE, WORLD } from "./layout.js";
 import { DEPARTMENT_STATUS, ROOM_KIND_LABELS } from "./status.js";
 
 const MAP_CONFIG_FILE = "./map-config.json";
-const MAP_CONFIG_STORAGE_KEY = "sim-hospital-map-config-ward-beds-20260612";
+const MAP_CONFIG_STORAGE_KEY = "sim-hospital-map-config-op-anchors-20260617";
 
 export { DEPARTMENT_STATUS, FLOOR_PLATE, ROOM_KIND_LABELS, TILE, WORLD };
 
@@ -72,7 +72,7 @@ function applyMapConfig(config) {
   const props = [];
   const floors = config.floors.map((floor) => {
     const floorId = Number(floor.id);
-    const floorRooms = (floor.rooms || []).map((roomSpec) => {
+    const floorRooms = (floor.rooms || []).filter((roomSpec) => !roomSpec.hidden).map((roomSpec) => {
       const room = normalizeRoom(floorId, roomSpec);
       const roomDoors = (roomSpec.doors || []).map((doorSpec) => normalizeDoor(room.id, doorSpec));
       const roomProps = (roomSpec.items || []).map((itemSpec) => normalizeRoomItem(room, itemSpec));
