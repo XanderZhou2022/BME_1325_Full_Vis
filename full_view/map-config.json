@@ -583,34 +583,24 @@
           "id": "R-OP-QUEUE-DIAGNOSTIC",
           "kind": "waiting",
           "label": "Diagnostic Queue",
-          "x": 32,
+          "x": 50,
           "y": 10.25,
-          "w": 12.2,
+          "w": 7.2,
           "h": 1.65,
           "accent": "#e7d1a1",
           "doors": [
             {
               "side": "top",
-              "offset": 5,
+              "offset": 3,
               "length": 2.2
-            }
-          ],
-          "items": [
-            {
-              "type": "chair",
-              "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
             },
             {
-              "type": "chair",
-              "x": 5,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
+              "side": "right",
+              "offset": 0,
+              "length": 1.65
             }
           ],
+          "items": [],
           "visualRoomId": "diagnostic_queue_2",
           "hidden": false,
           "department_group": "diagnostic",
@@ -891,7 +881,7 @@
           "label": "Internal Queue",
           "x": 41.25,
           "y": 16.95,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -899,19 +889,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -937,7 +925,7 @@
           "label": "Surgery Queue",
           "x": 63,
           "y": 16.95,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -945,19 +933,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1044,7 +1030,7 @@
             {
               "type": "desk",
               "x": 4.5,
-              "y": 2.85,
+              "y": 0.35,
               "w": 2.8,
               "h": 0.75
             }
@@ -1154,7 +1140,7 @@
           "label": "Peds Queue",
           "x": 34,
           "y": 24.85,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1162,19 +1148,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1198,7 +1182,7 @@
           "label": "Fever Queue",
           "x": 48.5,
           "y": 24.85,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1206,19 +1190,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1242,7 +1224,7 @@
           "label": "OB-GYN Queue",
           "x": 63,
           "y": 24.85,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1250,19 +1232,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1441,7 +1421,7 @@
           "label": "Eye Queue",
           "x": 5,
           "y": 32.75,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1449,19 +1429,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1485,7 +1463,7 @@
           "label": "ENT Queue",
           "x": 19.5,
           "y": 32.75,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1493,19 +1471,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1529,7 +1505,7 @@
           "label": "Dentistry Queue",
           "x": 34,
           "y": 32.75,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1537,19 +1513,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1573,7 +1547,7 @@
           "label": "Derm Queue",
           "x": 48.5,
           "y": 32.75,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1581,19 +1555,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1617,7 +1589,7 @@
           "label": "Psych Queue",
           "x": 63,
           "y": 32.75,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1625,19 +1597,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1723,7 +1693,7 @@
           "label": "Rehab Queue",
           "x": 5,
           "y": 40.65,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1731,19 +1701,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -1767,7 +1735,7 @@
           "label": "Pain Queue",
           "x": 19.5,
           "y": 40.65,
-          "w": 12.2,
+          "w": 7.2,
           "h": 2.15,
           "accent": "#e7d1a1",
           "doors": [
@@ -1775,19 +1743,17 @@
               "side": "top",
               "offset": 5,
               "length": 2.2
+            },
+            {
+              "side": "right",
+              "offset": 0,
+              "length": 2.15
             }
           ],
           "items": [
             {
               "type": "chair",
               "x": 2.1,
-              "y": 0.75,
-              "w": 1.15,
-              "h": 0.7
-            },
-            {
-              "type": "chair",
-              "x": 5,
               "y": 0.75,
               "w": 1.15,
               "h": 0.7
@@ -3689,5 +3655,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-06-17T12:52:22.969Z"
+  "updatedAt": "2026-06-24T00:00:00+08:00"
 }

@@ -1,0 +1,4506 @@
+{
+  "staff": [
+    {
+      "id": "nurse-er-a",
+      "employeeId": "N-ER-001",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Emily Carter",
+      "department": "Emergency",
+      "roomId": "R-ED-REGISTRATION",
+      "relX": 0.45818181818181813,
+      "relY": 0.615,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.9,
+      "available": true,
+      "local_person_id": "nurse-er-a",
+      "staff_id": "N-ER-001",
+      "employee_id": "N-ER-001",
+      "provider_id": "N-ER-001",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "R-ED-REGISTRATION"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.45818181818181813,
+        "rel_y": 0.615
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ED-REGISTRATION",
+      "rel_x": 0.45818181818181813,
+      "rel_y": 0.615
+    },
+    {
+      "id": "nurse-er-b",
+      "employeeId": "N-ER-002",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Daniel Lee",
+      "department": "Emergency",
+      "roomId": "R-ED-BEDSIDE-NURSE",
+      "relX": 0.3,
+      "relY": 0.6,
+      "gender": "male",
+      "pose": "walking",
+      "phase": 2.9,
+      "available": true,
+      "local_person_id": "nurse-er-b",
+      "staff_id": "N-ER-002",
+      "employee_id": "N-ER-002",
+      "provider_id": "N-ER-002",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "R-ED-BEDSIDE-NURSE"
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.3,
+        "rel_y": 0.6
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ED-BEDSIDE-NURSE",
+      "rel_x": 0.3,
+      "rel_y": 0.6
+    },
+    {
+      "id": "doctor-er-a",
+      "employeeId": "D-ER-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Michael Chen",
+      "department": "Emergency",
+      "roomId": "R-ED-DOCTOR-ROOM",
+      "relX": 0.28,
+      "relY": 0.58,
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.19,
+      "available": true,
+      "local_person_id": "doctor-er-a",
+      "staff_id": "D-ER-001",
+      "employee_id": "D-ER-001",
+      "provider_id": "D-ER-001",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "R-ED-DOCTOR-ROOM"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.28,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ED-DOCTOR-ROOM",
+      "rel_x": 0.28,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-er-b",
+      "employeeId": "D-ER-002",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Sarah Lin",
+      "department": "Emergency",
+      "roomId": "R-ED-RED-RESUS",
+      "relX": 0.5,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.19,
+      "available": true,
+      "local_person_id": "doctor-er-b",
+      "staff_id": "D-ER-002",
+      "employee_id": "D-ER-002",
+      "provider_id": "D-ER-002",
+      "department_id": "emergency",
+      "current_location": {
+        "room_id": "R-ED-RED-RESUS"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ED-RED-RESUS",
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "nurse-op-reg",
+      "employeeId": "N-OP-001",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Anna Zhou",
+      "department": "Registration",
+      "roomId": "R-OP-REGISTRATION",
+      "relX": 0.45818181818181813,
+      "relY": 0.615,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.4799999999999995,
+      "available": true,
+      "local_person_id": "nurse-op-reg",
+      "staff_id": "N-OP-001",
+      "employee_id": "N-OP-001",
+      "provider_id": "N-OP-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-REGISTRATION"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.45818181818181813,
+        "rel_y": 0.615
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-REGISTRATION",
+      "rel_x": 0.45818181818181813,
+      "rel_y": 0.615
+    },
+    {
+      "id": "nurse-op-triage",
+      "employeeId": "N-OP-002",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Kevin Wu",
+      "department": "Triage",
+      "roomId": "R-OP-TRIAGE",
+      "relX": 0.5327272727272727,
+      "relY": 0.5175,
+      "gender": "male",
+      "pose": "standing",
+      "phase": 4.35,
+      "available": true,
+      "local_person_id": "nurse-op-triage",
+      "staff_id": "N-OP-002",
+      "employee_id": "N-OP-002",
+      "provider_id": "N-OP-002",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-TRIAGE"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5327272727272727,
+        "rel_y": 0.5175
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-TRIAGE",
+      "rel_x": 0.5327272727272727,
+      "rel_y": 0.5175
+    },
+    {
+      "id": "doctor-op-a",
+      "employeeId": "D-OP-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Emma Wang",
+      "department": "Outpatient",
+      "roomId": "R-OP-CONSULTATION-A",
+      "relX": 0.84,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "seated",
+      "phase": 3.19,
+      "available": true,
+      "local_person_id": "doctor-op-a",
+      "staff_id": "D-OP-001",
+      "employee_id": "D-OP-001",
+      "provider_id": "D-OP-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-CONSULTATION-A"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.84,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-CONSULTATION-A",
+      "rel_x": 0.84,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-op-b",
+      "employeeId": "D-OP-002",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Jason Liu",
+      "department": "Outpatient",
+      "roomId": "R-OP-CONSULTATION-B",
+      "relX": 0.84,
+      "relY": 0.58,
+      "gender": "male",
+      "pose": "seated",
+      "phase": 3.19,
+      "available": true,
+      "local_person_id": "doctor-op-b",
+      "staff_id": "D-OP-002",
+      "employee_id": "D-OP-002",
+      "provider_id": "D-OP-002",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-CONSULTATION-B"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.84,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-CONSULTATION-B",
+      "rel_x": 0.84,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-op-internal",
+      "employeeId": "D-IM-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Brian Zhao",
+      "department": "Internal Medicine",
+      "roomId": "R-OP-INTERNAL",
+      "relX": 0.56,
+      "relY": 0.58,
+      "gender": "male",
+      "pose": "seated",
+      "phase": 5.22,
+      "available": true,
+      "local_person_id": "doctor-op-internal",
+      "staff_id": "D-IM-001",
+      "employee_id": "D-IM-001",
+      "provider_id": "D-IM-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-INTERNAL"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.56,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-INTERNAL",
+      "rel_x": 0.56,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-op-surgery",
+      "employeeId": "D-SG-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Olivia Sun",
+      "department": "Surgery Clinic",
+      "roomId": "R-OP-SURGERY",
+      "relX": 0.56,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 4.93,
+      "available": true,
+      "local_person_id": "doctor-op-surgery",
+      "staff_id": "D-SG-001",
+      "employee_id": "D-SG-001",
+      "provider_id": "D-SG-001",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-SURGERY"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.56,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-SURGERY",
+      "rel_x": 0.56,
+      "rel_y": 0.58
+    },
+    {
+      "id": "nurse-op-wait",
+      "employeeId": "N-OP-003",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Lily Huang",
+      "department": "Outpatient Waiting",
+      "roomId": "R-OP-QUEUE-INTERNAL",
+      "relX": 0.5327272727272727,
+      "relY": 0.7125,
+      "gender": "female",
+      "pose": "walking",
+      "phase": 3.7699999999999996,
+      "available": true,
+      "local_person_id": "nurse-op-wait",
+      "staff_id": "N-OP-003",
+      "employee_id": "N-OP-003",
+      "provider_id": "N-OP-003",
+      "department_id": "outpatient",
+      "current_location": {
+        "room_id": "R-OP-QUEUE-INTERNAL"
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5327272727272727,
+        "rel_y": 0.7125
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-OP-QUEUE-INTERNAL",
+      "rel_x": 0.5327272727272727,
+      "rel_y": 0.7125
+    },
+    {
+      "id": "nurse-icu-station-a",
+      "employeeId": "N-ICU-001",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Fiona Yu",
+      "department": "ICU",
+      "roomId": "R-ICU-STATION",
+      "relX": 0.5327272727272727,
+      "relY": 0.615,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 5.51,
+      "available": true,
+      "local_person_id": "nurse-icu-station-a",
+      "staff_id": "N-ICU-001",
+      "employee_id": "N-ICU-001",
+      "provider_id": "N-ICU-001",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "R-ICU-STATION"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5327272727272727,
+        "rel_y": 0.615
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ICU-STATION",
+      "rel_x": 0.5327272727272727,
+      "rel_y": 0.615
+    },
+    {
+      "id": "nurse-icu-station-b",
+      "employeeId": "N-ICU-002",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Aaron Ma",
+      "department": "ICU",
+      "roomId": "R-ICU-STATION",
+      "relX": 0.45818181818181813,
+      "relY": 0.615,
+      "gender": "male",
+      "pose": "standing",
+      "phase": 5.51,
+      "available": true,
+      "local_person_id": "nurse-icu-station-b",
+      "staff_id": "N-ICU-002",
+      "employee_id": "N-ICU-002",
+      "provider_id": "N-ICU-002",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "R-ICU-STATION"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.45818181818181813,
+        "rel_y": 0.615
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ICU-STATION",
+      "rel_x": 0.45818181818181813,
+      "rel_y": 0.615
+    },
+    {
+      "id": "doctor-icu-bed-a",
+      "employeeId": "D-ICU-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Helen Guo",
+      "department": "ICU",
+      "roomId": "R-ICU-BEDS-A",
+      "relX": 0.58,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "monitoring",
+      "phase": 4.64,
+      "available": true,
+      "local_person_id": "doctor-icu-bed-a",
+      "staff_id": "D-ICU-001",
+      "employee_id": "D-ICU-001",
+      "provider_id": "D-ICU-001",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "R-ICU-BEDS-A"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.58,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ICU-BEDS-A",
+      "rel_x": 0.58,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-icu-bed-b",
+      "employeeId": "D-ICU-002",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Mark Tang",
+      "department": "ICU",
+      "roomId": "R-ICU-BEDS-B",
+      "relX": 0.5327272727272727,
+      "relY": 0.615,
+      "gender": "male",
+      "pose": "monitoring",
+      "phase": 4.64,
+      "available": true,
+      "local_person_id": "doctor-icu-bed-b",
+      "staff_id": "D-ICU-002",
+      "employee_id": "D-ICU-002",
+      "provider_id": "D-ICU-002",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "R-ICU-BEDS-B"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.5327272727272727,
+        "rel_y": 0.615
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ICU-BEDS-B",
+      "rel_x": 0.5327272727272727,
+      "rel_y": 0.615
+    },
+    {
+      "id": "nurse-icu-isolation",
+      "employeeId": "N-ICU-003",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Amy Qian",
+      "department": "ICU Isolation",
+      "roomId": "R-ICU-ISOLATION",
+      "relX": 0.58,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "monitoring",
+      "phase": 5.51,
+      "available": true,
+      "local_person_id": "nurse-icu-isolation",
+      "staff_id": "N-ICU-003",
+      "employee_id": "N-ICU-003",
+      "provider_id": "N-ICU-003",
+      "department_id": "icu",
+      "current_location": {
+        "room_id": "R-ICU-ISOLATION"
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.58,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-ICU-ISOLATION",
+      "rel_x": 0.58,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-mdt-a",
+      "employeeId": "D-MDT-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Claire Luo",
+      "department": "MDT Center",
+      "roomId": "R-MDT-HEAD-DOCTOR",
+      "relX": 0.5,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "seated",
+      "phase": 3.4799999999999995,
+      "available": true,
+      "local_person_id": "doctor-mdt-a",
+      "staff_id": "D-MDT-001",
+      "employee_id": "D-MDT-001",
+      "provider_id": "D-MDT-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "R-MDT-HEAD-DOCTOR"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-MDT-HEAD-DOCTOR",
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-mdt-b",
+      "employeeId": "D-MDT-002",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Eric Fang",
+      "department": "MDT Center",
+      "roomId": "R-MDT-MEETING",
+      "relX": 0.5,
+      "relY": 0.58,
+      "gender": "male",
+      "pose": "seated",
+      "phase": 3.4799999999999995,
+      "available": true,
+      "local_person_id": "doctor-mdt-b",
+      "staff_id": "D-MDT-002",
+      "employee_id": "D-MDT-002",
+      "provider_id": "D-MDT-002",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "R-MDT-MEETING"
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-MDT-MEETING",
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "doctor-mdt-c",
+      "employeeId": "D-IMG-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Sophia Gao",
+      "department": "Imaging Review",
+      "roomId": "R-MDT-IMAGING-REVIEW",
+      "relX": 0.5,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.4799999999999995,
+      "available": true,
+      "local_person_id": "doctor-mdt-c",
+      "staff_id": "D-IMG-001",
+      "employee_id": "D-IMG-001",
+      "provider_id": "D-IMG-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "R-MDT-IMAGING-REVIEW"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-MDT-IMAGING-REVIEW",
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "nurse-mdt-coord",
+      "employeeId": "N-MDT-001",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Wendy He",
+      "department": "MDT Center",
+      "roomId": "R-MDT-FINAL-PLAN",
+      "relX": 0.5,
+      "relY": 0.58,
+      "gender": "female",
+      "pose": "standing",
+      "phase": 4.35,
+      "available": true,
+      "local_person_id": "nurse-mdt-coord",
+      "staff_id": "N-MDT-001",
+      "employee_id": "N-MDT-001",
+      "provider_id": "N-MDT-001",
+      "department_id": "mdt",
+      "current_location": {
+        "room_id": "R-MDT-FINAL-PLAN"
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "availability": {
+        "available": true
+      },
+      "room_id": "R-MDT-FINAL-PLAN",
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "nurse-ward-station-a",
+      "employeeId": "N-WD-001",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Bella Lin",
+      "department": "Ward",
+      "gender": "female",
+      "pose": "standing",
+      "phase": 5.8,
+      "available": false,
+      "local_person_id": "nurse-ward-station-a",
+      "staff_id": "N-WD-001",
+      "employee_id": "N-WD-001",
+      "provider_id": "N-WD-001",
+      "department_id": "ward",
+      "visual": {
+        "pose": "standing"
+      },
+      "availability": {
+        "available": false
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "nurse-ward-station-b",
+      "employeeId": "N-WD-002",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Leo Chen",
+      "department": "Ward",
+      "gender": "male",
+      "pose": "walking",
+      "phase": 5.8,
+      "available": false,
+      "local_person_id": "nurse-ward-station-b",
+      "staff_id": "N-WD-002",
+      "employee_id": "N-WD-002",
+      "provider_id": "N-WD-002",
+      "department_id": "ward",
+      "visual": {
+        "pose": "walking"
+      },
+      "availability": {
+        "available": false
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "doctor-ward-office",
+      "employeeId": "D-WD-001",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Victor Shen",
+      "department": "Ward",
+      "gender": "male",
+      "pose": "standing",
+      "phase": 5.22,
+      "available": false,
+      "local_person_id": "doctor-ward-office",
+      "staff_id": "D-WD-001",
+      "employee_id": "D-WD-001",
+      "provider_id": "D-WD-001",
+      "department_id": "ward",
+      "visual": {
+        "pose": "standing"
+      },
+      "availability": {
+        "available": false
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "doctor-ward-round",
+      "employeeId": "D-WD-002",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Rachel Xu",
+      "department": "Ward",
+      "gender": "female",
+      "pose": "monitoring",
+      "phase": 4.93,
+      "available": false,
+      "local_person_id": "doctor-ward-round",
+      "staff_id": "D-WD-002",
+      "employee_id": "D-WD-002",
+      "provider_id": "D-WD-002",
+      "department_id": "ward",
+      "visual": {
+        "pose": "monitoring"
+      },
+      "availability": {
+        "available": false
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "nurse-ward-room-c",
+      "employeeId": "N-WD-003",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Ivy Deng",
+      "department": "Ward",
+      "gender": "female",
+      "pose": "monitoring",
+      "phase": 4.93,
+      "available": false,
+      "local_person_id": "nurse-ward-room-c",
+      "staff_id": "N-WD-003",
+      "employee_id": "N-WD-003",
+      "provider_id": "N-WD-003",
+      "department_id": "ward",
+      "visual": {
+        "pose": "monitoring"
+      },
+      "availability": {
+        "available": false
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "stress-nurse-er-triage",
+      "local_person_id": "stress-nurse-er-triage",
+      "employeeId": "N-ST-ER-003",
+      "employee_id": "N-ST-ER-003",
+      "staff_id": "N-ST-ER-003",
+      "provider_id": "N-ST-ER-003",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Olivia Sun",
+      "gender": "female",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "roomId": "R-ED-TRIAGE",
+      "room_id": "R-ED-TRIAGE",
+      "current_location": {
+        "room_id": "R-ED-TRIAGE"
+      },
+      "relX": 0.5327272727272727,
+      "relY": 0.5175,
+      "rel_x": 0.5327272727272727,
+      "rel_y": 0.5175,
+      "pose": "standing",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5327272727272727,
+        "rel_y": 0.5175
+      }
+    },
+    {
+      "id": "stress-doctor-er-major",
+      "local_person_id": "stress-doctor-er-major",
+      "employeeId": "D-ST-ER-003",
+      "employee_id": "D-ST-ER-003",
+      "staff_id": "D-ST-ER-003",
+      "provider_id": "D-ST-ER-003",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Aaron Blake",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "roomId": "R-ED-MAJOR",
+      "room_id": "R-ED-MAJOR",
+      "current_location": {
+        "room_id": "R-ED-MAJOR"
+      },
+      "relX": 0.58,
+      "relY": 0.58,
+      "rel_x": 0.58,
+      "rel_y": 0.58,
+      "pose": "monitoring",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.58,
+        "rel_y": 0.58
+      }
+    },
+    {
+      "id": "stress-nurse-er-handoff",
+      "local_person_id": "stress-nurse-er-handoff",
+      "employeeId": "N-ST-ER-004",
+      "employee_id": "N-ST-ER-004",
+      "staff_id": "N-ST-ER-004",
+      "provider_id": "N-ST-ER-004",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Mia Zhang",
+      "gender": "female",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "roomId": "R-ED-HANDOFF",
+      "room_id": "R-ED-HANDOFF",
+      "current_location": {
+        "room_id": "R-ED-HANDOFF"
+      },
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "pose": "walking",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      }
+    },
+    {
+      "id": "stress-doctor-op-fever",
+      "local_person_id": "stress-doctor-op-fever",
+      "employeeId": "D-ST-OP-003",
+      "employee_id": "D-ST-OP-003",
+      "staff_id": "D-ST-OP-003",
+      "provider_id": "D-ST-OP-003",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Chloe Ren",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "roomId": "R-OP-FEVER",
+      "room_id": "R-OP-FEVER",
+      "current_location": {
+        "room_id": "R-OP-FEVER"
+      },
+      "relX": 0.72,
+      "relY": 0.58,
+      "rel_x": 0.72,
+      "rel_y": 0.58,
+      "pose": "seated",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "seated",
+        "rel_x": 0.72,
+        "rel_y": 0.58
+      }
+    },
+    {
+      "id": "stress-nurse-op-waiting",
+      "local_person_id": "stress-nurse-op-waiting",
+      "employeeId": "N-ST-OP-003",
+      "employee_id": "N-ST-OP-003",
+      "staff_id": "N-ST-OP-003",
+      "provider_id": "N-ST-OP-003",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Henry Ma",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "roomId": "R-OP-QUEUE-INTERNAL",
+      "room_id": "R-OP-QUEUE-INTERNAL",
+      "current_location": {
+        "room_id": "R-OP-QUEUE-INTERNAL"
+      },
+      "relX": 0.45818181818181813,
+      "relY": 0.615,
+      "rel_x": 0.45818181818181813,
+      "rel_y": 0.615,
+      "pose": "standing",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.45818181818181813,
+        "rel_y": 0.615
+      }
+    },
+    {
+      "id": "stress-doctor-icu-monitor",
+      "local_person_id": "stress-doctor-icu-monitor",
+      "employeeId": "D-ST-ICU-003",
+      "employee_id": "D-ST-ICU-003",
+      "staff_id": "D-ST-ICU-003",
+      "provider_id": "D-ST-ICU-003",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Olivia Grant",
+      "gender": "female",
+      "department": "ICU",
+      "department_id": "icu",
+      "roomId": "R-ICU-MONITOR-CENTER",
+      "room_id": "R-ICU-MONITOR-CENTER",
+      "current_location": {
+        "room_id": "R-ICU-MONITOR-CENTER"
+      },
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "pose": "monitoring",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      }
+    },
+    {
+      "id": "stress-nurse-icu-b",
+      "local_person_id": "stress-nurse-icu-b",
+      "employeeId": "N-ST-ICU-004",
+      "employee_id": "N-ST-ICU-004",
+      "staff_id": "N-ST-ICU-004",
+      "provider_id": "N-ST-ICU-004",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Jason Yu",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "roomId": "R-ICU-BEDS-B",
+      "room_id": "R-ICU-BEDS-B",
+      "current_location": {
+        "room_id": "R-ICU-BEDS-B"
+      },
+      "relX": 0.45818181818181813,
+      "relY": 0.615,
+      "rel_x": 0.45818181818181813,
+      "rel_y": 0.615,
+      "pose": "monitoring",
+      "phase": 0,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "monitoring",
+        "rel_x": 0.45818181818181813,
+        "rel_y": 0.615
+      }
+    },
+    {
+      "id": "stress-doctor-ward-gastro",
+      "local_person_id": "stress-doctor-ward-gastro",
+      "employeeId": "D-ST-WD-003",
+      "employee_id": "D-ST-WD-003",
+      "staff_id": "D-ST-WD-003",
+      "provider_id": "D-ST-WD-003",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "Dr. Martin Zhou",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "pose": "monitoring",
+      "phase": 0,
+      "available": false,
+      "availability": {
+        "available": false
+      },
+      "visual": {
+        "pose": "monitoring"
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "stress-nurse-ward-resp",
+      "local_person_id": "stress-nurse-ward-resp",
+      "employeeId": "N-ST-WD-004",
+      "employee_id": "N-ST-WD-004",
+      "staff_id": "N-ST-WD-004",
+      "provider_id": "N-ST-WD-004",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "Nurse Felicia Tang",
+      "gender": "female",
+      "department": "Ward",
+      "department_id": "ward",
+      "pose": "monitoring",
+      "phase": 0,
+      "available": false,
+      "availability": {
+        "available": false
+      },
+      "visual": {
+        "pose": "monitoring"
+      },
+      "legacy": true,
+      "hidden": true
+    },
+    {
+      "id": "porter-1f-01",
+      "local_person_id": "porter-1f-01",
+      "employeeId": "POT-1F-001",
+      "employee_id": "POT-1F-001",
+      "staff_id": "POT-1F-001",
+      "provider_id": "POT-1F-001",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Wei Chen",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 1,
+      "floor_id": 1,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 1
+      },
+      "pose": "walking",
+      "phase": 0.37,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-1f-02",
+      "local_person_id": "porter-1f-02",
+      "employeeId": "POT-1F-002",
+      "employee_id": "POT-1F-002",
+      "staff_id": "POT-1F-002",
+      "provider_id": "POT-1F-002",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Lily Wu",
+      "gender": "female",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 1,
+      "floor_id": 1,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 1
+      },
+      "pose": "walking",
+      "phase": 0.74,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-1f-03",
+      "local_person_id": "porter-1f-03",
+      "employeeId": "POT-1F-003",
+      "employee_id": "POT-1F-003",
+      "staff_id": "POT-1F-003",
+      "provider_id": "POT-1F-003",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ming Zhao",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 1,
+      "floor_id": 1,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 1
+      },
+      "pose": "walking",
+      "phase": 1.1099999999999999,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-1f-04",
+      "local_person_id": "porter-1f-04",
+      "employeeId": "POT-1F-004",
+      "employee_id": "POT-1F-004",
+      "staff_id": "POT-1F-004",
+      "provider_id": "POT-1F-004",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ana Liu",
+      "gender": "female",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-RESP"
+      },
+      "pose": "walking",
+      "phase": 1.48,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-004:resp_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-RESP"
+    },
+    {
+      "id": "porter-1f-05",
+      "local_person_id": "porter-1f-05",
+      "employeeId": "POT-1F-005",
+      "employee_id": "POT-1F-005",
+      "staff_id": "POT-1F-005",
+      "provider_id": "POT-1F-005",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Jason Lin",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 1.85,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-005:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-1f-06",
+      "local_person_id": "porter-1f-06",
+      "employeeId": "POT-1F-006",
+      "employee_id": "POT-1F-006",
+      "staff_id": "POT-1F-006",
+      "provider_id": "POT-1F-006",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Mei Huang",
+      "gender": "female",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 1,
+      "floor_id": 1,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 1
+      },
+      "pose": "walking",
+      "phase": 2.2199999999999998,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-1f-07",
+      "local_person_id": "porter-1f-07",
+      "employeeId": "POT-1F-007",
+      "employee_id": "POT-1F-007",
+      "staff_id": "POT-1F-007",
+      "provider_id": "POT-1F-007",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Kai Song",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 2.59,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-007:gastro_ward",
+      "roomId": null,
+      "room_id": null,
+      "hallway_anchor_room_id": "R-WARD-GASTRO",
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-1f-08",
+      "local_person_id": "porter-1f-08",
+      "employeeId": "POT-1F-008",
+      "employee_id": "POT-1F-008",
+      "staff_id": "POT-1F-008",
+      "provider_id": "POT-1F-008",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter David Xu",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 1,
+      "floor_id": 1,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 1
+      },
+      "pose": "walking",
+      "phase": 2.96,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-1f-09",
+      "local_person_id": "porter-1f-09",
+      "employeeId": "POT-1F-009",
+      "employee_id": "POT-1F-009",
+      "staff_id": "POT-1F-009",
+      "provider_id": "POT-1F-009",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Nora Fang",
+      "gender": "female",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-NEURO"
+      },
+      "pose": "walking",
+      "phase": 3.33,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-009:neuro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-NEURO"
+    },
+    {
+      "id": "porter-1f-10",
+      "local_person_id": "porter-1f-10",
+      "employeeId": "POT-1F-010",
+      "employee_id": "POT-1F-010",
+      "staff_id": "POT-1F-010",
+      "provider_id": "POT-1F-010",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Tian Yu",
+      "gender": "male",
+      "department": "Emergency",
+      "department_id": "emergency",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 3.7,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-1F-010:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-2f-01",
+      "local_person_id": "porter-2f-01",
+      "employeeId": "POT-2F-001",
+      "employee_id": "POT-2F-001",
+      "staff_id": "POT-2F-001",
+      "provider_id": "POT-2F-001",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Wei Chen",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-A"
+      },
+      "pose": "walking",
+      "phase": 0.37,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-001:icu_beds_a",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-ICU-BEDS-A"
+    },
+    {
+      "id": "porter-2f-02",
+      "local_person_id": "porter-2f-02",
+      "employeeId": "POT-2F-002",
+      "employee_id": "POT-2F-002",
+      "staff_id": "POT-2F-002",
+      "provider_id": "POT-2F-002",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Lily Wu",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 0.74,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-002:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-2f-03",
+      "local_person_id": "porter-2f-03",
+      "employeeId": "POT-2F-003",
+      "employee_id": "POT-2F-003",
+      "staff_id": "POT-2F-003",
+      "provider_id": "POT-2F-003",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ming Zhao",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-A"
+      },
+      "pose": "walking",
+      "phase": 1.1099999999999999,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-003:icu_beds_a",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-ICU-BEDS-A"
+    },
+    {
+      "id": "porter-2f-04",
+      "local_person_id": "porter-2f-04",
+      "employeeId": "POT-2F-004",
+      "employee_id": "POT-2F-004",
+      "staff_id": "POT-2F-004",
+      "provider_id": "POT-2F-004",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ana Liu",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-NEURO"
+      },
+      "pose": "walking",
+      "phase": 1.48,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-004:neuro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-NEURO"
+    },
+    {
+      "id": "porter-2f-05",
+      "local_person_id": "porter-2f-05",
+      "employeeId": "POT-2F-005",
+      "employee_id": "POT-2F-005",
+      "staff_id": "POT-2F-005",
+      "provider_id": "POT-2F-005",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Jason Lin",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 1.85,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-005:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-2f-06",
+      "local_person_id": "porter-2f-06",
+      "employeeId": "POT-2F-006",
+      "employee_id": "POT-2F-006",
+      "staff_id": "POT-2F-006",
+      "provider_id": "POT-2F-006",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Mei Huang",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 2.2199999999999998,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-006:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-2f-07",
+      "local_person_id": "porter-2f-07",
+      "employeeId": "POT-2F-007",
+      "employee_id": "POT-2F-007",
+      "staff_id": "POT-2F-007",
+      "provider_id": "POT-2F-007",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Kai Song",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 2,
+      "floor_id": 2,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 2
+      },
+      "pose": "walking",
+      "phase": 2.59,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-2f-08",
+      "local_person_id": "porter-2f-08",
+      "employeeId": "POT-2F-008",
+      "employee_id": "POT-2F-008",
+      "staff_id": "POT-2F-008",
+      "provider_id": "POT-2F-008",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter David Xu",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 2.96,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-008:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-2f-09",
+      "local_person_id": "porter-2f-09",
+      "employeeId": "POT-2F-009",
+      "employee_id": "POT-2F-009",
+      "staff_id": "POT-2F-009",
+      "provider_id": "POT-2F-009",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Nora Fang",
+      "gender": "female",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-NEURO"
+      },
+      "pose": "walking",
+      "phase": 3.33,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-009:neuro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-NEURO"
+    },
+    {
+      "id": "porter-2f-10",
+      "local_person_id": "porter-2f-10",
+      "employeeId": "POT-2F-010",
+      "employee_id": "POT-2F-010",
+      "staff_id": "POT-2F-010",
+      "provider_id": "POT-2F-010",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Tian Yu",
+      "gender": "male",
+      "department": "Outpatient",
+      "department_id": "outpatient",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 3.7,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-2F-010:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-3f-01",
+      "local_person_id": "porter-3f-01",
+      "employeeId": "POT-3F-001",
+      "employee_id": "POT-3F-001",
+      "staff_id": "POT-3F-001",
+      "provider_id": "POT-3F-001",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Wei Chen",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3
+      },
+      "pose": "walking",
+      "phase": 0.37,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-3f-02",
+      "local_person_id": "porter-3f-02",
+      "employeeId": "POT-3F-002",
+      "employee_id": "POT-3F-002",
+      "staff_id": "POT-3F-002",
+      "provider_id": "POT-3F-002",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Lily Wu",
+      "gender": "female",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-B"
+      },
+      "pose": "walking",
+      "phase": 0.74,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-002:icu_beds_b",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-ICU-BEDS-B"
+    },
+    {
+      "id": "porter-3f-03",
+      "local_person_id": "porter-3f-03",
+      "employeeId": "POT-3F-003",
+      "employee_id": "POT-3F-003",
+      "staff_id": "POT-3F-003",
+      "provider_id": "POT-3F-003",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ming Zhao",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3
+      },
+      "pose": "walking",
+      "phase": 1.1099999999999999,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-3f-04",
+      "local_person_id": "porter-3f-04",
+      "employeeId": "POT-3F-004",
+      "employee_id": "POT-3F-004",
+      "staff_id": "POT-3F-004",
+      "provider_id": "POT-3F-004",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ana Liu",
+      "gender": "female",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3,
+        "anchor_room_id": "R-ICU-BEDS-A"
+      },
+      "pose": "walking",
+      "phase": 1.48,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-004:icu_beds_a",
+      "roomId": null,
+      "room_id": null,
+      "hallway_anchor_room_id": "R-ICU-BEDS-A",
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-3f-05",
+      "local_person_id": "porter-3f-05",
+      "employeeId": "POT-3F-005",
+      "employee_id": "POT-3F-005",
+      "staff_id": "POT-3F-005",
+      "provider_id": "POT-3F-005",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Jason Lin",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 1.85,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-005:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-3f-06",
+      "local_person_id": "porter-3f-06",
+      "employeeId": "POT-3F-006",
+      "employee_id": "POT-3F-006",
+      "staff_id": "POT-3F-006",
+      "provider_id": "POT-3F-006",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Mei Huang",
+      "gender": "female",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3
+      },
+      "pose": "walking",
+      "phase": 2.2199999999999998,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-3f-07",
+      "local_person_id": "porter-3f-07",
+      "employeeId": "POT-3F-007",
+      "employee_id": "POT-3F-007",
+      "staff_id": "POT-3F-007",
+      "provider_id": "POT-3F-007",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Kai Song",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3
+      },
+      "pose": "walking",
+      "phase": 2.59,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-3f-08",
+      "local_person_id": "porter-3f-08",
+      "employeeId": "POT-3F-008",
+      "employee_id": "POT-3F-008",
+      "staff_id": "POT-3F-008",
+      "provider_id": "POT-3F-008",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter David Xu",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3
+      },
+      "pose": "walking",
+      "phase": 2.96,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-3f-09",
+      "local_person_id": "porter-3f-09",
+      "employeeId": "POT-3F-009",
+      "employee_id": "POT-3F-009",
+      "staff_id": "POT-3F-009",
+      "provider_id": "POT-3F-009",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Nora Fang",
+      "gender": "female",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5,
+        "anchor_room_id": "R-WARD-GASTRO"
+      },
+      "pose": "walking",
+      "phase": 3.33,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-009:gastro_ward",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58,
+      "hallway_anchor_room_id": "R-WARD-GASTRO"
+    },
+    {
+      "id": "porter-3f-10",
+      "local_person_id": "porter-3f-10",
+      "employeeId": "POT-3F-010",
+      "employee_id": "POT-3F-010",
+      "staff_id": "POT-3F-010",
+      "provider_id": "POT-3F-010",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Tian Yu",
+      "gender": "male",
+      "department": "ICU",
+      "department_id": "icu",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 3,
+      "floor_id": 3,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 3
+      },
+      "pose": "walking",
+      "phase": 3.7,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-3F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-01",
+      "local_person_id": "porter-4f-01",
+      "employeeId": "POT-4F-001",
+      "employee_id": "POT-4F-001",
+      "staff_id": "POT-4F-001",
+      "provider_id": "POT-4F-001",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Wei Chen",
+      "gender": "male",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 0.37,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-02",
+      "local_person_id": "porter-4f-02",
+      "employeeId": "POT-4F-002",
+      "employee_id": "POT-4F-002",
+      "staff_id": "POT-4F-002",
+      "provider_id": "POT-4F-002",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Lily Wu",
+      "gender": "female",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 0.74,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-03",
+      "local_person_id": "porter-4f-03",
+      "employeeId": "POT-4F-003",
+      "employee_id": "POT-4F-003",
+      "staff_id": "POT-4F-003",
+      "provider_id": "POT-4F-003",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ming Zhao",
+      "gender": "male",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 1.1099999999999999,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-04",
+      "local_person_id": "porter-4f-04",
+      "employeeId": "POT-4F-004",
+      "employee_id": "POT-4F-004",
+      "staff_id": "POT-4F-004",
+      "provider_id": "POT-4F-004",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ana Liu",
+      "gender": "female",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 1.48,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-004",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-05",
+      "local_person_id": "porter-4f-05",
+      "employeeId": "POT-4F-005",
+      "employee_id": "POT-4F-005",
+      "staff_id": "POT-4F-005",
+      "provider_id": "POT-4F-005",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Jason Lin",
+      "gender": "male",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 1.85,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-06",
+      "local_person_id": "porter-4f-06",
+      "employeeId": "POT-4F-006",
+      "employee_id": "POT-4F-006",
+      "staff_id": "POT-4F-006",
+      "provider_id": "POT-4F-006",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Mei Huang",
+      "gender": "female",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 2.2199999999999998,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-07",
+      "local_person_id": "porter-4f-07",
+      "employeeId": "POT-4F-007",
+      "employee_id": "POT-4F-007",
+      "staff_id": "POT-4F-007",
+      "provider_id": "POT-4F-007",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Kai Song",
+      "gender": "male",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 2.59,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-08",
+      "local_person_id": "porter-4f-08",
+      "employeeId": "POT-4F-008",
+      "employee_id": "POT-4F-008",
+      "staff_id": "POT-4F-008",
+      "provider_id": "POT-4F-008",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter David Xu",
+      "gender": "male",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 2.96,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-09",
+      "local_person_id": "porter-4f-09",
+      "employeeId": "POT-4F-009",
+      "employee_id": "POT-4F-009",
+      "staff_id": "POT-4F-009",
+      "provider_id": "POT-4F-009",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Nora Fang",
+      "gender": "female",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 3.33,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-4f-10",
+      "local_person_id": "porter-4f-10",
+      "employeeId": "POT-4F-010",
+      "employee_id": "POT-4F-010",
+      "staff_id": "POT-4F-010",
+      "provider_id": "POT-4F-010",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Tian Yu",
+      "gender": "male",
+      "department": "MDT Center",
+      "department_id": "mdt",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 4,
+      "floor_id": 4,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 4
+      },
+      "pose": "walking",
+      "phase": 3.7,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-4F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-01",
+      "local_person_id": "porter-5f-01",
+      "employeeId": "POT-5F-001",
+      "employee_id": "POT-5F-001",
+      "staff_id": "POT-5F-001",
+      "provider_id": "POT-5F-001",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Wei Chen",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 0.37,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-001",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-02",
+      "local_person_id": "porter-5f-02",
+      "employeeId": "POT-5F-002",
+      "employee_id": "POT-5F-002",
+      "staff_id": "POT-5F-002",
+      "provider_id": "POT-5F-002",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Lily Wu",
+      "gender": "female",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 0.74,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-002",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-03",
+      "local_person_id": "porter-5f-03",
+      "employeeId": "POT-5F-003",
+      "employee_id": "POT-5F-003",
+      "staff_id": "POT-5F-003",
+      "provider_id": "POT-5F-003",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ming Zhao",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 1.1099999999999999,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-003",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-04",
+      "local_person_id": "porter-5f-04",
+      "employeeId": "POT-5F-004",
+      "employee_id": "POT-5F-004",
+      "staff_id": "POT-5F-004",
+      "provider_id": "POT-5F-004",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Ana Liu",
+      "gender": "female",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 1.48,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-004",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-05",
+      "local_person_id": "porter-5f-05",
+      "employeeId": "POT-5F-005",
+      "employee_id": "POT-5F-005",
+      "staff_id": "POT-5F-005",
+      "provider_id": "POT-5F-005",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Jason Lin",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 1.85,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-005",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-06",
+      "local_person_id": "porter-5f-06",
+      "employeeId": "POT-5F-006",
+      "employee_id": "POT-5F-006",
+      "staff_id": "POT-5F-006",
+      "provider_id": "POT-5F-006",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Mei Huang",
+      "gender": "female",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 2.2199999999999998,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-006",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-07",
+      "local_person_id": "porter-5f-07",
+      "employeeId": "POT-5F-007",
+      "employee_id": "POT-5F-007",
+      "staff_id": "POT-5F-007",
+      "provider_id": "POT-5F-007",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Kai Song",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 2.59,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-007",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-08",
+      "local_person_id": "porter-5f-08",
+      "employeeId": "POT-5F-008",
+      "employee_id": "POT-5F-008",
+      "staff_id": "POT-5F-008",
+      "provider_id": "POT-5F-008",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter David Xu",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 2.96,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-008",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-09",
+      "local_person_id": "porter-5f-09",
+      "employeeId": "POT-5F-009",
+      "employee_id": "POT-5F-009",
+      "staff_id": "POT-5F-009",
+      "provider_id": "POT-5F-009",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Nora Fang",
+      "gender": "female",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 3.33,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-009",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "porter-5f-10",
+      "local_person_id": "porter-5f-10",
+      "employeeId": "POT-5F-010",
+      "employee_id": "POT-5F-010",
+      "staff_id": "POT-5F-010",
+      "provider_id": "POT-5F-010",
+      "type": "porter",
+      "role": "porter",
+      "name": "Porter Tian Yu",
+      "gender": "male",
+      "department": "Ward",
+      "department_id": "ward",
+      "locationType": "hallway",
+      "location_type": "hallway",
+      "floor": 5,
+      "floor_id": 5,
+      "current_location": {
+        "kind": "hallway",
+        "location_type": "hallway",
+        "floor_id": 5
+      },
+      "pose": "walking",
+      "phase": 3.7,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "visual": {
+        "pose": "walking",
+        "rel_x": 0.5,
+        "rel_y": 0.58
+      },
+      "hallway_seed": "POT-5F-010",
+      "room_id": null,
+      "roomId": null,
+      "relX": 0.5,
+      "relY": 0.58,
+      "rel_x": 0.5,
+      "rel_y": 0.58
+    },
+    {
+      "id": "nurse-01",
+      "employeeId": "NURSE_01",
+      "employee_id": "NURSE_01",
+      "staff_id": "NURSE_01",
+      "provider_id": "NURSE_01",
+      "local_person_id": "nurse-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "医院前台登记护士",
+      "department": "住院部入院登记",
+      "department_id": "ward",
+      "roomId": "R-WARD-WARD-ADMISSION",
+      "room_id": "R-WARD-WARD-ADMISSION",
+      "current_location": {
+        "room_id": "R-WARD-WARD-ADMISSION"
+      },
+      "relX": 0.45,
+      "relY": 0.58,
+      "rel_x": 0.45,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.45,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false
+    },
+    {
+      "id": "charge-nurse-01",
+      "employeeId": "CHARGE_NURSE_01",
+      "employee_id": "CHARGE_NURSE_01",
+      "staff_id": "CHARGE_NURSE_01",
+      "provider_id": "CHARGE_NURSE_01",
+      "local_person_id": "charge-nurse-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "病区护士长",
+      "department": "住院部",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.42,
+      "relY": 0.58,
+      "rel_x": 0.42,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.42,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false
+    },
+    {
+      "id": "doctor-resp-01",
+      "employeeId": "DOCTOR_RESP_01",
+      "employee_id": "DOCTOR_RESP_01",
+      "staff_id": "DOCTOR_RESP_01",
+      "provider_id": "DOCTOR_RESP_01",
+      "local_person_id": "doctor-resp-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "呼吸内科医生01",
+      "department": "呼吸内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.34,
+      "relY": 0.44,
+      "rel_x": 0.34,
+      "rel_y": 0.44,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.34,
+        "rel_y": 0.44
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "RESP"
+    },
+    {
+      "id": "nurse-resp-01",
+      "employeeId": "NURSE_RESP_01",
+      "employee_id": "NURSE_RESP_01",
+      "staff_id": "NURSE_RESP_01",
+      "provider_id": "NURSE_RESP_01",
+      "local_person_id": "nurse-resp-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "呼吸内科护士01",
+      "department": "呼吸内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.24,
+      "relY": 0.46,
+      "rel_x": 0.24,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.24,
+        "rel_y": 0.46
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "RESP",
+      "bed_coverage": {
+        "room_id": "R-WARD-RESP",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-RESP-01",
+          "B-WARD-RESP-02",
+          "B-WARD-RESP-03",
+          "B-WARD-RESP-04",
+          "B-WARD-RESP-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-resp-02",
+      "employeeId": "NURSE_RESP_02",
+      "employee_id": "NURSE_RESP_02",
+      "staff_id": "NURSE_RESP_02",
+      "provider_id": "NURSE_RESP_02",
+      "local_person_id": "nurse-resp-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "呼吸内科护士02",
+      "department": "呼吸内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.3,
+      "relY": 0.58,
+      "rel_x": 0.3,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.3,
+        "rel_y": 0.58
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "RESP",
+      "bed_coverage": {
+        "room_id": "R-WARD-RESP",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-RESP-06",
+          "B-WARD-RESP-07",
+          "B-WARD-RESP-08",
+          "B-WARD-RESP-09",
+          "B-WARD-RESP-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-card-01",
+      "employeeId": "DOCTOR_CARD_01",
+      "employee_id": "DOCTOR_CARD_01",
+      "staff_id": "DOCTOR_CARD_01",
+      "provider_id": "DOCTOR_CARD_01",
+      "local_person_id": "doctor-card-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "心血管内科医生01",
+      "department": "心血管内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.46,
+      "relY": 0.44,
+      "rel_x": 0.46,
+      "rel_y": 0.44,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.44
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "CARD"
+    },
+    {
+      "id": "nurse-card-01",
+      "employeeId": "NURSE_CARD_01",
+      "employee_id": "NURSE_CARD_01",
+      "staff_id": "NURSE_CARD_01",
+      "provider_id": "NURSE_CARD_01",
+      "local_person_id": "nurse-card-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "心血管内科护士01",
+      "department": "心血管内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.36,
+      "relY": 0.46,
+      "rel_x": 0.36,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.36,
+        "rel_y": 0.46
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "CARD",
+      "bed_coverage": {
+        "room_id": "R-WARD-CARD",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-CARD-01",
+          "B-WARD-CARD-02",
+          "B-WARD-CARD-03",
+          "B-WARD-CARD-04",
+          "B-WARD-CARD-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-card-02",
+      "employeeId": "NURSE_CARD_02",
+      "employee_id": "NURSE_CARD_02",
+      "staff_id": "NURSE_CARD_02",
+      "provider_id": "NURSE_CARD_02",
+      "local_person_id": "nurse-card-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "心血管内科护士02",
+      "department": "心血管内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.42,
+      "relY": 0.58,
+      "rel_x": 0.42,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.42,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "CARD",
+      "bed_coverage": {
+        "room_id": "R-WARD-CARD",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-CARD-06",
+          "B-WARD-CARD-07",
+          "B-WARD-CARD-08",
+          "B-WARD-CARD-09",
+          "B-WARD-CARD-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-gastro-01",
+      "employeeId": "DOCTOR_GASTRO_01",
+      "employee_id": "DOCTOR_GASTRO_01",
+      "staff_id": "DOCTOR_GASTRO_01",
+      "provider_id": "DOCTOR_GASTRO_01",
+      "local_person_id": "doctor-gastro-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "消化内科医生01",
+      "department": "消化内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.5800000000000001,
+      "relY": 0.44,
+      "rel_x": 0.5800000000000001,
+      "rel_y": 0.44,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5800000000000001,
+        "rel_y": 0.44
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.64,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GASTRO"
+    },
+    {
+      "id": "nurse-gastro-01",
+      "employeeId": "NURSE_GASTRO_01",
+      "employee_id": "NURSE_GASTRO_01",
+      "staff_id": "NURSE_GASTRO_01",
+      "provider_id": "NURSE_GASTRO_01",
+      "local_person_id": "nurse-gastro-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "消化内科护士01",
+      "department": "消化内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.48,
+      "relY": 0.46,
+      "rel_x": 0.48,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.48,
+        "rel_y": 0.46
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GASTRO",
+      "bed_coverage": {
+        "room_id": "R-WARD-GASTRO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-GASTRO-01",
+          "B-WARD-GASTRO-02",
+          "B-WARD-GASTRO-03",
+          "B-WARD-GASTRO-04",
+          "B-WARD-GASTRO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-gastro-02",
+      "employeeId": "NURSE_GASTRO_02",
+      "employee_id": "NURSE_GASTRO_02",
+      "staff_id": "NURSE_GASTRO_02",
+      "provider_id": "NURSE_GASTRO_02",
+      "local_person_id": "nurse-gastro-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "消化内科护士02",
+      "department": "消化内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.54,
+      "relY": 0.58,
+      "rel_x": 0.54,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.54,
+        "rel_y": 0.58
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GASTRO",
+      "bed_coverage": {
+        "room_id": "R-WARD-GASTRO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-GASTRO-06",
+          "B-WARD-GASTRO-07",
+          "B-WARD-GASTRO-08",
+          "B-WARD-GASTRO-09",
+          "B-WARD-GASTRO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-neuro-01",
+      "employeeId": "DOCTOR_NEURO_01",
+      "employee_id": "DOCTOR_NEURO_01",
+      "staff_id": "DOCTOR_NEURO_01",
+      "provider_id": "DOCTOR_NEURO_01",
+      "local_person_id": "doctor-neuro-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "神经内科医生01",
+      "department": "神经内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.34,
+      "relY": 0.56,
+      "rel_x": 0.34,
+      "rel_y": 0.56,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.34,
+        "rel_y": 0.56
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "NEURO"
+    },
+    {
+      "id": "nurse-neuro-01",
+      "employeeId": "NURSE_NEURO_01",
+      "employee_id": "NURSE_NEURO_01",
+      "staff_id": "NURSE_NEURO_01",
+      "provider_id": "NURSE_NEURO_01",
+      "local_person_id": "nurse-neuro-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "神经内科护士01",
+      "department": "神经内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6,
+      "relY": 0.46,
+      "rel_x": 0.6,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6,
+        "rel_y": 0.46
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "NEURO",
+      "bed_coverage": {
+        "room_id": "R-WARD-NEURO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-NEURO-01",
+          "B-WARD-NEURO-02",
+          "B-WARD-NEURO-03",
+          "B-WARD-NEURO-04",
+          "B-WARD-NEURO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-neuro-02",
+      "employeeId": "NURSE_NEURO_02",
+      "employee_id": "NURSE_NEURO_02",
+      "staff_id": "NURSE_NEURO_02",
+      "provider_id": "NURSE_NEURO_02",
+      "local_person_id": "nurse-neuro-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "神经内科护士02",
+      "department": "神经内科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6599999999999999,
+      "relY": 0.58,
+      "rel_x": 0.6599999999999999,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6599999999999999,
+        "rel_y": 0.58
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "NEURO",
+      "bed_coverage": {
+        "room_id": "R-WARD-NEURO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-NEURO-06",
+          "B-WARD-NEURO-07",
+          "B-WARD-NEURO-08",
+          "B-WARD-NEURO-09",
+          "B-WARD-NEURO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-endo-01",
+      "employeeId": "DOCTOR_ENDO_01",
+      "employee_id": "DOCTOR_ENDO_01",
+      "staff_id": "DOCTOR_ENDO_01",
+      "provider_id": "DOCTOR_ENDO_01",
+      "local_person_id": "doctor-endo-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "内分泌科医生01",
+      "department": "内分泌科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.46,
+      "relY": 0.56,
+      "rel_x": 0.46,
+      "rel_y": 0.56,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.56
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ENDO"
+    },
+    {
+      "id": "nurse-endo-01",
+      "employeeId": "NURSE_ENDO_01",
+      "employee_id": "NURSE_ENDO_01",
+      "staff_id": "NURSE_ENDO_01",
+      "provider_id": "NURSE_ENDO_01",
+      "local_person_id": "nurse-endo-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "内分泌科护士01",
+      "department": "内分泌科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.72,
+      "relY": 0.46,
+      "rel_x": 0.72,
+      "rel_y": 0.46,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.72,
+        "rel_y": 0.46
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ENDO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ENDO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-ENDO-01",
+          "B-WARD-ENDO-02",
+          "B-WARD-ENDO-03",
+          "B-WARD-ENDO-04",
+          "B-WARD-ENDO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-endo-02",
+      "employeeId": "NURSE_ENDO_02",
+      "employee_id": "NURSE_ENDO_02",
+      "staff_id": "NURSE_ENDO_02",
+      "provider_id": "NURSE_ENDO_02",
+      "local_person_id": "nurse-endo-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "内分泌科护士02",
+      "department": "内分泌科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.78,
+      "relY": 0.58,
+      "rel_x": 0.78,
+      "rel_y": 0.58,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.78,
+        "rel_y": 0.58
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ENDO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ENDO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-ENDO-06",
+          "B-WARD-ENDO-07",
+          "B-WARD-ENDO-08",
+          "B-WARD-ENDO-09",
+          "B-WARD-ENDO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-gensurg-01",
+      "employeeId": "DOCTOR_GENSURG_01",
+      "employee_id": "DOCTOR_GENSURG_01",
+      "staff_id": "DOCTOR_GENSURG_01",
+      "provider_id": "DOCTOR_GENSURG_01",
+      "local_person_id": "doctor-gensurg-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "普通外科医生01",
+      "department": "普通外科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.5800000000000001,
+      "relY": 0.56,
+      "rel_x": 0.5800000000000001,
+      "rel_y": 0.56,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5800000000000001,
+        "rel_y": 0.56
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 4.05,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GENSURG"
+    },
+    {
+      "id": "nurse-gensurg-01",
+      "employeeId": "NURSE_GENSURG_01",
+      "employee_id": "NURSE_GENSURG_01",
+      "staff_id": "NURSE_GENSURG_01",
+      "provider_id": "NURSE_GENSURG_01",
+      "local_person_id": "nurse-gensurg-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "普通外科护士01",
+      "department": "普通外科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.24,
+      "relY": 0.64,
+      "rel_x": 0.24,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.24,
+        "rel_y": 0.64
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.64,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GENSURG",
+      "bed_coverage": {
+        "room_id": "R-WARD-GENSURG",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-GENSURG-01",
+          "B-WARD-GENSURG-02",
+          "B-WARD-GENSURG-03",
+          "B-WARD-GENSURG-04",
+          "B-WARD-GENSURG-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-gensurg-02",
+      "employeeId": "NURSE_GENSURG_02",
+      "employee_id": "NURSE_GENSURG_02",
+      "staff_id": "NURSE_GENSURG_02",
+      "provider_id": "NURSE_GENSURG_02",
+      "local_person_id": "nurse-gensurg-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "普通外科护士02",
+      "department": "普通外科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.3,
+      "relY": 0.76,
+      "rel_x": 0.3,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.3,
+        "rel_y": 0.76
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.64,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "GENSURG",
+      "bed_coverage": {
+        "room_id": "R-WARD-GENSURG",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-GENSURG-06",
+          "B-WARD-GENSURG-07",
+          "B-WARD-GENSURG-08",
+          "B-WARD-GENSURG-09",
+          "B-WARD-GENSURG-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-ortho-01",
+      "employeeId": "DOCTOR_ORTHO_01",
+      "employee_id": "DOCTOR_ORTHO_01",
+      "staff_id": "DOCTOR_ORTHO_01",
+      "provider_id": "DOCTOR_ORTHO_01",
+      "local_person_id": "doctor-ortho-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "骨科医生01",
+      "department": "骨科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.34,
+      "relY": 0.6799999999999999,
+      "rel_x": 0.34,
+      "rel_y": 0.6799999999999999,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.34,
+        "rel_y": 0.6799999999999999
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ORTHO"
+    },
+    {
+      "id": "nurse-ortho-01",
+      "employeeId": "NURSE_ORTHO_01",
+      "employee_id": "NURSE_ORTHO_01",
+      "staff_id": "NURSE_ORTHO_01",
+      "provider_id": "NURSE_ORTHO_01",
+      "local_person_id": "nurse-ortho-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "骨科护士01",
+      "department": "骨科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.36,
+      "relY": 0.64,
+      "rel_x": 0.36,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.36,
+        "rel_y": 0.64
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ORTHO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ORTHO",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-ORTHO-01",
+          "B-WARD-ORTHO-02",
+          "B-WARD-ORTHO-03",
+          "B-WARD-ORTHO-04",
+          "B-WARD-ORTHO-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-ortho-02",
+      "employeeId": "NURSE_ORTHO_02",
+      "employee_id": "NURSE_ORTHO_02",
+      "staff_id": "NURSE_ORTHO_02",
+      "provider_id": "NURSE_ORTHO_02",
+      "local_person_id": "nurse-ortho-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "骨科护士02",
+      "department": "骨科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.42,
+      "relY": 0.76,
+      "rel_x": 0.42,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.42,
+        "rel_y": 0.76
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "ORTHO",
+      "bed_coverage": {
+        "room_id": "R-WARD-ORTHO",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-ORTHO-06",
+          "B-WARD-ORTHO-07",
+          "B-WARD-ORTHO-08",
+          "B-WARD-ORTHO-09",
+          "B-WARD-ORTHO-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-obgyn-01",
+      "employeeId": "DOCTOR_OBGYN_01",
+      "employee_id": "DOCTOR_OBGYN_01",
+      "staff_id": "DOCTOR_OBGYN_01",
+      "provider_id": "DOCTOR_OBGYN_01",
+      "local_person_id": "doctor-obgyn-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "妇产科医生01",
+      "department": "妇产科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.46,
+      "relY": 0.6799999999999999,
+      "rel_x": 0.46,
+      "rel_y": 0.6799999999999999,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.46,
+        "rel_y": 0.6799999999999999
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 3.23,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "OBGYN"
+    },
+    {
+      "id": "nurse-obgyn-01",
+      "employeeId": "NURSE_OBGYN_01",
+      "employee_id": "NURSE_OBGYN_01",
+      "staff_id": "NURSE_OBGYN_01",
+      "provider_id": "NURSE_OBGYN_01",
+      "local_person_id": "nurse-obgyn-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "妇产科护士01",
+      "department": "妇产科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.48,
+      "relY": 0.64,
+      "rel_x": 0.48,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.48,
+        "rel_y": 0.64
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "OBGYN",
+      "bed_coverage": {
+        "room_id": "R-WARD-OBGYN",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-OBGYN-01",
+          "B-WARD-OBGYN-02",
+          "B-WARD-OBGYN-03",
+          "B-WARD-OBGYN-04",
+          "B-WARD-OBGYN-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-obgyn-02",
+      "employeeId": "NURSE_OBGYN_02",
+      "employee_id": "NURSE_OBGYN_02",
+      "staff_id": "NURSE_OBGYN_02",
+      "provider_id": "NURSE_OBGYN_02",
+      "local_person_id": "nurse-obgyn-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "妇产科护士02",
+      "department": "妇产科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.54,
+      "relY": 0.76,
+      "rel_x": 0.54,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.54,
+        "rel_y": 0.76
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2.82,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "OBGYN",
+      "bed_coverage": {
+        "room_id": "R-WARD-OBGYN",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-OBGYN-06",
+          "B-WARD-OBGYN-07",
+          "B-WARD-OBGYN-08",
+          "B-WARD-OBGYN-09",
+          "B-WARD-OBGYN-10"
+        ]
+      }
+    },
+    {
+      "id": "doctor-ped-01",
+      "employeeId": "DOCTOR_PED_01",
+      "employee_id": "DOCTOR_PED_01",
+      "staff_id": "DOCTOR_PED_01",
+      "provider_id": "DOCTOR_PED_01",
+      "local_person_id": "doctor-ped-01",
+      "type": "doctor",
+      "role": "doctor",
+      "name": "儿科医生01",
+      "department": "儿科",
+      "department_id": "ward",
+      "roomId": "R-WARD-DOCTOR-OFFICE",
+      "room_id": "R-WARD-DOCTOR-OFFICE",
+      "current_location": {
+        "room_id": "R-WARD-DOCTOR-OFFICE"
+      },
+      "relX": 0.5800000000000001,
+      "relY": 0.6799999999999999,
+      "rel_x": 0.5800000000000001,
+      "rel_y": 0.6799999999999999,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.5800000000000001,
+        "rel_y": 0.6799999999999999
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2.41,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "PED"
+    },
+    {
+      "id": "nurse-ped-01",
+      "employeeId": "NURSE_PED_01",
+      "employee_id": "NURSE_PED_01",
+      "staff_id": "NURSE_PED_01",
+      "provider_id": "NURSE_PED_01",
+      "local_person_id": "nurse-ped-01",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "儿科护士01",
+      "department": "儿科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6,
+      "relY": 0.64,
+      "rel_x": 0.6,
+      "rel_y": 0.64,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6,
+        "rel_y": 0.64
+      },
+      "gender": "female",
+      "pose": "standing",
+      "phase": 2,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "PED",
+      "bed_coverage": {
+        "room_id": "R-WARD-PEDS",
+        "bed_range": [
+          "01",
+          "05"
+        ],
+        "bed_ids": [
+          "B-WARD-PEDS-01",
+          "B-WARD-PEDS-02",
+          "B-WARD-PEDS-03",
+          "B-WARD-PEDS-04",
+          "B-WARD-PEDS-05"
+        ]
+      }
+    },
+    {
+      "id": "nurse-ped-02",
+      "employeeId": "NURSE_PED_02",
+      "employee_id": "NURSE_PED_02",
+      "staff_id": "NURSE_PED_02",
+      "provider_id": "NURSE_PED_02",
+      "local_person_id": "nurse-ped-02",
+      "type": "nurse",
+      "role": "nurse",
+      "name": "儿科护士02",
+      "department": "儿科",
+      "department_id": "ward",
+      "roomId": "R-WARD-NURSE-STATION",
+      "room_id": "R-WARD-NURSE-STATION",
+      "current_location": {
+        "room_id": "R-WARD-NURSE-STATION"
+      },
+      "relX": 0.6599999999999999,
+      "relY": 0.76,
+      "rel_x": 0.6599999999999999,
+      "rel_y": 0.76,
+      "visual": {
+        "pose": "standing",
+        "rel_x": 0.6599999999999999,
+        "rel_y": 0.76
+      },
+      "gender": "male",
+      "pose": "standing",
+      "phase": 2,
+      "available": true,
+      "availability": {
+        "available": true
+      },
+      "hidden": false,
+      "legacy": false,
+      "ward_code": "PED",
+      "bed_coverage": {
+        "room_id": "R-WARD-PEDS",
+        "bed_range": [
+          "06",
+          "10"
+        ],
+        "bed_ids": [
+          "B-WARD-PEDS-06",
+          "B-WARD-PEDS-07",
+          "B-WARD-PEDS-08",
+          "B-WARD-PEDS-09",
+          "B-WARD-PEDS-10"
+        ]
+      }
+    }
+  ]
+}
